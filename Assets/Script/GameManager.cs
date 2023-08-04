@@ -28,7 +28,7 @@ public class GameManager : MonoBehaviour
         public PlayerTypes playerType;
         public bool hasOutside;
         public bool hasDonate;
-        public bool noJob;
+        public bool hasJob = true;
     }
 
     public List<Entity> playerList = new List<Entity>();
