@@ -56,6 +56,8 @@ public class GameManager : MonoBehaviour
             {
                 case States.ROLL_DICE:
                     {
+                        
+                        Debug.Log("Turns player " + playerList[activePlayer].playerName + " Turn'" + playerList[activePlayer].myPlayers[0].turncounts);
                         StartCoroutine(RollDiceDelay());
                         state = States.WAITING;
 
@@ -73,6 +75,7 @@ public class GameManager : MonoBehaviour
                     break;
                 case States.SWITCH_PLAYER:
                     {
+                        playerList[activePlayer].myPlayers[0].turncounts++;
                         StartCoroutine(SwitchPlayer());
                         state = States.WAITING;
                     }
@@ -168,21 +171,21 @@ public class GameManager : MonoBehaviour
             }
         }
         //perform kick if possible
+        /**
         if (moveKickPlayers.Count > 0)
         {
             int num = Random.Range(0, moveKickPlayers.Count);
             moveKickPlayers[num].StartTheMove(DiceNumber);
             state = States.WAITING;
             return;
-        }
+        }**/
         if (moveablePlayers.Count > 0)
         {
-            int num = Random.Range(0, moveablePlayers.Count);
-            moveablePlayers[num].StartTheMove(DiceNumber);
+            int num = moveablePlayers.Count;
+            moveablePlayers[num-1].StartTheMove(DiceNumber);
             state = States.WAITING;
             return;
         }
-
         Debug.Log("Should switch player ");
         state = States.SWITCH_PLAYER;
     }

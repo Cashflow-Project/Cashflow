@@ -22,7 +22,7 @@ public class Player : MonoBehaviour
 
     int steps;
     int doneSteps;
-    int turncounts;
+    public int turncounts;
 
     [Header("BOOLS")]
     public bool isOut;
@@ -213,12 +213,18 @@ public class Player : MonoBehaviour
     public void StartTheMove(int DiceNumber)
     {
         steps = DiceNumber;
-        turncounts++;
-        Debug.Log("Turns" + turncounts);
         if (turncounts == 1)
         {
             steps--;
+            if(steps == 0)
+            {
+                steps++;
+            }
         }
+        //Debug.Log("Turns player "+ playerid + " Turn'"+ turncounts);
         StartCoroutine(Move());
+        //turncounts++;
     }
 }
+
+ 
