@@ -22,7 +22,7 @@ public class Player : MonoBehaviour
 
     int steps;
     int doneSteps;
-    public int turncounts;
+    public int turncounts = 1;
 
     [Header("BOOLS")]
     public bool isOut;

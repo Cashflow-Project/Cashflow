@@ -36,7 +36,7 @@ public class GameManager : MonoBehaviour
     //STATEMACHINE
     public enum States
     {
-        WAITING,ROLL_DICE,ACTION,SWITCH_PLAYER
+        WAITING,ROLL_DICE,ACTION,SWITCH_PLAYER,START_TURN
     }
     public States state;
 
@@ -54,6 +54,12 @@ public class GameManager : MonoBehaviour
         {
             switch (state)
             {
+                case States.START_TURN:
+                    {
+                        playerList[activePlayer].myPlayers[0].turncounts++;
+                        state = States.ROLL_DICE;
+                    }
+                    break;
                 case States.ROLL_DICE:
                     {
                         
@@ -75,7 +81,7 @@ public class GameManager : MonoBehaviour
                     break;
                 case States.SWITCH_PLAYER:
                     {
-                        playerList[activePlayer].myPlayers[0].turncounts++;
+                        
                         StartCoroutine(SwitchPlayer());
                         state = States.WAITING;
                     }
@@ -181,6 +187,7 @@ public class GameManager : MonoBehaviour
         }**/
         if (moveablePlayers.Count > 0)
         {
+            //playerList[activePlayer].myPlayers[0].turncounts++;
             int num = moveablePlayers.Count;
             moveablePlayers[num-1].StartTheMove(DiceNumber);
             state = States.WAITING;
@@ -232,6 +239,6 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        state = States.ROLL_DICE;
+        state = States.START_TURN;
     }
 }
