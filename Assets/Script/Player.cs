@@ -9,6 +9,7 @@ public class Player : MonoBehaviour
     [Header("ROUTES")]
     public Route commonRoute;
     public Route outerRoute;
+    public Route StartRoute;
 
     public List<Node> fullRoute = new List<Node>();
     [Header("NODES")]
@@ -25,7 +26,7 @@ public class Player : MonoBehaviour
     public int turncounts = 1;
 
     [Header("BOOLS")]
-    public bool isOut;
+    public bool isOut = true;
     bool isMoving;
 
     bool hasTurn;//human input
@@ -34,11 +35,16 @@ public class Player : MonoBehaviour
     [Header("SELECTOR")]
     public GameObject selector;
 
+    float amplitude = 0.5f;
+    float cTime = 0f;
+
     void Start()
     {
         startNodeIndex = commonRoute.RequestPosition(startNode.gameObject.transform);
 
         CreateFullRoute();
+
+        SetSelector(false);
     }
 
     void CreateFullRoute()
@@ -62,14 +68,14 @@ public class Player : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.Space) && !isMoving)
         {
             steps = Random.Range(1, 7); 
-            turncounts++;
+            //turncounts++;
             Debug.Log("Turns" + turncounts);
             Debug.Log("Dice output" + steps);
-            if(turncounts == 1)
+            /*if(turncounts == 1)
             {
                 steps--;
             }
-            StartCoroutine(Move());
+            StartCoroutine(Move());*/
             /**
             if (doneSteps + steps < fullRoute.Count)
             {
@@ -95,17 +101,22 @@ public class Player : MonoBehaviour
             routePosition++;
             routePosition %= fullRoute.Count;
             Vector3 nextPos = fullRoute[routePosition].gameObject.transform.position;
-            while (MoveToNextNode(nextPos,8f)){yield return null;}
-            
+
+            Vector3 startPos = fullRoute[routePosition - 1].gameObject.transform.position;
+            //while (MoveToNextNode(nextPos,8f)){yield return null;}
+            while (MoveInArcToNextNode(startPos, nextPos, 8f)) { yield return null; }
             
             yield return new WaitForSeconds(0.1f);
+            cTime = 0;
             steps--;
             doneSteps++;
+            //Debug.Log(doneSteps);
         }
         /** lastNode = fullRoute[routePosition];
         if (lastNode.isTaken)
         {
             //return to start base node
+            lastNode.player.ReturnToBase();
         }
         currentNode.player = null;
         currentNode.isTaken = false;
@@ -115,6 +126,11 @@ public class Player : MonoBehaviour
 
         currentNode = lastNode;
         lastNode = null;**/
+        /**
+        if (winCondition())
+        {
+            GameManager.instace.ReportWinning();
+        }**/
         GameManager.instace.state = GameManager.States.SWITCH_PLAYER;
         isMoving = false;
         
@@ -123,6 +139,16 @@ public class Player : MonoBehaviour
     {
         return lastPos != (transform.position = Vector3.MoveTowards(transform.position, lastPos, speed * Time.deltaTime));
 
+    }
+
+    bool MoveInArcToNextNode(Vector3 startPos,Vector3 lastPos,float speed)
+    {
+        cTime += speed * Time.deltaTime;
+        Vector3 myPos = Vector3.Lerp(startPos, lastPos, cTime);
+
+        myPos.y += amplitude * Mathf.Sin(Mathf.Clamp01(cTime) * Mathf.PI);
+
+        return lastPos != (transform.position = Vector3.Lerp(transform.position, myPos, cTime));
     }
 
     public bool ReturnIsOut()
@@ -137,7 +163,7 @@ public class Player : MonoBehaviour
         routePosition = 0;
         //start coroutine
         
-        StartCoroutine(MoveOut());
+        //StartCoroutine(MoveOut());
     }
 
     IEnumerator MoveOut()
@@ -153,28 +179,31 @@ public class Player : MonoBehaviour
             //routePosition++;
             routePosition %= fullRoute.Count;
             Vector3 nextPos = fullRoute[routePosition].gameObject.transform.position;
-            while (MoveToNextNode(nextPos, 8f)) { yield return null; }
-
+            //while (MoveToNextNode(nextPos, 8f)) { yield return null; }
+            Vector3 startPos = baseNode.gameObject.transform.position;
+            while (MoveInArcToNextNode(startPos, nextPos, 4f)) { yield return null; }
 
             yield return new WaitForSeconds(0.1f);
+            cTime = 0;
             steps--;
             doneSteps++;
 
         }
 
         //update node
-        /** lastNode = fullRoute[routePosition];
+        /**lastNode = fullRoute[routePosition];
          if (lastNode.isTaken)
          {
              //return to start base node
+            lastNode.player.ReturnToBase();
          }
          lastNode.player = this;
          lastNode.isTaken = true;
 
          currentNode = lastNode;
-         lastNode = null;**/
+         lastNode = null;
 
-
+        **/
         //report to game manager
         GameManager.instace.state = GameManager.States.ROLL_DICE;
         isMoving = false;
@@ -215,15 +244,64 @@ public class Player : MonoBehaviour
         steps = DiceNumber;
         if (turncounts == 1)
         {
-            steps--;
-            if(steps == 0)
-            {
-                steps++;
-            }
+            //steps--;
+            
+            
         }
         //Debug.Log("Turns player "+ playerid + " Turn'"+ turncounts);
         StartCoroutine(Move());
         //turncounts++;
+    }
+
+    public void ReturnToBase()
+    {
+        StartCoroutine(Return());
+    }
+
+    IEnumerator Return()
+    {
+        GameManager.instace.ReportTurnPossible(false);
+        routePosition = 0;
+        currentNode = null;
+        lastNode = null;
+        isOut = false;
+        doneSteps = 0;
+
+        Vector3 baseNodePos = baseNode.gameObject.transform.position;
+        while (MoveToNextNode(baseNodePos, 100f))
+        {
+            yield return null;
+        }
+        GameManager.instace.ReportTurnPossible(true);
+    }
+
+    bool winCondition()
+    {
+        for (int i = 0; i < outerRoute.childNodeList.Count; i++)
+        {
+            if (!outerRoute.childNodeList[i].GetComponent<Node>().isTaken)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    //---------------------------------Human input------------------------------
+    public void SetSelector(bool on)
+    {
+        selector.SetActive(on);
+        hasTurn = on;
+
+    }
+  
+    public void tohasturn()
+    {
+        if (hasTurn)
+        {
+            StartTheMove(GameManager.instace.rolledhumanDice);
+        }
+        GameManager.instace.DeactivateAllSelector();
     }
 }
 
