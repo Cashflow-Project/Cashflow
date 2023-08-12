@@ -102,7 +102,7 @@ public class Player : MonoBehaviour
             routePosition %= fullRoute.Count;
             Vector3 nextPos = fullRoute[routePosition].gameObject.transform.position;
 
-            Vector3 startPos = fullRoute[routePosition - 1].gameObject.transform.position;
+            Vector3 startPos = fullRoute[routePosition].gameObject.transform.position;
             //while (MoveToNextNode(nextPos,8f)){yield return null;}
             while (MoveInArcToNextNode(startPos, nextPos, 8f)) { yield return null; }
             

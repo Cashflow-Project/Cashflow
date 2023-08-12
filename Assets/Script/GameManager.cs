@@ -55,11 +55,31 @@ public class GameManager : MonoBehaviour
     void Awake()
     {
         instace = this;
+
+        for (int i = 0; i < playerList.Count; i++)
+        {
+            if (SaveSettings.players[i] == "HUMAN")
+            {
+                playerList[i].playerType = Entity.PlayerTypes.HUMAN;
+            }
+            if (SaveSettings.players[i] == "CPU")
+            {
+                playerList[i].playerType = Entity.PlayerTypes.CPU;
+            }
+            if (SaveSettings.players[i] == "NP")
+            {
+                playerList[i].playerType = Entity.PlayerTypes.NO_PLAYER;
+            }
+        }
     }
 
     void Start()
     {
-        ActivateButton(false);   
+        ActivateButton(false);
+
+        int randomPlayer = Random.Range(0, playerList.Count);
+        activePlayer = randomPlayer;
+        info.instance.showMessage(playerList[activePlayer].playerName + " starts first");
     }
     void Update()
     {
@@ -156,6 +176,38 @@ public class GameManager : MonoBehaviour
                     break;
             }
         }
+        if (playerList[activePlayer].playerType == Entity.PlayerTypes.NO_PLAYER)
+        {
+            switch (state)
+            {
+                case States.START_TURN:
+                    {
+                        state = States.SWITCH_PLAYER;
+                    }
+                    break;
+                case States.ROLL_DICE:
+                    {
+                        
+                    }
+                    break;
+                case States.WAITING:
+                    {
+
+                    }
+                    break;
+                case States.ACTION:
+                    {
+
+                    }
+                    break;
+                case States.SWITCH_PLAYER:
+                    {
+                        StartCoroutine(noPlayerPassturn());
+                        //state = States.WAITING;
+                    }
+                    break;
+            }
+        }
     }
 
     void CPUDice()
@@ -186,6 +238,7 @@ public class GameManager : MonoBehaviour
             HumanRollDice();
         }
             Debug.Log("Dice Rolled number : " + DiceNumber);
+        info.instance.showMessage("Roll Dice Number:" + _diceNumber);
     }
 
     IEnumerator RollDiceDelay()
@@ -279,8 +332,8 @@ public class GameManager : MonoBehaviour
         Debug.Log("Should switch player ");
         state = States.SWITCH_PLAYER;
     }
-    
-   IEnumerator SwitchPlayer()
+
+    IEnumerator SwitchPlayer()
     {
         if (switchingPlayer)
         {
@@ -290,6 +343,18 @@ public class GameManager : MonoBehaviour
 
         yield return new WaitForSeconds(2);
 
+        //SET NEXT PLAYER
+        SetNextActivePlayer();
+
+        switchingPlayer = false;
+    }
+    IEnumerator noPlayerPassturn()
+    {
+        if (switchingPlayer)
+        {
+            yield break;
+        }
+        switchingPlayer = true;
         //SET NEXT PLAYER
         SetNextActivePlayer();
 
