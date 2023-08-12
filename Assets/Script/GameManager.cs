@@ -51,6 +51,7 @@ public class GameManager : MonoBehaviour
     public Text TurnUI;
     [HideInInspector]public int rolledhumanDice;
 
+    public Dice dice;
     void Awake()
     {
         instace = this;
@@ -157,9 +158,13 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    void RollDice()
+    void CPUDice()
     {
-        int DiceNumber = Random.Range(1, 7);
+        dice.RollDice();
+    }
+    public void RollDice(int _diceNumber)
+    {
+        int DiceNumber = _diceNumber;//Random.Range(1, 7);
         //int DiceNumber = 6;
 
         /**if(DiceNumber == 6)
@@ -167,18 +172,27 @@ public class GameManager : MonoBehaviour
             //check start node
             CheckStartNode(DiceNumber);
         }**/
-        if(DiceNumber <= 6)
+        if(playerList[activePlayer].playerType == Entity.PlayerTypes.CPU)
         {
-            //CheckStartNode(DiceNumber);
-            MoveAPlayer(DiceNumber);
+            if (DiceNumber <= 6)
+            {
+                //CheckStartNode(DiceNumber);
+                MoveAPlayer(DiceNumber);
+            }
         }
-        Debug.Log("Dice Rolled number : " + DiceNumber);
+        if (playerList[activePlayer].playerType == Entity.PlayerTypes.HUMAN)
+        {
+            rolledhumanDice = _diceNumber;
+            HumanRollDice();
+        }
+            Debug.Log("Dice Rolled number : " + DiceNumber);
     }
 
     IEnumerator RollDiceDelay()
     {
         yield return new WaitForSeconds(2);
-        RollDice();
+        // RollDice();
+        CPUDice();
     }
 
     void CheckStartNode(int DiceNumber)
@@ -339,13 +353,19 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void HumanRoll()
+    {
+        dice.RollDice();
+        ActivateButton(false);
+    }
+
     public void HumanRollDice()
     {
-        ActivateButton(false);
+       
 
         //roll dice
-        rolledhumanDice = Random.Range(1, 7);
-        Debug.Log("Dice Rolled number : " + rolledhumanDice);
+        //rolledhumanDice = Random.Range(1, 7);
+       // Debug.Log("Dice Rolled number : " + rolledhumanDice);
         List<Player> moveablePlayers = new List<Player>();
         //List<Player> moveKickPlayers = new List<Player>();
         /**
