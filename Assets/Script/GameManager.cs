@@ -79,6 +79,10 @@ public class GameManager : MonoBehaviour
 
         int randomPlayer = Random.Range(0, playerList.Count);
         activePlayer = randomPlayer;
+        while(playerList[activePlayer].playerType == Entity.PlayerTypes.NO_PLAYER)
+        {
+            activePlayer++;
+        }
         info.instance.showMessage(playerList[activePlayer].playerName + " starts first");
     }
     void Update()
@@ -176,6 +180,7 @@ public class GameManager : MonoBehaviour
                     break;
             }
         }
+
         if (playerList[activePlayer].playerType == Entity.PlayerTypes.NO_PLAYER)
         {
             switch (state)
@@ -399,6 +404,16 @@ public class GameManager : MonoBehaviour
     {
         //show some ui
         playerList[activePlayer].hasOutside = true;
+
+        for (int i = 0; i < SaveSettings.winners.Length; i++)
+        {
+            if (SaveSettings.winners[i] == "")
+            {
+                SaveSettings.winners[i] = playerList[activePlayer].playerName;
+                break;
+            }
+        }
+
     }
 
     //---------------------------human input--------------------

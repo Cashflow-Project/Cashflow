@@ -105,13 +105,19 @@ public class Player : MonoBehaviour
             Vector3 startPos = fullRoute[routePosition].gameObject.transform.position;
             //while (MoveToNextNode(nextPos,8f)){yield return null;}
             while (MoveInArcToNextNode(startPos, nextPos, 8f)) { yield return null; }
-            
+            //orange pass
+            if (routePosition % fullRoute.Count == 6 || routePosition % fullRoute.Count == 14 || routePosition % fullRoute.Count == 22)
+            {
+                Debug.Log("pass orange route");
+            }
             yield return new WaitForSeconds(0.1f);
             cTime = 0;
             steps--;
             doneSteps++;
             //Debug.Log(doneSteps);
         }
+
+        
         /** lastNode = fullRoute[routePosition];
         if (lastNode.isTaken)
         {
@@ -133,7 +139,38 @@ public class Player : MonoBehaviour
         }**/
         GameManager.instace.state = GameManager.States.SWITCH_PLAYER;
         isMoving = false;
+        //green route
+        if (routePosition % 2 == 1)
+        {
+            Debug.Log("in green route");
+        }
+        //red route
+        if (routePosition % fullRoute.Count == 2 || routePosition % fullRoute.Count == 10 || routePosition % fullRoute.Count == 18)
+        {
+            Debug.Log("in red route");
+        }
         
+        //blue route
+        if (routePosition % fullRoute.Count == 8 || routePosition % fullRoute.Count == 16 || routePosition % fullRoute.Count == 24)
+        {
+            Debug.Log("in blue route");
+        }
+        //purple1 route
+        if (routePosition % fullRoute.Count == 4 )
+        {
+            Debug.Log("in purple 1 route");
+        }
+        //purple2 route
+        if (routePosition % fullRoute.Count == 12)
+        {
+            Debug.Log("in purple 2 route");
+        }
+        //purple3 route
+        if (routePosition % fullRoute.Count == 20)
+        {
+            Debug.Log("in purple 3 route");
+        }
+
     }
     bool MoveToNextNode(Vector3 lastPos,float speed)
     {
@@ -147,6 +184,8 @@ public class Player : MonoBehaviour
         Vector3 myPos = Vector3.Lerp(startPos, lastPos, cTime);
 
         myPos.y += amplitude * Mathf.Sin(Mathf.Clamp01(cTime) * Mathf.PI);
+
+        
 
         return lastPos != (transform.position = Vector3.Lerp(transform.position, myPos, cTime));
     }

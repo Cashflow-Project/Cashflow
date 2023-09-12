@@ -88,4 +88,6 @@ public static class SaveSettings
 {
     //red blue yellow purple green orange
     public static string[] players = new string[6];
+
+    public static string[] winners = new string[5] { string.Empty, string.Empty, string.Empty, string.Empty, string.Empty };
 }
