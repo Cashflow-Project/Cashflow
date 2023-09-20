@@ -1375,7 +1375,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 4169e07771fa8e44ea071f428cbb1784, type: 2}
   - {fileID: 11400000, guid: 937bc2142c597d84ea5c4f6ed0bac4ec, type: 2}
   cardsToSpawns: {fileID: 6791394704437103392, guid: b888b56045bdc514baf510241275f448, type: 3}
-  drawCardCost: 2
+  FordrawCard: 1
   waitBetweenDrawingCard: 0.3
 --- !u!4 &373270874
 Transform:
@@ -8933,7 +8933,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2013104277}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 10.23, y: 0, z: 6.5}
+  m_LocalPosition: {x: 12.81, y: 0, z: 6.27}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -9358,7 +9358,7 @@ MonoBehaviour:
     myPlayers:
     - {fileID: 177378018}
     hasTurn: 0
-    playerType: 1
+    playerType: 0
     hasOutside: 0
     hasDonate: 0
     hasJob: 1
@@ -9370,7 +9370,7 @@ MonoBehaviour:
     myPlayers:
     - {fileID: 2073635646}
     hasTurn: 0
-    playerType: 1
+    playerType: 0
     hasOutside: 0
     hasDonate: 0
     hasJob: 1
@@ -9382,7 +9382,7 @@ MonoBehaviour:
     myPlayers:
     - {fileID: 385501129}
     hasTurn: 0
-    playerType: 1
+    playerType: 0
     hasOutside: 0
     hasDonate: 0
     hasJob: 1
@@ -9394,7 +9394,7 @@ MonoBehaviour:
     myPlayers:
     - {fileID: 1067837090}
     hasTurn: 0
-    playerType: 1
+    playerType: 0
     hasOutside: 0
     hasDonate: 0
     hasJob: 1

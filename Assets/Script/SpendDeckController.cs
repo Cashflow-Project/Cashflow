@@ -39,7 +39,7 @@ public class SpendDeckController : MonoBehaviour
     public void SetUpDeck()
     {
         activeCards.Clear();
-
+        UIController.instance.drawButton.SetActive(false);
         List<CardSpendScriptableObj> tempDeck = new List<CardSpendScriptableObj>();
         tempDeck.AddRange(deckToUse);
 
@@ -64,9 +64,16 @@ public class SpendDeckController : MonoBehaviour
         SpendCard newCard = Instantiate(cardsToSpawns, transform.position, transform.rotation);
         newCard.cardSpendSO = activeCards[0];
 
-        activeCards.RemoveAt(0);
+
+        
 
         ShowController.instance.AddCardToShow(newCard);
+        GameManager.instace.playerList[GameManager.instace.activePlayer].money = GameManager.instace.playerList[GameManager.instace.activePlayer].money - activeCards[0].payCost;
+
+        activeCards.RemoveAt(0);
+
+        UIController.instance.drawButton.SetActive(false);
+        GameManager.instace.state = GameManager.States.SWITCH_PLAYER;
     }
 
     /*public void DrawCardForMana()

@@ -400,6 +400,7 @@ public class GameManager : MonoBehaviour
         turnPossible = possible;
     }
 
+
     public void ReportWinning()
     {
         //show some ui

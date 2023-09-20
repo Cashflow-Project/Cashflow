@@ -137,7 +137,7 @@ public class Player : MonoBehaviour
         {
             GameManager.instace.ReportWinning();
         }**/
-        GameManager.instace.state = GameManager.States.SWITCH_PLAYER;
+        
         isMoving = false;
         //green route
         if (routePosition % 2 == 1)
@@ -148,6 +148,7 @@ public class Player : MonoBehaviour
         if (routePosition % fullRoute.Count == 2 || routePosition % fullRoute.Count == 10 || routePosition % fullRoute.Count == 18)
         {
             Debug.Log("in red route");
+            UIController.instance.drawButton.SetActive(true);
         }
         
         //blue route
@@ -170,6 +171,7 @@ public class Player : MonoBehaviour
         {
             Debug.Log("in purple 3 route");
         }
+        //GameManager.instace.state = GameManager.States.SWITCH_PLAYER;
 
     }
     bool MoveToNextNode(Vector3 lastPos,float speed)

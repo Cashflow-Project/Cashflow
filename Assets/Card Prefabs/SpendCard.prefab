@@ -346,7 +346,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d9448a1e9ce87b46bb391d6f0b96361, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cardSpendSO: {fileID: 0}
+  cardSpendSO: {fileID: 11400000, guid: 937bc2142c597d84ea5c4f6ed0bac4ec, type: 2}
   payCost: 1000
   canLoan: 0
   cardArt: {fileID: 6791394703936471510}
