@@ -12,6 +12,8 @@ public class ShowController : MonoBehaviour
 
     public Transform minPos, maxPos;
 
+    
+
     public List<Vector3> cardPosition = new List<Vector3>();
     // Start is called before the first frame update
     void Start()

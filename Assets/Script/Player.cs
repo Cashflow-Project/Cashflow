@@ -11,6 +11,7 @@ public class Player : MonoBehaviour
     public Route outerRoute;
     public Route StartRoute;
 
+    public List<Node> outterRoute = new List<Node>();
     public List<Node> fullRoute = new List<Node>();
     [Header("NODES")]
     public Node baseNode;
@@ -56,11 +57,11 @@ public class Player : MonoBehaviour
 
             fullRoute.Add(commonRoute.childNodeList[tempPos+1].GetComponent<Node>());
         }
-        /**
+        
         for (int i = 0; i < outerRoute.childNodeList.Count; i++)
         {
-            fullRoute.Add(outerRoute.childNodeList[i+1].GetComponent<Node>());
-        }**/
+            outterRoute.Add(outerRoute.childNodeList[i].GetComponent<Node>());
+        }
     }
 
     void Update()
@@ -109,6 +110,8 @@ public class Player : MonoBehaviour
             if (routePosition % fullRoute.Count == 6 || routePosition % fullRoute.Count == 14 || routePosition % fullRoute.Count == 22)
             {
                 Debug.Log("pass orange route");
+                UIController.instance.passButton.SetActive(true);
+                //GameManager.instace.state = GameManager.States.SWITCH_PLAYER;
             }
             yield return new WaitForSeconds(0.1f);
             cTime = 0;
@@ -143,6 +146,8 @@ public class Player : MonoBehaviour
         if (routePosition % 2 == 1)
         {
             Debug.Log("in green route");
+            UIController.instance.passButton.SetActive(true);
+            //GameManager.instace.state = GameManager.States.SWITCH_PLAYER;
         }
         //red route
         if (routePosition % fullRoute.Count == 2 || routePosition % fullRoute.Count == 10 || routePosition % fullRoute.Count == 18)
@@ -155,21 +160,29 @@ public class Player : MonoBehaviour
         if (routePosition % fullRoute.Count == 8 || routePosition % fullRoute.Count == 16 || routePosition % fullRoute.Count == 24)
         {
             Debug.Log("in blue route");
+            UIController.instance.passButton.SetActive(true);
+            //GameManager.instace.state = GameManager.States.SWITCH_PLAYER;
         }
         //purple1 route
         if (routePosition % fullRoute.Count == 4 )
         {
             Debug.Log("in purple 1 route");
+            UIController.instance.passButton.SetActive(true);
+            //GameManager.instace.state = GameManager.States.SWITCH_PLAYER;
         }
         //purple2 route
         if (routePosition % fullRoute.Count == 12)
         {
             Debug.Log("in purple 2 route");
+            UIController.instance.passButton.SetActive(true);
+            //GameManager.instace.state = GameManager.States.SWITCH_PLAYER;
         }
         //purple3 route
         if (routePosition % fullRoute.Count == 20)
         {
             Debug.Log("in purple 3 route");
+            UIController.instance.passButton.SetActive(true);
+            //GameManager.instace.state = GameManager.States.SWITCH_PLAYER;
         }
         //GameManager.instace.state = GameManager.States.SWITCH_PLAYER;
 
@@ -191,6 +204,8 @@ public class Player : MonoBehaviour
 
         return lastPos != (transform.position = Vector3.Lerp(transform.position, myPos, cTime));
     }
+
+    
 
     public bool ReturnIsOut()
     {

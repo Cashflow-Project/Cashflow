@@ -3,17 +3,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class UIController : MonoBehaviour
 {
     public static UIController instance;
+
+    public Image cardShow;
 
     private void Awake()
     {
         instance = this;
     }
 
-
+    public GameObject payButton;
+    public GameObject loanButton;
+    public GameObject cancelButton;
+    public GameObject passButton;
     public GameObject drawButton;
     // Start is called before the first frame update
     void Start()
@@ -31,5 +37,14 @@ public class UIController : MonoBehaviour
     public void DrawCard()
     {
         SpendDeckController.instance.DrawCardToHand();
+    }
+
+    public void PayCost()
+    {
+        SpendDeckController.instance.PayCost();
+    }
+    public void Cancel()
+    {
+
     }
 }

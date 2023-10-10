@@ -33,8 +33,10 @@ public class GameManager : MonoBehaviour
         
 
     }
+    
 
     public List<Entity> playerList = new List<Entity>();
+
 
     //STATEMACHINE
     public enum States
@@ -68,6 +70,7 @@ public class GameManager : MonoBehaviour
             }
             if (SaveSettings.players[i] == "NP")
             {
+                //playerList.RemoveAt(i);
                 playerList[i].playerType = Entity.PlayerTypes.NO_PLAYER;
             }
         }
@@ -76,7 +79,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         ActivateButton(false);
-
+        //SetupListPlayer();
         int randomPlayer = Random.Range(0, playerList.Count);
         activePlayer = randomPlayer;
         while(playerList[activePlayer].playerType == Entity.PlayerTypes.NO_PLAYER)
@@ -85,6 +88,7 @@ public class GameManager : MonoBehaviour
         }
         info.instance.showMessage(playerList[activePlayer].playerName + " starts first");
     }
+   
     void Update()
     {
         if(playerList[activePlayer].playerType == Entity.PlayerTypes.CPU)
@@ -215,20 +219,32 @@ public class GameManager : MonoBehaviour
         }
     }
 
+
+    public void SetupListPlayer()
+    {
+        playerList.Clear();
+        List<Entity> randomPlayerList = new List<Entity>();
+        randomPlayerList.AddRange(playerList);
+
+        int iterations = 0;
+        while (randomPlayerList.Count > 0 && iterations < 7)
+        {
+            int selected = Random.Range(0, randomPlayerList.Count);
+            playerList.Add(randomPlayerList[selected]);
+            randomPlayerList.RemoveAt(selected);
+
+            iterations++;
+        }
+
+    }
+
     void CPUDice()
     {
         dice.RollDice();
     }
     public void RollDice(int _diceNumber)
     {
-        int DiceNumber = _diceNumber;//Random.Range(1, 7);
-        //int DiceNumber = 6;
-
-        /**if(DiceNumber == 6)
-        {
-            //check start node
-            CheckStartNode(DiceNumber);
-        }**/
+        int DiceNumber = _diceNumber;
         if(playerList[activePlayer].playerType == Entity.PlayerTypes.CPU)
         {
             if (DiceNumber <= 6)
@@ -294,38 +310,8 @@ public class GameManager : MonoBehaviour
     void MoveAPlayer(int DiceNumber)
     {
         List<Player> moveablePlayers = new List<Player>();
-        //List<Player> moveKickPlayers = new List<Player>();
-        /**
-        for (int i = 0; i < playerList[activePlayer].myPlayers.Length; i++)
-        {
-            if (playerList[activePlayer].myPlayers[i].ReturnIsOut())
-            {
-                //check possible kick
-                /**
-                if (playerList[activePlayer].myPlayers[i].CheckPossibleKick(playerList[activePlayer].myPlayers[i].playerid, DiceNumber))
-                {
-                    moveKickPlayers.Add(playerList[activePlayer].myPlayers[i]);
-                    continue;
-                }
-
-                //check for possible move
-                if (playerList[activePlayer].myPlayers[i].CheckPossible(DiceNumber))
-                {
-                    moveablePlayers.Add(playerList[activePlayer].myPlayers[i]);
-                }
-
-            }
-        }**/
         moveablePlayers.Add(playerList[activePlayer].myPlayers[0]);
         //perform kick if possible
-        /**
-        if (moveKickPlayers.Count > 0)
-        {
-            int num = Random.Range(0, moveKickPlayers.Count);
-            moveKickPlayers[num].StartTheMove(DiceNumber);
-            state = States.WAITING;
-            return;
-        }**/
         if (moveablePlayers.Count > 0)
         {
             //playerList[activePlayer].myPlayers[0].turncounts++;
@@ -440,53 +426,17 @@ public class GameManager : MonoBehaviour
         ActivateButton(false);
     }
 
+    public void PassTurn()
+    {
+        GameManager.instace.state = GameManager.States.SWITCH_PLAYER;
+        UIController.instance.passButton.SetActive(false);
+    }
+
     public void HumanRollDice()
     {
-       
 
-        //roll dice
-        //rolledhumanDice = Random.Range(1, 7);
-       // Debug.Log("Dice Rolled number : " + rolledhumanDice);
         List<Player> moveablePlayers = new List<Player>();
-        //List<Player> moveKickPlayers = new List<Player>();
-        /**
-        for (int i = 0; i < playerList[activePlayer].myPlayers.Length; i++)
-        {
-            if (playerList[activePlayer].myPlayers[i].ReturnIsOut())
-            {
-                //check possible kick
-                /**
-                if (playerList[activePlayer].myPlayers[i].CheckPossibleKick(playerList[activePlayer].myPlayers[i].playerid, rolledhumanDicer))
-                {
-                    moveablePlayers.Add(playerList[activePlayer].myPlayers[i]);
-                    continue;
-                }
-
-                //check for possible move
-                if (playerList[activePlayer].myPlayers[i].CheckPossible(rolledhumanDice))
-                {
-                    moveablePlayers.Add(playerList[activePlayer].myPlayers[i]);
-                }
-
-            }
-        }**/
         moveablePlayers.Add(playerList[activePlayer].myPlayers[0]);
-        /**
-        if(rolledhumanDice <= 6)
-        {
-            moveablePlayers.AddRange(PossiblePlayer());
-        }**/
-        //state = States.SWITCH_PLAYER;
-        /**
-        if (moveablePlayers.Count > 0)
-        {
-            int num = moveablePlayers.Count;
-            moveablePlayers[num - 1].StartTheMove(rolledhumanDice);
-            state = States.WAITING;
-            return;
-        }
-        Debug.Log("Should switch player ");
-        state = States.SWITCH_PLAYER;**/
         
         for (int i = 0; i < moveablePlayers.Count; i++)
         {

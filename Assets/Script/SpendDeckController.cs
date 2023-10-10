@@ -6,7 +6,7 @@ using UnityEngine;
 public class SpendDeckController : MonoBehaviour
 {
     public static SpendDeckController instance;
-
+    public int cardcount=0; 
 
     private void Awake()
     {
@@ -16,6 +16,8 @@ public class SpendDeckController : MonoBehaviour
     public List<CardSpendScriptableObj> deckToUse = new List<CardSpendScriptableObj>();
 
     private List<CardSpendScriptableObj> activeCards = new List<CardSpendScriptableObj>();
+
+    private List<CardSpendScriptableObj> usedCards = new List<CardSpendScriptableObj>();
 
     public SpendCard cardsToSpawns;
 
@@ -40,6 +42,12 @@ public class SpendDeckController : MonoBehaviour
     {
         activeCards.Clear();
         UIController.instance.drawButton.SetActive(false);
+        UIController.instance.cardShow.enabled = false;
+        UIController.instance.cancelButton.SetActive(false);
+        UIController.instance.passButton.SetActive(false);
+        UIController.instance.loanButton.SetActive(false);
+        UIController.instance.payButton.SetActive(false);
+
         List<CardSpendScriptableObj> tempDeck = new List<CardSpendScriptableObj>();
         tempDeck.AddRange(deckToUse);
 
@@ -65,17 +73,44 @@ public class SpendDeckController : MonoBehaviour
         newCard.cardSpendSO = activeCards[0];
 
 
+        UIController.instance.cardShow.enabled = true;
         
+        UIController.instance.loanButton.SetActive(true);
+        UIController.instance.payButton.SetActive(true);
+        UIController.instance.drawButton.SetActive(false);
 
         ShowController.instance.AddCardToShow(newCard);
-        GameManager.instace.playerList[GameManager.instace.activePlayer].money = GameManager.instace.playerList[GameManager.instace.activePlayer].money - activeCards[0].payCost;
 
+        //GameManager.instace.playerList[GameManager.instace.activePlayer].money = GameManager.instace.playerList[GameManager.instace.activePlayer].money - activeCards[0].payCost;
+
+        UIController.instance.cardShow.sprite = activeCards[0].cardSprite;
+        usedCards.Add(activeCards[0]);
+        cardcount++;
         activeCards.RemoveAt(0);
-
-        UIController.instance.drawButton.SetActive(false);
-        GameManager.instace.state = GameManager.States.SWITCH_PLAYER;
+        Destroy(newCard.gameObject, 1);
+        
+        //GameManager.instace.state = GameManager.States.SWITCH_PLAYER;
+        
     }
 
+    public void PayCost()
+    {
+        
+        GameManager.instace.playerList[GameManager.instace.activePlayer].money = GameManager.instace.playerList[GameManager.instace.activePlayer].money - usedCards[cardcount-1].payCost;
+        UIController.instance.drawButton.SetActive(false);
+        UIController.instance.cardShow.enabled = false;
+        //UIController.instance.cancelButton.SetActive(false);
+        UIController.instance.loanButton.SetActive(false);
+        UIController.instance.payButton.SetActive(false);
+
+        UIController.instance.passButton.SetActive(true);
+
+    }
+
+    public void Loan()
+    {
+
+    }
     /*public void DrawCardForMana()
     {
         if (BattleContrller.instance.playerMana >= drawCardCost)
