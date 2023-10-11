@@ -16,7 +16,14 @@ public class GameManager : MonoBehaviour
         {
             DOCTOR,LAWER,POLICE,TRUCK_DRIVER,TEACHER,MACHANIC,NURSE,SECRETARY,CLEANING_STAFF,MANAGER,PILOT,ENGINEER
         }
+
+        public enum Color
+        {
+            RED, BLUE, YELLOW, PURPLE, GREEN, ORANGE
+        }
+
         public Jobs playerJob;
+        public Color ColorPlayer;
         public int paid;
 
         public string playerName;

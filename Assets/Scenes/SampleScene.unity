@@ -249,6 +249,7 @@ MonoBehaviour:
   commonRoute: {fileID: 1684081905}
   outerRoute: {fileID: 2013104279}
   StartRoute: {fileID: 381012281}
+  outterRoute: []
   fullRoute: []
   baseNode: {fileID: 691530996}
   startNode: {fileID: 691530996}
@@ -712,6 +713,7 @@ MonoBehaviour:
   commonRoute: {fileID: 1684081905}
   outerRoute: {fileID: 2013104279}
   StartRoute: {fileID: 381012281}
+  outterRoute: []
   fullRoute: []
   baseNode: {fileID: 691530996}
   startNode: {fileID: 691530996}
@@ -1762,6 +1764,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd52e7560cb99cc4dabca3dae100bf60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cardcount: 0
   deckToUse:
   - {fileID: 11400000, guid: 4169e07771fa8e44ea071f428cbb1784, type: 2}
   - {fileID: 11400000, guid: 937bc2142c597d84ea5c4f6ed0bac4ec, type: 2}
@@ -1956,6 +1959,7 @@ MonoBehaviour:
   commonRoute: {fileID: 1684081905}
   outerRoute: {fileID: 2013104279}
   StartRoute: {fileID: 381012281}
+  outterRoute: []
   fullRoute: []
   baseNode: {fileID: 691530996}
   startNode: {fileID: 691530996}
@@ -2272,6 +2276,7 @@ MonoBehaviour:
   commonRoute: {fileID: 1684081905}
   outerRoute: {fileID: 2013104279}
   StartRoute: {fileID: 381012281}
+  outterRoute: []
   fullRoute: []
   baseNode: {fileID: 691530996}
   startNode: {fileID: 691530996}
@@ -5509,6 +5514,7 @@ MonoBehaviour:
   commonRoute: {fileID: 1684081905}
   outerRoute: {fileID: 2013104279}
   StartRoute: {fileID: 381012281}
+  outterRoute: []
   fullRoute: []
   baseNode: {fileID: 691530996}
   startNode: {fileID: 691530996}
@@ -10360,6 +10366,7 @@ MonoBehaviour:
   commonRoute: {fileID: 1684081905}
   outerRoute: {fileID: 2013104279}
   StartRoute: {fileID: 381012281}
+  outterRoute: []
   fullRoute: []
   baseNode: {fileID: 691530996}
   startNode: {fileID: 691530996}
@@ -10414,6 +10421,7 @@ MonoBehaviour:
   - money: 10000
     getmoney: 5000
     playerJob: 2
+    colorplayer: 0
     paid: 1000
     playerName: RED
     myPlayers:
@@ -10426,6 +10434,7 @@ MonoBehaviour:
   - money: 10000
     getmoney: 5000
     playerJob: 2
+    colorplayer: 1
     paid: 1000
     playerName: BLUE
     myPlayers:
@@ -10438,6 +10447,7 @@ MonoBehaviour:
   - money: 10000
     getmoney: 5000
     playerJob: 2
+    colorplayer: 2
     paid: 1000
     playerName: YELLOW
     myPlayers:
@@ -10450,6 +10460,7 @@ MonoBehaviour:
   - money: 10000
     getmoney: 5000
     playerJob: 2
+    colorplayer: 3
     paid: 1000
     playerName: PURPLE
     myPlayers:
@@ -10462,6 +10473,7 @@ MonoBehaviour:
   - money: 10000
     getmoney: 5000
     playerJob: 2
+    colorplayer: 4
     paid: 1000
     playerName: GREEN
     myPlayers:
@@ -10474,6 +10486,7 @@ MonoBehaviour:
   - money: 10000
     getmoney: 5000
     playerJob: 2
+    colorplayer: 5
     paid: 1000
     playerName: ORANGE
     myPlayers:
