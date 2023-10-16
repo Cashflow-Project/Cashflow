@@ -1766,8 +1766,47 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardcount: 0
   deckToUse:
-  - {fileID: 11400000, guid: 4169e07771fa8e44ea071f428cbb1784, type: 2}
-  - {fileID: 11400000, guid: 937bc2142c597d84ea5c4f6ed0bac4ec, type: 2}
+  - {fileID: 11400000, guid: 3cf7582fcc4f48247b117ba06b88888b, type: 2}
+  - {fileID: 11400000, guid: 74041f4707aaa814fabce530b4a2f7c3, type: 2}
+  - {fileID: 11400000, guid: 3742c09def6c87041a003bb496b5f1a8, type: 2}
+  - {fileID: 11400000, guid: 630c218d3b5164442a9ad0517e849340, type: 2}
+  - {fileID: 11400000, guid: 31a505867f6de0e4cbbcfd1fb77c2519, type: 2}
+  - {fileID: 11400000, guid: b9aa72b2d229bf64e9a6007be9a13700, type: 2}
+  - {fileID: 11400000, guid: 4f0e4420edd3ab244bc03e0ad81ed004, type: 2}
+  - {fileID: 11400000, guid: 7fc739af5c1390145893d19aa2eecebb, type: 2}
+  - {fileID: 11400000, guid: 6e7c006335eddc14d8cbfb085137128d, type: 2}
+  - {fileID: 11400000, guid: 36bee2e47d4c63c44bf523abca9cc1c1, type: 2}
+  - {fileID: 11400000, guid: a7d62594926dc8942bc2993d8f19613c, type: 2}
+  - {fileID: 11400000, guid: 14b981d88d84ef742ab29cd4307669ad, type: 2}
+  - {fileID: 11400000, guid: 669b320249478e942a85bfda2dbbc38e, type: 2}
+  - {fileID: 11400000, guid: 947eb82aa88bcdb42bf55552e406e781, type: 2}
+  - {fileID: 11400000, guid: 9f119f69fc1422149b5699cd12e7be0d, type: 2}
+  - {fileID: 11400000, guid: b334840355a7a1d42be81a3af8a28b21, type: 2}
+  - {fileID: 11400000, guid: 997829368b296004a87a38b22de110c3, type: 2}
+  - {fileID: 11400000, guid: 046a89c8c9bf5cf40ab1e85314729325, type: 2}
+  - {fileID: 11400000, guid: 445bc8dd546e12040b35e705782af1b4, type: 2}
+  - {fileID: 11400000, guid: cc18b855815e8414c838a0311e130bbf, type: 2}
+  - {fileID: 11400000, guid: 4c819c5d36862cd429e891f57b9c8483, type: 2}
+  - {fileID: 11400000, guid: b7df440173fc2d448a25947694c05aab, type: 2}
+  - {fileID: 11400000, guid: df46972a6cbc02940b08301ea158bc51, type: 2}
+  - {fileID: 11400000, guid: 5fc2631606ffc384894fcd94778110ea, type: 2}
+  - {fileID: 11400000, guid: 4cdc1c98e3108fb40951869e9db0fd79, type: 2}
+  - {fileID: 11400000, guid: 408b5d531af089e4ca2eb1bb03df43ff, type: 2}
+  - {fileID: 11400000, guid: 42daa5b5a6c910843b5c7f0b29da7781, type: 2}
+  - {fileID: 11400000, guid: 86dbd9f3f7c06cd498eb54061e50d4d2, type: 2}
+  - {fileID: 11400000, guid: 4d0da3b99c94cdb4d84c5ce8689d2a1f, type: 2}
+  - {fileID: 11400000, guid: 3f48eb37eb166e640801bb90a295e57d, type: 2}
+  - {fileID: 11400000, guid: 3f74a857a31ab7844a752a7f07382604, type: 2}
+  - {fileID: 11400000, guid: eff74100f5b4fd8488e960185624b62c, type: 2}
+  - {fileID: 11400000, guid: 6571f338961ed7e49821e7ba56f50a46, type: 2}
+  - {fileID: 11400000, guid: 3a219c6ef1238d947a9c801a2a5bbac4, type: 2}
+  - {fileID: 11400000, guid: f865dfb81dcd75742930337a2c4b033f, type: 2}
+  - {fileID: 11400000, guid: b4671068ddcce544dab0cf3f5bb8f977, type: 2}
+  - {fileID: 11400000, guid: 192a9a89a1df3fa4aaad7f915dbfba15, type: 2}
+  - {fileID: 11400000, guid: b6a72037cec7fe3439f238c69522cbcd, type: 2}
+  - {fileID: 11400000, guid: 14d6936ae531d5b44ab140c551531043, type: 2}
+  - {fileID: 11400000, guid: 688b97966082632428023a8701d57417, type: 2}
+  - {fileID: 11400000, guid: cdffb62b4062e5844ae677705bae2a50, type: 2}
   cardsToSpawns: {fileID: 6791394704437103392, guid: b888b56045bdc514baf510241275f448, type: 3}
   FordrawCard: 1
   waitBetweenDrawingCard: 0.3
@@ -3288,15 +3327,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7586bd6578159174b936021d6edb0e8d, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.38128
+      value: 0.72253686
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7586bd6578159174b936021d6edb0e8d, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.38128
+      value: 0.72253686
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7586bd6578159174b936021d6edb0e8d, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.38128
+      value: 0.72253686
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7586bd6578159174b936021d6edb0e8d, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3304,7 +3343,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7586bd6578159174b936021d6edb0e8d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.92
+      value: 10.41
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7586bd6578159174b936021d6edb0e8d, type: 3}
       propertyPath: m_LocalPosition.z
@@ -10418,81 +10457,147 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerList:
-  - money: 10000
+  - playerName: RED
+    playerType: 0
+    playerJob: 0
+    ColorPlayer: 0
+    money: 100000
+    salary: 0
     getmoney: 5000
-    playerJob: 2
-    colorplayer: 0
+    tax: 0
+    homeMortgage: 0
+    learnMortgage: 0
+    carMortgage: 0
+    creditcardMortgage: 0
+    extraPay: 0
+    loanBank: 0
+    hasChild: 0
+    child: 0
+    perChild: 0
     paid: 1000
-    playerName: RED
     myPlayers:
     - {fileID: 109176913}
     hasTurn: 0
-    playerType: 0
     hasOutside: 0
     hasDonate: 0
     hasJob: 1
-  - money: 10000
-    getmoney: 5000
+  - playerName: BLUE
+    playerType: 0
     playerJob: 2
-    colorplayer: 1
+    ColorPlayer: 1
+    money: 100000
+    salary: 0
+    getmoney: 5000
+    tax: 0
+    homeMortgage: 0
+    learnMortgage: 0
+    carMortgage: 0
+    creditcardMortgage: 0
+    extraPay: 0
+    loanBank: 0
+    hasChild: 0
+    child: 0
+    perChild: 0
     paid: 1000
-    playerName: BLUE
     myPlayers:
     - {fileID: 437455887}
     hasTurn: 0
-    playerType: 0
     hasOutside: 0
     hasDonate: 0
     hasJob: 1
-  - money: 10000
-    getmoney: 5000
+  - playerName: YELLOW
+    playerType: 0
     playerJob: 2
-    colorplayer: 2
+    ColorPlayer: 2
+    money: 10000
+    salary: 0
+    getmoney: 5000
+    tax: 0
+    homeMortgage: 0
+    learnMortgage: 0
+    carMortgage: 0
+    creditcardMortgage: 0
+    extraPay: 0
+    loanBank: 0
+    hasChild: 0
+    child: 0
+    perChild: 0
     paid: 1000
-    playerName: YELLOW
     myPlayers:
     - {fileID: 177378018}
     hasTurn: 0
-    playerType: 0
     hasOutside: 0
     hasDonate: 0
     hasJob: 1
-  - money: 10000
-    getmoney: 5000
+  - playerName: PURPLE
+    playerType: 0
     playerJob: 2
-    colorplayer: 3
+    ColorPlayer: 3
+    money: 10000
+    salary: 0
+    getmoney: 5000
+    tax: 0
+    homeMortgage: 0
+    learnMortgage: 0
+    carMortgage: 0
+    creditcardMortgage: 0
+    extraPay: 0
+    loanBank: 0
+    hasChild: 0
+    child: 0
+    perChild: 0
     paid: 1000
-    playerName: PURPLE
     myPlayers:
     - {fileID: 2073635646}
     hasTurn: 0
-    playerType: 0
     hasOutside: 0
     hasDonate: 0
     hasJob: 1
-  - money: 10000
-    getmoney: 5000
+  - playerName: GREEN
+    playerType: 0
     playerJob: 2
-    colorplayer: 4
+    ColorPlayer: 4
+    money: 10000
+    salary: 0
+    getmoney: 5000
+    tax: 0
+    homeMortgage: 0
+    learnMortgage: 0
+    carMortgage: 0
+    creditcardMortgage: 0
+    extraPay: 0
+    loanBank: 0
+    hasChild: 0
+    child: 0
+    perChild: 0
     paid: 1000
-    playerName: GREEN
     myPlayers:
     - {fileID: 385501129}
     hasTurn: 0
-    playerType: 0
     hasOutside: 0
     hasDonate: 0
     hasJob: 1
-  - money: 10000
-    getmoney: 5000
+  - playerName: ORANGE
+    playerType: 0
     playerJob: 2
-    colorplayer: 5
+    ColorPlayer: 5
+    money: 10000
+    salary: 0
+    getmoney: 5000
+    tax: 0
+    homeMortgage: 0
+    learnMortgage: 0
+    carMortgage: 0
+    creditcardMortgage: 0
+    extraPay: 0
+    loanBank: 0
+    hasChild: 0
+    child: 0
+    perChild: 0
     paid: 1000
-    playerName: ORANGE
     myPlayers:
     - {fileID: 1067837090}
     hasTurn: 0
-    playerType: 0
     hasOutside: 0
     hasDonate: 0
     hasJob: 1

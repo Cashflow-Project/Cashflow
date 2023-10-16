@@ -15,9 +15,9 @@ public class SpendDeckController : MonoBehaviour
 
     public List<CardSpendScriptableObj> deckToUse = new List<CardSpendScriptableObj>();
 
-    private List<CardSpendScriptableObj> activeCards = new List<CardSpendScriptableObj>();
+    public List<CardSpendScriptableObj> activeCards = new List<CardSpendScriptableObj>();
 
-    private List<CardSpendScriptableObj> usedCards = new List<CardSpendScriptableObj>();
+    public List<CardSpendScriptableObj> usedCards = new List<CardSpendScriptableObj>();
 
     public SpendCard cardsToSpawns;
 
@@ -95,15 +95,30 @@ public class SpendDeckController : MonoBehaviour
 
     public void PayCost()
     {
-        
-        GameManager.instace.playerList[GameManager.instace.activePlayer].money = GameManager.instace.playerList[GameManager.instace.activePlayer].money - usedCards[cardcount-1].payCost;
-        UIController.instance.drawButton.SetActive(false);
-        UIController.instance.cardShow.enabled = false;
-        //UIController.instance.cancelButton.SetActive(false);
-        UIController.instance.loanButton.SetActive(false);
-        UIController.instance.payButton.SetActive(false);
 
-        UIController.instance.passButton.SetActive(true);
+        if(usedCards[cardcount - 1].hasChildsOrNot == true && GameManager.instace.playerList[GameManager.instace.activePlayer].hasChild == false)
+        {
+            GameManager.instace.playerList[GameManager.instace.activePlayer].money = GameManager.instace.playerList[GameManager.instace.activePlayer].money;
+            UIController.instance.drawButton.SetActive(false);
+            UIController.instance.cardShow.enabled = false;
+            //UIController.instance.cancelButton.SetActive(false);
+            UIController.instance.loanButton.SetActive(false);
+            UIController.instance.payButton.SetActive(false);
+
+            UIController.instance.passButton.SetActive(true);
+        }
+        else
+        {
+            GameManager.instace.playerList[GameManager.instace.activePlayer].money = GameManager.instace.playerList[GameManager.instace.activePlayer].money - usedCards[cardcount - 1].payCost;
+            UIController.instance.drawButton.SetActive(false);
+            UIController.instance.cardShow.enabled = false;
+            //UIController.instance.cancelButton.SetActive(false);
+            UIController.instance.loanButton.SetActive(false);
+            UIController.instance.payButton.SetActive(false);
+
+            UIController.instance.passButton.SetActive(true);
+        }
+        
 
     }
 

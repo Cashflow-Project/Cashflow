@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class GameManager : MonoBehaviour
 {
@@ -10,13 +12,18 @@ public class GameManager : MonoBehaviour
     [System.Serializable]
     public class Entity
     {
-        public int money;
-        public int getmoney;
+       
+
+        public string playerName;
+        public enum PlayerTypes
+        {
+            HUMAN, CPU, NO_PLAYER
+        }
+        public PlayerTypes playerType;
         public enum Jobs
         {
-            DOCTOR,LAWER,POLICE,TRUCK_DRIVER,TEACHER,MACHANIC,NURSE,SECRETARY,CLEANING_STAFF,MANAGER,PILOT,ENGINEER
+            DOCTOR, LAWER, POLICE, TRUCK_DRIVER, TEACHER, MACHANIC, NURSE, SECRETARY, CLEANING_STAFF, MANAGER, PILOT, ENGINEER
         }
-
         public enum Color
         {
             RED, BLUE, YELLOW, PURPLE, GREEN, ORANGE
@@ -24,20 +31,56 @@ public class GameManager : MonoBehaviour
 
         public Jobs playerJob;
         public Color ColorPlayer;
+        
+        //ทรัพย์สิน
+        public int money;
+        //ธุรกิจ
+
+        //รายรับ
+        public int salary;
+        public int getmoney;
+        //รายจาย
+        
+        public int tax;
+        public int homeMortgage;
+        public int learnMortgage;
+        public int carMortgage;
+        public int creditcardMortgage;
+        public int extraPay;
+        public int loanBank;
+
+        public bool hasChild;
+        public int child;
+        public int perChild;
+        public int sumChild;
+
         public int paid;
 
-        public string playerName;
+        public int homeDebt;
+        public int learnDebt;
+        public int carDebt;
+        public int creditDebt;
+        public int InstallmentsBank;
+
+
         public Player[] myPlayers;
         public bool hasTurn;
-        public enum PlayerTypes
-        {
-            HUMAN,CPU,NO_PLAYER
-        }
-        public PlayerTypes playerType;
+        
         public bool hasOutside;
         public bool hasDonate;
-        public bool hasJob = true;
-        
+        public bool hasJob1 = true;
+        public bool hasJob2 = true;
+
+        public bool hasON2U;
+        public bool hasMYT4U;
+        public bool hasGRO4US;
+        public bool hasOK4U;
+        public bool hasGoldCoins;
+        public bool hasHome32;
+        public bool hasHome21;
+        public bool hasCondominium21;
+        public bool hascommercialBuilding;
+        public bool hasApartment;
 
     }
     
@@ -93,7 +136,10 @@ public class GameManager : MonoBehaviour
         {
             activePlayer++;
         }
-        info.instance.showMessage(playerList[activePlayer].playerName + " starts first");
+        info.instance.showMessage(playerList[activePlayer].ColorPlayer + " starts first");
+
+
+
     }
    
     void Update()
@@ -150,16 +196,35 @@ public class GameManager : MonoBehaviour
                     {
                         playerList[activePlayer].myPlayers[0].SetSelector(true);
                         playerList[activePlayer].myPlayers[0].turncounts++;
-                        state = States.ROLL_DICE;
+                        Debug.Log("Turn player " + playerList[activePlayer].playerName + " Turn'" + playerList[activePlayer].myPlayers[0].turncounts);
+                        TurnUI.text = "Turn player " + playerList[activePlayer].playerName + " Turn'" + playerList[activePlayer].myPlayers[0].turncounts;
+
+                        if (playerList[activePlayer].hasJob1 == true && playerList[activePlayer].hasJob2 == true)
+                        {
+                            state = States.ROLL_DICE;
+                        }
+                        else
+                        {
+                            if (playerList[activePlayer].hasJob1 == true && playerList[activePlayer].hasJob2 == false)
+                            {
+                                playerList[activePlayer].hasJob2 = true;
+                                Debug.Log("unemployee 2");
+                            }
+                            if (playerList[activePlayer].hasJob1 == false && playerList[activePlayer].hasJob2 == false)
+                            {
+                                playerList[activePlayer].hasJob1 = true;
+                                Debug.Log("unemployee 1");
+                            }
+                            state = States.SWITCH_PLAYER;
+                        }
+                        
                     }
                     break;
                 case States.ROLL_DICE:
                     {
                         if (turnPossible)
                         {
-                            
-                            Debug.Log("Turn player " + playerList[activePlayer].playerName + " Turn'" + playerList[activePlayer].myPlayers[0].turncounts);
-                            TurnUI.text = "Turn player " + playerList[activePlayer].playerName + " Turn'" + playerList[activePlayer].myPlayers[0].turncounts;
+
                             //Deactivate Highlight
                             ActivateButton(true);
                             state = States.WAITING;
@@ -390,7 +455,9 @@ public class GameManager : MonoBehaviour
 
     public void ReportTurnPossible(bool possible)
     {
+
         turnPossible = possible;
+       
     }
 
 
@@ -408,6 +475,20 @@ public class GameManager : MonoBehaviour
             }
         }
 
+    }
+
+    public static class RandomEnum
+    {
+        private static System.Random _Random = new System.Random(Environment.TickCount);
+
+        public static T Of<T>()
+        {
+            if (!typeof(T).IsEnum)
+                throw new InvalidOperationException("Must use Enum type");
+
+            Array enumValues = Enum.GetValues(typeof(T));
+            return (T)enumValues.GetValue(_Random.Next(enumValues.Length));
+        }
     }
 
     //---------------------------human input--------------------
