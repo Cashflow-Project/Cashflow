@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Photon.Pun;
+using Photon.Realtime;
 using Random = UnityEngine.Random;
 
 public class GameManager : MonoBehaviour
@@ -63,7 +65,7 @@ public class GameManager : MonoBehaviour
         public int InstallmentsBank;
 
 
-        public Player[] myPlayers;
+        public Player1[] myPlayers;
         public bool hasTurn;
         
         public bool hasOutside;
@@ -128,6 +130,8 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+
+        //PhotonNetwork.PlayerList[0] = playerList[0];
         ActivateButton(false);
         //SetupListPlayer();
         int randomPlayer = Random.Range(0, playerList.Count);
@@ -381,7 +385,7 @@ public class GameManager : MonoBehaviour
     }
     void MoveAPlayer(int DiceNumber)
     {
-        List<Player> moveablePlayers = new List<Player>();
+        List<Player1> moveablePlayers = new List<Player1>();
         moveablePlayers.Add(playerList[activePlayer].myPlayers[0]);
         //perform kick if possible
         if (moveablePlayers.Count > 0)
@@ -523,7 +527,7 @@ public class GameManager : MonoBehaviour
     public void HumanRollDice()
     {
 
-        List<Player> moveablePlayers = new List<Player>();
+        List<Player1> moveablePlayers = new List<Player1>();
         moveablePlayers.Add(playerList[activePlayer].myPlayers[0]);
         
         for (int i = 0; i < moveablePlayers.Count; i++)
@@ -540,9 +544,9 @@ public class GameManager : MonoBehaviour
         }
     } 
 
-    List <Player> PossiblePlayer()
+    List <Player1> PossiblePlayer()
     {
-        List<Player> tempList = new List<Player>();
+        List<Player1> tempList = new List<Player1>();
 
         tempList.Add(playerList[activePlayer].myPlayers[0]);
         return tempList;

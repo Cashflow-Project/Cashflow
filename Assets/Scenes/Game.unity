@@ -1807,6 +1807,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 14d6936ae531d5b44ab140c551531043, type: 2}
   - {fileID: 11400000, guid: 688b97966082632428023a8701d57417, type: 2}
   - {fileID: 11400000, guid: cdffb62b4062e5844ae677705bae2a50, type: 2}
+  activeCards: []
+  usedCards: []
   cardsToSpawns: {fileID: 6791394704437103392, guid: b888b56045bdc514baf510241275f448, type: 3}
   FordrawCard: 1
   waitBetweenDrawingCard: 0.3
@@ -6995,6 +6997,37 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: dfe693b47e9fe2f46b30097e24551ca0, type: 3}
   m_PrefabInstance: {fileID: 1325497218}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1334282258
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1334282259}
+  m_Layer: 0
+  m_Name: Networking
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1334282259
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1334282258}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -3.067667, y: -1.8225294, z: 2.731093}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 20
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1375815476
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10474,13 +10507,30 @@ MonoBehaviour:
     hasChild: 0
     child: 0
     perChild: 0
+    sumChild: 0
     paid: 1000
+    homeDebt: 0
+    learnDebt: 0
+    carDebt: 0
+    creditDebt: 0
+    InstallmentsBank: 0
     myPlayers:
     - {fileID: 109176913}
     hasTurn: 0
     hasOutside: 0
     hasDonate: 0
-    hasJob: 1
+    hasJob1: 1
+    hasJob2: 1
+    hasON2U: 0
+    hasMYT4U: 0
+    hasGRO4US: 0
+    hasOK4U: 0
+    hasGoldCoins: 0
+    hasHome32: 0
+    hasHome21: 0
+    hasCondominium21: 0
+    hascommercialBuilding: 0
+    hasApartment: 0
   - playerName: BLUE
     playerType: 0
     playerJob: 2
@@ -10498,13 +10548,30 @@ MonoBehaviour:
     hasChild: 0
     child: 0
     perChild: 0
+    sumChild: 0
     paid: 1000
+    homeDebt: 0
+    learnDebt: 0
+    carDebt: 0
+    creditDebt: 0
+    InstallmentsBank: 0
     myPlayers:
     - {fileID: 437455887}
     hasTurn: 0
     hasOutside: 0
     hasDonate: 0
-    hasJob: 1
+    hasJob1: 1
+    hasJob2: 1
+    hasON2U: 0
+    hasMYT4U: 0
+    hasGRO4US: 0
+    hasOK4U: 0
+    hasGoldCoins: 0
+    hasHome32: 0
+    hasHome21: 0
+    hasCondominium21: 0
+    hascommercialBuilding: 0
+    hasApartment: 0
   - playerName: YELLOW
     playerType: 0
     playerJob: 2
@@ -10522,13 +10589,30 @@ MonoBehaviour:
     hasChild: 0
     child: 0
     perChild: 0
+    sumChild: 0
     paid: 1000
+    homeDebt: 0
+    learnDebt: 0
+    carDebt: 0
+    creditDebt: 0
+    InstallmentsBank: 0
     myPlayers:
     - {fileID: 177378018}
     hasTurn: 0
     hasOutside: 0
     hasDonate: 0
-    hasJob: 1
+    hasJob1: 1
+    hasJob2: 1
+    hasON2U: 0
+    hasMYT4U: 0
+    hasGRO4US: 0
+    hasOK4U: 0
+    hasGoldCoins: 0
+    hasHome32: 0
+    hasHome21: 0
+    hasCondominium21: 0
+    hascommercialBuilding: 0
+    hasApartment: 0
   - playerName: PURPLE
     playerType: 0
     playerJob: 2
@@ -10546,13 +10630,30 @@ MonoBehaviour:
     hasChild: 0
     child: 0
     perChild: 0
+    sumChild: 0
     paid: 1000
+    homeDebt: 0
+    learnDebt: 0
+    carDebt: 0
+    creditDebt: 0
+    InstallmentsBank: 0
     myPlayers:
     - {fileID: 2073635646}
     hasTurn: 0
     hasOutside: 0
     hasDonate: 0
-    hasJob: 1
+    hasJob1: 1
+    hasJob2: 1
+    hasON2U: 0
+    hasMYT4U: 0
+    hasGRO4US: 0
+    hasOK4U: 0
+    hasGoldCoins: 0
+    hasHome32: 0
+    hasHome21: 0
+    hasCondominium21: 0
+    hascommercialBuilding: 0
+    hasApartment: 0
   - playerName: GREEN
     playerType: 0
     playerJob: 2
@@ -10570,13 +10671,30 @@ MonoBehaviour:
     hasChild: 0
     child: 0
     perChild: 0
+    sumChild: 0
     paid: 1000
+    homeDebt: 0
+    learnDebt: 0
+    carDebt: 0
+    creditDebt: 0
+    InstallmentsBank: 0
     myPlayers:
     - {fileID: 385501129}
     hasTurn: 0
     hasOutside: 0
     hasDonate: 0
-    hasJob: 1
+    hasJob1: 1
+    hasJob2: 1
+    hasON2U: 0
+    hasMYT4U: 0
+    hasGRO4US: 0
+    hasOK4U: 0
+    hasGoldCoins: 0
+    hasHome32: 0
+    hasHome21: 0
+    hasCondominium21: 0
+    hascommercialBuilding: 0
+    hasApartment: 0
   - playerName: ORANGE
     playerType: 0
     playerJob: 2
@@ -10594,13 +10712,30 @@ MonoBehaviour:
     hasChild: 0
     child: 0
     perChild: 0
+    sumChild: 0
     paid: 1000
+    homeDebt: 0
+    learnDebt: 0
+    carDebt: 0
+    creditDebt: 0
+    InstallmentsBank: 0
     myPlayers:
     - {fileID: 1067837090}
     hasTurn: 0
     hasOutside: 0
     hasDonate: 0
-    hasJob: 1
+    hasJob1: 1
+    hasJob2: 1
+    hasON2U: 0
+    hasMYT4U: 0
+    hasGRO4US: 0
+    hasOK4U: 0
+    hasGoldCoins: 0
+    hasHome32: 0
+    hasHome21: 0
+    hasCondominium21: 0
+    hascommercialBuilding: 0
+    hasApartment: 0
   state: 4
   activePlayer: 0
   diceButton: {fileID: 110161151}

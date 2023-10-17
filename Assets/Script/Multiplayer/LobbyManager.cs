@@ -21,7 +21,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     public Canvas createRoom;
     public Canvas ListRoom;
-    internal object playerList;
+    
 
     //public GameObject createObj;
 
@@ -33,6 +33,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     #region PhotonCallBacks
     private void Connect()
     {
+        //PhotonNetwork.NickName = "Player " + Random.Range(0,500);
         PhotonNetwork.NickName = _nameInput.text;
         PhotonNetwork.ConnectUsingSettings();
         PhotonNetwork.AutomaticallySyncScene = true;
@@ -106,7 +107,6 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     }
     public void CreateRoom()
     {
-        this.head = true;
         if (string.IsNullOrEmpty(_roomInput.text) == false)
         {
             PhotonNetwork.CreateRoom(_roomInput.text, new RoomOptions() { MaxPlayers = 6 }, null);

@@ -677,7 +677,7 @@ GameObject:
   - component: {fileID: 908944882}
   - component: {fileID: 908944881}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: ready Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -953,7 +953,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1141113108
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1215,7 +1215,7 @@ GameObject:
   - component: {fileID: 1363622261}
   - component: {fileID: 1363622260}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: start Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1466,12 +1466,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e621a39a6f9df049b9575b5e5f233b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _status: {fileID: 0}
   _roomName: {fileID: 1882799139}
   leaveRoomBtn: {fileID: 1356350331}
   ReadyBtn: {fileID: 1141113111}
-  readyText: {fileID: 1363622260}
+  readyText: {fileID: 908944881}
   StartBtn: {fileID: 876967879}
+  playerReady: 0
   _playerItemUIPrefab: {fileID: 6937274694892779149, guid: 2753ede76f9a43b4cbafb801ce7e0847, type: 3}
   _playerListParent: {fileID: 175033987}
 --- !u!1 &1592611490

@@ -29,16 +29,15 @@ public class RoomManager : MonoBehaviourPunCallbacks
     void Start()
     {
         _roomName.text = PhotonNetwork.CurrentRoom.Name;
-        //_playerItemUIPrefab._playerName.text = PhotonNetwork.NickName;
         _playerItemUIPrefab.statusPlayer.text = "Not Ready";
-       
+        UpdatePlayerList();
         
     }
 
     // Update is called once per frame
     void Update()
     {
-        UpdatePlayerList();
+        //UpdatePlayerList();
     }
 
     public void LeaveRoom()
@@ -52,27 +51,26 @@ public class RoomManager : MonoBehaviourPunCallbacks
     {
         Debug.Log("Left Room " + PhotonNetwork.CurrentRoom.Name);
     }
+    /*
     public void ReadyButton()
     {
         if(_playerItemUIPrefab.statusPlayer.text == "Not Ready")
         {
-            _playerItemUIPrefab.statusPlayer.text = "Ready";
+            readyText.text = "Ready";
+            playerReady++;
+            _playerItemUIPrefab.SetStatusPlayer("Ready");
         }
         if (_playerItemUIPrefab.statusPlayer.text == "Ready")
         {
-            _playerItemUIPrefab.statusPlayer.text = "Not Ready";
+            readyText.text = "Not Ready";
+            playerReady--;
+            _playerItemUIPrefab.SetStatusPlayer("Not Ready");
         }
-    }
+    }*/
     public void StartGame()
     {
-        for (int i = 0; i < _playerList.Count; i++)
-        {
-            if (_playerList[i].statusPlayer.text == "Ready")
-            {
-                playerReady++;
-            }
-        }
-        if (playerReady == _playerList.Count && _playerList.Count > 1)
+        //player > 1
+        if (/*playerReady == _playerList.Count && */_playerList.Count > 0)
         {
             PhotonNetwork.LoadLevel("Game");
         }
@@ -99,13 +97,26 @@ public class RoomManager : MonoBehaviourPunCallbacks
 
         if(PhotonNetwork.CurrentRoom == null) { return; }
         //generate new player list
-        foreach (KeyValuePair<int, Photon.Realtime.Player> player in PhotonNetwork.CurrentRoom.Players)
+        /*
+        for (int i = 0; i < _playerList.Count; i++)
+        {
+
+            PlayerItemUI newPlayerItem = Instantiate(_playerItemUIPrefab);
+            newPlayerItem.PlayerParent = this;
+            newPlayerItem.SetName(_playerList[i]._playerName.text);
+            newPlayerItem.transform.SetParent(_playerListParent);
+
+            _playerList.Add(newPlayerItem);
+        }*/
+        
+        foreach (KeyValuePair<int, Player> player in PhotonNetwork.CurrentRoom.Players)
         {
             PlayerItemUI newPlayerItem = Instantiate(_playerItemUIPrefab);
-
             newPlayerItem.transform.SetParent(_playerListParent);
+            //newPlayerItem.SetName(PhotonNetwork.NickName);
             newPlayerItem.SetName(player.Value.NickName);
-
+            Debug.Log("name player " );
+            
             _playerList.Add(newPlayerItem);
 
         }

@@ -3,9 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player1 : MonoBehaviour
 {
-    public static Player instace;
+    public static Player1 instace;
     public int playerid;
 
     [Header("ROUTES")]

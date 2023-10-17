@@ -6,6 +6,6 @@ public class Node : MonoBehaviour
 {
     public bool isTaken;
 
-    public Player player;
+    public Player1 player;
 
 }
