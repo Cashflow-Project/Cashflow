@@ -9,8 +9,9 @@ using TMPro;
 public class LobbyManager : MonoBehaviourPunCallbacks
 {
     public static LobbyManager instance;
-
+    public bool head;
     [SerializeField] private TMP_InputField _roomInput;
+    [SerializeField] private TMP_InputField _nameInput;
     [SerializeField] private RoomItemUI roomItemUIPrefab;
     [SerializeField] private Transform roomListParent;
     [SerializeField] private int PlayerInRoom;
@@ -20,6 +21,8 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     public Canvas createRoom;
     public Canvas ListRoom;
+    internal object playerList;
+
     //public GameObject createObj;
 
     private void Start()
@@ -30,7 +33,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     #region PhotonCallBacks
     private void Connect()
     {
-        PhotonNetwork.NickName = "Player" + Random.Range(0, 5000);
+        PhotonNetwork.NickName = _nameInput.text;
         PhotonNetwork.ConnectUsingSettings();
         PhotonNetwork.AutomaticallySyncScene = true;
     }
@@ -103,11 +106,11 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     }
     public void CreateRoom()
     {
+        this.head = true;
         if (string.IsNullOrEmpty(_roomInput.text) == false)
         {
             PhotonNetwork.CreateRoom(_roomInput.text, new RoomOptions() { MaxPlayers = 6 }, null);
         }
-        
     }
 
     public void openCreateRoom()

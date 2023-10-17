@@ -6,19 +6,19 @@ using UnityEngine.UI;
 
 public class PlayerItemUI : MonoBehaviour
 {
-    public RoomManager RoomParent;
-    [SerializeField] private TMP_Text _roomName;
-    public TMP_Text playerInRoom;
+    public RoomManager PlayerParent;
+    [SerializeField] private TMP_Text _playerName;
+    public TMP_Text statusPlayer;
+    
 
-
-    public void SetName(string roomName)
+    public void SetName(string playerName)
     {
-        _roomName.text = roomName;
+        _playerName.text = playerName;
     }
 
-    public void SetPlayerInRoom(string playerInroom)
+    public void SetPlayerInRoom(string playerStatus)
     {
-        playerInRoom.text = playerInroom;
+        statusPlayer.text = playerStatus;
     }
 
     

@@ -4300,6 +4300,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _roomInput: {fileID: 1974674075}
+  _nameInput: {fileID: 796654388}
   roomItemUIPrefab: {fileID: -2413935143489433036, guid: 51ea8d9807202ba4bb77479d31d8ba56, type: 3}
   roomListParent: {fileID: 1589685887}
   PlayerInRoom: 0
