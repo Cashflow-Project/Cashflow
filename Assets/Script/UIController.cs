@@ -4,11 +4,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
-
+using Photon.Pun;
+using Photon.Realtime;
 public class UIController : MonoBehaviour
 {
     public static UIController instance;
 
+    
     public Image cardShow;
 
     private void Awake()
@@ -24,7 +26,7 @@ public class UIController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        
     }
 
     // Update is called once per frame
