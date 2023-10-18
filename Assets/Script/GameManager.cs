@@ -33,7 +33,7 @@ public class GameManager : MonoBehaviour
 
         public Jobs playerJob;
         public Color ColorPlayer;
-        
+
         //ทรัพย์สิน
         public int money;
         //ธุรกิจ
@@ -88,7 +88,7 @@ public class GameManager : MonoBehaviour
     
 
     public List<Entity> playerList = new List<Entity>();
-
+    public List<Entity> SortplayerList = new List<Entity>();
 
     //STATEMACHINE
     public enum States
@@ -130,11 +130,12 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        /*
-        for (int i = 0; i < PhotonNetwork.PlayerList.Length; i++)
-        {
-            PhotonNetwork.PlayerList[i] = playerList[i];
 
+        /*
+        for (int i = 0;i < PhotonNetwork.CurrentRoom.PlayerCount;i++)
+        {
+            PhotonNetwork.CurrentRoom.GetPlayer(activePlayer, false);
+            playerList[i].playerName = LobbyManager.instance.name;
         }*/
         //PhotonNetwork.PlayerList[0] = playerList[0];
         ActivateButton(false);

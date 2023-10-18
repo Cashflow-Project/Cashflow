@@ -5,6 +5,7 @@ using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class LobbyManager : MonoBehaviourPunCallbacks
 {
@@ -16,31 +17,36 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     [SerializeField] private Transform roomListParent;
     [SerializeField] private int PlayerInRoom;
 
+    [SerializeField] private TMP_Text status;
+    [SerializeField] private Button leaveRoomBtn;
+    [SerializeField] private Button startGameBtn;
+
+    [SerializeField] private TMP_Text _currentLocation;
+
+    [SerializeField] private PlayerItemUI _playerItemUIPrefab;
+    [SerializeField] private Transform _playerListParent;
+
+    [SerializeField] private GameObject _roomListWindow;
+    [SerializeField] private GameObject _playerListWindow;
+    [SerializeField] private GameObject _createRoomWindow;
+
     private List<RoomItemUI> _roomList = new List<RoomItemUI>();
+    private List<PlayerItemUI> _playerList = new List<PlayerItemUI>();
 
-
-    public Canvas createRoom;
-    public Canvas ListRoom;
-    
 
     //public GameObject createObj;
 
     private void Start()
     {
+        Initialize();
         Connect();
     }
 
-    #region PhotonCallBacks
-    private void Connect()
-    {
-        PhotonNetwork.NickName = "Player " + Random.Range(0,500);
-        //PhotonNetwork.PlayerList[0].NickName = _nameInput.text;
-        PhotonNetwork.ConnectUsingSettings();
-        PhotonNetwork.AutomaticallySyncScene = true;
-    }
-
+   
+    #region PhotonCallbacks
     public override void OnConnectedToMaster()
     {
+        status.text = "Connect to master server";
         Debug.Log("Connect to master server");
         PhotonNetwork.JoinLobby();
     }
@@ -52,25 +58,74 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     public override void OnDisconnected(DisconnectCause cause)
     {
+        if(status == null) { return; }
+        status.text = "Disconnected";
         Debug.Log("Disconnected");
     }
 
     public override void OnJoinedLobby()
     {
+        _currentLocation.text = "Room";
         Debug.Log("Join Lobby");
     }
 
     public override void OnJoinedRoom()
     {
+        leaveRoomBtn.interactable = true;
+        status.text = "Joined "+ PhotonNetwork.CurrentRoom.Name;
+        _currentLocation.text = PhotonNetwork.CurrentRoom.Name;
         Debug.Log("Join Room " + PhotonNetwork.CurrentRoom.Name);
-        PhotonNetwork.LoadLevel("Room");
-
+        //PhotonNetwork.LoadLevel("Room");
+        if (PhotonNetwork.IsMasterClient)
+        {
+            startGameBtn.interactable = true;
+        }
+        ShowWindow(false);
+        PlayerInRoom++;
+        UpdatePlayerList();
     }
 
+    public override void OnLeftRoom()
+    {
+        if (status != null)
+        {
+            status.text = "ON LOBBY ";
+        }
+        if(_currentLocation != null) { 
+            _currentLocation.text = "Room";
+            //Debug.Log("Left Room " + PhotonNetwork.CurrentRoom.Name);
+        }
+        leaveRoomBtn.interactable = false;
+        startGameBtn.interactable = false;
+        ShowWindow(true);
+        PlayerInRoom--;
+        UpdatePlayerList();
+    }
 
+    public override void OnPlayerEnteredRoom(Photon.Realtime.Player newPlayer)
+    {
+        UpdatePlayerList();
+    }
+    public override void OnPlayerLeftRoom(Photon.Realtime.Player otherPlayer)
+    {
+        UpdatePlayerList();
+    }
 
     #endregion
-   
+
+    private void Initialize()
+    {
+        leaveRoomBtn.interactable = false;
+    }
+    private void Connect()
+    {
+        PhotonNetwork.NickName = "Player " + Random.Range(0,500);
+
+        //_playerItemUIPrefab.SetName(_nameInput.text);
+        //PhotonNetwork.NickName = _playerItemUIPrefab._playerName.text;
+        PhotonNetwork.ConnectUsingSettings();
+        PhotonNetwork.AutomaticallySyncScene = true;
+    }
 
     private void UpdateRoomList(List<RoomInfo> roomList)
     {
@@ -81,6 +136,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         }
 
         _roomList.Clear();
+
         //generate a new list with update info
         for(int i = 0; i < roomList.Count; i++)
         {
@@ -101,6 +157,36 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         }
     }
 
+    private void UpdatePlayerList()
+    {
+        //clear current player list
+        for (int i = 0; i < _playerList.Count; i++)
+        {
+            Destroy(_playerList[i].gameObject);
+        }
+
+        _playerList.Clear();
+
+        if (PhotonNetwork.CurrentRoom == null) { return; }
+
+        //generate new player list
+        foreach (KeyValuePair<int, Player> player in PhotonNetwork.CurrentRoom.Players)
+        {
+            PlayerItemUI newPlayerItem = Instantiate(_playerItemUIPrefab);
+            newPlayerItem.transform.SetParent(_playerListParent);
+            newPlayerItem.SetName(player.Value.NickName);
+            //Debug.Log("name player ");
+
+            _playerList.Add(newPlayerItem);
+            
+        }
+    }
+    private void ShowWindow(bool isRoomList)
+    {
+        _roomListWindow.SetActive(isRoomList);
+        _playerListWindow.SetActive(!isRoomList);
+        _createRoomWindow.SetActive(isRoomList);
+    }
     public void JoinRoom(string roomName)
     {
         PhotonNetwork.JoinRoom(roomName);
@@ -113,28 +199,22 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         }
     }
 
-    public void openCreateRoom()
+    public void LeaveRoom()
     {
-        createRoom.enabled = true;
+        PhotonNetwork.LeaveRoom();
+        
     }
 
-    public void closeCreateRoom()
+
+
+    public void BackToMainMenu()
     {
-        createRoom.enabled = false;
+        PhotonNetwork.Disconnect();
+        SceneManager.LoadScene("Main Menu");
     }
 
-    public void openListRoom()
+    public void OnStartGamePressed()
     {
-        ListRoom.enabled = true;
-    }
-
-    public void closeListRoom()
-    {
-        ListRoom.enabled = false;
-    }
-
-    public void QuitGame()
-    {
-        Application.Quit();
+        PhotonNetwork.LoadLevel("Game");
     }
 }

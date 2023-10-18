@@ -7,8 +7,8 @@ using Photon.Pun;
 
 public class PlayerItemUI : MonoBehaviour
 {
-    public RoomManager PlayerParent;
-    [SerializeField] private TMP_Text _playerName;
+    public LobbyManager PlayerParent;
+    public TMP_Text _playerName;
     public TMP_Text statusPlayer;
 
    

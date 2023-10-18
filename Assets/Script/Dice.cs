@@ -81,7 +81,7 @@ public class Dice : MonoBehaviour
             {
                 diceValue = side.sideValue;
                 //send result to gamemanager
-                diceValue = 12;
+                //diceValue = 12;
                 GameManager.instace.RollDice(diceValue);
             }
         }

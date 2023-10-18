@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player1 : MonoBehaviour
+public class Player1 : Photon.Pun.MonoBehaviourPun
 {
     public static Player1 instace;
     public int playerid;
@@ -517,109 +517,111 @@ public class Player1 : MonoBehaviour
 
     IEnumerator Move()
     {
-        if (isMoving)
-        {
-            yield break;
-        }
-        isMoving = true;
-
-        while (steps > 0)
-        {
-            routePosition++;
-            routePosition %= fullRoute.Count;
-            Vector3 nextPos = fullRoute[routePosition].gameObject.transform.position;
-
-            Vector3 startPos = fullRoute[routePosition].gameObject.transform.position;
-            //while (MoveToNextNode(nextPos,8f)){yield return null;}
-            while (MoveInArcToNextNode(startPos, nextPos, 8f)) { yield return null; }
-            //orange pass
-            if (routePosition % fullRoute.Count == 6 || routePosition % fullRoute.Count == 14 || routePosition % fullRoute.Count == 22)
+        
+            if (isMoving)
             {
-                Debug.Log("pass orange route");
+                yield break;
+            }
+            isMoving = true;
+
+            while (steps > 0)
+            {
+                routePosition++;
+                routePosition %= fullRoute.Count;
+                Vector3 nextPos = fullRoute[routePosition].gameObject.transform.position;
+
+                Vector3 startPos = fullRoute[routePosition].gameObject.transform.position;
+                //while (MoveToNextNode(nextPos,8f)){yield return null;}
+                while (MoveInArcToNextNode(startPos, nextPos, 8f)) { yield return null; }
+                //orange pass
+                if (routePosition % fullRoute.Count == 6 || routePosition % fullRoute.Count == 14 || routePosition % fullRoute.Count == 22)
+                {
+                    Debug.Log("pass orange route");
+                    UIController.instance.passButton.SetActive(true);
+                    GameManager.instace.playerList[GameManager.instace.activePlayer].money = GameManager.instace.playerList[GameManager.instace.activePlayer].money + GameManager.instace.playerList[GameManager.instace.activePlayer].getmoney;
+                    //GameManager.instace.state = GameManager.States.SWITCH_PLAYER;
+                }
+                yield return new WaitForSeconds(0.1f);
+                cTime = 0;
+                steps--;
+                doneSteps++;
+                //Debug.Log(doneSteps);
+            }
+
+
+            /** lastNode = fullRoute[routePosition];
+            if (lastNode.isTaken)
+            {
+                //return to start base node
+                lastNode.player.ReturnToBase();
+            }
+            currentNode.player = null;
+            currentNode.isTaken = false;
+
+            lastNode.player = this;
+            lastNode.isTaken = true;
+
+            currentNode = lastNode;
+            lastNode = null;**/
+            /**
+            if (winCondition())
+            {
+                GameManager.instace.ReportWinning();
+            }**/
+
+            isMoving = false;
+            //green route
+            if (routePosition % 2 == 1)
+            {
+                Debug.Log("in green route");
                 UIController.instance.passButton.SetActive(true);
-                GameManager.instace.playerList[GameManager.instace.activePlayer].money = GameManager.instace.playerList[GameManager.instace.activePlayer].money + GameManager.instace.playerList[GameManager.instace.activePlayer].getmoney;
                 //GameManager.instace.state = GameManager.States.SWITCH_PLAYER;
             }
-            yield return new WaitForSeconds(0.1f);
-            cTime = 0;
-            steps--;
-            doneSteps++;
-            //Debug.Log(doneSteps);
-        }
-
-        
-        /** lastNode = fullRoute[routePosition];
-        if (lastNode.isTaken)
-        {
-            //return to start base node
-            lastNode.player.ReturnToBase();
-        }
-        currentNode.player = null;
-        currentNode.isTaken = false;
-
-        lastNode.player = this;
-        lastNode.isTaken = true;
-
-        currentNode = lastNode;
-        lastNode = null;**/
-        /**
-        if (winCondition())
-        {
-            GameManager.instace.ReportWinning();
-        }**/
-        
-        isMoving = false;
-        //green route
-        if (routePosition % 2 == 1)
-        {
-            Debug.Log("in green route");
-            UIController.instance.passButton.SetActive(true);
-            //GameManager.instace.state = GameManager.States.SWITCH_PLAYER;
-        }
-        //red route
-        if (routePosition % fullRoute.Count == 2 || routePosition % fullRoute.Count == 10 || routePosition % fullRoute.Count == 18)
-        {
-            Debug.Log("in red route");
-            UIController.instance.drawButton.SetActive(true);
-        }
-        
-        //blue route
-        if (routePosition % fullRoute.Count == 8 || routePosition % fullRoute.Count == 16 || routePosition % fullRoute.Count == 24)
-        {
-            Debug.Log("in blue route");
-            UIController.instance.passButton.SetActive(true);
-            //GameManager.instace.state = GameManager.States.SWITCH_PLAYER;
-        }
-        //purple1 route
-        if (routePosition % fullRoute.Count == 4 )
-        {
-            Debug.Log("in purple 1 route");
-            UIController.instance.passButton.SetActive(true);
-            //GameManager.instace.state = GameManager.States.SWITCH_PLAYER;
-        }
-        //purple2 route
-        if (routePosition % fullRoute.Count == 12)
-        {
-            Debug.Log("in purple 2 route");
-            UIController.instance.passButton.SetActive(true);
-            //GameManager.instace.state = GameManager.States.SWITCH_PLAYER;
-            GameManager.instace.playerList[GameManager.instace.activePlayer].hasJob1 = false;
-            GameManager.instace.playerList[GameManager.instace.activePlayer].hasJob2 = false;
-        }
-        //purple3 route
-        if (routePosition % fullRoute.Count == 20)
-        {
-            Debug.Log("in purple 3 route");
-            UIController.instance.passButton.SetActive(true);
-            GameManager.instace.playerList[GameManager.instace.activePlayer].hasChild = true;
-            if(GameManager.instace.playerList[GameManager.instace.activePlayer].child <= 3)
+            //red route
+            if (routePosition % fullRoute.Count == 2 || routePosition % fullRoute.Count == 10 || routePosition % fullRoute.Count == 18)
             {
-                GameManager.instace.playerList[GameManager.instace.activePlayer].child += 1;
+                Debug.Log("in red route");
+                UIController.instance.drawButton.SetActive(true);
             }
-            
+
+            //blue route
+            if (routePosition % fullRoute.Count == 8 || routePosition % fullRoute.Count == 16 || routePosition % fullRoute.Count == 24)
+            {
+                Debug.Log("in blue route");
+                UIController.instance.passButton.SetActive(true);
+                //GameManager.instace.state = GameManager.States.SWITCH_PLAYER;
+            }
+            //purple1 route
+            if (routePosition % fullRoute.Count == 4)
+            {
+                Debug.Log("in purple 1 route");
+                UIController.instance.passButton.SetActive(true);
+                //GameManager.instace.state = GameManager.States.SWITCH_PLAYER;
+            }
+            //purple2 route
+            if (routePosition % fullRoute.Count == 12)
+            {
+                Debug.Log("in purple 2 route");
+                UIController.instance.passButton.SetActive(true);
+                //GameManager.instace.state = GameManager.States.SWITCH_PLAYER;
+                GameManager.instace.playerList[GameManager.instace.activePlayer].hasJob1 = false;
+                GameManager.instace.playerList[GameManager.instace.activePlayer].hasJob2 = false;
+            }
+            //purple3 route
+            if (routePosition % fullRoute.Count == 20)
+            {
+                Debug.Log("in purple 3 route");
+                UIController.instance.passButton.SetActive(true);
+                GameManager.instace.playerList[GameManager.instace.activePlayer].hasChild = true;
+                if (GameManager.instace.playerList[GameManager.instace.activePlayer].child <= 3)
+                {
+                    GameManager.instace.playerList[GameManager.instace.activePlayer].child += 1;
+                }
+
+                //GameManager.instace.state = GameManager.States.SWITCH_PLAYER;
+            }
             //GameManager.instace.state = GameManager.States.SWITCH_PLAYER;
-        }
-        //GameManager.instace.state = GameManager.States.SWITCH_PLAYER;
+        
 
     }
     bool MoveToNextNode(Vector3 lastPos,float speed)
@@ -789,12 +791,14 @@ public class Player1 : MonoBehaviour
   
     public void tohasturn()
     {
-        if (hasTurn)
-        {
-            StartTheMove(GameManager.instace.rolledhumanDice);
-        }
+     if (hasTurn)
+     {
+        StartTheMove(GameManager.instace.rolledhumanDice);
+     }
         GameManager.instace.DeactivateAllSelector();
     }
+           
+    
 }
 
  
