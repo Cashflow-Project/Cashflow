@@ -29,6 +29,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
     void Start()
     {
         _roomName.text = PhotonNetwork.CurrentRoom.Name;
+        _playerItemUIPrefab.SetName(PhotonNetwork.PlayerList[0].NickName);
         _playerItemUIPrefab.statusPlayer.text = "Not Ready";
         UpdatePlayerList();
         

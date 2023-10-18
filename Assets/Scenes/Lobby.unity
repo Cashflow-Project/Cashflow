@@ -1081,7 +1081,7 @@ GameObject:
   - component: {fileID: 796654389}
   - component: {fileID: 796654388}
   m_Layer: 5
-  m_Name: InputField (TMP)
+  m_Name: name enter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3689,7 +3689,7 @@ GameObject:
   - component: {fileID: 1974674076}
   - component: {fileID: 1974674075}
   m_Layer: 5
-  m_Name: InputField (TMP)
+  m_Name: room name
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4299,7 +4299,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9fdcfa618130453479309aa989cbf3a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  head: 0
   _roomInput: {fileID: 1974674075}
   _nameInput: {fileID: 796654388}
   roomItemUIPrefab: {fileID: -2413935143489433036, guid: 51ea8d9807202ba4bb77479d31d8ba56, type: 3}

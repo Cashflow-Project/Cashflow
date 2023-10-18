@@ -130,7 +130,12 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        /*
+        for (int i = 0; i < PhotonNetwork.PlayerList.Length; i++)
+        {
+            PhotonNetwork.PlayerList[i] = playerList[i];
 
+        }*/
         //PhotonNetwork.PlayerList[0] = playerList[0];
         ActivateButton(false);
         //SetupListPlayer();

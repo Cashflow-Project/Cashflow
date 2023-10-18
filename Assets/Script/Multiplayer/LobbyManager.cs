@@ -9,7 +9,7 @@ using TMPro;
 public class LobbyManager : MonoBehaviourPunCallbacks
 {
     public static LobbyManager instance;
-    public bool head;
+    //public bool head;
     [SerializeField] private TMP_InputField _roomInput;
     [SerializeField] private TMP_InputField _nameInput;
     [SerializeField] private RoomItemUI roomItemUIPrefab;
@@ -33,8 +33,8 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     #region PhotonCallBacks
     private void Connect()
     {
-        //PhotonNetwork.NickName = "Player " + Random.Range(0,500);
-        PhotonNetwork.NickName = _nameInput.text;
+        PhotonNetwork.NickName = "Player " + Random.Range(0,500);
+        //PhotonNetwork.PlayerList[0].NickName = _nameInput.text;
         PhotonNetwork.ConnectUsingSettings();
         PhotonNetwork.AutomaticallySyncScene = true;
     }
