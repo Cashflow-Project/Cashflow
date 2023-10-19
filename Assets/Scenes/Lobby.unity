@@ -2385,7 +2385,7 @@ MonoBehaviour:
   m_Padding:
     m_Left: 300
     m_Right: 0
-    m_Top: 0
+    m_Top: 50
     m_Bottom: 0
   m_ChildAlignment: 0
   m_Spacing: 0
@@ -3197,9 +3197,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
-    m_Left: 300
+    m_Left: 400
     m_Right: 0
-    m_Top: 0
+    m_Top: 100
     m_Bottom: 0
   m_ChildAlignment: 0
   m_Spacing: 0
@@ -3830,7 +3830,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _roomInput: {fileID: 1974674075}
   _nameInput: {fileID: 796654388}
-  roomItemUIPrefab: {fileID: 1407024105511110681, guid: a97cede976131284ca6b555d36eae6f0, type: 3}
+  roomItemUIPrefab: {fileID: 1948527366158332347, guid: 98368e0ee80abdd43bcc541e3ef560ba, type: 3}
   roomListParent: {fileID: 1589685887}
   PlayerInRoom: 0
   status: {fileID: 526235123}

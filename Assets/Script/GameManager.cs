@@ -110,6 +110,7 @@ public class GameManager : MonoBehaviour
     {
         instace = this;
 
+
         for (int i = 0; i < playerList.Count; i++)
         {
             if (SaveSettings.players[i] == "HUMAN")
@@ -130,31 +131,80 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        
+        /*
+        for (int i = 0; i < SaveSettings.players.Length; i++)
+        {
+            SaveSettings.players[i] = "CPU";
+        }*/
+
+
 
         /*
-        for (int i = 0;i < PhotonNetwork.CurrentRoom.PlayerCount;i++)
-        {
-            PhotonNetwork.CurrentRoom.GetPlayer(activePlayer, false);
-            playerList[i].playerName = LobbyManager.instance.name;
-        }*/
+                if (PhotonNetwork.PlayerList== playerID)
+                    GetComponent().RequestOwnership();
+
+                for (int i = 0;i < PhotonNetwork.CurrentRoom.PlayerCount;i++)
+                {
+                    PhotonNetwork.CurrentRoom.GetPlayer(activePlayer, false);
+                    playerList[i].playerName = LobbyManager.instance.name;
+                }*/
         //PhotonNetwork.PlayerList[0] = playerList[0];
         ActivateButton(false);
         //SetupListPlayer();
-        int randomPlayer = Random.Range(0, playerList.Count);
-        activePlayer = randomPlayer;
-        while(playerList[activePlayer].playerType == Entity.PlayerTypes.NO_PLAYER)
+        if (PhotonNetwork.CurrentRoom.PlayerCount == 1)
         {
-            activePlayer++;
+            Debug.Log("1 player in room");
+            playerList[1].playerType = Entity.PlayerTypes.NO_PLAYER;
+            playerList[2].playerType = Entity.PlayerTypes.NO_PLAYER;
+            playerList[3].playerType = Entity.PlayerTypes.NO_PLAYER;
+            playerList[4].playerType = Entity.PlayerTypes.NO_PLAYER;
+            playerList[5].playerType = Entity.PlayerTypes.NO_PLAYER;
         }
-        info.instance.showMessage(playerList[activePlayer].ColorPlayer + " starts first");
+        if (PhotonNetwork.CurrentRoom.PlayerCount == 2)
+        {
+            Debug.Log("2 player in room");
+            
+            playerList[2].playerType = Entity.PlayerTypes.NO_PLAYER;
+            playerList[3].playerType = Entity.PlayerTypes.NO_PLAYER;
+            playerList[4].playerType = Entity.PlayerTypes.NO_PLAYER;
+            playerList[5].playerType = Entity.PlayerTypes.NO_PLAYER;
+        }
+        if (PhotonNetwork.CurrentRoom.PlayerCount == 3)
+        {
+            Debug.Log("3 player in room");
+            
+            playerList[3].playerType = Entity.PlayerTypes.NO_PLAYER;
+            playerList[4].playerType = Entity.PlayerTypes.NO_PLAYER;
+            playerList[5].playerType = Entity.PlayerTypes.NO_PLAYER;
+        }
+        if (PhotonNetwork.CurrentRoom.PlayerCount == 4)
+        {
+            Debug.Log("4 player in room");
+            
+            playerList[4].playerType = Entity.PlayerTypes.NO_PLAYER;
+            playerList[5].playerType = Entity.PlayerTypes.NO_PLAYER;
+        }
+        if (PhotonNetwork.CurrentRoom.PlayerCount == 5)
+        {
+            //SaveSettings.players[5] = "NP";
+            Debug.Log("5 player in room");
+            
+            playerList[5].playerType = Entity.PlayerTypes.NO_PLAYER;
+        }
+
+        randomFirstPlaer();
 
 
 
     }
    
+    
     void Update()
     {
-        if(playerList[activePlayer].playerType == Entity.PlayerTypes.CPU)
+       
+        //----------------------------------------------------------------------------CPU
+        if (playerList[activePlayer].playerType == Entity.PlayerTypes.CPU)
         {
             switch (state)
             {
@@ -198,12 +248,14 @@ public class GameManager : MonoBehaviour
                     break;
             }
         }
+        //----------------------------------------------------------------------------HUMAN
         if (playerList[activePlayer].playerType == Entity.PlayerTypes.HUMAN)
         {
             switch (state)
             {
                 case States.START_TURN:
                     {
+
                         playerList[activePlayer].myPlayers[0].SetSelector(true);
                         playerList[activePlayer].myPlayers[0].turncounts++;
                         Debug.Log("Turn player " + playerList[activePlayer].playerName + " Turn'" + playerList[activePlayer].myPlayers[0].turncounts);
@@ -232,7 +284,7 @@ public class GameManager : MonoBehaviour
                     break;
                 case States.ROLL_DICE:
                     {
-                        if (turnPossible)
+                        if (turnPossible )
                         {
 
                             //Deactivate Highlight
@@ -259,6 +311,7 @@ public class GameManager : MonoBehaviour
 
                             //Deactivate Highlight
                             playerList[activePlayer].myPlayers[0].SetSelector(false);
+                            
                             StartCoroutine(SwitchPlayer());
                             state = States.WAITING;
                         }
@@ -266,7 +319,7 @@ public class GameManager : MonoBehaviour
                     break;
             }
         }
-
+        //----------------------------------------------------------------------------NO PLAYER
         if (playerList[activePlayer].playerType == Entity.PlayerTypes.NO_PLAYER)
         {
             switch (state)
@@ -408,18 +461,21 @@ public class GameManager : MonoBehaviour
 
     IEnumerator SwitchPlayer()
     {
+        
         if (switchingPlayer)
-        {
-            yield break;
-        }
-        switchingPlayer = true;
+            {
+                yield break;
+            }
+            switchingPlayer = true;
 
-        yield return new WaitForSeconds(2);
-
-        //SET NEXT PLAYER
-        SetNextActivePlayer();
-
-        switchingPlayer = false;
+            yield return new WaitForSeconds(2);
+            
+            //SET NEXT PLAYER
+            SetNextActivePlayer();
+            playerInRoomChecking();
+            switchingPlayer = false;
+    
+        
     }
     IEnumerator noPlayerPassturn()
     {
@@ -433,6 +489,7 @@ public class GameManager : MonoBehaviour
 
         switchingPlayer = false;
     }
+
 
     void SetNextActivePlayer()
     {
@@ -558,5 +615,63 @@ public class GameManager : MonoBehaviour
         return tempList;
     }
 
-    
+
+    public void randomFirstPlaer()
+    {
+        int randomPlayer = Random.Range(0, playerList.Count);
+        activePlayer = randomPlayer;
+        while (playerList[activePlayer].playerType == Entity.PlayerTypes.NO_PLAYER)
+        {
+            activePlayer++;
+            if (activePlayer == 5)
+            {
+                activePlayer = 0;
+            }
+        }
+        info.instance.showMessage(playerList[activePlayer].ColorPlayer + " starts first");
+    }
+
+    public void playerInRoomChecking()
+    {
+        if (PhotonNetwork.CurrentRoom.PlayerCount == 1)
+        {
+            Debug.Log("1 player in room");
+            playerList[1].playerType = Entity.PlayerTypes.NO_PLAYER;
+            playerList[2].playerType = Entity.PlayerTypes.NO_PLAYER;
+            playerList[3].playerType = Entity.PlayerTypes.NO_PLAYER;
+            playerList[4].playerType = Entity.PlayerTypes.NO_PLAYER;
+            playerList[5].playerType = Entity.PlayerTypes.NO_PLAYER;
+        }
+        if (PhotonNetwork.CurrentRoom.PlayerCount == 2)
+        {
+            Debug.Log("2 player in room");
+
+            playerList[2].playerType = Entity.PlayerTypes.NO_PLAYER;
+            playerList[3].playerType = Entity.PlayerTypes.NO_PLAYER;
+            playerList[4].playerType = Entity.PlayerTypes.NO_PLAYER;
+            playerList[5].playerType = Entity.PlayerTypes.NO_PLAYER;
+        }
+        if (PhotonNetwork.CurrentRoom.PlayerCount == 3)
+        {
+            Debug.Log("3 player in room");
+
+            playerList[3].playerType = Entity.PlayerTypes.NO_PLAYER;
+            playerList[4].playerType = Entity.PlayerTypes.NO_PLAYER;
+            playerList[5].playerType = Entity.PlayerTypes.NO_PLAYER;
+        }
+        if (PhotonNetwork.CurrentRoom.PlayerCount == 4)
+        {
+            Debug.Log("4 player in room");
+
+            playerList[4].playerType = Entity.PlayerTypes.NO_PLAYER;
+            playerList[5].playerType = Entity.PlayerTypes.NO_PLAYER;
+        }
+        if (PhotonNetwork.CurrentRoom.PlayerCount == 5)
+        {
+            //SaveSettings.players[5] = "NP";
+            Debug.Log("5 player in room");
+
+            playerList[5].playerType = Entity.PlayerTypes.NO_PLAYER;
+        }
+    }
 }

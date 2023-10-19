@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
+using Photon.Realtime;
 
 public class Player1 : Photon.Pun.MonoBehaviourPun
 {
@@ -793,6 +795,7 @@ public class Player1 : Photon.Pun.MonoBehaviourPun
     {
      if (hasTurn)
      {
+        
         StartTheMove(GameManager.instace.rolledhumanDice);
      }
         GameManager.instace.DeactivateAllSelector();

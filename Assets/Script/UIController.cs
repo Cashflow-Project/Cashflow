@@ -12,7 +12,7 @@ public class UIController : MonoBehaviour
 
     
     public Image cardShow;
-
+    public Text roomname;
     private void Awake()
     {
         instance = this;
@@ -26,6 +26,7 @@ public class UIController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        roomname.text = PhotonNetwork.CurrentRoom.Name;
         
     }
 

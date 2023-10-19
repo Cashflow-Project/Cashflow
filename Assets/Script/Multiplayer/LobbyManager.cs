@@ -116,6 +116,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     private void Initialize()
     {
         leaveRoomBtn.interactable = false;
+        startGameBtn.interactable = false;
     }
     private void Connect()
     {
@@ -215,6 +216,10 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     public void OnStartGamePressed()
     {
+
         PhotonNetwork.LoadLevel("Game");
+
+
+        
     }
 }
