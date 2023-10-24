@@ -18,15 +18,43 @@ public class Network : MonoBehaviourPunCallbacks
         //roomName = LobbyManager.instance.room;
     }
 
+    public void Connect()
+    {
+        if (PhotonNetwork.IsConnected)
+        {
+            PhotonNetwork.JoinRandomRoom();
+
+        }
+        else
+        {
+            PhotonNetwork.ConnectUsingSettings();
+        }
+        
+    }
+
+    #region PhotonCallBacks
     public override void OnConnectedToMaster()
     {
         Debug.Log("Connect to master server");
-        PhotonNetwork.JoinOrCreateRoom("Room" + Random.Range(0,500),new RoomOptions() { MaxPlayers = 6},null );
+        PhotonNetwork.JoinRandomRoom();
+    }
+
+    public override void OnJoinRandomFailed(short returnCode, string message)
+    {
+        Debug.Log("joining random room failed");
+        PhotonNetwork.CreateRoom(null);
     }
 
     public override void OnJoinedRoom()
     {
-        Debug.Log("Connected");
-        
+    Debug.Log($"Player {PhotonNetwork.LocalPlayer.ActorNumber} join the room");
     }
+
+    public override void OnPlayerEnteredRoom(Player newPlayer)
+    {
+        Debug.Log($"Player {PhotonNetwork.LocalPlayer.ActorNumber} enter room");
+    }
+    #endregion
+
+
 }

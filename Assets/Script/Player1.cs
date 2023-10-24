@@ -45,6 +45,8 @@ public class Player1 : Photon.Pun.MonoBehaviourPun
 
     void Start()
     {
+        Debug.Log($"Player {PhotonNetwork.LocalPlayer.ActorNumber} enter room");
+
         startNodeIndex = commonRoute.RequestPosition(startNode.gameObject.transform);
 
         CreateFullRoute();

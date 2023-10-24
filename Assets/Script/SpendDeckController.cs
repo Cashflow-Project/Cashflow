@@ -32,10 +32,7 @@ public class SpendDeckController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        /*
-        if(Input.GetKeyDown(KeyCode.T)){
-            DrawCardToHand();
-        }*/
+  
     }
 
     public void SetUpDeck()

@@ -13,6 +13,7 @@ public class UIController : MonoBehaviour
     
     public Image cardShow;
     public Text roomname;
+
     private void Awake()
     {
         instance = this;

@@ -15,7 +15,6 @@ public class GameManager : MonoBehaviour
     public class Entity
     {
        
-
         public string playerName;
         public enum PlayerTypes
         {
@@ -131,7 +130,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        
+        activePlayer = PhotonNetwork.LocalPlayer.ActorNumber ;
         /*
         for (int i = 0; i < SaveSettings.players.Length; i++)
         {
@@ -255,30 +254,31 @@ public class GameManager : MonoBehaviour
             {
                 case States.START_TURN:
                     {
+                            playerList[activePlayer].myPlayers[0].SetSelector(true);
+                            playerList[activePlayer].myPlayers[0].turncounts++;
+                            Debug.Log("Turn player " + playerList[activePlayer].playerName + " Turn'" + playerList[activePlayer].myPlayers[0].turncounts);
+                            TurnUI.text = "Turn player " + playerList[activePlayer].playerName + " Turn'" + playerList[activePlayer].myPlayers[0].turncounts;
 
-                        playerList[activePlayer].myPlayers[0].SetSelector(true);
-                        playerList[activePlayer].myPlayers[0].turncounts++;
-                        Debug.Log("Turn player " + playerList[activePlayer].playerName + " Turn'" + playerList[activePlayer].myPlayers[0].turncounts);
-                        TurnUI.text = "Turn player " + playerList[activePlayer].playerName + " Turn'" + playerList[activePlayer].myPlayers[0].turncounts;
-
-                        if (playerList[activePlayer].hasJob1 == true && playerList[activePlayer].hasJob2 == true)
-                        {
-                            state = States.ROLL_DICE;
-                        }
-                        else
-                        {
-                            if (playerList[activePlayer].hasJob1 == true && playerList[activePlayer].hasJob2 == false)
+                            if (playerList[activePlayer].hasJob1 == true && playerList[activePlayer].hasJob2 == true)
                             {
-                                playerList[activePlayer].hasJob2 = true;
-                                Debug.Log("unemployee 2");
+                                state = States.ROLL_DICE;
                             }
-                            if (playerList[activePlayer].hasJob1 == false && playerList[activePlayer].hasJob2 == false)
+                            else
                             {
-                                playerList[activePlayer].hasJob1 = true;
-                                Debug.Log("unemployee 1");
+                                if (playerList[activePlayer].hasJob1 == true && playerList[activePlayer].hasJob2 == false)
+                                {
+                                    playerList[activePlayer].hasJob2 = true;
+                                    Debug.Log("unemployee 2");
+                                }
+                                if (playerList[activePlayer].hasJob1 == false && playerList[activePlayer].hasJob2 == false)
+                                {
+                                    playerList[activePlayer].hasJob1 = true;
+                                    Debug.Log("unemployee 1");
+                                }
+                                state = States.SWITCH_PLAYER;
                             }
-                            state = States.SWITCH_PLAYER;
-                        }
+                        
+                        
                         
                     }
                     break;
