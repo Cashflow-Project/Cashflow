@@ -35,10 +35,14 @@ public class GameManager : MonoBehaviourPun
 
         //ทรัพย์สิน
         public int money;
+        public int firstMoney;
+
         //ธุรกิจ
 
         //รายรับ
         public int salary;
+        public int income;
+        public int allRecieve;
         public int getmoney;
         //รายจาย
         
@@ -247,7 +251,7 @@ public class GameManager : MonoBehaviourPun
                     break;
                 case States.ROLL_DICE:
                     {
-                        if (turnPossible )
+                        if (turnPossible)
                         {
 
                             //Deactivate Highlight
@@ -583,12 +587,12 @@ public class GameManager : MonoBehaviourPun
     {
         if (PhotonNetwork.IsMasterClient)
         {
-            int randomPlayer = Random.Range(0, playerList.Count);
+            int randomPlayer = Random.Range(0, PhotonNetwork.PlayerList.Length);
             activePlayer = randomPlayer;
             while (playerList[activePlayer].playerType == Entity.PlayerTypes.NO_PLAYER)
             {
                 activePlayer++;
-                if (activePlayer == 5)
+                if (activePlayer >= 5)
                 {
                     activePlayer = 0;
                 }
