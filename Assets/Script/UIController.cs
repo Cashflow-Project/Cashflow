@@ -27,8 +27,10 @@ public class UIController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        roomname.text = PhotonNetwork.CurrentRoom.Name;
+        roomname.text = PhotonNetwork.CurrentRoom.Name +"actorNum " + PhotonNetwork.LocalPlayer.ActorNumber.ToString();
         
+
+
     }
 
     // Update is called once per frame

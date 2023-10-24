@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -20,4 +21,8 @@ public class info : MonoBehaviour
         infoText.text = text;
     }
 
+    internal void showMessage(object p)
+    {
+        throw new NotImplementedException();
+    }
 }

@@ -7,7 +7,7 @@ using Photon.Pun;
 using Photon.Realtime;
 using Random = UnityEngine.Random;
 
-public class GameManager : MonoBehaviour
+public class GameManager : MonoBehaviourPun
 {
     public static GameManager instace;
 
@@ -84,8 +84,9 @@ public class GameManager : MonoBehaviour
         public bool hasApartment;
 
     }
-    
 
+    public List<string> players;
+    public string currentPlayer;
     public List<Entity> playerList = new List<Entity>();
     public List<Entity> SortplayerList = new List<Entity>();
 
@@ -130,69 +131,31 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        activePlayer = PhotonNetwork.LocalPlayer.ActorNumber ;
+        //activePlayer = PhotonNetwork.LocalPlayer.ActorNumber ;
+        playerInRoomChecking();
+        randomFirstPlaeyer();
         /*
-        for (int i = 0; i < SaveSettings.players.Length; i++)
+        if (playerList.Count == 0)
+            return;
+
+        // Only the MasterClient chooses the starting player
+        if (PhotonNetwork.IsMasterClient)
         {
-            SaveSettings.players[i] = "CPU";
-        }*/
+            int randomIndex = Random.Range(0, playerList.Count);
+            activePlayer = randomIndex;
 
-
-
-        /*
-                if (PhotonNetwork.PlayerList== playerID)
-                    GetComponent().RequestOwnership();
-
-                for (int i = 0;i < PhotonNetwork.CurrentRoom.PlayerCount;i++)
-                {
-                    PhotonNetwork.CurrentRoom.GetPlayer(activePlayer, false);
-                    playerList[i].playerName = LobbyManager.instance.name;
-                }*/
-        //PhotonNetwork.PlayerList[0] = playerList[0];
+            // Broadcast the selected player to all clients
+            photonView.RPC("SetStartingPlayer", RpcTarget.AllBuffered, activePlayer);
+            info.instance.showMessage(activePlayer + " starts first");
+            
+        }
+        */
+        //info.instance.showMessage(PhotonNetwork.LocalPlayer.ActorNumber);
         ActivateButton(false);
         //SetupListPlayer();
-        if (PhotonNetwork.CurrentRoom.PlayerCount == 1)
-        {
-            Debug.Log("1 player in room");
-            playerList[1].playerType = Entity.PlayerTypes.NO_PLAYER;
-            playerList[2].playerType = Entity.PlayerTypes.NO_PLAYER;
-            playerList[3].playerType = Entity.PlayerTypes.NO_PLAYER;
-            playerList[4].playerType = Entity.PlayerTypes.NO_PLAYER;
-            playerList[5].playerType = Entity.PlayerTypes.NO_PLAYER;
-        }
-        if (PhotonNetwork.CurrentRoom.PlayerCount == 2)
-        {
-            Debug.Log("2 player in room");
-            
-            playerList[2].playerType = Entity.PlayerTypes.NO_PLAYER;
-            playerList[3].playerType = Entity.PlayerTypes.NO_PLAYER;
-            playerList[4].playerType = Entity.PlayerTypes.NO_PLAYER;
-            playerList[5].playerType = Entity.PlayerTypes.NO_PLAYER;
-        }
-        if (PhotonNetwork.CurrentRoom.PlayerCount == 3)
-        {
-            Debug.Log("3 player in room");
-            
-            playerList[3].playerType = Entity.PlayerTypes.NO_PLAYER;
-            playerList[4].playerType = Entity.PlayerTypes.NO_PLAYER;
-            playerList[5].playerType = Entity.PlayerTypes.NO_PLAYER;
-        }
-        if (PhotonNetwork.CurrentRoom.PlayerCount == 4)
-        {
-            Debug.Log("4 player in room");
-            
-            playerList[4].playerType = Entity.PlayerTypes.NO_PLAYER;
-            playerList[5].playerType = Entity.PlayerTypes.NO_PLAYER;
-        }
-        if (PhotonNetwork.CurrentRoom.PlayerCount == 5)
-        {
-            //SaveSettings.players[5] = "NP";
-            Debug.Log("5 player in room");
-            
-            playerList[5].playerType = Entity.PlayerTypes.NO_PLAYER;
-        }
+        
 
-        randomFirstPlaer();
+        
 
 
 
@@ -495,7 +458,7 @@ public class GameManager : MonoBehaviour
     {
         activePlayer++;
         activePlayer %= playerList.Count;
-
+        ChangeTurn(activePlayer);
         int available = 0;
         for (int i = 0; i < playerList.Count; i++)
         {
@@ -504,7 +467,7 @@ public class GameManager : MonoBehaviour
                 available++;
             }
         }
-
+        //out
         if (playerList[activePlayer].hasOutside && available > 1)
         {
             SetNextActivePlayer();
@@ -616,20 +579,24 @@ public class GameManager : MonoBehaviour
     }
 
 
-    public void randomFirstPlaer()
+    public void randomFirstPlaeyer()
     {
-        int randomPlayer = Random.Range(0, playerList.Count);
-        activePlayer = randomPlayer;
-        while (playerList[activePlayer].playerType == Entity.PlayerTypes.NO_PLAYER)
+        if (PhotonNetwork.IsMasterClient)
         {
-            activePlayer++;
-            if (activePlayer == 5)
+            int randomPlayer = Random.Range(0, playerList.Count);
+            activePlayer = randomPlayer;
+            while (playerList[activePlayer].playerType == Entity.PlayerTypes.NO_PLAYER)
             {
-                activePlayer = 0;
+                activePlayer++;
+                if (activePlayer == 5)
+                {
+                    activePlayer = 0;
+                }
             }
+            info.instance.showMessage(playerList[activePlayer].ColorPlayer + " starts first");
         }
-        info.instance.showMessage(playerList[activePlayer].ColorPlayer + " starts first");
     }
+
 
     public void playerInRoomChecking()
     {
@@ -673,5 +640,19 @@ public class GameManager : MonoBehaviour
 
             playerList[5].playerType = Entity.PlayerTypes.NO_PLAYER;
         }
+    }
+ 
+
+    [PunRPC]
+    void SetStartingPlayer(string startingPlayer)
+    {
+        currentPlayer = startingPlayer;
+        // From here, you can initiate the turn of the starting player
+    }
+
+    public void ChangeTurn(int newPlayerID)
+    {
+        // Logic to change turn. For example:
+        GameManager.instace.activePlayer = newPlayerID;
     }
 }
