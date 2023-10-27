@@ -6,8 +6,9 @@ using UnityEngine.UI;
 using Photon.Pun;
 using Photon.Realtime;
 using Random = UnityEngine.Random;
+using Hashtable = ExitGames.Client.Photon.Hashtable;
 
-public class GameManager : MonoBehaviourPun
+public class GameManager : MonoBehaviourPunCallbacks
 {
     public static GameManager instace;
 
@@ -18,7 +19,7 @@ public class GameManager : MonoBehaviourPun
         public string playerName;
         public enum PlayerTypes
         {
-            HUMAN, CPU, NO_PLAYER
+            HUMAN, NO_PLAYER
         }
         public PlayerTypes playerType;
         public enum Jobs
@@ -89,8 +90,7 @@ public class GameManager : MonoBehaviourPun
 
     }
 
-    public List<string> players;
-    public string currentPlayer;
+
     public List<Entity> playerList = new List<Entity>();
     public List<Entity> SortplayerList = new List<Entity>();
 
@@ -109,21 +109,21 @@ public class GameManager : MonoBehaviourPun
     public Text TurnUI;
     [HideInInspector]public int rolledhumanDice;
 
+    public PhotonView photonView;
     public Dice dice;
+
+    //private PhotonView photonView;
     void Awake()
     {
         instace = this;
 
+        photonView = GetComponent<PhotonView>();
 
         for (int i = 0; i < playerList.Count; i++)
         {
             if (SaveSettings.players[i] == "HUMAN")
             {
                 playerList[i].playerType = Entity.PlayerTypes.HUMAN;
-            }
-            if (SaveSettings.players[i] == "CPU")
-            {
-                playerList[i].playerType = Entity.PlayerTypes.CPU;
             }
             if (SaveSettings.players[i] == "NP")
             {
@@ -137,26 +137,22 @@ public class GameManager : MonoBehaviourPun
     {
         //activePlayer = PhotonNetwork.LocalPlayer.ActorNumber ;
         playerInRoomChecking();
-        randomFirstPlaeyer();
+        
+        RandomFirstPlayer();
+        playerJobSetting();
         /*
-        if (playerList.Count == 0)
-            return;
-
-        // Only the MasterClient chooses the starting player
         if (PhotonNetwork.IsMasterClient)
         {
-            int randomIndex = Random.Range(0, playerList.Count);
-            activePlayer = randomIndex;
-
-            // Broadcast the selected player to all clients
-            photonView.RPC("SetStartingPlayer", RpcTarget.AllBuffered, activePlayer);
-            info.instance.showMessage(activePlayer + " starts first");
-            
+            int firstPlayerIndex = Random.Range(0, PhotonNetwork.CurrentRoom.PlayerCount);
+            photonView.RPC("SetFirstPlayer", RpcTarget.AllBuffered, firstPlayerIndex);
         }
         */
-        //info.instance.showMessage(PhotonNetwork.LocalPlayer.ActorNumber);
+        info.instance.showMessage(playerList[activePlayer].ColorPlayer + " starts first");
+        //Debug.Log($"Player {PhotonNetwork.LocalPlayer.ActorNumber} enter room");
+        
+        
         ActivateButton(false);
-        //SetupListPlayer();
+        
         
 
         
@@ -168,64 +164,21 @@ public class GameManager : MonoBehaviourPun
     
     void Update()
     {
-       
-        //----------------------------------------------------------------------------CPU
-        if (playerList[activePlayer].playerType == Entity.PlayerTypes.CPU)
-        {
-            switch (state)
-            {
-                case States.START_TURN:
-                    {
-                        playerList[activePlayer].myPlayers[0].SetSelector(true);
-                        playerList[activePlayer].myPlayers[0].turncounts++;
-                        state = States.ROLL_DICE;
-                    }
-                    break;
-                case States.ROLL_DICE:
-                    {
-                        if (turnPossible) {
-                            
-                            Debug.Log("Turn player " + playerList[activePlayer].playerName + " Turn'" + playerList[activePlayer].myPlayers[0].turncounts);
-                            TurnUI.text = "Turn player " + playerList[activePlayer].playerName + " Turn'" + playerList[activePlayer].myPlayers[0].turncounts;
-                            StartCoroutine(RollDiceDelay());
-                            state = States.WAITING; 
-                        }
-                    }
-                    break;
-                case States.WAITING:
-                    {
 
-                    }
-                    break;
-                case States.ACTION:
-                    {
-
-                    }
-                    break;
-                case States.SWITCH_PLAYER:
-                    {
-                        if (turnPossible)
-                        {
-                            playerList[activePlayer].myPlayers[0].SetSelector(false);
-                            StartCoroutine(SwitchPlayer());
-                            state = States.WAITING;
-                        }
-                    }
-                    break;
-            }
-        }
         //----------------------------------------------------------------------------HUMAN
-        if (playerList[activePlayer].playerType == Entity.PlayerTypes.HUMAN)
+        if (playerList[activePlayer].playerType == Entity.PlayerTypes.HUMAN && PhotonNetwork.LocalPlayer.ActorNumber - 1 == activePlayer)
         {
             switch (state)
             {
                 case States.START_TURN:
                     {
-                            playerList[activePlayer].myPlayers[0].SetSelector(true);
-                            playerList[activePlayer].myPlayers[0].turncounts++;
-                            Debug.Log("Turn player " + playerList[activePlayer].playerName + " Turn'" + playerList[activePlayer].myPlayers[0].turncounts);
-                            TurnUI.text = "Turn player " + playerList[activePlayer].playerName + " Turn'" + playerList[activePlayer].myPlayers[0].turncounts;
-
+                        Debug.Log("Localplayer now " + PhotonNetwork.LocalPlayer.ActorNumber);
+                        Debug.Log("activeplayer now " + activePlayer);
+                        playerList[activePlayer].myPlayers[0].SetSelector(true);
+                       playerList[activePlayer].myPlayers[0].turncounts++;
+                       TurnUI.text = "Turn player " + playerList[activePlayer].playerName + " Turn'" + playerList[activePlayer].myPlayers[0].turncounts;
+                       Debug.Log("Turn player " + playerList[activePlayer].playerName + " Turn'" + playerList[activePlayer].myPlayers[0].turncounts);
+                       
                             if (playerList[activePlayer].hasJob1 == true && playerList[activePlayer].hasJob2 == true)
                             {
                                 state = States.ROLL_DICE;
@@ -245,19 +198,19 @@ public class GameManager : MonoBehaviourPun
                                 state = States.SWITCH_PLAYER;
                             }
                         
+
+                        
+                        
                         
                         
                     }
                     break;
                 case States.ROLL_DICE:
                     {
-                        if (turnPossible)
-                        {
 
                             //Deactivate Highlight
                             ActivateButton(true);
                             state = States.WAITING;
-                        }
                     }
                     break;
                 case States.WAITING:
@@ -272,19 +225,22 @@ public class GameManager : MonoBehaviourPun
                     break;
                 case States.SWITCH_PLAYER:
                     {
-                        if (turnPossible)
-                        {
+                        
                             //Deactivate button
 
                             //Deactivate Highlight
                             playerList[activePlayer].myPlayers[0].SetSelector(false);
-                            
+
+                        if (PhotonNetwork.LocalPlayer.ActorNumber - 1 == activePlayer)
+                        {
                             StartCoroutine(SwitchPlayer());
-                            state = States.WAITING;
                         }
+                        state = States.WAITING;
+                        
                     }
                     break;
             }
+            
         }
         //----------------------------------------------------------------------------NO PLAYER
         if (playerList[activePlayer].playerType == Entity.PlayerTypes.NO_PLAYER)
@@ -340,21 +296,10 @@ public class GameManager : MonoBehaviourPun
 
     }
 
-    void CPUDice()
-    {
-        dice.RollDice();
-    }
+    
     public void RollDice(int _diceNumber)
     {
         int DiceNumber = _diceNumber;
-        if(playerList[activePlayer].playerType == Entity.PlayerTypes.CPU)
-        {
-            if (DiceNumber <= 6)
-            {
-                //CheckStartNode(DiceNumber);
-                MoveAPlayer(DiceNumber);
-            }
-        }
         if (playerList[activePlayer].playerType == Entity.PlayerTypes.HUMAN)
         {
             rolledhumanDice = _diceNumber;
@@ -364,51 +309,7 @@ public class GameManager : MonoBehaviourPun
         info.instance.showMessage("Roll Dice Number:" + _diceNumber);
     }
 
-    IEnumerator RollDiceDelay()
-    {
-        yield return new WaitForSeconds(2);
-        // RollDice();
-        CPUDice();
-    }
 
-    void CheckStartNode(int DiceNumber)
-    {
-        //is anyone on start node
-        bool startnodeFull = false;
-        for (int i = 0; i < playerList[activePlayer].myPlayers.Length; i++)
-        {
-            if(playerList[activePlayer].myPlayers[i].currentNode == playerList[activePlayer].myPlayers[i].startNode)
-            {
-                startnodeFull = true;
-                break;
-            }
-            if (startnodeFull)
-            {
-                //move player
-                
-                MoveAPlayer(DiceNumber);
-                Debug.Log("Start node is full");
-            }
-            /**else//start node empty
-            {
-                //if have inside base
-                for (int j = 0; j < playerList[activePlayer].myPlayers.Length; i++)
-                {
-                    j++;
-                    if (!playerList[activePlayer].myPlayers[i].ReturnIsOut())
-                    {
-                        //leave the base
-                        Debug.Log("2");
-                        playerList[activePlayer].myPlayers[i].leaveBase();
-                        state = States.WAITING;
-                        return;
-                    }
-                }
-                //move player
-                MoveAPlayer(DiceNumber);
-            }**/
-        }
-    }
     void MoveAPlayer(int DiceNumber)
     {
         List<Player1> moveablePlayers = new List<Player1>();
@@ -425,11 +326,38 @@ public class GameManager : MonoBehaviourPun
         Debug.Log("Should switch player ");
         state = States.SWITCH_PLAYER;
     }
+    public override void OnRoomPropertiesUpdate(Hashtable propertiesThatChanged)
+    {
+        object activePlayerObj;
+        if (propertiesThatChanged.TryGetValue("activePlayer", out activePlayerObj))
+        {
+            activePlayer = (int)activePlayerObj;
 
+            // Here you can update your game UI, gameplay logic, etc., based on the turn change.
+        }
+    }
     IEnumerator SwitchPlayer()
     {
+        /*
+        if (switchingPlayer || PhotonNetwork.LocalPlayer.ActorNumber != activePlayer)
+        {
+            yield break;
+        }
+
+        switchingPlayer = true;
+        yield return new WaitForSeconds(2);
+
+        // SET NEXT PLAYER
+        SetNextActivePlayer();
+
+        Hashtable turnProperties = new Hashtable();
+        turnProperties["activePlayer"] = activePlayer;
+        PhotonNetwork.CurrentRoom.SetCustomProperties(turnProperties);
+
+        switchingPlayer = false;*/
         
-        if (switchingPlayer)
+        Debug.Log(activePlayer);
+        if (switchingPlayer || PhotonNetwork.LocalPlayer.ActorNumber - 1 != activePlayer )
             {
                 yield break;
             }
@@ -438,11 +366,12 @@ public class GameManager : MonoBehaviourPun
             yield return new WaitForSeconds(2);
             
             //SET NEXT PLAYER
-            SetNextActivePlayer();
-            playerInRoomChecking();
-            switchingPlayer = false;
+        SetNextActivePlayer();
+        Debug.Log(activePlayer);
+        //playerInRoomChecking();
+        switchingPlayer = false;
     
-        
+
     }
     IEnumerator noPlayerPassturn()
     {
@@ -462,7 +391,7 @@ public class GameManager : MonoBehaviourPun
     {
         activePlayer++;
         activePlayer %= playerList.Count;
-        ChangeTurn(activePlayer);
+        
         int available = 0;
         for (int i = 0; i < playerList.Count; i++)
         {
@@ -550,7 +479,7 @@ public class GameManager : MonoBehaviourPun
 
     public void PassTurn()
     {
-        GameManager.instace.state = GameManager.States.SWITCH_PLAYER;
+        state = States.SWITCH_PLAYER;
         UIController.instance.passButton.SetActive(false);
     }
 
@@ -583,21 +512,23 @@ public class GameManager : MonoBehaviourPun
     }
 
 
-    public void randomFirstPlaeyer()
+    public void RandomFirstPlayer()
     {
         if (PhotonNetwork.IsMasterClient)
         {
-            int randomPlayer = Random.Range(0, PhotonNetwork.PlayerList.Length);
+            int randomPlayer = Random.Range(0, playerList.Count);
             activePlayer = randomPlayer;
             while (playerList[activePlayer].playerType == Entity.PlayerTypes.NO_PLAYER)
             {
                 activePlayer++;
-                if (activePlayer >= 5)
+                if (activePlayer >= playerList.Count)
                 {
                     activePlayer = 0;
                 }
             }
-            info.instance.showMessage(playerList[activePlayer].ColorPlayer + " starts first");
+            //Debug.Log("playerList is: " + (playerList == null ? "null" : "not null"));
+            //Debug.Log("photonView is: " + (photonView == null ? "null" : "not null"));
+            //photonView.RPC("SetStartingPlayer", RpcTarget.All, activePlayer);
         }
     }
 
@@ -645,15 +576,535 @@ public class GameManager : MonoBehaviourPun
             playerList[5].playerType = Entity.PlayerTypes.NO_PLAYER;
         }
     }
- 
 
-    [PunRPC]
-    void SetStartingPlayer(string startingPlayer)
+    public void valueUpdate()
     {
-        currentPlayer = startingPlayer;
-        // From here, you can initiate the turn of the starting player
+        GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].allRecieve = GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].salary + GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].income;
+        GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].InstallmentsBank = GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].loanBank * (1 / 10);
+        GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].sumChild = GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].child * GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].perChild;
+        GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].paid = GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].tax + GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].homeMortgage + GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].learnMortgage + GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].carMortgage + GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].creditcardMortgage + GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].extraPay + GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].InstallmentsBank + GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].sumChild;
+        GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].getmoney = GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].allRecieve - GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].paid;
+    }
+    public void playerJobSetting()
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            for (int i = 0; i < GameManager.instace.playerList.Count; i++)
+            {
+                GameManager.instace.playerList[i].playerJob = GameManager.RandomEnum.Of<GameManager.Entity.Jobs>();
+                photonView.RPC("SetPlayerJob", RpcTarget.All, GameManager.instace.playerList[i].playerJob);
+                
+                // DOCTOR, LAWER, POLICE, TRUCK_DRIVER, TEACHER, MACHANIC, NURSE, SECRETARY, CLEANING_STAFF, MANAGER, PILOT, ENGINEER
+                //---------------------------------------------------------------------doctor-----------------------------------------------------------------
+                if (GameManager.instace.playerList[i].playerJob == GameManager.Entity.Jobs.DOCTOR)
+                {
+
+                    GameManager.instace.playerList[i].firstMoney = 35000;
+
+                    GameManager.instace.playerList[i].money = GameManager.instace.playerList[i].firstMoney;
+
+                    GameManager.instace.playerList[i].salary = 132000;
+                    GameManager.instace.playerList[i].income = 0;
+                    GameManager.instace.playerList[i].allRecieve = GameManager.instace.playerList[i].salary + GameManager.instace.playerList[i].income;
+
+                    GameManager.instace.playerList[i].tax = 32000;
+                    GameManager.instace.playerList[i].homeMortgage = 19000;
+                    GameManager.instace.playerList[i].learnMortgage = 7000;
+                    GameManager.instace.playerList[i].carMortgage = 3000;
+                    GameManager.instace.playerList[i].creditcardMortgage = 2000;
+                    GameManager.instace.playerList[i].extraPay = 20000;
+                    GameManager.instace.playerList[i].InstallmentsBank = GameManager.instace.playerList[i].loanBank * (1 / 10);
+
+                    GameManager.instace.playerList[i].homeDebt = 2020000;
+                    GameManager.instace.playerList[i].learnDebt = 1500000;
+                    GameManager.instace.playerList[i].carDebt = 190000;
+                    GameManager.instace.playerList[i].creditDebt = 100000;
+
+                    GameManager.instace.playerList[i].loanBank = 0;
+
+                    GameManager.instace.playerList[i].child = 0;
+                    GameManager.instace.playerList[i].perChild = 7000;
+                    GameManager.instace.playerList[i].sumChild = GameManager.instace.playerList[i].child * GameManager.instace.playerList[i].perChild;
+
+                    GameManager.instace.playerList[i].paid = GameManager.instace.playerList[i].tax + GameManager.instace.playerList[i].homeMortgage + GameManager.instace.playerList[i].learnMortgage + GameManager.instace.playerList[i].carMortgage + GameManager.instace.playerList[i].creditcardMortgage + GameManager.instace.playerList[i].extraPay + GameManager.instace.playerList[i].InstallmentsBank + GameManager.instace.playerList[i].sumChild;
+
+                    GameManager.instace.playerList[i].getmoney = GameManager.instace.playerList[i].allRecieve - GameManager.instace.playerList[i].paid;
+
+                    GameManager.instace.playerList[i].hasJob1 = true;
+                    GameManager.instace.playerList[i].hasJob2 = true;
+                    GameManager.instace.playerList[i].hasChild = false;
+                    GameManager.instace.playerList[i].hasDonate = false;
+                    GameManager.instace.playerList[i].hasOutside = false;
+
+                }
+                //---------------------------------------------------------------------lawer-----------------------------------------------------------------
+                if (GameManager.instace.playerList[i].playerJob == GameManager.Entity.Jobs.LAWER)
+                {
+                    GameManager.instace.playerList[i].firstMoney = 20000;
+                    GameManager.instace.playerList[i].money = GameManager.instace.playerList[i].firstMoney;
+                    GameManager.instace.playerList[i].salary = 75000;
+                    GameManager.instace.playerList[i].income = 0;
+                    GameManager.instace.playerList[i].allRecieve = GameManager.instace.playerList[i].salary + GameManager.instace.playerList[i].income;
+
+                    GameManager.instace.playerList[i].tax = 18000;
+                    GameManager.instace.playerList[i].homeMortgage = 11000;
+                    GameManager.instace.playerList[i].learnMortgage = 3000;
+                    GameManager.instace.playerList[i].carMortgage = 2000;
+                    GameManager.instace.playerList[i].creditcardMortgage = 2000;
+                    GameManager.instace.playerList[i].extraPay = 15000;
+                    GameManager.instace.playerList[i].InstallmentsBank = GameManager.instace.playerList[i].loanBank * (1 / 10);
+
+                    GameManager.instace.playerList[i].homeDebt = 1150000;
+                    GameManager.instace.playerList[i].learnDebt = 780000;
+                    GameManager.instace.playerList[i].carDebt = 110000;
+                    GameManager.instace.playerList[i].creditDebt = 70000;
+
+                    GameManager.instace.playerList[i].loanBank = 0;
+
+                    GameManager.instace.playerList[i].child = 0;
+                    GameManager.instace.playerList[i].perChild = 4000;
+                    GameManager.instace.playerList[i].sumChild = GameManager.instace.playerList[i].child * GameManager.instace.playerList[i].perChild;
+
+                    GameManager.instace.playerList[i].paid = GameManager.instace.playerList[i].tax + GameManager.instace.playerList[i].homeMortgage + GameManager.instace.playerList[i].learnMortgage + GameManager.instace.playerList[i].carMortgage + GameManager.instace.playerList[i].creditcardMortgage + GameManager.instace.playerList[i].extraPay + GameManager.instace.playerList[i].InstallmentsBank + GameManager.instace.playerList[i].sumChild;
+
+                    GameManager.instace.playerList[i].getmoney = GameManager.instace.playerList[i].allRecieve - GameManager.instace.playerList[i].paid;
+
+                    GameManager.instace.playerList[i].hasJob1 = true;
+                    GameManager.instace.playerList[i].hasJob2 = true;
+                    GameManager.instace.playerList[i].hasChild = false;
+                    GameManager.instace.playerList[i].hasDonate = false;
+                    GameManager.instace.playerList[i].hasOutside = false;
+                }
+                //---------------------------------------------------------------------police-----------------------------------------------------------------
+                if (GameManager.instace.playerList[i].playerJob == GameManager.Entity.Jobs.POLICE)
+                {
+                    GameManager.instace.playerList[i].firstMoney = 5000;
+                    GameManager.instace.playerList[i].money = GameManager.instace.playerList[i].firstMoney;
+                    GameManager.instace.playerList[i].salary = 30000;
+                    GameManager.instace.playerList[i].income = 0;
+                    GameManager.instace.playerList[i].allRecieve = GameManager.instace.playerList[i].salary + GameManager.instace.playerList[i].income;
+                    GameManager.instace.playerList[i].tax = 6000;
+                    GameManager.instace.playerList[i].homeMortgage = 4000;
+                    GameManager.instace.playerList[i].learnMortgage = 0;
+                    GameManager.instace.playerList[i].carMortgage = 1000;
+                    GameManager.instace.playerList[i].creditcardMortgage = 1000;
+                    GameManager.instace.playerList[i].extraPay = 7000;
+                    GameManager.instace.playerList[i].InstallmentsBank = GameManager.instace.playerList[i].loanBank * (1 / 10);
+
+                    GameManager.instace.playerList[i].homeDebt = 460000;
+                    GameManager.instace.playerList[i].learnDebt = 0;
+                    GameManager.instace.playerList[i].carDebt = 50000;
+                    GameManager.instace.playerList[i].creditDebt = 30000;
+
+                    GameManager.instace.playerList[i].loanBank = 0;
+
+                    GameManager.instace.playerList[i].child = 0;
+                    GameManager.instace.playerList[i].perChild = 2000;
+                    GameManager.instace.playerList[i].sumChild = GameManager.instace.playerList[i].child * GameManager.instace.playerList[i].perChild;
+
+                    GameManager.instace.playerList[i].paid = GameManager.instace.playerList[i].tax + GameManager.instace.playerList[i].homeMortgage + GameManager.instace.playerList[i].learnMortgage + GameManager.instace.playerList[i].carMortgage + GameManager.instace.playerList[i].creditcardMortgage + GameManager.instace.playerList[i].extraPay + GameManager.instace.playerList[i].InstallmentsBank + GameManager.instace.playerList[i].sumChild;
+
+                    GameManager.instace.playerList[i].getmoney = GameManager.instace.playerList[i].allRecieve - GameManager.instace.playerList[i].paid;
+
+                    GameManager.instace.playerList[i].hasJob1 = true;
+                    GameManager.instace.playerList[i].hasJob2 = true;
+                    GameManager.instace.playerList[i].hasChild = false;
+                    GameManager.instace.playerList[i].hasDonate = false;
+                    GameManager.instace.playerList[i].hasOutside = false;
+                }
+                //---------------------------------------------------------------------truck driver-----------------------------------------------------------------
+                if (GameManager.instace.playerList[i].playerJob == GameManager.Entity.Jobs.TRUCK_DRIVER)
+                {
+                    GameManager.instace.playerList[i].firstMoney = 8000;
+                    GameManager.instace.playerList[i].money = GameManager.instace.playerList[i].firstMoney;
+                    GameManager.instace.playerList[i].salary = 25000;
+                    GameManager.instace.playerList[i].income = 0;
+                    GameManager.instace.playerList[i].allRecieve = GameManager.instace.playerList[i].salary + GameManager.instace.playerList[i].income;
+                    GameManager.instace.playerList[i].tax = 5000;
+                    GameManager.instace.playerList[i].homeMortgage = 4000;
+                    GameManager.instace.playerList[i].learnMortgage = 0;
+                    GameManager.instace.playerList[i].carMortgage = 1000;
+                    GameManager.instace.playerList[i].creditcardMortgage = 1000;
+                    GameManager.instace.playerList[i].extraPay = 6000;
+                    GameManager.instace.playerList[i].InstallmentsBank = GameManager.instace.playerList[i].loanBank * (1 / 10);
+
+                    GameManager.instace.playerList[i].homeDebt = 380000;
+                    GameManager.instace.playerList[i].learnDebt = 0;
+                    GameManager.instace.playerList[i].carDebt = 40000;
+                    GameManager.instace.playerList[i].creditDebt = 30000;
+                    GameManager.instace.playerList[i].loanBank = 0;
+
+                    GameManager.instace.playerList[i].child = 0;
+                    GameManager.instace.playerList[i].perChild = 2000;
+                    GameManager.instace.playerList[i].sumChild = GameManager.instace.playerList[i].child * GameManager.instace.playerList[i].perChild;
+
+                    GameManager.instace.playerList[i].paid = GameManager.instace.playerList[i].tax + GameManager.instace.playerList[i].homeMortgage + GameManager.instace.playerList[i].learnMortgage + GameManager.instace.playerList[i].carMortgage + GameManager.instace.playerList[i].creditcardMortgage + GameManager.instace.playerList[i].extraPay + GameManager.instace.playerList[i].InstallmentsBank + GameManager.instace.playerList[i].sumChild;
+
+                    GameManager.instace.playerList[i].getmoney = GameManager.instace.playerList[i].allRecieve - GameManager.instace.playerList[i].paid;
+
+                    GameManager.instace.playerList[i].hasJob1 = true;
+                    GameManager.instace.playerList[i].hasJob2 = true;
+                    GameManager.instace.playerList[i].hasChild = false;
+                    GameManager.instace.playerList[i].hasDonate = false;
+                    GameManager.instace.playerList[i].hasOutside = false;
+                }
+                //---------------------------------------------------------------------teacher-----------------------------------------------------------------
+                if (GameManager.instace.playerList[i].playerJob == GameManager.Entity.Jobs.TEACHER)
+                {
+                    GameManager.instace.playerList[i].firstMoney = 4000;
+                    GameManager.instace.playerList[i].money = GameManager.instace.playerList[i].firstMoney;
+                    GameManager.instace.playerList[i].salary = 33000;
+                    GameManager.instace.playerList[i].income = 0;
+                    GameManager.instace.playerList[i].allRecieve = GameManager.instace.playerList[i].salary + GameManager.instace.playerList[i].income;
+                    GameManager.instace.playerList[i].tax = 5000;
+                    GameManager.instace.playerList[i].homeMortgage = 5000;
+                    GameManager.instace.playerList[i].learnMortgage = 1000;
+                    GameManager.instace.playerList[i].carMortgage = 1000;
+                    GameManager.instace.playerList[i].creditcardMortgage = 2000;
+                    GameManager.instace.playerList[i].extraPay = 7000;
+                    GameManager.instace.playerList[i].InstallmentsBank = GameManager.instace.playerList[i].loanBank * (1 / 10);
+
+                    GameManager.instace.playerList[i].homeDebt = 500000;
+                    GameManager.instace.playerList[i].learnDebt = 120000;
+                    GameManager.instace.playerList[i].carDebt = 50000;
+                    GameManager.instace.playerList[i].creditDebt = 40000;
+                    GameManager.instace.playerList[i].loanBank = 0;
+
+                    GameManager.instace.playerList[i].child = 0;
+                    GameManager.instace.playerList[i].perChild = 2000;
+                    GameManager.instace.playerList[i].sumChild = GameManager.instace.playerList[i].child * GameManager.instace.playerList[i].perChild;
+
+                    GameManager.instace.playerList[i].paid = GameManager.instace.playerList[i].tax + GameManager.instace.playerList[i].homeMortgage + GameManager.instace.playerList[i].learnMortgage + GameManager.instace.playerList[i].carMortgage + GameManager.instace.playerList[i].creditcardMortgage + GameManager.instace.playerList[i].extraPay + GameManager.instace.playerList[i].InstallmentsBank + GameManager.instace.playerList[i].sumChild;
+
+                    GameManager.instace.playerList[i].getmoney = GameManager.instace.playerList[i].allRecieve - GameManager.instace.playerList[i].paid;
+
+                    GameManager.instace.playerList[i].hasJob1 = true;
+                    GameManager.instace.playerList[i].hasJob2 = true;
+                    GameManager.instace.playerList[i].hasChild = false;
+                    GameManager.instace.playerList[i].hasDonate = false;
+                    GameManager.instace.playerList[i].hasOutside = false;
+                }
+                //---------------------------------------------------------------------machanic-----------------------------------------------------------------
+                if (GameManager.instace.playerList[i].playerJob == GameManager.Entity.Jobs.MACHANIC)
+                {
+                    GameManager.instace.playerList[i].firstMoney = 7000;
+                    GameManager.instace.playerList[i].money = GameManager.instace.playerList[i].firstMoney;
+                    GameManager.instace.playerList[i].salary = 20000;
+                    GameManager.instace.playerList[i].income = 0;
+                    GameManager.instace.playerList[i].allRecieve = GameManager.instace.playerList[i].salary + GameManager.instace.playerList[i].income;
+                    GameManager.instace.playerList[i].tax = 4000;
+                    GameManager.instace.playerList[i].homeMortgage = 3000;
+                    GameManager.instace.playerList[i].learnMortgage = 0;
+                    GameManager.instace.playerList[i].carMortgage = 1000;
+                    GameManager.instace.playerList[i].creditcardMortgage = 1000;
+                    GameManager.instace.playerList[i].extraPay = 4000;
+                    GameManager.instace.playerList[i].InstallmentsBank = GameManager.instace.playerList[i].loanBank * (1 / 10);
+
+                    GameManager.instace.playerList[i].homeDebt = 310000;
+                    GameManager.instace.playerList[i].learnDebt = 0;
+                    GameManager.instace.playerList[i].carDebt = 30000;
+                    GameManager.instace.playerList[i].creditDebt = 30000;
+                    GameManager.instace.playerList[i].loanBank = 0;
+
+                    GameManager.instace.playerList[i].child = 0;
+                    GameManager.instace.playerList[i].perChild = 1000;
+                    GameManager.instace.playerList[i].sumChild = GameManager.instace.playerList[i].child * GameManager.instace.playerList[i].perChild;
+
+                    GameManager.instace.playerList[i].paid = GameManager.instace.playerList[i].tax + GameManager.instace.playerList[i].homeMortgage + GameManager.instace.playerList[i].learnMortgage + GameManager.instace.playerList[i].carMortgage + GameManager.instace.playerList[i].creditcardMortgage + GameManager.instace.playerList[i].extraPay + GameManager.instace.playerList[i].InstallmentsBank + GameManager.instace.playerList[i].sumChild;
+
+                    GameManager.instace.playerList[i].getmoney = GameManager.instace.playerList[i].allRecieve - GameManager.instace.playerList[i].paid;
+
+                    GameManager.instace.playerList[i].hasJob1 = true;
+                    GameManager.instace.playerList[i].hasJob2 = true;
+                    GameManager.instace.playerList[i].hasChild = false;
+                    GameManager.instace.playerList[i].hasDonate = false;
+                    GameManager.instace.playerList[i].hasOutside = false;
+                }
+                //---------------------------------------------------------------------nurse-----------------------------------------------------------------
+                if (GameManager.instace.playerList[i].playerJob == GameManager.Entity.Jobs.NURSE)
+                {
+                    GameManager.instace.playerList[i].firstMoney = 5000;
+                    GameManager.instace.playerList[i].money = GameManager.instace.playerList[i].firstMoney;
+                    GameManager.instace.playerList[i].salary = 31000;
+                    GameManager.instace.playerList[i].income = 0;
+                    GameManager.instace.playerList[i].allRecieve = GameManager.instace.playerList[i].salary + GameManager.instace.playerList[i].income;
+                    GameManager.instace.playerList[i].tax = 6000;
+                    GameManager.instace.playerList[i].homeMortgage = 4000;
+                    GameManager.instace.playerList[i].learnMortgage = 1000;
+                    GameManager.instace.playerList[i].carMortgage = 1000;
+                    GameManager.instace.playerList[i].creditcardMortgage = 2000;
+                    GameManager.instace.playerList[i].extraPay = 6000;
+                    GameManager.instace.playerList[i].InstallmentsBank = GameManager.instace.playerList[i].loanBank * (1 / 10);
+
+                    GameManager.instace.playerList[i].homeDebt = 470000;
+                    GameManager.instace.playerList[i].learnDebt = 60000;
+                    GameManager.instace.playerList[i].carDebt = 50000;
+                    GameManager.instace.playerList[i].creditDebt = 40000;
+                    GameManager.instace.playerList[i].loanBank = 0;
+
+                    GameManager.instace.playerList[i].child = 0;
+                    GameManager.instace.playerList[i].perChild = 2000;
+                    GameManager.instace.playerList[i].sumChild = GameManager.instace.playerList[i].child * GameManager.instace.playerList[i].perChild;
+
+                    GameManager.instace.playerList[i].paid = GameManager.instace.playerList[i].tax + GameManager.instace.playerList[i].homeMortgage + GameManager.instace.playerList[i].learnMortgage + GameManager.instace.playerList[i].carMortgage + GameManager.instace.playerList[i].creditcardMortgage + GameManager.instace.playerList[i].extraPay + GameManager.instace.playerList[i].InstallmentsBank + GameManager.instace.playerList[i].sumChild;
+
+                    GameManager.instace.playerList[i].getmoney = GameManager.instace.playerList[i].allRecieve - GameManager.instace.playerList[i].paid;
+
+                    GameManager.instace.playerList[i].hasJob1 = true;
+                    GameManager.instace.playerList[i].hasJob2 = true;
+                    GameManager.instace.playerList[i].hasChild = false;
+                    GameManager.instace.playerList[i].hasDonate = false;
+                    GameManager.instace.playerList[i].hasOutside = false;
+                }
+                //---------------------------------------------------------------------secretary-----------------------------------------------------------------
+                if (GameManager.instace.playerList[i].playerJob == GameManager.Entity.Jobs.SECRETARY)
+                {
+                    GameManager.instace.playerList[i].firstMoney = 7000;
+                    GameManager.instace.playerList[i].money = GameManager.instace.playerList[i].firstMoney;
+                    GameManager.instace.playerList[i].salary = 25000;
+                    GameManager.instace.playerList[i].income = 0;
+                    GameManager.instace.playerList[i].allRecieve = GameManager.instace.playerList[i].salary + GameManager.instace.playerList[i].income;
+                    GameManager.instace.playerList[i].tax = 5000;
+                    GameManager.instace.playerList[i].homeMortgage = 4000;
+                    GameManager.instace.playerList[i].learnMortgage = 0;
+                    GameManager.instace.playerList[i].carMortgage = 1000;
+                    GameManager.instace.playerList[i].creditcardMortgage = 1000;
+                    GameManager.instace.playerList[i].extraPay = 6000;
+                    GameManager.instace.playerList[i].InstallmentsBank = GameManager.instace.playerList[i].loanBank * (1 / 10);
+
+                    GameManager.instace.playerList[i].homeDebt = 380000;
+                    GameManager.instace.playerList[i].learnDebt = 0;
+                    GameManager.instace.playerList[i].carDebt = 40000;
+                    GameManager.instace.playerList[i].creditDebt = 30000;
+                    GameManager.instace.playerList[i].loanBank = 0;
+
+                    GameManager.instace.playerList[i].child = 0;
+                    GameManager.instace.playerList[i].perChild = 1000;
+                    GameManager.instace.playerList[i].sumChild = GameManager.instace.playerList[i].child * GameManager.instace.playerList[i].perChild;
+
+                    GameManager.instace.playerList[i].paid = GameManager.instace.playerList[i].tax + GameManager.instace.playerList[i].homeMortgage + GameManager.instace.playerList[i].learnMortgage + GameManager.instace.playerList[i].carMortgage + GameManager.instace.playerList[i].creditcardMortgage + GameManager.instace.playerList[i].extraPay + GameManager.instace.playerList[i].InstallmentsBank + GameManager.instace.playerList[i].sumChild;
+
+                    GameManager.instace.playerList[i].getmoney = GameManager.instace.playerList[i].allRecieve - GameManager.instace.playerList[i].paid;
+
+                    GameManager.instace.playerList[i].hasJob1 = true;
+                    GameManager.instace.playerList[i].hasJob2 = true;
+                    GameManager.instace.playerList[i].hasChild = false;
+                    GameManager.instace.playerList[i].hasDonate = false;
+                    GameManager.instace.playerList[i].hasOutside = false;
+                }
+                //---------------------------------------------------------------------cleaning staff-----------------------------------------------------------------
+                if (GameManager.instace.playerList[i].playerJob == GameManager.Entity.Jobs.CLEANING_STAFF)
+                {
+                    GameManager.instace.playerList[i].firstMoney = 6000;
+                    GameManager.instace.playerList[i].money = GameManager.instace.playerList[i].firstMoney;
+                    GameManager.instace.playerList[i].salary = 16000;
+                    GameManager.instace.playerList[i].income = 0;
+                    GameManager.instace.playerList[i].allRecieve = GameManager.instace.playerList[i].salary + GameManager.instace.playerList[i].income;
+                    GameManager.instace.playerList[i].tax = 3000;
+                    GameManager.instace.playerList[i].homeMortgage = 2000;
+                    GameManager.instace.playerList[i].learnMortgage = 0;
+                    GameManager.instace.playerList[i].carMortgage = 1000;
+                    GameManager.instace.playerList[i].creditcardMortgage = 1000;
+                    GameManager.instace.playerList[i].extraPay = 3000;
+                    GameManager.instace.playerList[i].InstallmentsBank = GameManager.instace.playerList[i].loanBank * (1 / 10);
+
+                    GameManager.instace.playerList[i].homeDebt = 200000;
+                    GameManager.instace.playerList[i].learnDebt = 0;
+                    GameManager.instace.playerList[i].carDebt = 40000;
+                    GameManager.instace.playerList[i].creditDebt = 30000;
+                    GameManager.instace.playerList[i].loanBank = 0;
+
+                    GameManager.instace.playerList[i].child = 0;
+                    GameManager.instace.playerList[i].perChild = 1000;
+                    GameManager.instace.playerList[i].sumChild = GameManager.instace.playerList[i].child * GameManager.instace.playerList[i].perChild;
+
+                    GameManager.instace.playerList[i].paid = GameManager.instace.playerList[i].tax + GameManager.instace.playerList[i].homeMortgage + GameManager.instace.playerList[i].learnMortgage + GameManager.instace.playerList[i].carMortgage + GameManager.instace.playerList[i].creditcardMortgage + GameManager.instace.playerList[i].extraPay + GameManager.instace.playerList[i].InstallmentsBank + GameManager.instace.playerList[i].sumChild;
+
+                    GameManager.instace.playerList[i].getmoney = GameManager.instace.playerList[i].allRecieve - GameManager.instace.playerList[i].paid;
+
+                    GameManager.instace.playerList[i].hasJob1 = true;
+                    GameManager.instace.playerList[i].hasJob2 = true;
+                    GameManager.instace.playerList[i].hasChild = false;
+                    GameManager.instace.playerList[i].hasDonate = false;
+                    GameManager.instace.playerList[i].hasOutside = false;
+                }
+                //---------------------------------------------------------------------manager-----------------------------------------------------------------
+                if (GameManager.instace.playerList[i].playerJob == GameManager.Entity.Jobs.MANAGER)
+                {
+                    GameManager.instace.playerList[i].firstMoney = 4000;
+                    GameManager.instace.playerList[i].money = GameManager.instace.playerList[i].firstMoney;
+                    GameManager.instace.playerList[i].salary = 46000;
+                    GameManager.instace.playerList[i].income = 0;
+                    GameManager.instace.playerList[i].allRecieve = GameManager.instace.playerList[i].salary + GameManager.instace.playerList[i].income;
+                    GameManager.instace.playerList[i].tax = 9000;
+                    GameManager.instace.playerList[i].homeMortgage = 7000;
+                    GameManager.instace.playerList[i].learnMortgage = 1000;
+                    GameManager.instace.playerList[i].carMortgage = 1000;
+                    GameManager.instace.playerList[i].creditcardMortgage = 2000;
+                    GameManager.instace.playerList[i].extraPay = 10000;
+                    GameManager.instace.playerList[i].InstallmentsBank = GameManager.instace.playerList[i].loanBank * (1 / 10);
+
+                    GameManager.instace.playerList[i].homeDebt = 750000;
+                    GameManager.instace.playerList[i].learnDebt = 120000;
+                    GameManager.instace.playerList[i].carDebt = 60000;
+                    GameManager.instace.playerList[i].creditDebt = 40000;
+                    GameManager.instace.playerList[i].loanBank = 0;
+
+                    GameManager.instace.playerList[i].child = 0;
+                    GameManager.instace.playerList[i].perChild = 3000;
+                    GameManager.instace.playerList[i].sumChild = GameManager.instace.playerList[i].child * GameManager.instace.playerList[i].perChild;
+
+                    GameManager.instace.playerList[i].paid = GameManager.instace.playerList[i].tax + GameManager.instace.playerList[i].homeMortgage + GameManager.instace.playerList[i].learnMortgage + GameManager.instace.playerList[i].carMortgage + GameManager.instace.playerList[i].creditcardMortgage + GameManager.instace.playerList[i].extraPay + GameManager.instace.playerList[i].InstallmentsBank + GameManager.instace.playerList[i].sumChild;
+
+                    GameManager.instace.playerList[i].getmoney = GameManager.instace.playerList[i].allRecieve - GameManager.instace.playerList[i].paid;
+
+                    GameManager.instace.playerList[i].hasJob1 = true;
+                    GameManager.instace.playerList[i].hasJob2 = true;
+                    GameManager.instace.playerList[i].hasChild = false;
+                    GameManager.instace.playerList[i].hasDonate = false;
+                    GameManager.instace.playerList[i].hasOutside = false;
+                }
+                //---------------------------------------------------------------------pilot-----------------------------------------------------------------
+                if (GameManager.instace.playerList[i].playerJob == GameManager.Entity.Jobs.PILOT)
+                {
+                    GameManager.instace.playerList[i].firstMoney = 25000;
+                    GameManager.instace.playerList[i].money = GameManager.instace.playerList[i].firstMoney;
+                    GameManager.instace.playerList[i].salary = 95000;
+                    GameManager.instace.playerList[i].income = 0;
+                    GameManager.instace.playerList[i].allRecieve = GameManager.instace.playerList[i].salary + GameManager.instace.playerList[i].income;
+                    GameManager.instace.playerList[i].tax = 20000;
+                    GameManager.instace.playerList[i].homeMortgage = 10000;
+                    GameManager.instace.playerList[i].learnMortgage = 0;
+                    GameManager.instace.playerList[i].carMortgage = 3000;
+                    GameManager.instace.playerList[i].creditcardMortgage = 7000;
+                    GameManager.instace.playerList[i].extraPay = 20000;
+                    GameManager.instace.playerList[i].InstallmentsBank = GameManager.instace.playerList[i].loanBank * (1 / 10);
+
+                    GameManager.instace.playerList[i].homeDebt = 900000;
+                    GameManager.instace.playerList[i].learnDebt = 0;
+                    GameManager.instace.playerList[i].carDebt = 150000;
+                    GameManager.instace.playerList[i].creditDebt = 220000;
+                    GameManager.instace.playerList[i].loanBank = 0;
+
+                    GameManager.instace.playerList[i].child = 0;
+                    GameManager.instace.playerList[i].perChild = 4000;
+                    GameManager.instace.playerList[i].sumChild = GameManager.instace.playerList[i].child * GameManager.instace.playerList[i].perChild;
+
+                    GameManager.instace.playerList[i].paid = GameManager.instace.playerList[i].tax + GameManager.instace.playerList[i].homeMortgage + GameManager.instace.playerList[i].learnMortgage + GameManager.instace.playerList[i].carMortgage + GameManager.instace.playerList[i].creditcardMortgage + GameManager.instace.playerList[i].extraPay + GameManager.instace.playerList[i].InstallmentsBank + GameManager.instace.playerList[i].sumChild;
+
+                    GameManager.instace.playerList[i].getmoney = GameManager.instace.playerList[i].allRecieve - GameManager.instace.playerList[i].paid;
+
+                    GameManager.instace.playerList[i].hasJob1 = true;
+                    GameManager.instace.playerList[i].hasJob2 = true;
+                    GameManager.instace.playerList[i].hasChild = false;
+                    GameManager.instace.playerList[i].hasDonate = false;
+                    GameManager.instace.playerList[i].hasOutside = false;
+                }
+                //---------------------------------------------------------------------engineer-----------------------------------------------------------------
+                if (GameManager.instace.playerList[i].playerJob == GameManager.Entity.Jobs.ENGINEER)
+                {
+                    GameManager.instace.playerList[i].firstMoney = 4000;
+                    GameManager.instace.playerList[i].money = GameManager.instace.playerList[i].firstMoney;
+                    GameManager.instace.playerList[i].salary = 49000;
+                    GameManager.instace.playerList[i].income = 0;
+                    GameManager.instace.playerList[i].allRecieve = GameManager.instace.playerList[i].salary + GameManager.instace.playerList[i].income;
+                    GameManager.instace.playerList[i].tax = 10000;
+                    GameManager.instace.playerList[i].homeMortgage = 7000;
+                    GameManager.instace.playerList[i].learnMortgage = 1000;
+                    GameManager.instace.playerList[i].carMortgage = 2000;
+                    GameManager.instace.playerList[i].creditcardMortgage = 2000;
+                    GameManager.instace.playerList[i].extraPay = 10000;
+                    GameManager.instace.playerList[i].InstallmentsBank = GameManager.instace.playerList[i].loanBank * (1 / 10);
+
+                    GameManager.instace.playerList[i].homeDebt = 750000;
+                    GameManager.instace.playerList[i].learnDebt = 120000;
+                    GameManager.instace.playerList[i].carDebt = 70000;
+                    GameManager.instace.playerList[i].creditDebt = 50000;
+                    GameManager.instace.playerList[i].loanBank = 0;
+
+                    GameManager.instace.playerList[i].child = 0;
+                    GameManager.instace.playerList[i].perChild = 2000;
+                    GameManager.instace.playerList[i].sumChild = GameManager.instace.playerList[i].child * GameManager.instace.playerList[i].perChild;
+
+                    GameManager.instace.playerList[i].paid = GameManager.instace.playerList[i].tax + GameManager.instace.playerList[i].homeMortgage + GameManager.instace.playerList[i].learnMortgage + GameManager.instace.playerList[i].carMortgage + GameManager.instace.playerList[i].creditcardMortgage + GameManager.instace.playerList[i].extraPay + GameManager.instace.playerList[i].InstallmentsBank + GameManager.instace.playerList[i].sumChild;
+
+                    GameManager.instace.playerList[i].getmoney = GameManager.instace.playerList[i].allRecieve - GameManager.instace.playerList[i].paid;
+
+                    GameManager.instace.playerList[i].hasJob1 = true;
+                    GameManager.instace.playerList[i].hasJob2 = true;
+                    GameManager.instace.playerList[i].hasChild = false;
+                    GameManager.instace.playerList[i].hasDonate = false;
+                    GameManager.instace.playerList[i].hasOutside = false;
+
+                }
+
+            }
+
+            //photonView.RPC("SetPlayerFirstMoney", RpcTarget.All, playerList[activePlayer].firstMoney);
+            /*photonView.RPC("SetPlayerJob", RpcTarget.AllBuffered, playerList[activePlayer].money);
+            photonView.RPC("SetPlayerJob", RpcTarget.AllBuffered, playerList[activePlayer].salary);
+            photonView.RPC("SetPlayerJob", RpcTarget.AllBuffered, playerList[activePlayer].income);
+            photonView.RPC("SetPlayerJob", RpcTarget.AllBuffered, playerList[activePlayer].allRecieve);
+            photonView.RPC("SetPlayerJob", RpcTarget.AllBuffered, playerList[activePlayer].tax);
+            photonView.RPC("SetPlayerJob", RpcTarget.AllBuffered, playerList[activePlayer].homeMortgage);
+            photonView.RPC("SetPlayerJob", RpcTarget.AllBuffered, playerList[activePlayer].learnMortgage);
+            photonView.RPC("SetPlayerJob", RpcTarget.AllBuffered, playerList[activePlayer].carMortgage);
+            photonView.RPC("SetPlayerJob", RpcTarget.AllBuffered, playerList[activePlayer].creditcardMortgage);
+            photonView.RPC("SetPlayerJob", RpcTarget.AllBuffered, playerList[activePlayer].extraPay);
+            photonView.RPC("SetPlayerJob", RpcTarget.AllBuffered, playerList[activePlayer].InstallmentsBank);
+
+            photonView.RPC("SetPlayerJob", RpcTarget.AllBuffered, playerList[activePlayer].homeDebt);
+            photonView.RPC("SetPlayerJob", RpcTarget.AllBuffered, playerList[activePlayer].learnDebt);
+            photonView.RPC("SetPlayerJob", RpcTarget.AllBuffered, playerList[activePlayer].carDebt);
+            photonView.RPC("SetPlayerJob", RpcTarget.AllBuffered, playerList[activePlayer].creditDebt);
+            photonView.RPC("SetPlayerJob", RpcTarget.AllBuffered, playerList[activePlayer].loanBank);
+            photonView.RPC("SetPlayerJob", RpcTarget.AllBuffered, playerList[activePlayer].child);
+            photonView.RPC("SetPlayerJob", RpcTarget.AllBuffered, playerList[activePlayer].perChild);
+            photonView.RPC("SetPlayerJob", RpcTarget.AllBuffered, playerList[activePlayer].sumChild);
+            photonView.RPC("SetPlayerJob", RpcTarget.AllBuffered, playerList[activePlayer].paid);
+            photonView.RPC("SetPlayerJob", RpcTarget.AllBuffered, playerList[activePlayer].getmoney);
+            photonView.RPC("SetPlayerJob", RpcTarget.AllBuffered, playerList[activePlayer].hasJob1);
+            photonView.RPC("SetPlayerJob", RpcTarget.AllBuffered, playerList[activePlayer].hasJob2);
+            photonView.RPC("SetPlayerJob", RpcTarget.AllBuffered, playerList[activePlayer].hasChild);
+            photonView.RPC("SetPlayerJob", RpcTarget.AllBuffered, playerList[activePlayer].hasDonate);
+            photonView.RPC("SetPlayerJob", RpcTarget.AllBuffered, playerList[activePlayer].hasOutside);*/
+        }
+
     }
 
+    [PunRPC]
+    void SetFirstPlayer(int index)
+    {
+        activePlayer = index;
+        info.instance.showMessage(playerList[activePlayer].ColorPlayer + " starts first");
+        Debug.Log($"Starting Player is {playerList[activePlayer].playerName}");
+    }
+    void SetStartingPlayer(int startingPlayer)
+    {
+        activePlayer = startingPlayer;
+        info.instance.showMessage("Player " + activePlayer + " starts first");
+
+        if (activePlayer >= 0 && activePlayer < playerList.Count) // Safety check
+        {
+            Debug.Log($"Starting Player is {playerList[activePlayer].playerName}");
+        }
+        else
+        {
+            Debug.LogError($"Invalid activePlayer index: {activePlayer}");
+        }
+    }
+
+    void SetPlayerJob(Entity.Jobs jobPlayer)
+    {
+        playerList[activePlayer].playerJob = jobPlayer;
+
+    }
+
+    void SetPlayerFirstMoney(int firstmoney)
+    {
+        playerList[activePlayer].firstMoney = firstmoney;
+
+    }
     public void ChangeTurn(int newPlayerID)
     {
         // Logic to change turn. For example:

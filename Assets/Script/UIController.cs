@@ -6,6 +6,9 @@ using TMPro;
 using UnityEngine.UI;
 using Photon.Pun;
 using Photon.Realtime;
+using System;
+using UnityEngine.SceneManagement;
+
 public class UIController : MonoBehaviour
 {
     public static UIController instance;
@@ -52,5 +55,11 @@ public class UIController : MonoBehaviour
     public void Cancel()
     {
 
+    }
+
+    public void Quit()
+    {
+        PhotonNetwork.LeaveRoom();
+        SceneManager.LoadScene("Lobby");
     }
 }
