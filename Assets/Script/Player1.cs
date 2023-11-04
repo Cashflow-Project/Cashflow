@@ -287,12 +287,7 @@ public class Player1 : Photon.Pun.MonoBehaviourPun
     public void StartTheMove(int DiceNumber)
     {
         steps = DiceNumber;
-        if (turncounts == 1)
-        {
-            //steps--;
-            
-            
-        }
+       
         //Debug.Log("Turns player "+ playerid + " Turn'"+ turncounts);
         StartCoroutine(Move());
         //turncounts++;
@@ -328,8 +323,11 @@ public class Player1 : Photon.Pun.MonoBehaviourPun
     {
      if (hasTurn)
      {
-        
-        StartTheMove(GameManager.instace.rolledhumanDice);
+            if (GameManager.instace.dice2.diceValue > 0)
+            {
+                GameManager.instace.rolledhumanDice = GameManager.instace.rolledhumanDice + GameManager.instace.dice2.diceValue;
+            }
+            StartTheMove(GameManager.instace.rolledhumanDice);
      }
         GameManager.instace.DeactivateAllSelector();
     }

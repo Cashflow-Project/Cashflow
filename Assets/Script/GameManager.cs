@@ -106,11 +106,13 @@ public class GameManager : MonoBehaviourPunCallbacks
     bool turnPossible = true;
 
     public GameObject diceButton;
+    public GameObject DoublediceButton;
     public Text TurnUI;
     [HideInInspector]public int rolledhumanDice;
 
     public PhotonView photonView;
     public Dice dice;
+    public Dice dice2;
 
     //private PhotonView photonView;
     void Awake()
@@ -300,9 +302,15 @@ public class GameManager : MonoBehaviourPunCallbacks
     public void RollDice(int _diceNumber)
     {
         int DiceNumber = _diceNumber;
+       
         if (playerList[activePlayer].playerType == Entity.PlayerTypes.HUMAN)
         {
+            if (dice2.diceValue > 0)
+            {
+                _diceNumber = _diceNumber + dice2.diceValue;
+            }
             rolledhumanDice = _diceNumber;
+            
             HumanRollDice();
         }
             Debug.Log("Dice Rolled number : " + DiceNumber);
@@ -338,23 +346,6 @@ public class GameManager : MonoBehaviourPunCallbacks
     }
     IEnumerator SwitchPlayer()
     {
-        /*
-        if (switchingPlayer || PhotonNetwork.LocalPlayer.ActorNumber != activePlayer)
-        {
-            yield break;
-        }
-
-        switchingPlayer = true;
-        yield return new WaitForSeconds(2);
-
-        // SET NEXT PLAYER
-        SetNextActivePlayer();
-
-        Hashtable turnProperties = new Hashtable();
-        turnProperties["activePlayer"] = activePlayer;
-        PhotonNetwork.CurrentRoom.SetCustomProperties(turnProperties);
-
-        switchingPlayer = false;*/
         
         Debug.Log(activePlayer);
         if (switchingPlayer || PhotonNetwork.LocalPlayer.ActorNumber - 1 != activePlayer )
@@ -458,6 +449,10 @@ public class GameManager : MonoBehaviourPunCallbacks
     void ActivateButton(bool on)
     {
         diceButton.SetActive(on);
+        if (playerList[activePlayer].hasDonate)
+        {
+            DoublediceButton.SetActive(on);
+        }
     }
     
     public void DeactivateAllSelector()
@@ -477,6 +472,13 @@ public class GameManager : MonoBehaviourPunCallbacks
         ActivateButton(false);
     }
 
+    public void DoubleRoll()
+    {
+        dice.RollDice();
+        dice2.RollDice();
+        //Dice.instace.diceValue = dice.diceValue + dice2.diceValue;
+        ActivateButton(false);
+    }
     public void PassTurn()
     {
         state = States.SWITCH_PLAYER;
