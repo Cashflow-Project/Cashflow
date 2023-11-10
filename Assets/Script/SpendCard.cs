@@ -2,8 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Photon.Pun;
+using Photon.Realtime;
 
-public class SpendCard : MonoBehaviour
+public class SpendCard : MonoBehaviourPunCallbacks
 {
     public CardSpendScriptableObj cardSpendSO;
 
@@ -133,4 +135,6 @@ public class SpendCard : MonoBehaviour
 
         MoveToPoint(sc.cardPosition[ShowPosition],sc.minPos.rotation);
     }
+
+   
 }

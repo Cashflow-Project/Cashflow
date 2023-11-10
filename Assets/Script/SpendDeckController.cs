@@ -2,8 +2,9 @@ using System.Runtime.InteropServices;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public class SpendDeckController : MonoBehaviour
+using Photon.Pun;
+using Photon.Realtime;
+public class SpendDeckController : MonoBehaviourPunCallbacks
 {
     public static SpendDeckController instance;
     public int cardcount=0; 
@@ -41,7 +42,8 @@ public class SpendDeckController : MonoBehaviour
         UIController.instance.drawButton.SetActive(false);
         UIController.instance.cardShow.enabled = false;
         UIController.instance.cancelButton.SetActive(false);
-        UIController.instance.passButton.SetActive(false);
+        //UIController.instance.passButton.SetActive(false);
+        photonView.RPC("EndTurnPlayer", RpcTarget.All, false);
         UIController.instance.loanButton.SetActive(false);
         UIController.instance.payButton.SetActive(false);
 
@@ -102,7 +104,8 @@ public class SpendDeckController : MonoBehaviour
             UIController.instance.loanButton.SetActive(false);
             UIController.instance.payButton.SetActive(false);
 
-            UIController.instance.passButton.SetActive(true);
+            //UIController.instance.passButton.SetActive(true);
+            photonView.RPC("EndTurnPlayer", RpcTarget.All, true);
         }
         else
         {
@@ -113,7 +116,8 @@ public class SpendDeckController : MonoBehaviour
             UIController.instance.loanButton.SetActive(false);
             UIController.instance.payButton.SetActive(false);
 
-            UIController.instance.passButton.SetActive(true);
+            //UIController.instance.passButton.SetActive(true);
+            photonView.RPC("EndTurnPlayer", RpcTarget.All, true);
         }
         
 
@@ -123,5 +127,16 @@ public class SpendDeckController : MonoBehaviour
     {
 
     }
-    
+
+    private bool IsMyTurn()
+    {
+        // Replace with your logic. This could be checking against a player list, an ID, etc.
+        return PhotonNetwork.LocalPlayer.ActorNumber - 1 == GameManager.instace.activePlayer;
+    }
+
+    [PunRPC]
+    void EndTurnPlayer(bool isTurn)
+    {
+        UIController.instance.passButton.SetActive(isTurn);
+    }
 }

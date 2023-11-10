@@ -353,7 +353,7 @@ public class Player1 : MonoBehaviourPunCallbacks
     [PunRPC]
     void EndTurnPlayer(bool isTurn)
     {
-        UIController.instance.passButton.SetActive(IsMyTurn());
+        UIController.instance.passButton.SetActive(isTurn);
     }
 
     [PunRPC]
