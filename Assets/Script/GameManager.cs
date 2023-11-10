@@ -160,9 +160,9 @@ public class GameManager : MonoBehaviourPunCallbacks
                         Debug.Log("Localplayer now " + PhotonNetwork.LocalPlayer.ActorNumber);
                         Debug.Log("activeplayer now " + activePlayer);
                         playerList[activePlayer].myPlayers[0].SetSelector(true);
-                       playerList[activePlayer].myPlayers[0].turncounts++;
                        
-                       Debug.Log("Turn player " + playerList[activePlayer].playerName + " Turn'" + playerList[activePlayer].myPlayers[0].turncounts);
+                       
+                       
                        
                             if (playerList[activePlayer].hasJob1 == true && playerList[activePlayer].hasJob2 == true)
                             {
@@ -269,21 +269,22 @@ public class GameManager : MonoBehaviourPunCallbacks
                 _diceNumber = _diceNumber + dice2.diceValue;
             }
             rolledhumanDice = _diceNumber;
-            
-            HumanRollDice();
+            photonView.RPC("HumanRollD", RpcTarget.All);
+            //HumanRollDice();
         }
         Debug.Log("Dice Rolled number : " + DiceNumber);
         info.instance.showMessage("Roll Dice Number:" + _diceNumber);
     }
 
-
+    /*
     void MoveAPlayer(int DiceNumber)
     {
         List<Player1> moveablePlayers = new List<Player1>();
         moveablePlayers.Add(playerList[activePlayer].myPlayers[0]);
         if (moveablePlayers.Count > 0)
         {
-            //playerList[activePlayer].myPlayers[0].turncounts++;
+            moveablePlayers[activePlayer].StartTheMove(DiceNumber);
+            /*
             int num = moveablePlayers.Count;
             moveablePlayers[num-1].StartTheMove(DiceNumber);
             state = States.WAITING;
@@ -291,7 +292,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         }
         Debug.Log("Should switch player ");
         state = States.SWITCH_PLAYER;
-    }
+    }*/
 
     /*public override void OnRoomPropertiesUpdate(Hashtable propertiesThatChanged)
     {
@@ -340,14 +341,9 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     void SetNextActivePlayer()
     {
-        if (PhotonNetwork.IsMasterClient)
-        {
-            activePlayer++;
-            activePlayer %= playerList.Count;
-            photonView.RPC("nextPlayerRPC", RpcTarget.All,activePlayer);
-        }
-        
-        
+        activePlayer++;
+        activePlayer %= playerList.Count;
+        photonView.RPC("nextPlayerRPC", RpcTarget.All, activePlayer);
         int available = 0;
         for (int i = 0; i < playerList.Count; i++)
         {
@@ -429,11 +425,12 @@ public class GameManager : MonoBehaviourPunCallbacks
                 playerList[i].myPlayers[j].SetSelector(false);
             }
         }
+        //photonView.RPC("endTurn", RpcTarget.All,IsMyTurnSure());
     }
 
     public void HumanRoll()
     {
-        dice.RollDice();
+        photonView.RPC("rollDice", RpcTarget.All);
         ActivateButton(false);
     }
 
@@ -455,6 +452,8 @@ public class GameManager : MonoBehaviourPunCallbacks
 
         List<Player1> moveablePlayers = new List<Player1>();
         moveablePlayers.Add(playerList[activePlayer].myPlayers[0]);
+        //moveablePlayers[activePlayer].SetSelector(true);
+        //moveablePlayers[activePlayer].tohasturn();
         
         for (int i = 0; i < moveablePlayers.Count; i++)
         {
@@ -462,9 +461,11 @@ public class GameManager : MonoBehaviourPunCallbacks
             {
                 moveablePlayers[i].SetSelector(true);
                 moveablePlayers[i].tohasturn();
+                
             }
             else
             {
+                //photonView.RPC("nextPlayerRPC", RpcTarget.All, activePlayer);
                 state = States.SWITCH_PLAYER;
             }
         }
@@ -1054,8 +1055,10 @@ public class GameManager : MonoBehaviourPunCallbacks
     [PunRPC]
     void nextPlayerRPC(int nextPlayer)
     {
+        playerList[activePlayer].myPlayers[0].turncounts++;
         activePlayer = nextPlayer;
         TurnUI.text = "Turn player " + playerList[activePlayer].playerName + " Turn'" + playerList[activePlayer].myPlayers[0].turncounts;
+        Debug.Log("Turn player " + playerList[activePlayer].playerName + " Turn'" + playerList[activePlayer].myPlayers[0].turncounts);
     }
 
     [PunRPC]
@@ -1073,14 +1076,42 @@ public class GameManager : MonoBehaviourPunCallbacks
         Debug.Log("SetStartingPlayer RPC : " + activePlayer);
         info.instance.showMessage("Player " + activePlayer + " starts first");
         TurnUI.text = "Turn player " + playerList[activePlayer].playerName + " Turn'" + playerList[activePlayer].myPlayers[0].turncounts;
+        Debug.Log("Turn player " + playerList[activePlayer].playerName + " Turn'" + playerList[activePlayer].myPlayers[0].turncounts);
 
     }
 
-    
-
-    public void ChangeTurn(int newPlayerID)
+    [PunRPC]
+    void rollDice()
     {
-        // Logic to change turn. For example:
-        GameManager.instace.activePlayer = newPlayerID;
+        dice.RollDice();
+    }
+
+    [PunRPC]
+    void HumanRollD()
+    {
+        List<Player1> moveablePlayers = new List<Player1>();
+        moveablePlayers.Add(playerList[activePlayer].myPlayers[0]);
+        //moveablePlayers[activePlayer].SetSelector(true);
+        //moveablePlayers[activePlayer].tohasturn();
+
+        for (int i = 0; i < moveablePlayers.Count; i++)
+        {
+            if (moveablePlayers.Count > 0)
+            {
+                moveablePlayers[i].SetSelector(true);
+                moveablePlayers[i].tohasturn();
+
+            }
+            else
+            {
+                state = States.SWITCH_PLAYER;
+            }
+        }
+    }
+
+    [PunRPC]
+    void endTurn(bool on)
+    {
+        playerList[activePlayer].hasTurn = on;
     }
 }

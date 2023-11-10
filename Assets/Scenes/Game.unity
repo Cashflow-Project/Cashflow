@@ -17533,12 +17533,20 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2013104279}
     - target: {fileID: 1854391199728589440, guid: f2dadac5be49835499c419f7f70539b5, type: 3}
+      propertyPath: turncounts
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1854391199728589440, guid: f2dadac5be49835499c419f7f70539b5, type: 3}
       propertyPath: commonRoute
       value: 
       objectReference: {fileID: 1684081905}
     - target: {fileID: 1854391199728589467, guid: f2dadac5be49835499c419f7f70539b5, type: 3}
       propertyPath: sceneViewId
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1854391199728589468, guid: f2dadac5be49835499c419f7f70539b5, type: 3}
+      propertyPath: m_SynchronizeRotation
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2177111663324675432, guid: f2dadac5be49835499c419f7f70539b5, type: 3}
       propertyPath: m_RootOrder
@@ -17633,6 +17641,10 @@ PrefabInstance:
       propertyPath: outerRoute
       value: 
       objectReference: {fileID: 2013104279}
+    - target: {fileID: 2933116591348040201, guid: 81151d654125acd4a8f2cf1bda95752d, type: 3}
+      propertyPath: turncounts
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2933116591348040201, guid: 81151d654125acd4a8f2cf1bda95752d, type: 3}
       propertyPath: commonRoute
       value: 
@@ -17787,6 +17799,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2013104279}
     - target: {fileID: 4593130497382591952, guid: f308355464091164fbf883fe0cd83c8c, type: 3}
+      propertyPath: turncounts
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4593130497382591952, guid: f308355464091164fbf883fe0cd83c8c, type: 3}
       propertyPath: commonRoute
       value: 
       objectReference: {fileID: 1684081905}
@@ -17843,6 +17859,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5802866404580320668, guid: d602f15c7e7b38c409e6e0be463208f4, type: 3}
+      propertyPath: m_SynchronizeRotation
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5802866404580320669, guid: d602f15c7e7b38c409e6e0be463208f4, type: 3}
       propertyPath: sceneViewId
       value: 4
@@ -17863,6 +17883,10 @@ PrefabInstance:
       propertyPath: outerRoute
       value: 
       objectReference: {fileID: 2013104279}
+    - target: {fileID: 5802866404580320736, guid: d602f15c7e7b38c409e6e0be463208f4, type: 3}
+      propertyPath: turncounts
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5802866404580320736, guid: d602f15c7e7b38c409e6e0be463208f4, type: 3}
       propertyPath: commonRoute
       value: 
@@ -17957,12 +17981,20 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2013104279}
     - target: {fileID: 8233510428022991834, guid: fa58cb4b7e5ec5f4dbeae0b561f51941, type: 3}
+      propertyPath: turncounts
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8233510428022991834, guid: fa58cb4b7e5ec5f4dbeae0b561f51941, type: 3}
       propertyPath: commonRoute
       value: 
       objectReference: {fileID: 1684081905}
     - target: {fileID: 8233510428022991837, guid: fa58cb4b7e5ec5f4dbeae0b561f51941, type: 3}
       propertyPath: sceneViewId
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8233510428022991838, guid: fa58cb4b7e5ec5f4dbeae0b561f51941, type: 3}
+      propertyPath: m_SynchronizeRotation
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8487586968781556798, guid: fa58cb4b7e5ec5f4dbeae0b561f51941, type: 3}
       propertyPath: m_RootOrder
@@ -18114,9 +18146,17 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2013104279}
     - target: {fileID: 8530850236307854296, guid: ed6039dc0a8cf9c4fa56a4d33d166396, type: 3}
+      propertyPath: turncounts
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8530850236307854296, guid: ed6039dc0a8cf9c4fa56a4d33d166396, type: 3}
       propertyPath: commonRoute
       value: 
       objectReference: {fileID: 1684081905}
+    - target: {fileID: 8530850236307854300, guid: ed6039dc0a8cf9c4fa56a4d33d166396, type: 3}
+      propertyPath: m_SynchronizeRotation
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8530850236307854301, guid: ed6039dc0a8cf9c4fa56a4d33d166396, type: 3}
       propertyPath: sceneViewId
       value: 3

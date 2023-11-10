@@ -123,33 +123,5 @@ public class SpendDeckController : MonoBehaviour
     {
 
     }
-    /*public void DrawCardForMana()
-    {
-        if (BattleContrller.instance.playerMana >= drawCardCost)
-        {
-            DrawCardToHand();
-            BattleContrller.instance.SpendPlayerMana(drawCardCost);
-        }
-        else
-        {
-            UIController.instance.ShowManaWarning();
-            UIController.instance.drawButton.SetActive(false);
-        }
-    }
-
-    public void DrawMultipleCards(int amountToDraw)
-    {
-        StartCoroutine(DrawMultipleCo(amountToDraw));
-    }
-
-    IEnumerator DrawMultipleCo(int amountToDraw)
-    {
-        for (int i = 0; i < amountToDraw; i++)
-        {
-            DrawCardToHand();
-
-            yield return new WaitForSeconds(waitBetweenDrawingCard);
-
-        }
-    }*/
+    
 }

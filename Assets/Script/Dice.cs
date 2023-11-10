@@ -1,8 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
+using Photon.Realtime;
 
-public class Dice : MonoBehaviour
+public class Dice : MonoBehaviourPunCallbacks
 {
     public static Dice instace;
     Rigidbody rb;
@@ -49,6 +51,7 @@ public class Dice : MonoBehaviour
 
     void Update()
     {
+        //photonView.RPC("dice", RpcTarget.All);
         if (rb.IsSleeping() && !hasLanded && thrown)
         {
             hasLanded = true;
@@ -58,12 +61,13 @@ public class Dice : MonoBehaviour
             //check value
             SideValueCheck();
         }
-        else if(rb.IsSleeping() && hasLanded && diceValue == 0)
+        else if (rb.IsSleeping() && hasLanded && diceValue == 0)
         {
             //roll dice again
             RollAgain();
         }
-    }
+    
+}
 
     void RollAgain()
     {
@@ -85,6 +89,25 @@ public class Dice : MonoBehaviour
                 //diceValue = 12;
                 GameManager.instace.RollDice(diceValue);
             }
+        }
+    }
+
+    [PunRPC]
+    void dice()
+    {
+        if (rb.IsSleeping() && !hasLanded && thrown)
+        {
+            hasLanded = true;
+            rb.useGravity = true;
+            rb.isKinematic = true;
+
+            //check value
+            SideValueCheck();
+        }
+        else if (rb.IsSleeping() && hasLanded && diceValue == 0)
+        {
+            //roll dice again
+            RollAgain();
         }
     }
 }

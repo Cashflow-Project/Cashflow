@@ -43,6 +43,16 @@ MonoBehaviour:
   - SetFirstPlayer
   - nextPlayerRPC
   - SetPlayerJob
+  - MovingPlayer
+  - hasTurnToEveryone
+  - dice
+  - rollDice
+  - MovePlayer
+  - Move1
+  - Move
+  - HumanRollD
+  - endTurn
+  - EndTurnPlayer
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1
