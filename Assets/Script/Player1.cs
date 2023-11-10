@@ -142,7 +142,7 @@ public class Player1 : MonoBehaviourPunCallbacks
         {
             Debug.Log("in red route");
             //UIController.instance.drawButton.SetActive(IsMyTurn());
-            photonView.RPC("PlayerDraw", RpcTarget.All,IsMyTurn());
+            photonView.RPC("PlayerDraw", RpcTarget.All);
         }
 
         //blue route
@@ -358,9 +358,9 @@ public class Player1 : MonoBehaviourPunCallbacks
     }
 
     [PunRPC]
-    void PlayerDraw(bool canDraw)
+    void PlayerDraw()
     {
-        UIController.instance.drawButton.SetActive(canDraw);
+        UIController.instance.drawButton.SetActive(IsMyTurn());
     }
     [PunRPC]
     public IEnumerator Move1()
