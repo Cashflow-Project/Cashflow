@@ -17534,7 +17534,7 @@ PrefabInstance:
       objectReference: {fileID: 2013104279}
     - target: {fileID: 1854391199728589440, guid: f2dadac5be49835499c419f7f70539b5, type: 3}
       propertyPath: turncounts
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1854391199728589440, guid: f2dadac5be49835499c419f7f70539b5, type: 3}
       propertyPath: commonRoute
@@ -17643,7 +17643,7 @@ PrefabInstance:
       objectReference: {fileID: 2013104279}
     - target: {fileID: 2933116591348040201, guid: 81151d654125acd4a8f2cf1bda95752d, type: 3}
       propertyPath: turncounts
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2933116591348040201, guid: 81151d654125acd4a8f2cf1bda95752d, type: 3}
       propertyPath: commonRoute
@@ -17800,7 +17800,7 @@ PrefabInstance:
       objectReference: {fileID: 2013104279}
     - target: {fileID: 4593130497382591952, guid: f308355464091164fbf883fe0cd83c8c, type: 3}
       propertyPath: turncounts
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4593130497382591952, guid: f308355464091164fbf883fe0cd83c8c, type: 3}
       propertyPath: commonRoute
@@ -17885,7 +17885,7 @@ PrefabInstance:
       objectReference: {fileID: 2013104279}
     - target: {fileID: 5802866404580320736, guid: d602f15c7e7b38c409e6e0be463208f4, type: 3}
       propertyPath: turncounts
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5802866404580320736, guid: d602f15c7e7b38c409e6e0be463208f4, type: 3}
       propertyPath: commonRoute
@@ -17982,7 +17982,7 @@ PrefabInstance:
       objectReference: {fileID: 2013104279}
     - target: {fileID: 8233510428022991834, guid: fa58cb4b7e5ec5f4dbeae0b561f51941, type: 3}
       propertyPath: turncounts
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8233510428022991834, guid: fa58cb4b7e5ec5f4dbeae0b561f51941, type: 3}
       propertyPath: commonRoute
@@ -18147,7 +18147,7 @@ PrefabInstance:
       objectReference: {fileID: 2013104279}
     - target: {fileID: 8530850236307854296, guid: ed6039dc0a8cf9c4fa56a4d33d166396, type: 3}
       propertyPath: turncounts
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8530850236307854296, guid: ed6039dc0a8cf9c4fa56a4d33d166396, type: 3}
       propertyPath: commonRoute

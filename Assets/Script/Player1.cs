@@ -96,7 +96,7 @@ public class Player1 : MonoBehaviourPunCallbacks
             {
                 Debug.Log("pass orange route");
                 //UIController.instance.passButton.SetActive(IsMyTurn());
-                photonView.RPC("EndTurnPlayer", RpcTarget.All, IsMyTurn());
+                photonView.RPC("EndTurnPlayer", RpcTarget.All);
                 GameManager.instace.playerList[GameManager.instace.activePlayer].money = GameManager.instace.playerList[GameManager.instace.activePlayer].money + GameManager.instace.playerList[GameManager.instace.activePlayer].getmoney;
                 //GameManager.instace.state = GameManager.States.SWITCH_PLAYER;
             }
@@ -134,7 +134,7 @@ public class Player1 : MonoBehaviourPunCallbacks
         {
             Debug.Log("in green route");
             //UIController.instance.passButton.SetActive(IsMyTurn());
-            photonView.RPC("EndTurnPlayer", RpcTarget.All, IsMyTurn());
+            photonView.RPC("EndTurnPlayer", RpcTarget.All);
             //GameManager.instace.state = GameManager.States.SWITCH_PLAYER;
         }
         //red route
@@ -142,7 +142,7 @@ public class Player1 : MonoBehaviourPunCallbacks
         {
             Debug.Log("in red route");
             //UIController.instance.drawButton.SetActive(IsMyTurn());
-            photonView.RPC("PlayerDraw", RpcTarget.All, IsMyTurn());
+            photonView.RPC("PlayerDraw", RpcTarget.All,IsMyTurn());
         }
 
         //blue route
@@ -150,7 +150,7 @@ public class Player1 : MonoBehaviourPunCallbacks
         {
             Debug.Log("in blue route");
             //UIController.instance.passButton.SetActive(IsMyTurn());
-            photonView.RPC("EndTurnPlayer", RpcTarget.All, IsMyTurn());
+            photonView.RPC("EndTurnPlayer", RpcTarget.All);
             //GameManager.instace.state = GameManager.States.SWITCH_PLAYER;
         }
         //purple1 route
@@ -158,7 +158,7 @@ public class Player1 : MonoBehaviourPunCallbacks
         {
             Debug.Log("in purple 1 route");
             //UIController.instance.passButton.SetActive(IsMyTurn());
-            photonView.RPC("EndTurnPlayer", RpcTarget.All, IsMyTurn());
+            photonView.RPC("EndTurnPlayer", RpcTarget.All);
             //GameManager.instace.state = GameManager.States.SWITCH_PLAYER;
         }
         //purple2 route
@@ -166,7 +166,7 @@ public class Player1 : MonoBehaviourPunCallbacks
         {
             Debug.Log("in purple 2 route");
             //UIController.instance.passButton.SetActive(IsMyTurn());
-            photonView.RPC("EndTurnPlayer", RpcTarget.All, IsMyTurn());
+            photonView.RPC("EndTurnPlayer", RpcTarget.All);
             //GameManager.instace.state = GameManager.States.SWITCH_PLAYER;
             GameManager.instace.playerList[GameManager.instace.activePlayer].hasJob1 = false;
             GameManager.instace.playerList[GameManager.instace.activePlayer].hasJob2 = false;
@@ -175,7 +175,8 @@ public class Player1 : MonoBehaviourPunCallbacks
         if (routePosition % fullRoute.Count == 20)
         {
             Debug.Log("in purple 3 route");
-            photonView.RPC("EndTurnPlayer", RpcTarget.All,IsMyTurn());
+            photonView.RPC("EndTurnPlayer", RpcTarget.All);
+            //UIController.instance.passButton.SetActive(IsMyTurn());
             GameManager.instace.playerList[GameManager.instace.activePlayer].hasChild = true;
             if (GameManager.instace.playerList[GameManager.instace.activePlayer].child <= 3)
             {
@@ -351,9 +352,9 @@ public class Player1 : MonoBehaviourPunCallbacks
     }
 
     [PunRPC]
-    void EndTurnPlayer(bool isTurn)
+    void EndTurnPlayer()
     {
-        UIController.instance.passButton.SetActive(isTurn);
+        UIController.instance.passButton.SetActive(IsMyTurn());
     }
 
     [PunRPC]

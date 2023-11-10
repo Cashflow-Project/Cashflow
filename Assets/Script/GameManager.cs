@@ -160,11 +160,11 @@ public class GameManager : MonoBehaviourPunCallbacks
                         Debug.Log("Localplayer now " + PhotonNetwork.LocalPlayer.ActorNumber);
                         Debug.Log("activeplayer now " + activePlayer);
                         playerList[activePlayer].myPlayers[0].SetSelector(true);
-                       
-                       
-                       
-                       
-                            if (playerList[activePlayer].hasJob1 == true && playerList[activePlayer].hasJob2 == true)
+                        playerList[activePlayer].myPlayers[0].turncounts++;
+                        photonView.RPC("turnCountRPC", RpcTarget.All, playerList[activePlayer].myPlayers[0].turncounts);
+
+
+                        if (playerList[activePlayer].hasJob1 == true && playerList[activePlayer].hasJob2 == true)
                             {
                                 state = States.ROLL_DICE;
                             }
@@ -1051,14 +1051,19 @@ public class GameManager : MonoBehaviourPunCallbacks
         playerList[i].playerJob = jobPlayer;
         CheckingJob(i);
     }
-
+    [PunRPC]
+    void turnCountRPC(int turncount)
+    {
+        playerList[activePlayer].myPlayers[0].turncounts = turncount;
+        TurnUI.text = "Turn player " + playerList[activePlayer].playerName + " Turn'" + playerList[activePlayer].myPlayers[0].turncounts;
+        Debug.Log("Turn player " + playerList[activePlayer].playerName + " Turn'" + playerList[activePlayer].myPlayers[0].turncounts);
+    }
     [PunRPC]
     void nextPlayerRPC(int nextPlayer)
     {
-        playerList[activePlayer].myPlayers[0].turncounts++;
+        
         activePlayer = nextPlayer;
-        TurnUI.text = "Turn player " + playerList[activePlayer].playerName + " Turn'" + playerList[activePlayer].myPlayers[0].turncounts;
-        Debug.Log("Turn player " + playerList[activePlayer].playerName + " Turn'" + playerList[activePlayer].myPlayers[0].turncounts);
+        
     }
 
     [PunRPC]

@@ -42,8 +42,8 @@ public class SpendDeckController : MonoBehaviourPunCallbacks
         UIController.instance.drawButton.SetActive(false);
         UIController.instance.cardShow.enabled = false;
         UIController.instance.cancelButton.SetActive(false);
-        //UIController.instance.passButton.SetActive(false);
-        photonView.RPC("EndTurnPlayer", RpcTarget.All, false);
+        UIController.instance.passButton.SetActive(false);
+        //photonView.RPC("EndTurnPlayer", RpcTarget.All, false);
         UIController.instance.loanButton.SetActive(false);
         UIController.instance.payButton.SetActive(false);
 
@@ -105,7 +105,7 @@ public class SpendDeckController : MonoBehaviourPunCallbacks
             UIController.instance.payButton.SetActive(false);
 
             //UIController.instance.passButton.SetActive(true);
-            photonView.RPC("EndTurnPlayer", RpcTarget.All, true);
+            photonView.RPC("EndTurnPlayer", RpcTarget.All);
         }
         else
         {
@@ -117,7 +117,7 @@ public class SpendDeckController : MonoBehaviourPunCallbacks
             UIController.instance.payButton.SetActive(false);
 
             //UIController.instance.passButton.SetActive(true);
-            photonView.RPC("EndTurnPlayer", RpcTarget.All, true);
+            photonView.RPC("EndTurnPlayer", RpcTarget.All);
         }
         
 
@@ -135,8 +135,9 @@ public class SpendDeckController : MonoBehaviourPunCallbacks
     }
 
     [PunRPC]
-    void EndTurnPlayer(bool isTurn)
+    void EndTurnPlayer()
     {
-        UIController.instance.passButton.SetActive(isTurn);
+        UIController.instance.passButton.SetActive(IsMyTurn());
     }
+
 }

@@ -53,6 +53,9 @@ MonoBehaviour:
   - HumanRollD
   - endTurn
   - EndTurnPlayer
+  - PlayerDraw
+  - payMoney
+  - turnCountRPC
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1
