@@ -45,18 +45,11 @@ public class Player1 : Photon.Pun.MonoBehaviourPun
 
     void Start()
     {
-        
 
         startNodeIndex = commonRoute.RequestPosition(startNode.gameObject.transform);
 
         CreateFullRoute();
         
-        
-            
-
-
-
-
         SetSelector(false);
     }
 
@@ -192,11 +185,6 @@ public class Player1 : Photon.Pun.MonoBehaviourPun
         
 
     }
-    bool MoveToNextNode(Vector3 lastPos,float speed)
-    {
-        return lastPos != (transform.position = Vector3.MoveTowards(transform.position, lastPos, speed * Time.deltaTime));
-
-    }
 
     bool MoveInArcToNextNode(Vector3 startPos,Vector3 lastPos,float speed)
     {
@@ -314,7 +302,7 @@ public class Player1 : Photon.Pun.MonoBehaviourPun
     {
         if (IsMyTurn())
         {
-            selector.SetActive(IsMyTurn());
+            selector.SetActive(true);
             hasTurn = on;
         }
     }
@@ -323,11 +311,13 @@ public class Player1 : Photon.Pun.MonoBehaviourPun
     {
      if (hasTurn)
      {
+            StartTheMove(GameManager.instace.rolledhumanDice);
+            /*
             if (GameManager.instace.dice2.diceValue > 0)
             {
                 GameManager.instace.rolledhumanDice = GameManager.instace.rolledhumanDice + GameManager.instace.dice2.diceValue;
-            }
-            StartTheMove(GameManager.instace.rolledhumanDice);
+            }*/
+            //StartTheMove(GameManager.instace.rolledhumanDice);
      }
         GameManager.instace.DeactivateAllSelector();
     }
