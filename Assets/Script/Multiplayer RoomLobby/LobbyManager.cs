@@ -7,6 +7,7 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
 
+
 public class LobbyManager : MonoBehaviourPunCallbacks
 {
     public static LobbyManager instance;
@@ -117,6 +118,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     {
         leaveRoomBtn.interactable = false;
         startGameBtn.interactable = false;
+        
     }
     private void Connect()
     {

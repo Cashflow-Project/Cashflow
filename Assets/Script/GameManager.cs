@@ -172,14 +172,12 @@ public class GameManager : MonoBehaviourPunCallbacks
                             {
                                 if (playerList[activePlayer].hasJob1 == true && playerList[activePlayer].hasJob2 == false)
                                 {
-                                    playerList[activePlayer].hasJob2 = true;
-                                    Debug.Log("unemployee 2");
-                                }
+                                photonView.RPC("hasJob2", RpcTarget.All);
+                            }
                                 if (playerList[activePlayer].hasJob1 == false && playerList[activePlayer].hasJob2 == false)
                                 {
-                                    playerList[activePlayer].hasJob1 = true;
-                                    Debug.Log("unemployee 1");
-                                }
+                                photonView.RPC("hasJob1", RpcTarget.All);
+                            }
                                 state = States.SWITCH_PLAYER;
                             }
 
@@ -556,19 +554,9 @@ public class GameManager : MonoBehaviourPunCallbacks
                 //CheckingJob(i);
             }
 
-            //photonView.RPC("SetPlayerFirstMoney", RpcTarget.All, playerList[activePlayer].firstMoney);
-            /*photonView.RPC("SetPlayerJob", RpcTarget.AllBuffered, playerList[activePlayer].money);
-            photonView.RPC("SetPlayerJob", RpcTarget.AllBuffered, playerList[activePlayer].salary);
-            photonView.RPC("SetPlayerJob", RpcTarget.AllBuffered, playerList[activePlayer].income);
-            photonView.RPC("SetPlayerJob", RpcTarget.AllBuffered, playerList[activePlayer].allRecieve);
-            photonView.RPC("SetPlayerJob", RpcTarget.AllBuffered, playerList[activePlayer].tax);
-            photonView.RPC("SetPlayerJob", RpcTarget.AllBuffered, playerList[activePlayer].homeMortgage);
-            photonView.RPC("SetPlayerJob", RpcTarget.AllBuffered, playerList[activePlayer].learnMortgage);
-            photonView.RPC("SetPlayerJob", RpcTarget.AllBuffered, playerList[activePlayer].carMortgage);
-            photonView.RPC("SetPlayerJob", RpcTarget.AllBuffered, playerList[activePlayer].creditcardMortgage);
-            photonView.RPC("SetPlayerJob", RpcTarget.AllBuffered, playerList[activePlayer].extraPay);
-            photonView.RPC("SetPlayerJob", RpcTarget.AllBuffered, playerList[activePlayer].InstallmentsBank);
+            //photonView.RPC("SetPlayerFirstMoney", RpcTarget.All, playerList[activePlayer].firstMoney, playerList[activePlayer].money, playerList[activePlayer].salary, playerList[activePlayer].income, playerList[activePlayer].allRecieve, playerList[activePlayer].tax, playerList[activePlayer].homeMortgage, playerList[activePlayer].learnMortgage, playerList[activePlayer].carMortgage, playerList[activePlayer].creditcardMortgage, playerList[activePlayer].extraPay, playerList[activePlayer].InstallmentsBank);
 
+            /*
             photonView.RPC("SetPlayerJob", RpcTarget.AllBuffered, playerList[activePlayer].homeDebt);
             photonView.RPC("SetPlayerJob", RpcTarget.AllBuffered, playerList[activePlayer].learnDebt);
             photonView.RPC("SetPlayerJob", RpcTarget.AllBuffered, playerList[activePlayer].carDebt);
@@ -1064,6 +1052,19 @@ public class GameManager : MonoBehaviourPunCallbacks
         
         activePlayer = nextPlayer;
         
+    }
+    [PunRPC]
+    void hasJob2()
+    {
+        playerList[activePlayer].hasJob2 = true;
+        Debug.Log("unemployee 2");
+    }
+
+    [PunRPC]
+    void hasJob1()
+    {
+        playerList[activePlayer].hasJob1 = true;
+        Debug.Log("unemployee 1");
     }
 
     [PunRPC]
