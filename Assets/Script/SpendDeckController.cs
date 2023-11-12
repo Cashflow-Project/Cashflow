@@ -149,7 +149,7 @@ public class SpendDeckController : MonoBehaviourPunCallbacks
         }
         else
         {
-            Debug.Log("7");
+            //Debug.Log("7");
             //photonView.RPC("CalculateSpendRPChasChild", RpcTarget.All, GameManager.instace.playerList[GameManager.instace.activePlayer].money);
             GameManager.instace.playerList[GameManager.instace.activePlayer].money = GameManager.instace.playerList[GameManager.instace.activePlayer].money - usedCards[cardcount - 1].payCost;
             photonView.RPC("UpdateMoney", RpcTarget.All, GameManager.instace.playerList[GameManager.instace.activePlayer].money, GameManager.instace.activePlayer);
