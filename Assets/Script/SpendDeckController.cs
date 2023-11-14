@@ -25,7 +25,7 @@ public class SpendDeckController : MonoBehaviourPunCallbacks
 
     public List<CardSpendScriptableObj> usedCards = new List<CardSpendScriptableObj>();
 
-    //List<CardSpendScriptableObj> tempDeck = new List<CardSpendScriptableObj>();
+    public List<CardSpendScriptableObj> tempDeck = new List<CardSpendScriptableObj>();
 
     //int iterations = 0;
 
@@ -59,6 +59,8 @@ public class SpendDeckController : MonoBehaviourPunCallbacks
         //photonView.RPC("EndTurnPlayer", RpcTarget.All, false);
         UIController.instance.loanButton.SetActive(false);
         UIController.instance.payButton.SetActive(false);
+
+        //photonView.RPC("CreateSpendDeckStart", RpcTarget.All);
         /*
         activeCards.Clear();
         List<CardSpendScriptableObj> tempDeck = new List<CardSpendScriptableObj>();
@@ -74,26 +76,27 @@ public class SpendDeckController : MonoBehaviourPunCallbacks
 
             iterations++;
         }*/
-        
+        activeCards.Clear();
+        tempDeck.AddRange(deckToUse);
         if (PhotonNetwork.IsMasterClient)
         {
-            activeCards.Clear();
-            List<CardSpendScriptableObj> tempDeck = new List<CardSpendScriptableObj>();
-            tempDeck.AddRange(deckToUse);
+            //activeCards.Clear();
+            //List<CardSpendScriptableObj> tempDeck = new List<CardSpendScriptableObj>();
+            //tempDeck.AddRange(deckToUse);
 
             int iterations = 0;
             while (tempDeck.Count > 0 && iterations < 500)
             {
                 int selected = Random.Range(0, tempDeck.Count);
-                //photonView.RPC("CreateSpendDeckStart", RpcTarget.All,selected);
-                activeCards.Add(tempDeck[selected]);
-                tempDeck.RemoveAt(selected);
+                photonView.RPC("CreateSpendDeckStart", RpcTarget.All,selected);
+                //activeCards.Add(tempDeck[selected]);
+                //tempDeck.RemoveAt(selected);
 
                 iterations++;
             }
             //photonView.RPC("CreateSpendDeckStart", RpcTarget.All);
         }
-            
+
     }
 
     public void DrawCardToHand()
@@ -186,12 +189,15 @@ public class SpendDeckController : MonoBehaviourPunCallbacks
     }
 
     [PunRPC]
-    void CreateSpendDeckStart()
+    void CreateSpendDeckStart(int selected)
     {
-        activeCards.AddRange(activeCards);
+        activeCards.Add(tempDeck[selected]);
+        tempDeck.RemoveAt(selected);
+        //activeCards.AddRange(activeCards);
         //activeCards.Add(tempDeck[i]);
         //tempDeck.RemoveAt(i);
         //iterations++;
+
     }
 
     [PunRPC]
