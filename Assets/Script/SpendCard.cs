@@ -52,7 +52,7 @@ public class SpendCard : MonoBehaviourPunCallbacks
     {
         transform.position = Vector3.Lerp(transform.position, targetPoint, moveSpeed * Time.deltaTime);
         transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot ,rotateSpeed * Time.deltaTime);
-
+/*
         if(isSelected){
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
@@ -103,13 +103,13 @@ public class SpendCard : MonoBehaviourPunCallbacks
             }
         }
 
-        justPressed = false;
+        justPressed = false;*/
     }
     public void MoveToPoint(Vector3 pointToMoveTo, Quaternion rotToMatch){
         targetPoint = pointToMoveTo;
         targetRot = rotToMatch;
     }
-
+    /*
     private void OnMouseOver(){
         if(OnShowing){
             MoveToPoint(sc.cardPosition[ShowPosition] + new Vector3(0f, 1f, .5f),Quaternion.identity);
@@ -135,6 +135,6 @@ public class SpendCard : MonoBehaviourPunCallbacks
 
         MoveToPoint(sc.cardPosition[ShowPosition],sc.minPos.rotation);
     }
-
+    */
    
 }

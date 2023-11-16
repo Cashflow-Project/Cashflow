@@ -14,6 +14,43 @@ public class GameManager : MonoBehaviourPunCallbacks
     public static GameManager instace;
 
     [System.Serializable]
+    public class DealKeep
+    {
+        public string CardName;
+        public int BusinessValue;
+        public int DownPayment;
+        public int BankLoan;
+        public int CashflowIncome;
+
+        public bool house3s2;
+        public bool house2s1;
+        public bool Condominium;
+        public bool CommercialBuilding;
+        public bool Apartment;
+
+    }
+
+    [System.Serializable]
+    public class OtherInvestKeep
+    {
+        public string CardName;
+
+
+    }
+
+    [System.Serializable]
+    public class InvestKeep
+    {
+        public string CardName;
+        public int countShare;
+        public int pricePerShare;
+        public bool ON2U;
+        public bool MYT4U;
+        public bool GRO4US;
+        public bool OK4U;
+    }
+
+    [System.Serializable]
     public class Entity
     {
        
@@ -89,9 +126,13 @@ public class GameManager : MonoBehaviourPunCallbacks
         public bool hascommercialBuilding;
         public bool hasApartment;
 
+        public List<DealKeep> DealList = new List<DealKeep>();
+        public List<InvestKeep> InvestList = new List<InvestKeep>();
+        public List<OtherInvestKeep> OtherInvestList = new List<OtherInvestKeep>();
+
     }
 
-
+    
     public List<Entity> playerList = new List<Entity>();
     public List<Entity> SortplayerList = new List<Entity>();
 
