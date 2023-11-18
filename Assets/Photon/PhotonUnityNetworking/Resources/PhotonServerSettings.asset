@@ -68,6 +68,9 @@ MonoBehaviour:
   - GetChild
   - hasJob1
   - hasJob2
+  - CalculateBigDealRPC
+  - CreateBigDealDeckStart
+  - drawCardBigDeal
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

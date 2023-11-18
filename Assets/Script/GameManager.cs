@@ -27,6 +27,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         public bool Condominium;
         public bool CommercialBuilding;
         public bool Apartment;
+        public bool Business;
 
     }
 
@@ -48,6 +49,13 @@ public class GameManager : MonoBehaviourPunCallbacks
         public bool MYT4U;
         public bool GRO4US;
         public bool OK4U;
+    }
+
+    [System.Serializable]
+    public class Note
+    {
+        public string CardName;
+        public int price; 
     }
 
     [System.Serializable]
@@ -126,9 +134,12 @@ public class GameManager : MonoBehaviourPunCallbacks
         public bool hascommercialBuilding;
         public bool hasApartment;
 
+        public int KeepCount;
+
         public List<DealKeep> DealList = new List<DealKeep>();
         public List<InvestKeep> InvestList = new List<InvestKeep>();
         public List<OtherInvestKeep> OtherInvestList = new List<OtherInvestKeep>();
+        public List<Note> Keep = new List<Note>();
 
     }
 

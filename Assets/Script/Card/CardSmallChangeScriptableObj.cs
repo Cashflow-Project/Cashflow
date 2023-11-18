@@ -7,7 +7,19 @@ public class CardSmallChangeScriptableObj : ScriptableObject
 {
     public string cardName;
 
-    public int payCost;
+    public int BusinessValue;
+
+    public int DownPayment;
+
+    public int BankLoan;
+
+    public int CashflowIncome;
+
+    public bool house3s2;
+    public bool house2s1;
+    public bool Condominium;
+    public bool CommercialBuilding;
+    public bool Apartment;
 
     public bool canLoan;
 

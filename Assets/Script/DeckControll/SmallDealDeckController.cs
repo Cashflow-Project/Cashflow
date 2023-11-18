@@ -53,7 +53,7 @@ public class SmallDealDeckController : MonoBehaviourPunCallbacks
         UIController.instance.cardShow.enabled = false;
         UIController.instance.cancelButton.SetActive(false);
         UIController.instance.passButton.SetActive(false);
-        UIController.instance.loanButton.SetActive(false);
+        
         UIController.instance.payButton.SetActive(false);
 
       
@@ -90,7 +90,7 @@ public class SmallDealDeckController : MonoBehaviourPunCallbacks
 
         UIController.instance.cardShow.enabled = true;
 
-        UIController.instance.loanButton.SetActive(true);
+        
         UIController.instance.payButton.SetActive(true);
         UIController.instance.drawButton.SetActive(false);
 
@@ -112,7 +112,7 @@ public class SmallDealDeckController : MonoBehaviourPunCallbacks
 
             UIController.instance.drawButton.SetActive(false);
             UIController.instance.cardShow.enabled = false;
-            UIController.instance.loanButton.SetActive(false);
+            
             UIController.instance.payButton.SetActive(false);
 
             UIController.instance.passButton.SetActive(true);
@@ -124,7 +124,7 @@ public class SmallDealDeckController : MonoBehaviourPunCallbacks
             photonView.RPC("UpdateMoney", RpcTarget.All, GameManager.instace.playerList[GameManager.instace.activePlayer].money, GameManager.instace.activePlayer);
             UIController.instance.drawButton.SetActive(false);
             UIController.instance.cardShow.enabled = false;
-            UIController.instance.loanButton.SetActive(false);
+            
             UIController.instance.payButton.SetActive(false);
             UIController.instance.passButton.SetActive(true);
         }
@@ -196,7 +196,7 @@ public class SmallDealDeckController : MonoBehaviourPunCallbacks
 
         UIController.instance.cardShow.enabled = true;
 
-        UIController.instance.loanButton.SetActive(true);
+        
         UIController.instance.payButton.SetActive(true);
         UIController.instance.drawButton.SetActive(false);
 
