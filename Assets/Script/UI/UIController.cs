@@ -57,9 +57,21 @@ public class UIController : MonoBehaviour
 
     }
 
+    public void Loan()
+    {
+
+    }
+
     public void Quit()
     {
         PhotonNetwork.LeaveRoom();
         SceneManager.LoadScene("Lobby");
+    }
+
+    [PunRPC]
+    void AddToUseCard()
+    {
+
+
     }
 }
