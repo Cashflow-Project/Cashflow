@@ -52,5 +52,6 @@
         "temp/":true,
         "Temp/":true
     },
-    "dotnet.defaultSolution": "Cashflow1.sln"
+    "dotnet.defaultSolution": "Cashflow1.sln",
+    "dotnet.preferCSharpExtension": true
 }

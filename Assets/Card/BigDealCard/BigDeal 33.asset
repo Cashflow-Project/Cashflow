@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4af132f3d0fe964181569730efd15d5, type: 3}
+  m_Name: BigDeal 33
+  m_EditorClassIdentifier: 
+  cardName: pizza franchines
+  BusinessValue: 5000000
+  DownPayment: 1000000
+  BankLoan: 4000000
+  CashflowIncome: 50000
+  house3s2: 0
+  CommercialBuilding: 0
+  Apartment: 0
+  Business: 1
+  count: 0
+  canLoan: 0
+  cardSprite: {fileID: 21300000, guid: 7cb70b251e09acb4a8fc3e10c279e3de, type: 3}

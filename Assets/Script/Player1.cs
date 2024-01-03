@@ -77,6 +77,18 @@ public class Player1 : MonoBehaviourPunCallbacks
     [PunRPC]
     IEnumerator Move()
     {
+        if (GameManager.instace.playerList[GameManager.instace.activePlayer].EnterOuter == true)
+        {
+            GameManager.instace.playerList[GameManager.instace.activePlayer].EnterOuter = false;
+ 
+        }
+        
+
+        if (GameManager.instace.playerList[GameManager.instace.activePlayer].hasOutside == true)
+        {
+            fullRoute = outterRoute;
+        }
+
         if (isMoving)
         {
             yield break;
@@ -134,7 +146,8 @@ public class Player1 : MonoBehaviourPunCallbacks
         {
             Debug.Log("in green route");
             //UIController.instance.passButton.SetActive(IsMyTurn());
-            photonView.RPC("EndTurnPlayer", RpcTarget.All);
+
+            photonView.RPC("PlayerChooseSmallBig", RpcTarget.All);
             //GameManager.instace.state = GameManager.States.SWITCH_PLAYER;
         }
         //red route
@@ -383,7 +396,12 @@ public class Player1 : MonoBehaviourPunCallbacks
     {
         UIController.instance.drawButton.SetActive(IsMyTurn());
     }
-    
+
+    [PunRPC]
+    void PlayerChooseSmallBig()
+    {
+        UIController.instance.ChooseBigSmall.SetActive(IsMyTurn());
+    }
 }
 
  

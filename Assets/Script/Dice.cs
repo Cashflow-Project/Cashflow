@@ -86,7 +86,7 @@ public class Dice : MonoBehaviourPunCallbacks
             {
                 diceValue = side.sideValue;
                 //send result to gamemanager
-                diceValue = 2;
+                //diceValue = 2;
                 GameManager.instace.RollDice(diceValue);
             }
         }

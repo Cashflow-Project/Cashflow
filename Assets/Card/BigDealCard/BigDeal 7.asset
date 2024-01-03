@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4af132f3d0fe964181569730efd15d5, type: 3}
+  m_Name: BigDeal 7
+  m_EditorClassIdentifier: 
+  cardName: Commercial Building 2n
+  BusinessValue: 1750000
+  DownPayment: 180000
+  BankLoan: 1520000
+  CashflowIncome: 9000
+  house3s2: 0
+  CommercialBuilding: 1
+  Apartment: 0
+  Business: 0
+  count: 2
+  canLoan: 0
+  cardSprite: {fileID: 21300000, guid: f482950916897164a8ecb4dbb067a956, type: 3}

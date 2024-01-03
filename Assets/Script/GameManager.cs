@@ -85,7 +85,6 @@ public class GameManager : MonoBehaviourPunCallbacks
         public int firstMoney;
 
         //ธุรกิจ
-
         //รายรับ
         public int salary;
         public int income;
@@ -133,9 +132,10 @@ public class GameManager : MonoBehaviourPunCallbacks
         public bool hasCondominium21;
         public bool hascommercialBuilding;
         public bool hasApartment;
+        public int GoldCoins;
 
         public int KeepCount;
-
+        public bool EnterOuter;
         public List<DealKeep> DealList = new List<DealKeep>();
         public List<InvestKeep> InvestList = new List<InvestKeep>();
         public List<OtherInvestKeep> OtherInvestList = new List<OtherInvestKeep>();
@@ -208,6 +208,11 @@ public class GameManager : MonoBehaviourPunCallbacks
             {
                 case States.START_TURN:
                     {
+                        if (playerList[activePlayer].income > playerList[activePlayer].paid)
+                        {
+                            playerList[activePlayer].EnterOuter = true;
+                            playerList[activePlayer].hasOutside = true;
+                        }
                         Debug.Log(IsMyTurnSure());
                         Debug.Log("Localplayer now " + PhotonNetwork.LocalPlayer.ActorNumber);
                         Debug.Log("activeplayer now " + activePlayer);

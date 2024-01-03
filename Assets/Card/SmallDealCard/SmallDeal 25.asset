@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69a3e7854f1da4643a979c9c3f4b57ed, type: 3}
+  m_Name: SmallDeal 25
+  m_EditorClassIdentifier: 
+  cardName: 
+  BusinessValue: 0
+  DownPayment: 0
+  BankLoan: 0
+  CashflowIncome: 0
+  house3s2: 0
+  house2s1: 0
+  Condominium: 0
+  CommercialBuilding: 0
+  Apartment: 0
+  canLoan: 0
+  cardSprite: {fileID: 0}

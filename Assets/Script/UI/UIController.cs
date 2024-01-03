@@ -27,6 +27,7 @@ public class UIController : MonoBehaviour
     public GameObject cancelButton;
     public GameObject passButton;
     public GameObject drawButton;
+    public GameObject ChooseBigSmall;
     // Start is called before the first frame update
     void Start()
     {
@@ -46,6 +47,16 @@ public class UIController : MonoBehaviour
     public void DrawCard()
     {
         SpendDeckController.instance.DrawCardToHand();
+    }
+
+    public void DrawBigCard()
+    {
+        BigDealDeckController.instance.DrawCardToHand();
+    }
+
+    public void DrawSmallCard()
+    {
+        SmallDealDeckController.instance.DrawCardToHand();
     }
 
     public void PayCost()

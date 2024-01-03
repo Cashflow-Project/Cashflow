@@ -15,6 +15,17 @@ public class CardSmallChangeScriptableObj : ScriptableObject
 
     public int CashflowIncome;
 
+    public bool special;
+    public bool extra1;
+    public bool extra2;
+    public bool extra3;
+    public bool ON2U;
+    public bool MYT4U;
+    public bool GRO4US;
+    public bool OK4U;
+    public bool GoldCoins;
+    public int value;
+    public int count;
     public bool house3s2;
     public bool house2s1;
     public bool Condominium;
