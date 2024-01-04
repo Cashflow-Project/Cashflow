@@ -13,13 +13,14 @@ public class UIController : MonoBehaviour
 {
     public static UIController instance;
 
-    
+    public Text infoText;
     public Image cardShow;
     public Text roomname;
 
     private void Awake()
     {
         instance = this;
+        infoText.text = "";
     }
 
     public GameObject payButton;
@@ -43,6 +44,15 @@ public class UIController : MonoBehaviour
         
     }
 
+    public void showMessage(string text)
+    {
+        infoText.text = text;
+    }
+
+    internal void showMessage(object p)
+    {
+        throw new NotImplementedException();
+    }
 
     public void DrawCard()
     {

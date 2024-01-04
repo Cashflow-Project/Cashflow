@@ -173,7 +173,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         instace = this;
 
         photonView = GetComponent<PhotonView>();
-
+        /*
         for (int i = 0; i < playerList.Count; i++)
         {
             if (SaveSettings.players[i] == "HUMAN")
@@ -185,7 +185,7 @@ public class GameManager : MonoBehaviourPunCallbacks
                 //playerList.RemoveAt(i);
                 playerList[i].playerType = Entity.PlayerTypes.NO_PLAYER;
             }
-        }
+        }*/
     }
 
     void Start()
@@ -328,7 +328,7 @@ public class GameManager : MonoBehaviourPunCallbacks
             //HumanRollDice();
         }
         Debug.Log("Dice Rolled number : " + DiceNumber);
-        info.instance.showMessage("Roll Dice Number:" + _diceNumber);
+        UIController.instance.showMessage("Roll Dice Number:" + _diceNumber);
     }
 
     /*
@@ -435,7 +435,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     {
         //show some ui
         playerList[activePlayer].hasOutside = true;
-
+/*
         for (int i = 0; i < SaveSettings.winners.Length; i++)
         {
             if (SaveSettings.winners[i] == "")
@@ -443,7 +443,7 @@ public class GameManager : MonoBehaviourPunCallbacks
                 SaveSettings.winners[i] = playerList[activePlayer].playerName;
                 break;
             }
-        }
+        }*/
 
     }
 
@@ -1137,7 +1137,7 @@ public class GameManager : MonoBehaviourPunCallbacks
             }
         }
         Debug.Log("SetStartingPlayer RPC : " + activePlayer);
-        info.instance.showMessage("Player " + activePlayer + " starts first");
+        UIController.instance.showMessage("Player " + activePlayer + " starts first");
         TurnUI.text = "Turn player " + playerList[activePlayer].playerName + " Turn'" + playerList[activePlayer].myPlayers[0].turncounts;
         Debug.Log("Turn player " + playerList[activePlayer].playerName + " Turn'" + playerList[activePlayer].myPlayers[0].turncounts);
 
