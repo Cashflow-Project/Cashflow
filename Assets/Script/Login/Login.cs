@@ -7,21 +7,28 @@ using UnityEngine.UI;
 
 public class Login : MonoBehaviour
 {
-    [SerializeField] private string authenticationEndpoint = "http://127.0.0.1:13756/account";
+    [SerializeField] private string LoginEndpoint = "http://127.0.0.1:13756/account/login";
+    [SerializeField] private string createEndpoint = "http://127.0.0.1:13756/account/create";
 
     [SerializeField] private TextMeshProUGUI alertText;
     [SerializeField] private Button loginButton;
+    [SerializeField] private Button createButton;
     [SerializeField] private TMP_InputField usernameInputField;
     [SerializeField] private TMP_InputField passwordInputField;
 
     public void OnLoginClick()
     {
         alertText.text = "Signing in...";
-        loginButton.interactable = false;
-
+        ActivateButtons(false);
         StartCoroutine(TryLogin());
     }
 
+    public void OnCreateClick()
+    {
+        alertText.text = "Creating account...";
+        ActivateButtons(false);
+        StartCoroutine(TryCreate());
+    }
     private IEnumerator TryLogin()
     {
 
@@ -31,14 +38,14 @@ public class Login : MonoBehaviour
         if(username.Length < 3 || username.Length > 30)
         {
             alertText.text = "Invalid username";
-            loginButton.interactable = true;
+            ActivateButtons(true);
             yield break;
         }
 
         if (password.Length < 3 || password.Length > 30)
         {
             alertText.text = "Invalid password";
-            loginButton.interactable = true;
+            ActivateButtons(true);
             yield break;
         }
 
@@ -46,7 +53,7 @@ public class Login : MonoBehaviour
         form.AddField("rUsername", username);
         form.AddField("rPassword", password);
 
-        UnityWebRequest request = UnityWebRequest.Post(authenticationEndpoint,form);
+        UnityWebRequest request = UnityWebRequest.Post(LoginEndpoint,form);
         var handler = request.SendWebRequest();
 
         float startTime = 0.0f;
@@ -64,18 +71,33 @@ public class Login : MonoBehaviour
 
         if(request.result == UnityWebRequest.Result.Success)
         {
-            if (request.downloadHandler.text != "Invalid credentials")//login success
+            //Debug.Log(request.downloadHandler.text);
+            LoginResponse response = JsonUtility.FromJson<LoginResponse>(request.downloadHandler.text);
+
+
+            if (response.code == 0)//login success
             {
-               
-                loginButton.interactable = false;
+
+                ActivateButtons(false);
                 GameAccount returnedAccount = JsonUtility.FromJson<GameAccount>(request.downloadHandler.text);
-                alertText.text = $"{returnedAccount._id} Welcome "+ returnedAccount.username + ((returnedAccount.adminFlag == 1) ? " Admin" : "");
+                alertText.text = $"{returnedAccount._id} Welcome "+((response.data.adminFlag == 1) ? " Admin" : "");
                 //Debug.Log($"{username}:{password}");
             }
             else
             {
-                alertText.text = "Invalid credentials";
-                loginButton.interactable = true;
+                switch (response.code)
+                {
+                    case 1:
+                        alertText.text = "Invalid credentials";
+                        ActivateButtons(true);
+                        break;
+                    default :
+                        alertText.text = "Corruption detected";
+                        ActivateButtons(false);
+                        break;
+                }
+                
+
             }
 
 
@@ -84,9 +106,93 @@ public class Login : MonoBehaviour
         {
             alertText.text = "Error connecting to the server...";
             //Debug.Log("Unable to connect to the server...");
-            loginButton.interactable = true;
+            ActivateButtons(true);
         }
         
+
+        yield return null;
+    }
+
+    private void ActivateButtons(bool on)
+    {
+        loginButton.interactable = on;
+        createButton.interactable = on;
+    }
+
+    private IEnumerator TryCreate()
+    {
+        string username = usernameInputField.text;
+        string password = passwordInputField.text;
+
+        if (username.Length < 3 || username.Length > 30)
+        {
+            alertText.text = "Invalid username";
+            ActivateButtons(true);
+            yield break;
+        }
+
+        if (password.Length < 3 || password.Length > 30)
+        {
+            alertText.text = "Invalid password";
+            ActivateButtons(true);
+            yield break;
+        }
+
+        WWWForm form = new WWWForm();
+        form.AddField("rUsername", username);
+        form.AddField("rPassword", password);
+
+        UnityWebRequest request = UnityWebRequest.Post(createEndpoint, form);
+        var handler = request.SendWebRequest();
+
+        float startTime = 0.0f;
+        while (!handler.isDone)
+        {
+            startTime += Time.deltaTime;
+
+            if (startTime > 10.0f)
+            {
+                break;
+            }
+
+            yield return null;
+        }
+
+        if (request.result == UnityWebRequest.Result.Success)
+        {
+            Debug.Log(request.downloadHandler.text);
+            CreateResponse response = JsonUtility.FromJson<CreateResponse>(request.downloadHandler.text);
+
+            if (response.code == 0)
+            {
+                alertText.text = "Account has been created";
+            }
+            else
+            {
+                switch (response.code)
+                {
+                    case 1:
+                        alertText.text = "Invalid credentials";
+                        break;
+                    case 2:
+                        alertText.text = "Username already in use";
+                        break;
+                    case 3:
+                        alertText.text = "Unsafe password";
+                        break;
+                    default:
+                        alertText.text = "Corruption detected";
+                        break;
+                }
+            }
+
+        }
+        else
+        {
+            alertText.text = "Error connecting to the server...";
+            
+        }
+        ActivateButtons(true);
 
         yield return null;
     }
