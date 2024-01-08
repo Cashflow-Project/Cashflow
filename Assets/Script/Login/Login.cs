@@ -4,9 +4,11 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.Networking;
 using UnityEngine.UI;
+using System.Text.RegularExpressions;
 
 public class Login : MonoBehaviour
 {
+    private const string PASSWORD_REGEX = "((?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{6,30})";
     [SerializeField] private string LoginEndpoint = "http://127.0.0.1:13756/account/login";
     [SerializeField] private string createEndpoint = "http://127.0.0.1:13756/account/create";
 
@@ -42,9 +44,9 @@ public class Login : MonoBehaviour
             yield break;
         }
 
-        if (password.Length < 3 || password.Length > 30)
+        if (!Regex.IsMatch(password,PASSWORD_REGEX))
         {
-            alertText.text = "Invalid password";
+            alertText.text = "Invalid credentials";
             ActivateButtons(true);
             yield break;
         }
@@ -131,9 +133,9 @@ public class Login : MonoBehaviour
             yield break;
         }
 
-        if (password.Length < 3 || password.Length > 30)
+        if (!Regex.IsMatch(password, PASSWORD_REGEX))
         {
-            alertText.text = "Invalid password";
+            alertText.text = "Invalid credentials";
             ActivateButtons(true);
             yield break;
         }
