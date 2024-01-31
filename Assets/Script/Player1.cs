@@ -51,6 +51,7 @@ public class Player1 : MonoBehaviourPunCallbacks
         CreateFullRoute();
         
         SetSelector(false);
+
     }
 
     void CreateFullRoute()
@@ -83,7 +84,6 @@ public class Player1 : MonoBehaviourPunCallbacks
  
         }
         
-
         if (GameManager.instace.playerList[GameManager.instace.activePlayer].hasOutside == true)
         {
             fullRoute = outterRoute;
