@@ -5,6 +5,7 @@ using TMPro;
 using UnityEngine.Networking;
 using UnityEngine.UI;
 using System.Text.RegularExpressions;
+using UnityEngine.SceneManagement;
 
 public class Login : MonoBehaviour
 {
@@ -84,6 +85,7 @@ public class Login : MonoBehaviour
                 GameAccount returnedAccount = JsonUtility.FromJson<GameAccount>(request.downloadHandler.text);
                 alertText.text = $"{returnedAccount._id} Welcome "+((response.data.adminFlag == 1) ? " Admin" : "");
                 //Debug.Log($"{username}:{password}");
+                SceneManager.LoadScene("Main Menu");
             }
             else
             {
@@ -91,6 +93,7 @@ public class Login : MonoBehaviour
                 {
                     case 1:
                         alertText.text = "Invalid credentials";
+                        Debug.Log("case 1");
                         ActivateButtons(true);
                         break;
                     default :
