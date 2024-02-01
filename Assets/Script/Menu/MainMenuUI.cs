@@ -12,6 +12,7 @@ public class MainMenuUI : MonoBehaviour
 
     public void OnQuitPressed()
     {
-        Application.Quit();
+        SceneManager.LoadScene("Login");
+        //Application.Quit();
     }
 }
