@@ -93,7 +93,7 @@ public class Login : MonoBehaviour
                 {
                     case 1:
                         alertText.text = "Invalid credentials";
-                        Debug.Log("case 1");
+                        //Debug.Log("case 1");
                         ActivateButtons(true);
                         break;
                     default :
