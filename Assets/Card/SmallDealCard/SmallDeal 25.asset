@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69a3e7854f1da4643a979c9c3f4b57ed, type: 3}
   m_Name: SmallDeal 25
   m_EditorClassIdentifier: 
-  cardName: 
-  BusinessValue: 0
-  DownPayment: 0
-  BankLoan: 0
-  CashflowIncome: 0
+  cardName: Condominium 2n1
+  BusinessValue: 400000
+  DownPayment: 40000
+  BankLoan: 360000
+  CashflowIncome: 1400
   special: 0
   extra1: 0
   extra2: 0
@@ -27,10 +27,11 @@ MonoBehaviour:
   OK4U: 0
   GoldCoins: 0
   value: 0
+  value2: 0
   count: 0
   house3s2: 0
   house2s1: 0
-  Condominium: 0
+  Condominium: 1
   CommercialBuilding: 0
   Apartment: 0
   canLoan: 0

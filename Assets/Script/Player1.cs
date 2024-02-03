@@ -95,6 +95,7 @@ public class Player1 : MonoBehaviourPunCallbacks
         }
         isMoving = true;
 
+       
         while (steps > 0)
         {
             routePosition++;
@@ -201,6 +202,7 @@ public class Player1 : MonoBehaviourPunCallbacks
             //GameManager.instace.state = GameManager.States.SWITCH_PLAYER;
         }
         //GameManager.instace.state = GameManager.States.SWITCH_PLAYER;
+        
     }
 
     bool MoveInArcToNextNode(Vector3 startPos,Vector3 lastPos,float speed)
@@ -389,6 +391,7 @@ public class Player1 : MonoBehaviourPunCallbacks
     void EndTurnPlayer()
     {
         UIController.instance.passButton.SetActive(IsMyTurn());
+        
     }
 
     [PunRPC]

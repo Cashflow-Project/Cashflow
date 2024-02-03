@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69a3e7854f1da4643a979c9c3f4b57ed, type: 3}
   m_Name: SmallDeal 22
   m_EditorClassIdentifier: 
-  cardName: 
+  cardName: friend want money
   BusinessValue: 0
   DownPayment: 0
   BankLoan: 0
@@ -25,9 +25,10 @@ MonoBehaviour:
   MYT4U: 0
   GRO4US: 0
   OK4U: 0
-  GoldCoins: 0
-  value: 0
-  count: 0
+  GoldCoins: 1
+  value: 30000
+  value2: 0
+  count: 10
   house3s2: 0
   house2s1: 0
   Condominium: 0

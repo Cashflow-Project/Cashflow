@@ -25,6 +25,7 @@ public class CardSmallChangeScriptableObj : ScriptableObject
     public bool OK4U;
     public bool GoldCoins;
     public int value;
+    public int value2;
     public int count;
     public bool house3s2;
     public bool house2s1;
