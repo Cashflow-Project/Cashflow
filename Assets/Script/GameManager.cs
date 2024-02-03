@@ -611,24 +611,6 @@ public class GameManager : MonoBehaviourPunCallbacks
                 //CheckingJob(i);
             }
 
-            //photonView.RPC("SetPlayerFirstMoney", RpcTarget.All, playerList[activePlayer].firstMoney, playerList[activePlayer].money, playerList[activePlayer].salary, playerList[activePlayer].income, playerList[activePlayer].allRecieve, playerList[activePlayer].tax, playerList[activePlayer].homeMortgage, playerList[activePlayer].learnMortgage, playerList[activePlayer].carMortgage, playerList[activePlayer].creditcardMortgage, playerList[activePlayer].extraPay, playerList[activePlayer].InstallmentsBank);
-
-            /*
-            photonView.RPC("SetPlayerJob", RpcTarget.AllBuffered, playerList[activePlayer].homeDebt);
-            photonView.RPC("SetPlayerJob", RpcTarget.AllBuffered, playerList[activePlayer].learnDebt);
-            photonView.RPC("SetPlayerJob", RpcTarget.AllBuffered, playerList[activePlayer].carDebt);
-            photonView.RPC("SetPlayerJob", RpcTarget.AllBuffered, playerList[activePlayer].creditDebt);
-            photonView.RPC("SetPlayerJob", RpcTarget.AllBuffered, playerList[activePlayer].loanBank);
-            photonView.RPC("SetPlayerJob", RpcTarget.AllBuffered, playerList[activePlayer].child);
-            photonView.RPC("SetPlayerJob", RpcTarget.AllBuffered, playerList[activePlayer].perChild);
-            photonView.RPC("SetPlayerJob", RpcTarget.AllBuffered, playerList[activePlayer].sumChild);
-            photonView.RPC("SetPlayerJob", RpcTarget.AllBuffered, playerList[activePlayer].paid);
-            photonView.RPC("SetPlayerJob", RpcTarget.AllBuffered, playerList[activePlayer].getmoney);
-            photonView.RPC("SetPlayerJob", RpcTarget.AllBuffered, playerList[activePlayer].hasJob1);
-            photonView.RPC("SetPlayerJob", RpcTarget.AllBuffered, playerList[activePlayer].hasJob2);
-            photonView.RPC("SetPlayerJob", RpcTarget.AllBuffered, playerList[activePlayer].hasChild);
-            photonView.RPC("SetPlayerJob", RpcTarget.AllBuffered, playerList[activePlayer].hasDonate);
-            photonView.RPC("SetPlayerJob", RpcTarget.AllBuffered, playerList[activePlayer].hasOutside);*/
         }
 
     }

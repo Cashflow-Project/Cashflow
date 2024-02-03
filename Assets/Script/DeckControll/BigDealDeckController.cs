@@ -58,8 +58,6 @@ public class BigDealDeckController : MonoBehaviourPunCallbacks
         tempDeck.AddRange(deckToUse);
         if (PhotonNetwork.IsMasterClient)
         {
-
-
             int iterations = 0;
             while (tempDeck.Count > 0 && iterations < 500)
             {
@@ -104,6 +102,10 @@ public class BigDealDeckController : MonoBehaviourPunCallbacks
         //GameManager.instace.playerList[GameManager.instace.activePlayer].Keep[GameManager.instace.playerList[GameManager.instace.activePlayer].KeepCount].CardName = usedCards[cardcount - 1].cardName;
         //GameManager.instace.playerList[GameManager.instace.activePlayer].Keep[GameManager.instace.playerList[GameManager.instace.activePlayer].KeepCount].price = usedCards[cardcount - 1].payCost;
         GameManager.instace.playerList[GameManager.instace.activePlayer].KeepCount++;
+        UIController.instance.drawButton.SetActive(false);
+        UIController.instance.cardShow.enabled = false;
+        UIController.instance.payButton.SetActive(false);
+        UIController.instance.passButton.SetActive(true);
     }
 
     public void Loan()

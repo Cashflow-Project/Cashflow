@@ -38,7 +38,7 @@ public class SpendDeckController : MonoBehaviourPunCallbacks
     // Start is called before the first frame update
     void Start()
     {
-        PhotonPeer.RegisterType(typeof(CardSpendScriptableObj), 0, CardSpendScriptableObjSerialization.Serialize, CardSpendScriptableObjSerialization.Deserialize);
+        //PhotonPeer.RegisterType(typeof(CardSpendScriptableObj), 0, CardSpendScriptableObjSerialization.Serialize, CardSpendScriptableObjSerialization.Deserialize);
         SetUpDeck();
 
     }

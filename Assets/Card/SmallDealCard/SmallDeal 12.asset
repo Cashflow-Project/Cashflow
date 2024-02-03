@@ -18,6 +18,9 @@ MonoBehaviour:
   BankLoan: 0
   CashflowIncome: 0
   special: 1
+  extra1: 0
+  extra2: 0
+  extra3: 0
   ON2U: 0
   MYT4U: 0
   GRO4US: 0
@@ -31,4 +34,4 @@ MonoBehaviour:
   CommercialBuilding: 0
   Apartment: 0
   canLoan: 0
-  cardSprite: {fileID: 0}
+  cardSprite: {fileID: 21300000, guid: 4b910d112feadd247953b547ea870768, type: 3}

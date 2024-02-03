@@ -4361,6 +4361,7 @@ GameObject:
   - component: {fileID: 420601017}
   - component: {fileID: 420601020}
   - component: {fileID: 420601019}
+  - component: {fileID: 420601021}
   m_Layer: 0
   m_Name: SmallDealDeck
   m_TagString: Untagged
@@ -4479,6 +4480,26 @@ MonoBehaviour:
   sceneViewId: 13
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &420601021
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 420601016}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e464698031d619a459221f68b0ed7553, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cardcount: 0
+  deckToUse: []
+  activeCards: []
+  usedCards: []
+  tempDeck: []
+  cardsToSpawns: {fileID: 0}
+  FordrawCard: 1
+  waitBetweenDrawingCard: 0.3
 --- !u!1 &426902245 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: dfe693b47e9fe2f46b30097e24551ca0, type: 3}
@@ -13457,7 +13478,43 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardcount: 0
-  deckToUse: []
+  deckToUse:
+  - {fileID: 11400000, guid: 0b714e1374983bc4eb490c5a4b95a823, type: 2}
+  - {fileID: 11400000, guid: d0193b96b1ef8144bb7578aef675650e, type: 2}
+  - {fileID: 11400000, guid: 795dc2aca87ef384f92be3fce9ce9774, type: 2}
+  - {fileID: 11400000, guid: 17916ac6a49ab8646867027ee5b27412, type: 2}
+  - {fileID: 11400000, guid: 60e32999638a4cb4d8cf275d9f0f2584, type: 2}
+  - {fileID: 11400000, guid: a9fd942a33afd974591d510ff3a9b53d, type: 2}
+  - {fileID: 11400000, guid: d99dcd7172065ed4fbaf239b1476ea6e, type: 2}
+  - {fileID: 11400000, guid: a587c9991ee372b469b052ea0dc170ad, type: 2}
+  - {fileID: 11400000, guid: ba8740f49fd3549438edebb6ddc1b538, type: 2}
+  - {fileID: 11400000, guid: 8ea8426d764067a409cecf3f5f06af40, type: 2}
+  - {fileID: 11400000, guid: 5cecd85a6662dd34eb7e782da7f9ccad, type: 2}
+  - {fileID: 11400000, guid: fa4519e6e7851c646acfb3439becaa90, type: 2}
+  - {fileID: 11400000, guid: 4eab022bd3561384ca0b466d64004d72, type: 2}
+  - {fileID: 11400000, guid: 0076f99c66f440646af3bd139cf85886, type: 2}
+  - {fileID: 11400000, guid: dd4f7c80e212f5d4babf6662b3264c07, type: 2}
+  - {fileID: 11400000, guid: 58b9fb830e7968d47a32dfa9b0fc2765, type: 2}
+  - {fileID: 11400000, guid: 00da179974786e742bbba5b77b115b95, type: 2}
+  - {fileID: 11400000, guid: e4d6bc513c5932a46b6838c876220cad, type: 2}
+  - {fileID: 11400000, guid: eb9a56bccec4ded4c96c6757e287aeac, type: 2}
+  - {fileID: 11400000, guid: 06a4e2454e5654245973c8cf854ea5ee, type: 2}
+  - {fileID: 11400000, guid: b3886851d46b7a94b826cedacf39bb26, type: 2}
+  - {fileID: 11400000, guid: 647a676e5657b364ea73c4a94b2b1389, type: 2}
+  - {fileID: 11400000, guid: 1ab3e10240b628243accb480fcdbad5f, type: 2}
+  - {fileID: 11400000, guid: 5d9eb4c62291b414ca72502cbd631438, type: 2}
+  - {fileID: 11400000, guid: b0aab05a1f7b9ad4ea48160c61bde0ef, type: 2}
+  - {fileID: 11400000, guid: aa7dc7851378f2448bb62dedd1d8475c, type: 2}
+  - {fileID: 11400000, guid: f9f374d20cb10f24da094fd9bcb8a79f, type: 2}
+  - {fileID: 11400000, guid: 9cb7df460cb16224ebe82d82dd9da20e, type: 2}
+  - {fileID: 11400000, guid: 19c792b0ee072264585e2e428ac32e3e, type: 2}
+  - {fileID: 11400000, guid: a71a6cc641b82814c83be4d2cdda745c, type: 2}
+  - {fileID: 11400000, guid: 46561a7ef352fd04b871eff9d56423ad, type: 2}
+  - {fileID: 11400000, guid: b1899d85576a6d447b278aad9161618a, type: 2}
+  - {fileID: 11400000, guid: 9bfc11e1019e6a441a2979139a420ee5, type: 2}
+  - {fileID: 11400000, guid: 31b31130e432c104e95e0b7411bf9f31, type: 2}
+  - {fileID: 11400000, guid: 2f8da7180035e394191cff9d37465d9f, type: 2}
+  - {fileID: 11400000, guid: a19c51e1b334efd4abb13fd7976c42d9, type: 2}
   activeCards: []
   usedCards: []
   tempDeck: []
@@ -14050,8 +14107,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1380618590}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2.057, y: -2.41, z: 1.6683}
-  m_LocalScale: {x: 22.736347, y: 2.8196917, z: 14.731578}
+  m_LocalPosition: {x: -2.0703, y: -0.88578, z: 1.675}
+  m_LocalScale: {x: 14.542555, y: 1.8035228, z: 9.422568}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1944191530}
