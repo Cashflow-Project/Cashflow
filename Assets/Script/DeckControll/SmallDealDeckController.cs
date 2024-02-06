@@ -18,15 +18,15 @@ public class SmallDealDeckController : MonoBehaviourPunCallbacks
 
     }
 
-    public List<CardSpendScriptableObj> deckToUse = new List<CardSpendScriptableObj>();
+    public List<CardSmallChangeScriptableObj> deckToUse = new List<CardSmallChangeScriptableObj>();
 
-    public List<CardSpendScriptableObj> activeCards = new List<CardSpendScriptableObj>();
+    public List<CardSmallChangeScriptableObj> activeCards = new List<CardSmallChangeScriptableObj>();
 
-    public List<CardSpendScriptableObj> usedCards = new List<CardSpendScriptableObj>();
+    public List<CardSmallChangeScriptableObj> usedCards = new List<CardSmallChangeScriptableObj>();
 
-    public List<CardSpendScriptableObj> tempDeck = new List<CardSpendScriptableObj>();
+    public List<CardSmallChangeScriptableObj> tempDeck = new List<CardSmallChangeScriptableObj>();
 
-    public SpendCard cardsToSpawns;
+    public SmallDealCard cardsToSpawns;
 
     public int FordrawCard = 1;
     public float waitBetweenDrawingCard = .3f;
@@ -35,7 +35,7 @@ public class SmallDealDeckController : MonoBehaviourPunCallbacks
     // Start is called before the first frame update
     void Start()
     {
-        PhotonPeer.RegisterType(typeof(CardSpendScriptableObj), 0, CardSpendScriptableObjSerialization.Serialize, CardSpendScriptableObjSerialization.Deserialize);
+        
         SetUpDeck();
 
     }
@@ -67,7 +67,7 @@ public class SmallDealDeckController : MonoBehaviourPunCallbacks
             while (tempDeck.Count > 0 && iterations < 500)
             {
                 int selected = Random.Range(0, tempDeck.Count);
-                photonView.RPC("CreateSpendDeckStart", RpcTarget.All,selected);
+                photonView.RPC("CreateSmallDealDeckStart", RpcTarget.All,selected);
 
                 iterations++;
             }
@@ -84,8 +84,8 @@ public class SmallDealDeckController : MonoBehaviourPunCallbacks
             SetUpDeck();
         }
 
-        SpendCard newCard = Instantiate(cardsToSpawns, transform.position, transform.rotation);
-        newCard.cardSpendSO = activeCards[0];
+        SmallDealCard newCard = Instantiate(cardsToSpawns, transform.position, transform.rotation);
+        newCard.cardSCSO = activeCards[0];
 
 
         UIController.instance.cardShow.enabled = true;
@@ -94,7 +94,7 @@ public class SmallDealDeckController : MonoBehaviourPunCallbacks
         UIController.instance.payButton.SetActive(true);
         UIController.instance.drawButton.SetActive(false);
 
-        ShowController.instance.AddCardToShow(newCard);
+        ShowSmallDealController.instance.AddCardToShow(newCard);
 
         
         UIController.instance.cardShow.sprite = activeCards[0].cardSprite;
@@ -107,28 +107,12 @@ public class SmallDealDeckController : MonoBehaviourPunCallbacks
     public void PayCost()
     {
 
-        if(usedCards[cardcount - 1].hasChildsOrNot == true && GameManager.instace.playerList[GameManager.instace.activePlayer].hasChild == false)
-        {
+        GameManager.instace.playerList[GameManager.instace.activePlayer].KeepCount++;
+        UIController.instance.drawButton.SetActive(false);
+        UIController.instance.cardShow.enabled = false;
+        UIController.instance.payButton.SetActive(false);
+        UIController.instance.passButton.SetActive(true);
 
-            UIController.instance.drawButton.SetActive(false);
-            UIController.instance.cardShow.enabled = false;
-            
-            UIController.instance.payButton.SetActive(false);
-
-            UIController.instance.passButton.SetActive(true);
-        }
-        else
-        {
-
-            GameManager.instace.playerList[GameManager.instace.activePlayer].money = GameManager.instace.playerList[GameManager.instace.activePlayer].money - usedCards[cardcount - 1].payCost;
-            photonView.RPC("UpdateMoney", RpcTarget.All, GameManager.instace.playerList[GameManager.instace.activePlayer].money, GameManager.instace.activePlayer);
-            UIController.instance.drawButton.SetActive(false);
-            UIController.instance.cardShow.enabled = false;
-            
-            UIController.instance.payButton.SetActive(false);
-            UIController.instance.passButton.SetActive(true);
-        }
-        
 
     }
 
@@ -152,7 +136,7 @@ public class SmallDealDeckController : MonoBehaviourPunCallbacks
     }
 
     [PunRPC]
-    void CreateSpendDeckStart(int selected)
+    void CreateSmallDealDeckStart(int selected)
     {
         activeCards.Add(tempDeck[selected]);
         tempDeck.RemoveAt(selected);
@@ -176,22 +160,22 @@ public class SmallDealDeckController : MonoBehaviourPunCallbacks
     }
 
     [PunRPC]
-    void CalculateSpendRPC(int money)
+    void CalculateSmallDealRPC(int money)
     {
-        GameManager.instace.playerList[GameManager.instace.activePlayer].money = GameManager.instace.playerList[GameManager.instace.activePlayer].money - usedCards[cardcount - 1].payCost ;
+        GameManager.instace.playerList[GameManager.instace.activePlayer].money = GameManager.instace.playerList[GameManager.instace.activePlayer].money - usedCards[cardcount - 1].DownPayment;
         GameManager.instace.playerList[GameManager.instace.activePlayer].money = money;
     }
 
     [PunRPC]
-    void drawCardSpend()
+    void drawCardSmallDeal()
     {
         if (activeCards.Count == 0)
         {
             SetUpDeck();
         }
 
-        SpendCard newCard = Instantiate(cardsToSpawns, transform.position, transform.rotation);
-        newCard.cardSpendSO = activeCards[0];
+        SmallDealCard newCard = Instantiate(cardsToSpawns, transform.position, transform.rotation);
+        newCard.cardSCSO = activeCards[0];
 
 
         UIController.instance.cardShow.enabled = true;
@@ -200,7 +184,7 @@ public class SmallDealDeckController : MonoBehaviourPunCallbacks
         UIController.instance.payButton.SetActive(true);
         UIController.instance.drawButton.SetActive(false);
 
-        ShowController.instance.AddCardToShow(newCard);
+        ShowSmallDealController.instance.AddCardToShow(newCard);
 
         UIController.instance.cardShow.sprite = activeCards[0].cardSprite;
         usedCards.Add(activeCards[0]);

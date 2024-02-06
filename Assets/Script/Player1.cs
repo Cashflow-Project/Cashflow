@@ -299,9 +299,6 @@ public class Player1 : MonoBehaviourPunCallbacks
         //turncounts++;
     }
 
-    
-
-   
 
     bool winCondition()
     {
