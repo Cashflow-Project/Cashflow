@@ -24,7 +24,7 @@ public class BigDealCard : MonoBehaviourPunCallbacks
     public bool  OnShowing;
     public int ShowPosition;
 
-    private ShowController sc;
+    private ShowBigDealController sc;
 
     private bool isSelected;
     private Collider col;
@@ -39,7 +39,7 @@ public class BigDealCard : MonoBehaviourPunCallbacks
     {
         setupCard();
         
-        sc = FindObjectOfType<ShowController>();
+        //sc = FindObjectOfType<ShowBigDealController>();
 
         col = GetComponent<Collider>();
 
@@ -47,11 +47,13 @@ public class BigDealCard : MonoBehaviourPunCallbacks
 
     public void setupCard()
     {
+        Debug.Log(cardBCSO.cardSprite);
+        Debug.Log("BigCard");
         BusinessValue = cardBCSO.BusinessValue;
         DownPayment = cardBCSO.DownPayment;
         BankLoan = cardBCSO.BankLoan;
         CashflowIncome = cardBCSO.CashflowIncome;
-
+        Debug.Log(cardArt);
         cardArt.sprite = cardBCSO.cardSprite;
     }
     // Update is called once per frame

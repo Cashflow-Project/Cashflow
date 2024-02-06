@@ -35,7 +35,7 @@ public class SpendCard : MonoBehaviourPunCallbacks
     {
         setupCard();
         
-        sc = FindObjectOfType<ShowController>();
+        //sc = FindObjectOfType<ShowController>();
 
         col = GetComponent<Collider>();
 

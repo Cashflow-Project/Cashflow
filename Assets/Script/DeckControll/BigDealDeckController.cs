@@ -82,7 +82,7 @@ public class BigDealDeckController : MonoBehaviourPunCallbacks
         BigDealCard newCard = Instantiate(cardsToSpawns, transform.position, transform.rotation);
         newCard.cardBCSO = activeCards[0];
 
-
+        UIController.instance.ChooseBigSmall.SetActive(false);
         UIController.instance.cardShow.enabled = true;
         UIController.instance.payButton.SetActive(true);
         UIController.instance.drawButton.SetActive(false);
@@ -94,7 +94,7 @@ public class BigDealDeckController : MonoBehaviourPunCallbacks
 
         photonView.RPC("AddToUseCard", RpcTarget.All);
 
-        Destroy(newCard.gameObject, 1);
+        //Destroy(newCard.gameObject, 1);
     }
 
     public void PayCost()

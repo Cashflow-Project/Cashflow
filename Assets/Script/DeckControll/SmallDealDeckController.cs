@@ -87,21 +87,19 @@ public class SmallDealDeckController : MonoBehaviourPunCallbacks
         SmallDealCard newCard = Instantiate(cardsToSpawns, transform.position, transform.rotation);
         newCard.cardSCSO = activeCards[0];
 
-
+        UIController.instance.ChooseBigSmall.SetActive(false);
         UIController.instance.cardShow.enabled = true;
-
-        
         UIController.instance.payButton.SetActive(true);
         UIController.instance.drawButton.SetActive(false);
-
-        ShowSmallDealController.instance.AddCardToShow(newCard);
+        Debug.Log("check card sprite" + activeCards[0].cardSprite);
+        //ShowSmallDealController.instance.AddCardToShow(newCard);
 
         
         UIController.instance.cardShow.sprite = activeCards[0].cardSprite;
 
         photonView.RPC("AddToUseCard", RpcTarget.All);
 
-        Destroy(newCard.gameObject, 1);
+        //Destroy(newCard.gameObject, 1);
     }
 
     public void PayCost()
@@ -146,6 +144,7 @@ public class SmallDealDeckController : MonoBehaviourPunCallbacks
     [PunRPC]
     void AddToUseCard()
     {
+        Debug.Log("this is activetivecard0 " + activeCards[0]);
         usedCards.Add(activeCards[0]);
         cardcount++;
         activeCards.RemoveAt(0);

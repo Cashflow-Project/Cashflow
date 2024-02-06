@@ -6,13 +6,9 @@ using UnityEngine;
 public class CardSmallChangeScriptableObj : ScriptableObject
 {
     public string cardName;
-
     public int BusinessValue;
-
     public int DownPayment;
-
     public int BankLoan;
-
     public int CashflowIncome;
 
     public bool special;

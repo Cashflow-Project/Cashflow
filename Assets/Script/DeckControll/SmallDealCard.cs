@@ -14,8 +14,11 @@ public class SmallDealCard : MonoBehaviourPunCallbacks
     public int BankLoan;
     public int CashflowIncome;
 
+    public int value;
+    public int value2;
+
     public bool canLoan;
-    public Image cardArt;
+    public object SmallCardArt;
 
     private Vector3 targetPoint;
     private Quaternion targetRot;
@@ -24,7 +27,7 @@ public class SmallDealCard : MonoBehaviourPunCallbacks
     public bool  OnShowing;
     public int ShowPosition;
 
-    private ShowController sc;
+    private ShowSmallDealController sc;
 
     private bool isSelected;
     private Collider col;
@@ -39,7 +42,7 @@ public class SmallDealCard : MonoBehaviourPunCallbacks
     {
         setupCard();
         
-        sc = FindObjectOfType<ShowController>();
+        //sc = FindObjectOfType<ShowSmallDealController>();
 
         col = GetComponent<Collider>();
 
@@ -47,12 +50,16 @@ public class SmallDealCard : MonoBehaviourPunCallbacks
 
     public void setupCard()
     {
+        Debug.Log(cardSCSO.cardSprite);
         BusinessValue = cardSCSO.BusinessValue;
         DownPayment = cardSCSO.DownPayment;
         BankLoan = cardSCSO.BankLoan;
         CashflowIncome = cardSCSO.CashflowIncome;
-
-        cardArt.sprite = cardSCSO.cardSprite;
+        value = cardSCSO.value;
+        value2 = cardSCSO.value2;
+        
+        SmallCardArt = cardSCSO.cardSprite;
+        Debug.Log(SmallCardArt);
     }
     // Update is called once per frame
     void Update()
