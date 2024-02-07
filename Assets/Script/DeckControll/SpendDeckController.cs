@@ -111,17 +111,17 @@ public class SpendDeckController : MonoBehaviourPunCallbacks
         newCard.cardSpendSO = activeCards[0];
 
 
-        UIController.instance.cardShow.enabled = true;
+        //UIController.instance.cardShow.enabled = true;
 
         //UIController.instance.loanButton.SetActive(true);
         UIController.instance.payButton.SetActive(true);
         UIController.instance.drawButton.SetActive(false);
 
         ShowController.instance.AddCardToShow(newCard);
-
+        photonView.RPC("ShowCardToAllPlayerRPC", RpcTarget.All);
         //GameManager.instace.playerList[GameManager.instace.activePlayer].money = GameManager.instace.playerList[GameManager.instace.activePlayer].money - activeCards[0].payCost;
 
-        UIController.instance.cardShow.sprite = activeCards[0].cardSprite;
+        //UIController.instance.cardShow.sprite = activeCards[0].cardSprite;
 
         photonView.RPC("AddToUseCard", RpcTarget.All);
         /*
@@ -158,8 +158,7 @@ public class SpendDeckController : MonoBehaviourPunCallbacks
             photonView.RPC("UpdateMoney", RpcTarget.All, GameManager.instace.playerList[GameManager.instace.activePlayer].money, GameManager.instace.activePlayer);
             //GameManager.instace.playerList[GameManager.instace.activePlayer].Keep[GameManager.instace.playerList[GameManager.instace.activePlayer].KeepCount].CardName = usedCards[cardcount - 1].cardName;
             //GameManager.instace.playerList[GameManager.instace.activePlayer].Keep[GameManager.instace.playerList[GameManager.instace.activePlayer].KeepCount].price = usedCards[cardcount - 1].payCost;
-            GameManager.instace.playerList[GameManager.instace.activePlayer].KeepCount++;
-
+            
             UIController.instance.drawButton.SetActive(false);
             UIController.instance.cardShow.enabled = false;
             //UIController.instance.cancelButton.SetActive(false);
@@ -218,11 +217,26 @@ public class SpendDeckController : MonoBehaviourPunCallbacks
     void UpdateMoney(int money,int x)
     {
         GameManager.instace.playerList[x].money = money;
+        GameManager.Note myNote = new GameManager.Note();
+        myNote.CardName = usedCards[cardcount - 1].cardName;
+        myNote.price = usedCards[cardcount - 1].payCost;
+        GameManager.instace.playerList[GameManager.instace.activePlayer].Keep.Add(myNote);
+        GameManager.instace.playerList[GameManager.instace.activePlayer].KeepCount++;
+
+    }
+
+    [PunRPC]
+    void ShowCardToAllPlayerRPC()
+    {
+        UIController.instance.cardShow.enabled = true;
+        UIController.instance.cardShow.sprite = activeCards[0].cardSprite;
     }
 
     [PunRPC]
     void CalculateSpendRPC(int money)
     {
+        
+
         GameManager.instace.playerList[GameManager.instace.activePlayer].money = GameManager.instace.playerList[GameManager.instace.activePlayer].money - usedCards[cardcount - 1].payCost ;
         GameManager.instace.playerList[GameManager.instace.activePlayer].money = money;
     }

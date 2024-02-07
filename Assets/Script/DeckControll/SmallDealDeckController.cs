@@ -89,7 +89,8 @@ public class SmallDealDeckController : MonoBehaviourPunCallbacks
 
         UIController.instance.ChooseBigSmall.SetActive(false);
         UIController.instance.cardShow.enabled = true;
-        UIController.instance.payButton.SetActive(true);
+        UIController.instance.payButton.SetActive(false);
+        UIController.instance.cancelButton.SetActive(true);
         UIController.instance.drawButton.SetActive(false);
         Debug.Log("check card sprite" + activeCards[0].cardSprite);
         //ShowSmallDealController.instance.AddCardToShow(newCard);
@@ -102,10 +103,11 @@ public class SmallDealDeckController : MonoBehaviourPunCallbacks
         //Destroy(newCard.gameObject, 1);
     }
 
-    public void PayCost()
+    public void BuyCost()
     {
 
         GameManager.instace.playerList[GameManager.instace.activePlayer].KeepCount++;
+
         UIController.instance.drawButton.SetActive(false);
         UIController.instance.cardShow.enabled = false;
         UIController.instance.payButton.SetActive(false);

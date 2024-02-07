@@ -28,7 +28,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         public bool CommercialBuilding;
         public bool Apartment;
         public bool Business;
-
+        public int count;
     }
 
     [System.Serializable]

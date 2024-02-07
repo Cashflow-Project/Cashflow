@@ -52,7 +52,9 @@ public class BigDealDeckController : MonoBehaviourPunCallbacks
         UIController.instance.cancelButton.SetActive(false);
         UIController.instance.passButton.SetActive(false);
         UIController.instance.payButton.SetActive(false);
-
+        UIController.instance.BigPayButton.SetActive(false);
+        UIController.instance.SmallPayButton.SetActive(false);
+        UIController.instance.SellButton.SetActive(false);
       
         activeCards.Clear();
         tempDeck.AddRange(deckToUse);
@@ -83,28 +85,37 @@ public class BigDealDeckController : MonoBehaviourPunCallbacks
         newCard.cardBCSO = activeCards[0];
 
         UIController.instance.ChooseBigSmall.SetActive(false);
-        UIController.instance.cardShow.enabled = true;
-        UIController.instance.payButton.SetActive(true);
+        
+        UIController.instance.payButton.SetActive(false);
+        UIController.instance.BigPayButton.SetActive(true);
+        UIController.instance.SellButton.SetActive(false);
+        UIController.instance.SmallPayButton.SetActive(false);
         UIController.instance.drawButton.SetActive(false);
-
+        ShowBigDealController.instance.AddCardToShow(newCard);
+        photonView.RPC("ShowCardToAllPlayerRPC", RpcTarget.All);
+        /*
+        UIController.instance.cardShow.enabled = true;
         ShowBigDealController.instance.AddCardToShow(newCard);
 
         
         UIController.instance.cardShow.sprite = activeCards[0].cardSprite;
-
+        */
         photonView.RPC("AddToUseCard", RpcTarget.All);
 
         //Destroy(newCard.gameObject, 1);
     }
 
-    public void PayCost()
+    public void BuyCost()
     {
-        //GameManager.instace.playerList[GameManager.instace.activePlayer].Keep[GameManager.instace.playerList[GameManager.instace.activePlayer].KeepCount].CardName = usedCards[cardcount - 1].cardName;
-        //GameManager.instace.playerList[GameManager.instace.activePlayer].Keep[GameManager.instace.playerList[GameManager.instace.activePlayer].KeepCount].price = usedCards[cardcount - 1].payCost;
-        GameManager.instace.playerList[GameManager.instace.activePlayer].KeepCount++;
+        GameManager.instace.playerList[GameManager.instace.activePlayer].money = GameManager.instace.playerList[GameManager.instace.activePlayer].money - usedCards[cardcount - 1].DownPayment;
+        photonView.RPC("UpdateMoney", RpcTarget.All, GameManager.instace.playerList[GameManager.instace.activePlayer].money, GameManager.instace.activePlayer);
+        
         UIController.instance.drawButton.SetActive(false);
         UIController.instance.cardShow.enabled = false;
         UIController.instance.payButton.SetActive(false);
+        UIController.instance.BigPayButton.SetActive(false);
+        UIController.instance.SellButton.SetActive(false);
+        UIController.instance.SmallPayButton.SetActive(false);
         UIController.instance.passButton.SetActive(true);
     }
 
@@ -148,6 +159,45 @@ public class BigDealDeckController : MonoBehaviourPunCallbacks
     void UpdateMoney(int money,int x)
     {
         GameManager.instace.playerList[x].money = money;
+        //note collect
+        GameManager.Note myNote = new GameManager.Note();
+        myNote.CardName = usedCards[cardcount - 1].cardName;
+        myNote.price = usedCards[cardcount - 1].DownPayment;
+        GameManager.instace.playerList[GameManager.instace.activePlayer].Keep.Add(myNote);
+        GameManager.instace.playerList[GameManager.instace.activePlayer].KeepCount++;
+        //invest collect
+        GameManager.DealKeep myDeal = new GameManager.DealKeep();
+        myDeal.CardName = usedCards[cardcount - 1].cardName;
+        myDeal.BusinessValue = usedCards[cardcount - 1].BusinessValue;
+        myDeal.DownPayment = usedCards[cardcount - 1].DownPayment;
+        myDeal.BankLoan = usedCards[cardcount - 1].BankLoan;
+        myDeal.CashflowIncome = usedCards[cardcount - 1].CashflowIncome;
+        myDeal.count = usedCards[cardcount - 1].count;
+        if (usedCards[cardcount - 1].house3s2 == true)
+        {
+            myDeal.house3s2 = true;
+        }
+        if (usedCards[cardcount - 1].CommercialBuilding == true)
+        {
+            myDeal.CommercialBuilding = true;
+        }
+        if (usedCards[cardcount - 1].Apartment == true)
+        {
+            myDeal.Apartment = true;
+        }
+        if (usedCards[cardcount - 1].Business == true)
+        {
+            myDeal.Business = true;
+        }
+        GameManager.instace.playerList[GameManager.instace.activePlayer].DealList.Add(myDeal);
+        
+    }
+
+    [PunRPC]
+    void ShowCardToAllPlayerRPC()
+    {
+        UIController.instance.cardShow.enabled = true;
+        UIController.instance.cardShow.sprite = activeCards[0].cardSprite;
     }
 
     [PunRPC]

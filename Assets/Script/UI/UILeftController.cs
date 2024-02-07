@@ -17,6 +17,8 @@ public class UILeftController : MonoBehaviour
     public GameObject opPage2;
     public GameObject opPage1_1;
     public GameObject opPage2_1;
+    public GameObject Loan1;
+    public GameObject Loan2;
 
     public TMP_Text income1;
     public TMP_Text income2;
@@ -55,8 +57,10 @@ public class UILeftController : MonoBehaviour
 
         opPage1.SetActive(true);
         opPage2.SetActive(true);
+        Loan1.SetActive(true);
         opPage1_1.SetActive(false);
         opPage2_1.SetActive(false);
+        Loan2.SetActive(false);
 
         SetPage1Value();
         SetPage2Value();
@@ -77,9 +81,11 @@ public class UILeftController : MonoBehaviour
 
         opPage1.SetActive(false);
         opPage2.SetActive(false);
+        Loan1.SetActive(false);
         opPage1_1.SetActive(true);
         opPage2_1.SetActive(true);
-}
+        Loan2.SetActive(true);
+    }
 
     public void OperPage2()
     {
@@ -89,9 +95,11 @@ public class UILeftController : MonoBehaviour
 
         opPage1.SetActive(false);
         opPage2.SetActive(false);
+        Loan1.SetActive(false);
         opPage1_1.SetActive(true);
         opPage2_1.SetActive(true);
-        
+        Loan2.SetActive(true);
+
     }
 
     public void closePage1()
@@ -107,6 +115,8 @@ public class UILeftController : MonoBehaviour
             opPage2.SetActive(false);
             opPage1_1.SetActive(true);
             opPage2_1.SetActive(true);
+            Loan1.SetActive(false);
+            Loan2.SetActive(true);
         }
         else
         {
@@ -117,7 +127,8 @@ public class UILeftController : MonoBehaviour
             opPage2.SetActive(true);
             opPage1_1.SetActive(false);
             opPage2_1.SetActive(false);
-            
+            Loan1.SetActive(true);
+            Loan2.SetActive(false);
         }
 
     }
@@ -135,6 +146,8 @@ public class UILeftController : MonoBehaviour
             opPage2.SetActive(true);
             opPage1_1.SetActive(false);
             opPage2_1.SetActive(false);
+            Loan1.SetActive(true);
+            Loan2.SetActive(false);
         }
         else
         {
@@ -145,6 +158,8 @@ public class UILeftController : MonoBehaviour
             opPage2.SetActive(false);
             opPage1_1.SetActive(true);
             opPage2_1.SetActive(true);
+            Loan1.SetActive(false);
+            Loan2.SetActive(true);
         }
 
     }

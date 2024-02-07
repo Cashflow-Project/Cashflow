@@ -24,11 +24,14 @@ public class UIController : MonoBehaviour
     }
 
     public GameObject payButton;
+    public GameObject SmallPayButton;
+    public GameObject BigPayButton;
     public GameObject loanButton;
     public GameObject cancelButton;
     public GameObject passButton;
     public GameObject drawButton;
     public GameObject ChooseBigSmall;
+    public GameObject SellButton;
     // Start is called before the first frame update
     void Start()
     {
@@ -72,6 +75,16 @@ public class UIController : MonoBehaviour
     public void PayCost()
     {
         SpendDeckController.instance.PayCost();
+    }
+
+    public void SmallPayCost()
+    {
+
+    }
+
+    public void BigPayCost()
+    {
+        BigDealDeckController.instance.BuyCost();
     }
     public void Cancel()
     {
