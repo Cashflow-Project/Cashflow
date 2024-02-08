@@ -79,6 +79,8 @@ MonoBehaviour:
   - UpdateKeepForDeal
   - UpdateKeepForInvest
   - UpdateKeep
+  - whoCanSell
+  - valueUpdate
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

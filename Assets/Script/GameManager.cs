@@ -499,6 +499,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     public void PassTurn()
     {
         UIController.instance.passButton.SetActive(false);
+        photonView.RPC("setOtherOff", RpcTarget.All); 
         state = States.SWITCH_PLAYER;
         
     }
@@ -1153,4 +1154,11 @@ public class GameManager : MonoBehaviourPunCallbacks
     {
         playerList[activePlayer].hasTurn = on;
     }
+
+    [PunRPC]
+    void setOtherOff()
+    {
+        UIController.instance.SetAllFalse();
+    }
+    
 }

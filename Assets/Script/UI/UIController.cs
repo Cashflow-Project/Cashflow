@@ -90,6 +90,14 @@ public class UIController : MonoBehaviour
     }
     public void Cancel()
     {
+        SetAllFalse();
+
+        passButton.SetActive(true);
+    }
+
+    public void SetAllFalse()
+    {
+
         cardShow.enabled = false;
         payButton.SetActive(false);
         SmallPayButton.SetActive(false);
@@ -99,7 +107,6 @@ public class UIController : MonoBehaviour
         ChooseBigSmall.SetActive(false);
         SellButton.SetActive(false);
 
-        passButton.SetActive(true);
     }
 
     public void Loan()
