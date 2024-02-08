@@ -13,6 +13,7 @@ public class UIController : MonoBehaviour
 {
     public static UIController instance;
 
+    public GameObject InvestCanvas;
     public Text infoText;
     public Image cardShow;
     public Text roomname;
@@ -26,12 +27,13 @@ public class UIController : MonoBehaviour
     public GameObject payButton;
     public GameObject SmallPayButton;
     public GameObject BigPayButton;
-    public GameObject loanButton;
     public GameObject cancelButton;
     public GameObject passButton;
     public GameObject drawButton;
     public GameObject ChooseBigSmall;
     public GameObject SellButton;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -79,7 +81,7 @@ public class UIController : MonoBehaviour
 
     public void SmallPayCost()
     {
-
+        SmallDealDeckController.instance.BuyCost();
     }
 
     public void BigPayCost()
@@ -88,7 +90,16 @@ public class UIController : MonoBehaviour
     }
     public void Cancel()
     {
+        cardShow.enabled = false;
+        payButton.SetActive(false);
+        SmallPayButton.SetActive(false);
+        BigPayButton.SetActive(false);
+        cancelButton.SetActive(false);
+        drawButton.SetActive(false);
+        ChooseBigSmall.SetActive(false);
+        SellButton.SetActive(false);
 
+        passButton.SetActive(true);
     }
 
     public void Loan()
@@ -102,10 +113,4 @@ public class UIController : MonoBehaviour
         SceneManager.LoadScene("Lobby");
     }
 
-    [PunRPC]
-    void AddToUseCard()
-    {
-
-
-    }
 }

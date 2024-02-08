@@ -20,7 +20,7 @@ public class SpendCard : MonoBehaviourPunCallbacks
     public bool  OnShowing;
     public int ShowPosition;
 
-    private ShowController sc;
+    //private ShowController sc;
 
     private bool isSelected;
     private Collider col;

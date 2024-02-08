@@ -17,6 +17,11 @@ public class SmallDealCard : MonoBehaviourPunCallbacks
     public int value;
     public int value2;
 
+    public bool hasON2U;
+    public bool hasMYT4U;
+    public bool hasOK4U;
+    public bool hasGRO4US;
+
     public bool canLoan;
     public object SmallCardArt;
 
@@ -27,7 +32,7 @@ public class SmallDealCard : MonoBehaviourPunCallbacks
     public bool  OnShowing;
     public int ShowPosition;
 
-    private ShowSmallDealController sc;
+    //private ShowSmallDealController sc;
 
     private bool isSelected;
     private Collider col;
@@ -57,7 +62,10 @@ public class SmallDealCard : MonoBehaviourPunCallbacks
         CashflowIncome = cardSCSO.CashflowIncome;
         value = cardSCSO.value;
         value2 = cardSCSO.value2;
-        
+        hasON2U = cardSCSO.ON2U;
+        hasMYT4U = cardSCSO.MYT4U;
+        hasOK4U = cardSCSO.OK4U;
+        hasGRO4US = cardSCSO.GRO4US;
         SmallCardArt = cardSCSO.cardSprite;
         Debug.Log(SmallCardArt);
     }

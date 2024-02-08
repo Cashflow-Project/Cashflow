@@ -109,8 +109,10 @@ public class Player1 : MonoBehaviourPunCallbacks
             {
                 Debug.Log("pass orange route");
                 //UIController.instance.passButton.SetActive(IsMyTurn());
-                photonView.RPC("EndTurnPlayer", RpcTarget.All);
+                //photonView.RPC("EndTurnPlayer", RpcTarget.All);
+                photonView.RPC("valueUpdate", RpcTarget.All); 
                 GameManager.instace.playerList[GameManager.instace.activePlayer].money = GameManager.instace.playerList[GameManager.instace.activePlayer].money + GameManager.instace.playerList[GameManager.instace.activePlayer].getmoney;
+                photonView.RPC("UpdateMoney", RpcTarget.All, GameManager.instace.playerList[GameManager.instace.activePlayer].money, GameManager.instace.activePlayer);
                 //GameManager.instace.state = GameManager.States.SWITCH_PLAYER;
             }
             yield return new WaitForSeconds(0.1f);
@@ -147,7 +149,7 @@ public class Player1 : MonoBehaviourPunCallbacks
         {
             Debug.Log("in green route");
             //UIController.instance.passButton.SetActive(IsMyTurn());
-
+            photonView.RPC("valueUpdate", RpcTarget.All);
             photonView.RPC("PlayerChooseSmallBig", RpcTarget.All);
             //GameManager.instace.state = GameManager.States.SWITCH_PLAYER;
         }
@@ -155,14 +157,24 @@ public class Player1 : MonoBehaviourPunCallbacks
         if (routePosition % fullRoute.Count == 2 || routePosition % fullRoute.Count == 10 || routePosition % fullRoute.Count == 18)
         {
             Debug.Log("in red route");
+            photonView.RPC("valueUpdate", RpcTarget.All);
             //UIController.instance.drawButton.SetActive(IsMyTurn());
             photonView.RPC("PlayerDraw", RpcTarget.All);
         }
-
+        //orange route
+        if (routePosition % fullRoute.Count == 6 || routePosition % fullRoute.Count == 14 || routePosition % fullRoute.Count == 22)
+        {
+            Debug.Log("in orange route");
+            photonView.RPC("valueUpdate", RpcTarget.All);
+            //UIController.instance.passButton.SetActive(IsMyTurn());
+            photonView.RPC("EndTurnPlayer", RpcTarget.All);
+            //GameManager.instace.state = GameManager.States.SWITCH_PLAYER;
+        }
         //blue route
         if (routePosition % fullRoute.Count == 8 || routePosition % fullRoute.Count == 16 || routePosition % fullRoute.Count == 24)
         {
             Debug.Log("in blue route");
+            photonView.RPC("valueUpdate", RpcTarget.All);
             //UIController.instance.passButton.SetActive(IsMyTurn());
             photonView.RPC("EndTurnPlayer", RpcTarget.All);
             //GameManager.instace.state = GameManager.States.SWITCH_PLAYER;
@@ -171,6 +183,7 @@ public class Player1 : MonoBehaviourPunCallbacks
         if (routePosition % fullRoute.Count == 4)
         {
             Debug.Log("in purple 1 route");
+            photonView.RPC("valueUpdate", RpcTarget.All);
             //UIController.instance.passButton.SetActive(IsMyTurn());
             photonView.RPC("EndTurnPlayer", RpcTarget.All);
             //GameManager.instace.state = GameManager.States.SWITCH_PLAYER;
@@ -179,6 +192,7 @@ public class Player1 : MonoBehaviourPunCallbacks
         if (routePosition % fullRoute.Count == 12)
         {
             Debug.Log("in purple 2 route");
+            photonView.RPC("valueUpdate", RpcTarget.All);
             //UIController.instance.passButton.SetActive(IsMyTurn());
             photonView.RPC("hasJob", RpcTarget.All);
             photonView.RPC("EndTurnPlayer", RpcTarget.All);
@@ -189,6 +203,7 @@ public class Player1 : MonoBehaviourPunCallbacks
         if (routePosition % fullRoute.Count == 20)
         {
             Debug.Log("in purple 3 route");
+            photonView.RPC("valueUpdate", RpcTarget.All);
             photonView.RPC("GetChild", RpcTarget.All);
             photonView.RPC("EndTurnPlayer", RpcTarget.All);
             //UIController.instance.passButton.SetActive(IsMyTurn());
@@ -402,6 +417,27 @@ public class Player1 : MonoBehaviourPunCallbacks
     {
         UIController.instance.ChooseBigSmall.SetActive(IsMyTurn());
     }
-}
 
- 
+    [PunRPC]
+    void UpdateMoney(int money, int x)
+    {
+        GameManager.instace.playerList[x].money = money;
+        //note collect
+        GameManager.Note myNote = new GameManager.Note();
+        myNote.CardName = "Month Income";
+        myNote.price = GameManager.instace.playerList[GameManager.instace.activePlayer].getmoney;
+        GameManager.instace.playerList[GameManager.instace.activePlayer].Keep.Add(myNote);
+        GameManager.instace.playerList[GameManager.instace.activePlayer].KeepCount++;
+
+    }
+    [PunRPC]
+    void valueUpdate()
+    {
+        GameManager.instace.playerList[GameManager.instace.activePlayer].allRecieve = GameManager.instace.playerList[GameManager.instace.activePlayer].salary + GameManager.instace.playerList[GameManager.instace.activePlayer].income;
+        GameManager.instace.playerList[GameManager.instace.activePlayer].InstallmentsBank = GameManager.instace.playerList[GameManager.instace.activePlayer].loanBank * (1 / 10);
+        GameManager.instace.playerList[GameManager.instace.activePlayer].sumChild = GameManager.instace.playerList[GameManager.instace.activePlayer].child * GameManager.instace.playerList[GameManager.instace.activePlayer].perChild;
+        GameManager.instace.playerList[GameManager.instace.activePlayer].paid = GameManager.instace.playerList[GameManager.instace.activePlayer].tax + GameManager.instace.playerList[GameManager.instace.activePlayer].homeMortgage + GameManager.instace.playerList[GameManager.instace.activePlayer].learnMortgage + GameManager.instace.playerList[GameManager.instace.activePlayer].carMortgage + GameManager.instace.playerList[GameManager.instace.activePlayer].creditcardMortgage + GameManager.instace.playerList[GameManager.instace.activePlayer].extraPay + GameManager.instace.playerList[GameManager.instace.activePlayer].InstallmentsBank + GameManager.instace.playerList[GameManager.instace.activePlayer].sumChild;
+        GameManager.instace.playerList[GameManager.instace.activePlayer].getmoney = GameManager.instace.playerList[GameManager.instace.activePlayer].allRecieve - GameManager.instace.playerList[GameManager.instace.activePlayer].paid;
+    }
+}
+    

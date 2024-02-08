@@ -41,7 +41,7 @@ public class BigDealDeckController : MonoBehaviourPunCallbacks
     // Update is called once per frame
     void Update()
     {
-  
+        
     }
 
     public void SetUpDeck()
@@ -85,13 +85,16 @@ public class BigDealDeckController : MonoBehaviourPunCallbacks
         newCard.cardBCSO = activeCards[0];
 
         UIController.instance.ChooseBigSmall.SetActive(false);
-        
-        UIController.instance.payButton.SetActive(false);
         UIController.instance.BigPayButton.SetActive(true);
+
+        UIController.instance.payButton.SetActive(false);
+        UIController.instance.cancelButton.SetActive(true);
         UIController.instance.SellButton.SetActive(false);
         UIController.instance.SmallPayButton.SetActive(false);
         UIController.instance.drawButton.SetActive(false);
-        ShowBigDealController.instance.AddCardToShow(newCard);
+
+
+        //ShowBigDealController.instance.AddCardToShow(newCard);
         photonView.RPC("ShowCardToAllPlayerRPC", RpcTarget.All);
         /*
         UIController.instance.cardShow.enabled = true;
@@ -102,7 +105,7 @@ public class BigDealDeckController : MonoBehaviourPunCallbacks
         */
         photonView.RPC("AddToUseCard", RpcTarget.All);
 
-        //Destroy(newCard.gameObject, 1);
+        Destroy(newCard.gameObject, 1);
     }
 
     public void BuyCost()
@@ -115,27 +118,12 @@ public class BigDealDeckController : MonoBehaviourPunCallbacks
         UIController.instance.payButton.SetActive(false);
         UIController.instance.BigPayButton.SetActive(false);
         UIController.instance.SellButton.SetActive(false);
+        UIController.instance.cancelButton.SetActive(false);
         UIController.instance.SmallPayButton.SetActive(false);
         UIController.instance.passButton.SetActive(true);
     }
 
-    public void Loan()
-    {
 
-    }
-    
-
-    private bool IsMyTurn()
-    {
-        // Replace with your logic. This could be checking against a player list, an ID, etc.
-        return PhotonNetwork.LocalPlayer.ActorNumber - 1 == GameManager.instace.activePlayer;
-    }
-
-    [PunRPC]
-    void EndTurnPlayer()
-    {
-        UIController.instance.passButton.SetActive(IsMyTurn());
-    }
 
     [PunRPC]
     void CreateBigDealDeckStart(int selected)
@@ -176,21 +164,25 @@ public class BigDealDeckController : MonoBehaviourPunCallbacks
         if (usedCards[cardcount - 1].house3s2 == true)
         {
             myDeal.house3s2 = true;
+            GameManager.instace.playerList[GameManager.instace.activePlayer].hasHome32 = true;
         }
         if (usedCards[cardcount - 1].CommercialBuilding == true)
         {
             myDeal.CommercialBuilding = true;
+            GameManager.instace.playerList[GameManager.instace.activePlayer].hascommercialBuilding = true;
         }
         if (usedCards[cardcount - 1].Apartment == true)
         {
             myDeal.Apartment = true;
+            GameManager.instace.playerList[GameManager.instace.activePlayer].hasApartment = true;
         }
         if (usedCards[cardcount - 1].Business == true)
         {
             myDeal.Business = true;
+            
         }
         GameManager.instace.playerList[GameManager.instace.activePlayer].DealList.Add(myDeal);
-        
+        GameManager.instace.playerList[GameManager.instace.activePlayer].income = GameManager.instace.playerList[GameManager.instace.activePlayer].income + usedCards[cardcount - 1].CashflowIncome;
     }
 
     [PunRPC]
@@ -207,29 +199,4 @@ public class BigDealDeckController : MonoBehaviourPunCallbacks
         GameManager.instace.playerList[GameManager.instace.activePlayer].money = money;
     }
 
-    [PunRPC]
-    void drawCardBigDeal()
-    {
-        if (activeCards.Count == 0)
-        {
-            SetUpDeck();
-        }
-
-        BigDealCard newCard = Instantiate(cardsToSpawns, transform.position, transform.rotation);
-        newCard.cardBCSO = activeCards[0];
-
-
-        UIController.instance.cardShow.enabled = true;
-
-        UIController.instance.payButton.SetActive(true);
-        UIController.instance.drawButton.SetActive(false);
-
-        ShowBigDealController.instance.AddCardToShow(newCard);
-
-        UIController.instance.cardShow.sprite = activeCards[0].cardSprite;
-        usedCards.Add(activeCards[0]);
-        cardcount++;
-        activeCards.RemoveAt(0);
-        Destroy(newCard.gameObject, 1);
-    }
 }

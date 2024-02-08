@@ -24,7 +24,7 @@ public class BigDealCard : MonoBehaviourPunCallbacks
     public bool  OnShowing;
     public int ShowPosition;
 
-    private ShowBigDealController sc;
+    //private ShowBigDealController sc;
 
     private bool isSelected;
     private Collider col;

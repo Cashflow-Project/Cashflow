@@ -117,7 +117,7 @@ public class SpendDeckController : MonoBehaviourPunCallbacks
         UIController.instance.payButton.SetActive(true);
         UIController.instance.drawButton.SetActive(false);
 
-        ShowController.instance.AddCardToShow(newCard);
+        //ShowController.instance.AddCardToShow(newCard);
         photonView.RPC("ShowCardToAllPlayerRPC", RpcTarget.All);
         //GameManager.instace.playerList[GameManager.instace.activePlayer].money = GameManager.instace.playerList[GameManager.instace.activePlayer].money - activeCards[0].payCost;
 
@@ -131,7 +131,6 @@ public class SpendDeckController : MonoBehaviourPunCallbacks
         
         Destroy(newCard.gameObject, 1);*/
         //GameManager.instace.state = GameManager.States.SWITCH_PLAYER;
-        //photonView.RPC("drawCardSpend", RpcTarget.All);
         Destroy(newCard.gameObject, 1);
     }
 
@@ -241,32 +240,4 @@ public class SpendDeckController : MonoBehaviourPunCallbacks
         GameManager.instace.playerList[GameManager.instace.activePlayer].money = money;
     }
 
-    [PunRPC]
-    void drawCardSpend()
-    {
-        if (activeCards.Count == 0)
-        {
-            SetUpDeck();
-        }
-
-        SpendCard newCard = Instantiate(cardsToSpawns, transform.position, transform.rotation);
-        newCard.cardSpendSO = activeCards[0];
-
-
-        UIController.instance.cardShow.enabled = true;
-
-        //UIController.instance.loanButton.SetActive(true);
-        UIController.instance.payButton.SetActive(true);
-        UIController.instance.drawButton.SetActive(false);
-
-        ShowController.instance.AddCardToShow(newCard);
-
-        //GameManager.instace.playerList[GameManager.instace.activePlayer].money = GameManager.instace.playerList[GameManager.instace.activePlayer].money - activeCards[0].payCost;
-
-        UIController.instance.cardShow.sprite = activeCards[0].cardSprite;
-        usedCards.Add(activeCards[0]);
-        cardcount++;
-        activeCards.RemoveAt(0);
-        Destroy(newCard.gameObject, 1);
-    }
 }

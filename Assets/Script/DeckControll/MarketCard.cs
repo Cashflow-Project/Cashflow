@@ -20,7 +20,7 @@ public class MarketCard : MonoBehaviourPunCallbacks
     public bool  OnShowing;
     public int ShowPosition;
 
-    private ShowController sc;
+    //private ShowController sc;
 
     private bool isSelected;
     private Collider col;
@@ -35,7 +35,7 @@ public class MarketCard : MonoBehaviourPunCallbacks
     {
         setupCard();
         
-        sc = FindObjectOfType<ShowController>();
+        //sc = FindObjectOfType<ShowController>();
 
         col = GetComponent<Collider>();
 
