@@ -17,7 +17,13 @@ public class UIInvestConfirm : MonoBehaviourPunCallbacks
     // Start is called before the first frame update
     void Start()
     {
-        
+        UIController.instance.payButton.SetActive(false);
+        UIController.instance.SmallPayButton.SetActive(false);
+        UIController.instance.BigPayButton.SetActive(false);
+        UIController.instance.cancelButton.SetActive(false);
+        UIController.instance.drawButton.SetActive(false);
+        UIController.instance.ChooseBigSmall.SetActive(false);
+        UIController.instance.SellButton.SetActive(false);
     }
 
     // Update is called once per frame
@@ -38,6 +44,13 @@ public class UIInvestConfirm : MonoBehaviourPunCallbacks
     public void CancelClick()
     {
         UIController.instance.InvestCanvas.SetActive(false);
+
+        UIController.instance.payButton.SetActive(false);
+        UIController.instance.SmallPayButton.SetActive(true);
+        UIController.instance.BigPayButton.SetActive(false);
+        UIController.instance.cancelButton.SetActive(true);
+        UIController.instance.ChooseBigSmall.SetActive(false);
+
     }
 
     public void SetAllFalse()
@@ -76,6 +89,8 @@ public class UIInvestConfirm : MonoBehaviourPunCallbacks
         myInvest.CardName = SmallDealDeckController.instance.usedCards[SmallDealDeckController.instance.cardcount - 1].cardName;
         myInvest.countShare = SmallDealDeckController.instance.usedCards[SmallDealDeckController.instance.cardcount - 1].count;
         myInvest.pricePerShare = SmallDealDeckController.instance.usedCards[SmallDealDeckController.instance.cardcount - 1].value;
+        myInvest.sumValue = Int32.Parse(sumCalculate.text);
+        GameManager.instace.playerList[GameManager.instace.activePlayer].InvestList.Add(myInvest);
         if (SmallDealDeckController.instance.usedCards[SmallDealDeckController.instance.cardcount - 1].ON2U == true)
         {
             myInvest.ON2U = true;

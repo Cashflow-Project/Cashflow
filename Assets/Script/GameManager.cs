@@ -45,6 +45,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         public string CardName;
         public int countShare;
         public int pricePerShare;
+        public int sumValue;
         public bool ON2U;
         public bool MYT4U;
         public bool GRO4US;
@@ -1158,7 +1159,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     [PunRPC]
     void setOtherOff()
     {
-        UIController.instance.SetAllFalse();
+        UIController.instance.SetAllFalse(false);
     }
     
 }

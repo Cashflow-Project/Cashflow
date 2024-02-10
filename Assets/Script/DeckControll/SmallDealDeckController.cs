@@ -93,10 +93,6 @@ public class SmallDealDeckController : MonoBehaviourPunCallbacks
         UIController.instance.SmallPayButton.SetActive(true);
         UIController.instance.SellButton.SetActive(false);
 
-
-        
-
-
         UIController.instance.BigPayButton.SetActive(false);
         UIController.instance.payButton.SetActive(false);
         UIController.instance.cancelButton.SetActive(true);

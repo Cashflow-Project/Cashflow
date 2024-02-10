@@ -3856,7 +3856,7 @@ GameObject:
   - component: {fileID: 1993143046}
   - component: {fileID: 1993143045}
   m_Layer: 5
-  m_Name: bgEnterName
+  m_Name: bgStatus
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -14,6 +14,7 @@ public class UIController : MonoBehaviour
     public static UIController instance;
 
     public GameObject InvestCanvas;
+    public GameObject SellListCanvas;
     public Text infoText;
     public Image cardShow;
     public Text roomname;
@@ -90,15 +91,14 @@ public class UIController : MonoBehaviour
     }
     public void Cancel()
     {
-        SetAllFalse();
+        SetAllFalse(false);
 
         passButton.SetActive(true);
     }
 
-    public void SetAllFalse()
+    public void Sell()
     {
-
-        cardShow.enabled = false;
+        SellListCanvas.SetActive(true);
         payButton.SetActive(false);
         SmallPayButton.SetActive(false);
         BigPayButton.SetActive(false);
@@ -106,6 +106,19 @@ public class UIController : MonoBehaviour
         drawButton.SetActive(false);
         ChooseBigSmall.SetActive(false);
         SellButton.SetActive(false);
+    }
+
+    public void SetAllFalse(bool on)
+    {
+
+        cardShow.enabled = on;
+        payButton.SetActive(on);
+        SmallPayButton.SetActive(on);
+        BigPayButton.SetActive(on);
+        cancelButton.SetActive(on);
+        drawButton.SetActive(on);
+        ChooseBigSmall.SetActive(on);
+        SellButton.SetActive(on);
 
     }
 
