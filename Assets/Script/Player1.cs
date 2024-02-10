@@ -102,6 +102,7 @@ public class Player1 : MonoBehaviourPunCallbacks
             routePosition %= fullRoute.Count;
             Vector3 nextPos = fullRoute[routePosition].gameObject.transform.position;
             Vector3 startPos = fullRoute[routePosition].gameObject.transform.position;
+            photonView.RPC("valueUpdate", RpcTarget.All);
             //while (MoveToNextNode(nextPos,8f)){yield return null;}
             while (MoveInArcToNextNode(startPos, nextPos, 8f)) { yield return null; }
             //orange pass
@@ -203,8 +204,8 @@ public class Player1 : MonoBehaviourPunCallbacks
         if (routePosition % fullRoute.Count == 20)
         {
             Debug.Log("in purple 3 route");
-            photonView.RPC("valueUpdate", RpcTarget.All);
             photonView.RPC("GetChild", RpcTarget.All);
+            photonView.RPC("valueUpdate", RpcTarget.All);
             photonView.RPC("EndTurnPlayer", RpcTarget.All);
             //UIController.instance.passButton.SetActive(IsMyTurn());
             /*

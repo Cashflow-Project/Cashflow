@@ -12,8 +12,9 @@ public class UIInvestConfirm : MonoBehaviourPunCallbacks
 
     public TMP_Text sumCalculate;
     public GameObject cancelButton;
-    public GameObject okButton;
+    public Button BuyButton;
     public TMP_InputField inputNum;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -29,7 +30,17 @@ public class UIInvestConfirm : MonoBehaviourPunCallbacks
     // Update is called once per frame
     void Update()
     {
+        var isNumeric = int.TryParse(inputNum.text, out int n);
+        if (!isNumeric || Int32.Parse(inputNum.text) <= 0)
+        {
+            BuyButton.interactable = false;
+        }
+        else
+        {
+            BuyButton.interactable = true;
+        }
         sumCalculate.text = (Int32.Parse(inputNum.text) * SmallDealDeckController.instance.usedCards[SmallDealDeckController.instance.cardcount - 1].value).ToString();
+        
     }
 
     public void OkClick()

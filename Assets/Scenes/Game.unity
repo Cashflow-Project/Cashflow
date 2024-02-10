@@ -1742,7 +1742,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u200B"
+  m_text: "0\u200B"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -3485,7 +3485,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: dfe693b47e9fe2f46b30097e24551ca0, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.65999997
+      value: 0.8
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: dfe693b47e9fe2f46b30097e24551ca0, type: 3}
       propertyPath: m_LocalPosition.y
@@ -3493,7 +3493,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: dfe693b47e9fe2f46b30097e24551ca0, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 6.3899994
+      value: 6.15
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: dfe693b47e9fe2f46b30097e24551ca0, type: 3}
       propertyPath: m_LocalRotation.w
@@ -22392,7 +22392,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2072243476}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
@@ -22739,7 +22739,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sumCalculate: {fileID: 1475161823}
   cancelButton: {fileID: 1862680237}
-  okButton: {fileID: 1650632423}
+  BuyButton: {fileID: 1650632425}
   inputNum: {fileID: 441695000}
 --- !u!114 &2076699776
 MonoBehaviour:

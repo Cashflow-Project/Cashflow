@@ -121,6 +121,8 @@ public class BigDealDeckController : MonoBehaviourPunCallbacks
         UIController.instance.cancelButton.SetActive(false);
         UIController.instance.SmallPayButton.SetActive(false);
         UIController.instance.passButton.SetActive(true);
+
+        photonView.RPC("valueUpdate", RpcTarget.All);
     }
 
 
@@ -199,4 +201,13 @@ public class BigDealDeckController : MonoBehaviourPunCallbacks
         GameManager.instace.playerList[GameManager.instace.activePlayer].money = money;
     }
 
+    [PunRPC]
+    void valueUpdate()
+    {
+        GameManager.instace.playerList[GameManager.instace.activePlayer].allRecieve = GameManager.instace.playerList[GameManager.instace.activePlayer].salary + GameManager.instace.playerList[GameManager.instace.activePlayer].income;
+        GameManager.instace.playerList[GameManager.instace.activePlayer].InstallmentsBank = GameManager.instace.playerList[GameManager.instace.activePlayer].loanBank * (1 / 10);
+        GameManager.instace.playerList[GameManager.instace.activePlayer].sumChild = GameManager.instace.playerList[GameManager.instace.activePlayer].child * GameManager.instace.playerList[GameManager.instace.activePlayer].perChild;
+        GameManager.instace.playerList[GameManager.instace.activePlayer].paid = GameManager.instace.playerList[GameManager.instace.activePlayer].tax + GameManager.instace.playerList[GameManager.instace.activePlayer].homeMortgage + GameManager.instace.playerList[GameManager.instace.activePlayer].learnMortgage + GameManager.instace.playerList[GameManager.instace.activePlayer].carMortgage + GameManager.instace.playerList[GameManager.instace.activePlayer].creditcardMortgage + GameManager.instace.playerList[GameManager.instace.activePlayer].extraPay + GameManager.instace.playerList[GameManager.instace.activePlayer].InstallmentsBank + GameManager.instace.playerList[GameManager.instace.activePlayer].sumChild;
+        GameManager.instace.playerList[GameManager.instace.activePlayer].getmoney = GameManager.instace.playerList[GameManager.instace.activePlayer].allRecieve - GameManager.instace.playerList[GameManager.instace.activePlayer].paid;
+    }
 }
