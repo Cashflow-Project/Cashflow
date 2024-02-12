@@ -5668,7 +5668,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 524723576}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
@@ -8301,7 +8301,7 @@ Light:
   serializedVersion: 10
   m_Type: 1
   m_Shape: 0
-  m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
+  m_Color: {r: 0.9056604, g: 0.9056604, b: 0.9056604, a: 1}
   m_Intensity: 1
   m_Range: 10
   m_SpotAngle: 30
@@ -9607,7 +9607,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: ac845c241fcffce488a36803bb1d9bc9, type: 2}
+  - {fileID: 2100000, guid: 263c8788a64ef24498037223d1fee035, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -12693,7 +12693,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: dfe693b47e9fe2f46b30097e24551ca0, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 25b9e3ec408737341bbf7ba211f0dc45, type: 2}
+      objectReference: {fileID: 2100000, guid: 263c8788a64ef24498037223d1fee035, type: 2}
     - target: {fileID: 919132149155446097, guid: dfe693b47e9fe2f46b30097e24551ca0, type: 3}
       propertyPath: m_Name
       value: Node 12
@@ -13499,7 +13499,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u200B"
+  m_text: "0\u200B"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -20408,7 +20408,7 @@ MonoBehaviour:
   m_CaretColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
   m_CustomCaretColor: 0
   m_SelectionColor: {r: 0.65882355, g: 0.80784315, b: 1, a: 0.7529412}
-  m_Text: 
+  m_Text: 0
   m_CaretBlinkRate: 0.85
   m_CaretWidth: 1
   m_ReadOnly: 0
@@ -23201,7 +23201,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Countdown: 1
-  timerDuration: 180
   timer: 0
   firstMinutes: {fileID: 1719134835}
   secondMinutes: {fileID: 1855849734}
@@ -23989,6 +23988,9 @@ MonoBehaviour:
     hascommercialBuilding: 0
     hasApartment: 0
     GoldCoins: 0
+    isInRedRoute: 0
+    isDrawButtonOn: 0
+    isSpendAlready: 0
     KeepCount: 0
     EnterOuter: 0
     DealList: []
@@ -24040,6 +24042,9 @@ MonoBehaviour:
     hascommercialBuilding: 0
     hasApartment: 0
     GoldCoins: 0
+    isInRedRoute: 0
+    isDrawButtonOn: 0
+    isSpendAlready: 0
     KeepCount: 0
     EnterOuter: 0
     DealList: []
@@ -24091,6 +24096,9 @@ MonoBehaviour:
     hascommercialBuilding: 0
     hasApartment: 0
     GoldCoins: 0
+    isInRedRoute: 0
+    isDrawButtonOn: 0
+    isSpendAlready: 0
     KeepCount: 0
     EnterOuter: 0
     DealList: []
@@ -24142,6 +24150,9 @@ MonoBehaviour:
     hascommercialBuilding: 0
     hasApartment: 0
     GoldCoins: 0
+    isInRedRoute: 0
+    isDrawButtonOn: 0
+    isSpendAlready: 0
     KeepCount: 0
     EnterOuter: 0
     DealList: []
@@ -24193,6 +24204,9 @@ MonoBehaviour:
     hascommercialBuilding: 0
     hasApartment: 0
     GoldCoins: 0
+    isInRedRoute: 0
+    isDrawButtonOn: 0
+    isSpendAlready: 0
     KeepCount: 0
     EnterOuter: 0
     DealList: []
@@ -24244,6 +24258,9 @@ MonoBehaviour:
     hascommercialBuilding: 0
     hasApartment: 0
     GoldCoins: 0
+    isInRedRoute: 0
+    isDrawButtonOn: 0
+    isSpendAlready: 0
     KeepCount: 0
     EnterOuter: 0
     DealList: []
