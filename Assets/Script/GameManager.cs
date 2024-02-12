@@ -135,6 +135,9 @@ public class GameManager : MonoBehaviourPunCallbacks
         public bool hasApartment;
         public int GoldCoins;
 
+        public bool isInRedRoute = false;
+        public bool isDrawButtonOn = false;
+        public bool isSpendAlready = false;
         public int KeepCount;
         public bool EnterOuter;
         public List<DealKeep> DealList = new List<DealKeep>();
@@ -174,19 +177,8 @@ public class GameManager : MonoBehaviourPunCallbacks
         instace = this;
 
         photonView = GetComponent<PhotonView>();
-        /*
-        for (int i = 0; i < playerList.Count; i++)
-        {
-            if (SaveSettings.players[i] == "HUMAN")
-            {
-                playerList[i].playerType = Entity.PlayerTypes.HUMAN;
-            }
-            if (SaveSettings.players[i] == "NP")
-            {
-                //playerList.RemoveAt(i);
-                playerList[i].playerType = Entity.PlayerTypes.NO_PLAYER;
-            }
-        }*/
+     
+
     }
 
     void Start()
@@ -219,6 +211,7 @@ public class GameManager : MonoBehaviourPunCallbacks
                         Debug.Log("activeplayer now " + activePlayer);
                         playerList[activePlayer].myPlayers[0].SetSelector(true);
                         playerList[activePlayer].myPlayers[0].turncounts++;
+
                         photonView.RPC("turnCountRPC", RpcTarget.All, playerList[activePlayer].myPlayers[0].turncounts);
 
 
@@ -239,8 +232,8 @@ public class GameManager : MonoBehaviourPunCallbacks
                                 state = States.SWITCH_PLAYER;
                             }
 
-                        
-                        
+                        playerList[activePlayer].isSpendAlready = false;
+
                     }
                     break;
                 case States.ROLL_DICE:
@@ -248,12 +241,15 @@ public class GameManager : MonoBehaviourPunCallbacks
 
                             //Deactivate Highlight
                             ActivateButton(true);
-                            state = States.WAITING;
+                        
+                        
+                        state = States.WAITING;
                     }
                     break;
                 case States.WAITING:
                     {
-
+                        
+                        
                     }
                     break;
                 case States.ACTION:
@@ -350,24 +346,24 @@ public class GameManager : MonoBehaviourPunCallbacks
         state = States.SWITCH_PLAYER;
     }*/
 
-    /*public override void OnRoomPropertiesUpdate(Hashtable propertiesThatChanged)
-    {
-        object activePlayerObj;
-        if (propertiesThatChanged.TryGetValue("activePlayer", out activePlayerObj))
-        {
-            activePlayer = (int)activePlayerObj;
+                        /*public override void OnRoomPropertiesUpdate(Hashtable propertiesThatChanged)
+                        {
+                            object activePlayerObj;
+                            if (propertiesThatChanged.TryGetValue("activePlayer", out activePlayerObj))
+                            {
+                                activePlayer = (int)activePlayerObj;
 
-            // Here you can update your game UI, gameplay logic, etc., based on the turn change.
-        }
-    }*/
-    IEnumerator SwitchPlayer()
+                                // Here you can update your game UI, gameplay logic, etc., based on the turn change.
+                            }
+                        }*/
+                        IEnumerator SwitchPlayer()
     {
         
         Debug.Log(activePlayer);
         if (switchingPlayer || PhotonNetwork.LocalPlayer.ActorNumber - 1 != activePlayer )
-            {
-                yield break;
-            }
+        {
+            yield break;
+        }
             switchingPlayer = true;
 
             yield return new WaitForSeconds(2);
@@ -463,7 +459,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     }
 
     //---------------------------human input--------------------
-    void ActivateButton(bool on)
+    public void ActivateButton(bool on)
     {
         diceButton.SetActive(on);
         if (playerList[activePlayer].hasDonate)
@@ -500,6 +496,8 @@ public class GameManager : MonoBehaviourPunCallbacks
     public void PassTurn()
     {
         UIController.instance.passButton.SetActive(false);
+        playerList[activePlayer].isInRedRoute = false;
+        
         photonView.RPC("setOtherOff", RpcTarget.All); 
         state = States.SWITCH_PLAYER;
         

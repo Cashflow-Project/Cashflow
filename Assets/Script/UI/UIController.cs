@@ -63,6 +63,7 @@ public class UIController : MonoBehaviour
     public void DrawCard()
     {
         SpendDeckController.instance.DrawCardToHand();
+        GameManager.instace.playerList[GameManager.instace.activePlayer].isDrawButtonOn = false;
     }
 
     public void DrawBigCard()

@@ -35,7 +35,7 @@ public class Player1 : MonoBehaviourPunCallbacks
     bool isMoving;
 
     bool hasTurn;//human input
-
+    
 
     [Header("SELECTOR")]
     public GameObject selector;
@@ -410,6 +410,8 @@ public class Player1 : MonoBehaviourPunCallbacks
     [PunRPC]
     void PlayerDraw()
     {
+        GameManager.instace.playerList[GameManager.instace.activePlayer].isInRedRoute = true;
+        GameManager.instace.playerList[GameManager.instace.activePlayer].isDrawButtonOn = true;
         UIController.instance.drawButton.SetActive(IsMyTurn());
     }
 

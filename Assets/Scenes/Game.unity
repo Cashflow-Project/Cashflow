@@ -543,7 +543,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &73059817
 RectTransform:
   m_ObjectHideFlags: 0
@@ -611,7 +611,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 1
+  m_PresetInfoIsWorld: 0
 --- !u!223 &73059820
 Canvas:
   m_ObjectHideFlags: 0
@@ -23201,11 +23201,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Countdown: 1
+  timerDuration: 180
+  timer: 0
   firstMinutes: {fileID: 1719134835}
   secondMinutes: {fileID: 1855849734}
   Separator: {fileID: 678113228}
   firstSeconds: {fileID: 2078138223}
   secondSeconds: {fileID: 1874652094}
+  flashTimer: 0
+  flashDuration: 1
 --- !u!1 &2038068494
 GameObject:
   m_ObjectHideFlags: 0

@@ -145,7 +145,7 @@ public class SpendDeckController : MonoBehaviourPunCallbacks
             //UIController.instance.cancelButton.SetActive(false);
             //UIController.instance.loanButton.SetActive(false);
             UIController.instance.payButton.SetActive(false);
-
+            GameManager.instace.playerList[GameManager.instace.activePlayer].isSpendAlready = true;
             UIController.instance.passButton.SetActive(true);
             //photonView.RPC("EndTurnPlayer", RpcTarget.All);
         }
@@ -163,7 +163,7 @@ public class SpendDeckController : MonoBehaviourPunCallbacks
             //UIController.instance.cancelButton.SetActive(false);
             //UIController.instance.loanButton.SetActive(false);
             UIController.instance.payButton.SetActive(false);
-
+            GameManager.instace.playerList[GameManager.instace.activePlayer].isSpendAlready = true;
             UIController.instance.passButton.SetActive(true);
             //photonView.RPC("EndTurnPlayer", RpcTarget.All);
         }
