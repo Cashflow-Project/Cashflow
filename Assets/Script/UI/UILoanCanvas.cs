@@ -26,7 +26,7 @@ public class UILoanCanvas : MonoBehaviourPunCallbacks
     void Update()
     {
         var isNumeric = int.TryParse(LoanInputNum.text, out int n);
-        if (!isNumeric || Int32.Parse(LoanInputNum.text) <= 0 || Int32.Parse(LoanInputNum.text) > Int32.Parse(canLoan.text))
+        if (!isNumeric || Int32.Parse(LoanInputNum.text) <= 0 || Int32.Parse(LoanInputNum.text) > Int32.Parse(canLoan.text) || Int32.Parse(LoanInputNum.text)%10 != 0)
         {
             LoanButton.interactable = false;
         }
@@ -34,19 +34,16 @@ public class UILoanCanvas : MonoBehaviourPunCallbacks
         {
             LoanButton.interactable = true;
         }
-        LoanAlready.text = GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].InstallmentsBank.ToString();
+        LoanAlready.text = GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].loanBank.ToString();
         canLoan.text = (GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].getmoney * 10).ToString();
         
     }
 
     public void OkClick()
     {
-        GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].InstallmentsBank += Int32.Parse(LoanInputNum.text);
-        GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].money += Int32.Parse(LoanInputNum.text);
-        GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].loanBank += Int32.Parse(LoanInputNum.text) * 10 / 100;
+        photonView.RPC("UpdateLoan", RpcTarget.All);
         UIController.instance.LoanCanvas.SetActive(false);
         photonView.RPC("UpdateMoney", RpcTarget.All, GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].money, PhotonNetwork.LocalPlayer.ActorNumber - 1);
-        //photonView.RPC("UpdateLoan", RpcTarget.All);
         photonView.RPC("valueUpdate", RpcTarget.All);
         
     }
@@ -70,14 +67,16 @@ public class UILoanCanvas : MonoBehaviourPunCallbacks
     [PunRPC]
     void UpdateLoan()
     {
-       
+        GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].money += Int32.Parse(LoanInputNum.text);
+        GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].loanBank += Int32.Parse(LoanInputNum.text);
+        GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].InstallmentsBank += Int32.Parse(LoanInputNum.text);
     }
 
     [PunRPC]
     void valueUpdate()
     {
         GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].allRecieve = GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].salary + GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].income;
-        GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].InstallmentsBank = GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].loanBank * (1 / 10);
+        GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].InstallmentsBank = GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].loanBank / 10;
         GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].sumChild = GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].child * GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].perChild;
         GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].paid = GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].tax + GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].homeMortgage + GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].learnMortgage + GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].carMortgage + GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].creditcardMortgage + GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].extraPay + GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].InstallmentsBank + GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].sumChild;
         GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].getmoney = GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].allRecieve - GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].paid;

@@ -71,7 +71,10 @@ public class UILeftController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (page2.enabled == true)
+        {
+            SetPage2Value();
+        }
     }
 
 
