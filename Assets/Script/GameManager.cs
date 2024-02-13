@@ -81,17 +81,17 @@ public class GameManager : MonoBehaviourPunCallbacks
         public Jobs playerJob;
         public Color ColorPlayer;
 
-        //·ÃÑ¾ÂìÊÔ¹
+        //ï¿½ï¿½Ñ¾ï¿½ï¿½ï¿½Ô¹
         public int money;
         public int firstMoney;
 
-        //¸ØÃ¡Ô¨
-        //ÃÒÂÃÑº
+        //ï¿½ï¿½Ã¡Ô¨
+        //ï¿½ï¿½ï¿½ï¿½Ñº
         public int salary;
         public int income;
         public int allRecieve;
         public int getmoney;
-        //ÃÒÂ¨ÒÂ
+        //ï¿½ï¿½Â¨ï¿½ï¿½
         
         public int tax;
         public int homeMortgage;
@@ -360,7 +360,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     {
         
         Debug.Log(activePlayer);
-        if (switchingPlayer || PhotonNetwork.LocalPlayer.ActorNumber - 1 != activePlayer )
+        if (switchingPlayer || GameManager.instace.activePlayer != activePlayer )
         {
             yield break;
         }
@@ -612,7 +612,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     private bool IsMyTurnSure()
     {
         // Replace with your logic. This could be checking against a player list, an ID, etc.
-        return PhotonNetwork.LocalPlayer.ActorNumber - 1 == GameManager.instace.activePlayer;
+        return GameManager.instace.activePlayer == PhotonNetwork.LocalPlayer.ActorNumber - 1;
     }
 
     public void CheckingJob(int i)

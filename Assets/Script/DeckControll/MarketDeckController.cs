@@ -128,7 +128,7 @@ public class MarketDeckController : MonoBehaviourPunCallbacks
     private bool IsMyTurn()
     {
         // Replace with your logic. This could be checking against a player list, an ID, etc.
-        return PhotonNetwork.LocalPlayer.ActorNumber - 1 == GameManager.instace.activePlayer;
+        return GameManager.instace.activePlayer == PhotonNetwork.LocalPlayer.ActorNumber - 1;
     }
 
     [PunRPC]

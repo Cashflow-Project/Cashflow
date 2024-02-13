@@ -18,6 +18,7 @@ public class UIController : MonoBehaviour
     public Text infoText;
     public Image cardShow;
     public Text roomname;
+    public GameObject LoanCanvas;
 
     private void Awake()
     {
@@ -40,7 +41,6 @@ public class UIController : MonoBehaviour
     {
         roomname.text = PhotonNetwork.CurrentRoom.Name +"actorNum " + PhotonNetwork.LocalPlayer.ActorNumber.ToString();
         
-
 
     }
 

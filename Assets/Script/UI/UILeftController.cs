@@ -8,10 +8,12 @@ using Photon.Pun;
 using Photon.Realtime;
 public class UILeftController : MonoBehaviour
 {
-    public static UIController instance;
+    public static UILeftController instance;
 
     public Canvas page1;
     public Canvas page2;
+
+    
 
     public GameObject opPage1;
     public GameObject opPage2;
@@ -163,42 +165,49 @@ public class UILeftController : MonoBehaviour
         }
 
     }
+
+    public void OpenLoanCanvas()
+    {
+        UIController.instance.LoanCanvas.SetActive(true);
+    }
+
     public void SetPage1Value()
     {
-     firstmoneyP2.text = GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].firstMoney.ToString();
-    leftmoneyP2.text = (GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].salary - GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].getmoney).ToString();
-    allMoneyP2.text = (GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].firstMoney + (GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].salary - GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].getmoney)).ToString();
+     firstmoneyP2.text = GameManager.instace.playerList[GameManager.instace.activePlayer].firstMoney.ToString();
+    leftmoneyP2.text = (GameManager.instace.playerList[GameManager.instace.activePlayer].salary - GameManager.instace.playerList[GameManager.instace.activePlayer].getmoney).ToString();
+    allMoneyP2.text = (GameManager.instace.playerList[GameManager.instace.activePlayer].firstMoney + (GameManager.instace.playerList[GameManager.instace.activePlayer].salary - GameManager.instace.playerList[GameManager.instace.activePlayer].getmoney)).ToString();
 }
     public void SetPage2Value()
     {
-        Job.text = GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].playerJob.ToString() +" actorNum "+ PhotonNetwork.LocalPlayer.ActorNumber;
-        income1.text = GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].income.ToString();
-        income2.text = GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].income.ToString();
+        Job.text = GameManager.instace.playerList[GameManager.instace.activePlayer].playerJob.ToString() +" actorNum "+ PhotonNetwork.LocalPlayer.ActorNumber;
+        income1.text = GameManager.instace.playerList[GameManager.instace.activePlayer].income.ToString();
+        income2.text = GameManager.instace.playerList[GameManager.instace.activePlayer].income.ToString();
 
-        salary1.text = GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].salary.ToString();
-        salary2.text = GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].salary.ToString();
+        salary1.text = GameManager.instace.playerList[GameManager.instace.activePlayer].salary.ToString();
+        salary2.text = GameManager.instace.playerList[GameManager.instace.activePlayer].salary.ToString();
 
-        allGet.text = GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].allRecieve.ToString();
-        allPay.text = GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].paid.ToString();
-        incomeLeft.text = GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].getmoney.ToString();
-        tax.text = GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].tax.ToString();
-        house.text = GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].homeMortgage.ToString();
-        learn.text = GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].learnMortgage.ToString();
-        car.text = GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].carMortgage.ToString();
-        creditCard.text = GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].creditcardMortgage.ToString();
-        addOn.text = GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].extraPay.ToString();
-        loan.text = GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].InstallmentsBank.ToString();
+        allGet.text = GameManager.instace.playerList[GameManager.instace.activePlayer].allRecieve.ToString();
+        allPay.text = GameManager.instace.playerList[GameManager.instace.activePlayer].paid.ToString();
+        incomeLeft.text = GameManager.instace.playerList[GameManager.instace.activePlayer].getmoney.ToString();
+        tax.text = GameManager.instace.playerList[GameManager.instace.activePlayer].tax.ToString();
+        house.text = GameManager.instace.playerList[GameManager.instace.activePlayer].homeMortgage.ToString();
+        learn.text = GameManager.instace.playerList[GameManager.instace.activePlayer].learnMortgage.ToString();
+        car.text = GameManager.instace.playerList[GameManager.instace.activePlayer].carMortgage.ToString();
+        creditCard.text = GameManager.instace.playerList[GameManager.instace.activePlayer].creditcardMortgage.ToString();
+        addOn.text = GameManager.instace.playerList[GameManager.instace.activePlayer].extraPay.ToString();
+        loan.text = GameManager.instace.playerList[GameManager.instace.activePlayer].InstallmentsBank.ToString();
 
-        child1.text = GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].child.ToString();
-        child2.text = GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].perChild.ToString();
-        allChild.text = GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].sumChild.ToString();
-        money.text = GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].firstMoney.ToString();
-        house1.text = GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].homeDebt.ToString();
-        learn1.text = GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].learnDebt.ToString();
-        car1.text = GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].carDebt.ToString();
-        creditCard1.text = GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].creditDebt.ToString();
-        loan1.text = GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].loanBank.ToString();
+        child1.text = GameManager.instace.playerList[GameManager.instace.activePlayer].child.ToString();
+        child2.text = GameManager.instace.playerList[GameManager.instace.activePlayer].perChild.ToString();
+        allChild.text = GameManager.instace.playerList[GameManager.instace.activePlayer].sumChild.ToString();
+        money.text = GameManager.instace.playerList[GameManager.instace.activePlayer].firstMoney.ToString();
+        house1.text = GameManager.instace.playerList[GameManager.instace.activePlayer].homeDebt.ToString();
+        learn1.text = GameManager.instace.playerList[GameManager.instace.activePlayer].learnDebt.ToString();
+        car1.text = GameManager.instace.playerList[GameManager.instace.activePlayer].carDebt.ToString();
+        creditCard1.text = GameManager.instace.playerList[GameManager.instace.activePlayer].creditDebt.ToString();
+        loan1.text = GameManager.instace.playerList[GameManager.instace.activePlayer].loanBank.ToString();
     
     }
+
 }
 
