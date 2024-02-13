@@ -51,6 +51,7 @@ public class Timer : MonoBehaviour
                 && GameManager.instace.playerList[GameManager.instace.activePlayer].isInRedRoute == false)
             {
                 GameManager.instace.ActivateButton(false);
+                UIController.instance.InvestCanvas.SetActive(false);
                 UIController.instance.passButton.SetActive(false);
                 ResetTimer();
                 GameManager.instace.state = GameManager.States.SWITCH_PLAYER;
@@ -59,6 +60,7 @@ public class Timer : MonoBehaviour
             {
                 UIController.instance.SetAllFalse(false);
                 GameManager.instace.ActivateButton(false);
+                UIController.instance.InvestCanvas.SetActive(false);
                 UIController.instance.passButton.SetActive(false);
                 ResetTimer();
                 GameManager.instace.state = GameManager.States.SWITCH_PLAYER;

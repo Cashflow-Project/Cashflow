@@ -36,7 +36,6 @@ public class GameManager : MonoBehaviourPunCallbacks
     {
         public string CardName;
 
-
     }
 
     [System.Serializable]
@@ -50,6 +49,40 @@ public class GameManager : MonoBehaviourPunCallbacks
         public bool MYT4U;
         public bool GRO4US;
         public bool OK4U;
+    }
+
+    [System.Serializable]
+    public class ON2UKeep
+    {
+        public string CardName;
+        public int countShare;
+        public int pricePerShare;
+        public int sumValue;
+    }
+    [System.Serializable]
+    public class MYT4UKeep
+    {
+        public string CardName;
+        public int countShare;
+        public int pricePerShare;
+        public int sumValue;
+    }
+    [System.Serializable]
+    public class GRO4USKeep
+    {
+        public string CardName;
+        public int countShare;
+        public int pricePerShare;
+        public int sumValue;
+    }
+
+    [System.Serializable]
+    public class OK4UKeep
+    {
+        public string CardName;
+        public int countShare;
+        public int pricePerShare;
+        public int sumValue;
     }
 
     [System.Serializable]
@@ -142,6 +175,12 @@ public class GameManager : MonoBehaviourPunCallbacks
         public bool EnterOuter;
         public List<DealKeep> DealList = new List<DealKeep>();
         public List<InvestKeep> InvestList = new List<InvestKeep>();
+
+        public List<ON2UKeep> ON2UList = new List<ON2UKeep>();
+        public List<MYT4UKeep> MYT4UList = new List<MYT4UKeep>();
+        public List<GRO4USKeep> GRO4USList = new List<GRO4USKeep>();
+        public List<OK4UKeep> OK4UList = new List<OK4UKeep>();
+
         public List<OtherInvestKeep> OtherInvestList = new List<OtherInvestKeep>();
         public List<Note> Keep = new List<Note>();
 

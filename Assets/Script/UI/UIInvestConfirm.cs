@@ -98,28 +98,52 @@ public class UIInvestConfirm : MonoBehaviourPunCallbacks
         //invest collect
         GameManager.InvestKeep myInvest = new GameManager.InvestKeep();
         myInvest.CardName = SmallDealDeckController.instance.usedCards[SmallDealDeckController.instance.cardcount - 1].cardName;
-        myInvest.countShare = SmallDealDeckController.instance.usedCards[SmallDealDeckController.instance.cardcount - 1].count;
+        myInvest.countShare = Int32.Parse(inputNum.text);
         myInvest.pricePerShare = SmallDealDeckController.instance.usedCards[SmallDealDeckController.instance.cardcount - 1].value;
         myInvest.sumValue = Int32.Parse(sumCalculate.text);
         GameManager.instace.playerList[GameManager.instace.activePlayer].InvestList.Add(myInvest);
         if (SmallDealDeckController.instance.usedCards[SmallDealDeckController.instance.cardcount - 1].ON2U == true)
         {
             myInvest.ON2U = true;
+            GameManager.ON2UKeep myON2U = new GameManager.ON2UKeep();
+            myON2U.CardName = SmallDealDeckController.instance.usedCards[SmallDealDeckController.instance.cardcount - 1].cardName;
+            myON2U.countShare = Int32.Parse(inputNum.text);
+            myON2U.pricePerShare = SmallDealDeckController.instance.usedCards[SmallDealDeckController.instance.cardcount - 1].value;
+            myON2U.sumValue = Int32.Parse(sumCalculate.text);
+            GameManager.instace.playerList[GameManager.instace.activePlayer].ON2UList.Add(myON2U);
             GameManager.instace.playerList[GameManager.instace.activePlayer].hasON2U = true;
         }
         if (SmallDealDeckController.instance.usedCards[SmallDealDeckController.instance.cardcount - 1].MYT4U == true)
         {
             myInvest.MYT4U = true;
+            GameManager.MYT4UKeep myMYT4U = new GameManager.MYT4UKeep();
+            myMYT4U.CardName = SmallDealDeckController.instance.usedCards[SmallDealDeckController.instance.cardcount - 1].cardName;
+            myMYT4U.countShare = Int32.Parse(inputNum.text);
+            myMYT4U.pricePerShare = SmallDealDeckController.instance.usedCards[SmallDealDeckController.instance.cardcount - 1].value;
+            myMYT4U.sumValue = Int32.Parse(sumCalculate.text);
+            GameManager.instace.playerList[GameManager.instace.activePlayer].MYT4UList.Add(myMYT4U);
             GameManager.instace.playerList[GameManager.instace.activePlayer].hasMYT4U = true;
         }
         if (SmallDealDeckController.instance.usedCards[SmallDealDeckController.instance.cardcount - 1].GRO4US == true)
         {
             myInvest.GRO4US = true;
+            GameManager.GRO4USKeep myGRO4US = new GameManager.GRO4USKeep();
+            myGRO4US.CardName = SmallDealDeckController.instance.usedCards[SmallDealDeckController.instance.cardcount - 1].cardName;
+            myGRO4US.countShare = Int32.Parse(inputNum.text);
+            myGRO4US.pricePerShare = SmallDealDeckController.instance.usedCards[SmallDealDeckController.instance.cardcount - 1].value;
+            myGRO4US.sumValue = Int32.Parse(sumCalculate.text);
+            GameManager.instace.playerList[GameManager.instace.activePlayer].GRO4USList.Add(myGRO4US);
             GameManager.instace.playerList[GameManager.instace.activePlayer].hasGRO4US = true;
         }
         if (SmallDealDeckController.instance.usedCards[SmallDealDeckController.instance.cardcount - 1].OK4U == true)
         {
             myInvest.OK4U = true;
+            GameManager.OK4UKeep myOK4U = new GameManager.OK4UKeep();
+            myOK4U.CardName = SmallDealDeckController.instance.usedCards[SmallDealDeckController.instance.cardcount - 1].cardName;
+            myOK4U.countShare = Int32.Parse(inputNum.text);
+            myOK4U.pricePerShare = SmallDealDeckController.instance.usedCards[SmallDealDeckController.instance.cardcount - 1].value;
+            myOK4U.sumValue = Int32.Parse(sumCalculate.text);
+            GameManager.instace.playerList[GameManager.instace.activePlayer].OK4UList.Add(myOK4U);
             GameManager.instace.playerList[GameManager.instace.activePlayer].hasOK4U = true;
         }
     }
