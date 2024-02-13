@@ -19,7 +19,7 @@ public class UIController : MonoBehaviour
     public Image cardShow;
     public Text roomname;
     public GameObject LoanCanvas;
-
+    public GameObject investSellCanvas;
     private void Awake()
     {
         instance = this;

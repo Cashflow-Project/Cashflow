@@ -56,24 +56,23 @@ public class GameManager : MonoBehaviourPunCallbacks
     {
         public string CardName;
         public int countShare;
-        public int pricePerShare;
-        public int sumValue;
+        public float pricePerShare;
     }
     [System.Serializable]
     public class MYT4UKeep
     {
         public string CardName;
         public int countShare;
-        public int pricePerShare;
-        public int sumValue;
+        public float pricePerShare;
+
     }
     [System.Serializable]
     public class GRO4USKeep
     {
         public string CardName;
         public int countShare;
-        public int pricePerShare;
-        public int sumValue;
+        public float pricePerShare;
+
     }
 
     [System.Serializable]
@@ -81,8 +80,8 @@ public class GameManager : MonoBehaviourPunCallbacks
     {
         public string CardName;
         public int countShare;
-        public int pricePerShare;
-        public int sumValue;
+        public float pricePerShare;
+
     }
 
     [System.Serializable]

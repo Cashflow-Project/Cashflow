@@ -273,19 +273,19 @@ public class SmallDealDeckController : MonoBehaviourPunCallbacks
     [PunRPC]
     void whoCanSell()
     {
-        if (GameManager.instace.playerList[GameManager.instace.activePlayer].hasON2U == usedCards[cardcount - 1].ON2U && GameManager.instace.playerList[GameManager.instace.activePlayer].hasON2U == true)
+        if (GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].hasON2U == usedCards[cardcount - 1].ON2U && GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].hasON2U == true)
         {
             UIController.instance.SellButton.SetActive(true);
         }
-        if (GameManager.instace.playerList[GameManager.instace.activePlayer].hasMYT4U == usedCards[cardcount - 1].MYT4U && GameManager.instace.playerList[GameManager.instace.activePlayer].hasMYT4U == true)
+        if (GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].hasMYT4U == usedCards[cardcount - 1].MYT4U && GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].hasMYT4U == true)
         {
             UIController.instance.SellButton.SetActive(true);
         }
-        if (GameManager.instace.playerList[GameManager.instace.activePlayer].hasGRO4US == usedCards[cardcount - 1].GRO4US && GameManager.instace.playerList[GameManager.instace.activePlayer].hasGRO4US == true)
+        if (GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].hasGRO4US == usedCards[cardcount - 1].GRO4US && GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].hasGRO4US == true)
         {
             UIController.instance.SellButton.SetActive(true);
         }
-        if (GameManager.instace.playerList[GameManager.instace.activePlayer].hasOK4U == usedCards[cardcount - 1].OK4U && GameManager.instace.playerList[GameManager.instace.activePlayer].hasOK4U == true)
+        if (GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].hasOK4U == usedCards[cardcount - 1].OK4U && GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].hasOK4U == true)
         {
             UIController.instance.SellButton.SetActive(true);
         }

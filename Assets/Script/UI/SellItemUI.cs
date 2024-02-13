@@ -8,24 +8,21 @@ public class SellItemUI : MonoBehaviour
 {
     public SellObjFromYourself sellObjFromYourselfParent;
     [SerializeField] public TMP_Text itemName;
-    [SerializeField] public TMP_Text itemPrice;
-    public bool isON2U;
-    public bool isMYT4U;
-    public bool isGRO4US;
-    public bool isOK4U;
+    [SerializeField] public TMP_Text itemCount;
+    
 
     public void SetItemName(string _itemName)
     {
         itemName.text = _itemName;
     }
 
-    public void SetPriceInItem(string _itemPrice)
+    public void SetCountInItem(string _itemCount)
     {
-        itemPrice.text = _itemPrice;
+        itemCount.text = _itemCount;
     }
 
     public void SellPressed()
     {
-        
-    }
+        UIController.instance.investSellCanvas.SetActive(true);
+}
 }

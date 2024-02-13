@@ -13,7 +13,7 @@ public class SellObjFromYourself : MonoBehaviourPunCallbacks
     [SerializeField] private GameObject SellListWindow;
     [SerializeField] private SellItemUI SellItemUIPrefab;
     [SerializeField] private Transform sellListParent;
-    private List<SellItemUI> _investItemList = new List<SellItemUI>();
+    public List<SellItemUI> _investItemList = new List<SellItemUI>();
 
     // Start is called before the first frame update
     void Start()
@@ -82,7 +82,7 @@ public class SellObjFromYourself : MonoBehaviourPunCallbacks
                 SellItemUI newItem = Instantiate(SellItemUIPrefab);
                 newItem.sellObjFromYourselfParent = this;
                 newItem.SetItemName(GameManager.instace.playerList[j].InvestList[i].CardName);
-                newItem.SetPriceInItem(GameManager.instace.playerList[j].InvestList[i].sumValue.ToString());
+                newItem.SetCountInItem(GameManager.instace.playerList[j].InvestList[i].countShare.ToString());
                 newItem.transform.SetParent(sellListParent);
 
                 _investItemList.Add(newItem);
@@ -116,7 +116,7 @@ public class SellObjFromYourself : MonoBehaviourPunCallbacks
                 SellItemUI newItem = Instantiate(SellItemUIPrefab);
                 newItem.sellObjFromYourselfParent = this;
                 newItem.SetItemName(GameManager.instace.playerList[j].ON2UList[i].CardName);
-                newItem.SetPriceInItem((SmallDealDeckController.instance.usedCards[SmallDealDeckController.instance.cardcount - 1].value * GameManager.instace.playerList[j].ON2UList[i].countShare).ToString());
+                newItem.SetCountInItem((GameManager.instace.playerList[j].ON2UList[i].countShare).ToString());
                newItem.transform.SetParent(sellListParent);
 
                 _investItemList.Add(newItem);
@@ -149,7 +149,7 @@ public class SellObjFromYourself : MonoBehaviourPunCallbacks
                 SellItemUI newItem = Instantiate(SellItemUIPrefab);
                 newItem.sellObjFromYourselfParent = this;
                 newItem.SetItemName(GameManager.instace.playerList[j].MYT4UList[i].CardName);
-                newItem.SetPriceInItem((SmallDealDeckController.instance.usedCards[SmallDealDeckController.instance.cardcount - 1].value * GameManager.instace.playerList[j].MYT4UList[i].countShare).ToString());
+                newItem.SetCountInItem((GameManager.instace.playerList[j].MYT4UList[i].countShare).ToString());
                 newItem.transform.SetParent(sellListParent);
 
                 _investItemList.Add(newItem);
@@ -182,7 +182,7 @@ public class SellObjFromYourself : MonoBehaviourPunCallbacks
                 SellItemUI newItem = Instantiate(SellItemUIPrefab);
                 newItem.sellObjFromYourselfParent = this;
                 newItem.SetItemName(GameManager.instace.playerList[j].GRO4USList[i].CardName);
-                newItem.SetPriceInItem((SmallDealDeckController.instance.usedCards[SmallDealDeckController.instance.cardcount - 1].value * GameManager.instace.playerList[j].GRO4USList[i].countShare).ToString());
+                newItem.SetCountInItem((GameManager.instace.playerList[j].GRO4USList[i].countShare).ToString());
                 newItem.transform.SetParent(sellListParent);
 
                 _investItemList.Add(newItem);
@@ -215,7 +215,7 @@ public class SellObjFromYourself : MonoBehaviourPunCallbacks
                 SellItemUI newItem = Instantiate(SellItemUIPrefab);
                 newItem.sellObjFromYourselfParent = this;
                 newItem.SetItemName(GameManager.instace.playerList[j].OK4UList[i].CardName);
-                newItem.SetPriceInItem((SmallDealDeckController.instance.usedCards[SmallDealDeckController.instance.cardcount - 1].value * GameManager.instace.playerList[j].OK4UList[i].countShare).ToString());
+                newItem.SetCountInItem((GameManager.instace.playerList[j].OK4UList[i].countShare).ToString());
                 newItem.transform.SetParent(sellListParent);
 
                 _investItemList.Add(newItem);

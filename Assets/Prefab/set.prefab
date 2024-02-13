@@ -201,7 +201,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 7695907772657049146}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5795612599875439950}
+        m_TargetAssemblyTypeName: SellItemUI, Assembly-CSharp
+        m_MethodName: SellPressed
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &5129704253291234530
 GameObject:
   m_ObjectHideFlags: 0
@@ -283,7 +295,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sellObjFromYourselfParent: {fileID: 0}
   itemName: {fileID: 5129704253417292838}
-  itemPrice: {fileID: 5129704253798114396}
+  itemCount: {fileID: 5129704253798114396}
 --- !u!1 &5129704253417292832
 GameObject:
   m_ObjectHideFlags: 0
@@ -431,7 +443,7 @@ GameObject:
   - component: {fileID: 5129704253798114387}
   - component: {fileID: 5129704253798114396}
   m_Layer: 5
-  m_Name: price
+  m_Name: count
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -485,7 +497,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u0E23\u0E32\u0E04\u0E32"
+  m_text: 0
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: b2afcdfdc41d0a0448aa685e2bc751e1, type: 2}
   m_sharedMaterial: {fileID: -8492481614995313747, guid: b2afcdfdc41d0a0448aa685e2bc751e1, type: 2}
