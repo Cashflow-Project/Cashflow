@@ -109,6 +109,10 @@ public class UIController : MonoBehaviour
         SellButton.SetActive(false);
     }
 
+    public void CloseSellList()
+    {
+        SellListCanvas.SetActive(false);
+    }
     public void SetAllFalse(bool on)
     {
 

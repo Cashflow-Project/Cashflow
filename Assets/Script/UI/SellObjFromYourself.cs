@@ -18,6 +18,13 @@ public class SellObjFromYourself : MonoBehaviourPunCallbacks
     // Start is called before the first frame update
     void Start()
     {
+        
+        //UpdateInvestItemList();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
         if (SmallDealDeckController.instance.usedCards[SmallDealDeckController.instance.cardcount - 1].ON2U == true && GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].hasON2U == true)
         {
             UpdateON2UItemList();
@@ -32,15 +39,8 @@ public class SellObjFromYourself : MonoBehaviourPunCallbacks
         }
         if (SmallDealDeckController.instance.usedCards[SmallDealDeckController.instance.cardcount - 1].OK4U == true && GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].hasOK4U == true)
         {
-            UpdateOK4UItemList(); 
+            UpdateOK4UItemList();
         }
-        //UpdateInvestItemList();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     public void CancelList()
