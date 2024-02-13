@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f134ba36e4579ba43b8e31d5a3882b55, type: 3}
   m_Name: MarketCard 14
   m_EditorClassIdentifier: 
-  cardName: 
+  cardName: ON2U
   Cost: 0
   percentCard: 0
-  ON2U: 0
+  ON2U: 1
   MYT4U: 0
   GRO4US: 0
   OK4U: 0
@@ -27,4 +27,5 @@ MonoBehaviour:
   Apartment: 0
   notSell: 0
   canLoan: 0
-  cardSprite: {fileID: 0}
+  increseFromSameCost: 0
+  cardSprite: {fileID: 21300000, guid: 42e7b4e9fa4eb764b996d579d26e2b32, type: 3}

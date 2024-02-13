@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f134ba36e4579ba43b8e31d5a3882b55, type: 3}
   m_Name: MarketCard 33
   m_EditorClassIdentifier: 
-  cardName: 
-  Cost: 0
+  cardName: destroy
+  Cost: 5000
   percentCard: 0
   ON2U: 0
   MYT4U: 0
@@ -25,6 +25,7 @@ MonoBehaviour:
   Condominium: 0
   CommercialBuilding: 0
   Apartment: 0
-  notSell: 0
+  notSell: 1
   canLoan: 0
-  cardSprite: {fileID: 0}
+  increseFromSameCost: 0
+  cardSprite: {fileID: 21300000, guid: 9680e23f64871a14baaf92062fb5b665, type: 3}

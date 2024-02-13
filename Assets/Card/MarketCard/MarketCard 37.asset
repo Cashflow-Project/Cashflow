@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f134ba36e4579ba43b8e31d5a3882b55, type: 3}
   m_Name: MarketCard 37
   m_EditorClassIdentifier: 
-  cardName: 
+  cardName: want Apartment and Commercial Building
   Cost: 0
-  percentCard: 0
+  percentCard: 5
   ON2U: 0
   MYT4U: 0
   GRO4US: 0
@@ -23,8 +23,9 @@ MonoBehaviour:
   house3s2: 0
   house2s1: 0
   Condominium: 0
-  CommercialBuilding: 0
-  Apartment: 0
+  CommercialBuilding: 1
+  Apartment: 1
   notSell: 0
   canLoan: 0
-  cardSprite: {fileID: 0}
+  increseFromSameCost: 1
+  cardSprite: {fileID: 21300000, guid: 41e35247b35868b49bafe1c99bfebc78, type: 3}

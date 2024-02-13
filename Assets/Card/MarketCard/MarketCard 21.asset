@@ -12,19 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f134ba36e4579ba43b8e31d5a3882b55, type: 3}
   m_Name: MarketCard 21
   m_EditorClassIdentifier: 
-  cardName: 
-  Cost: 0
+  cardName: want house3n2
+  Cost: 150000
   percentCard: 0
   ON2U: 0
   MYT4U: 0
   GRO4US: 0
   OK4U: 0
   GoldCoins: 0
-  house3s2: 0
+  house3s2: 1
   house2s1: 0
   Condominium: 0
   CommercialBuilding: 0
   Apartment: 0
   notSell: 0
   canLoan: 0
-  cardSprite: {fileID: 0}
+  increseFromSameCost: 1
+  cardSprite: {fileID: 21300000, guid: c17ca12bd64875043a0039c49f9dcc87, type: 3}
