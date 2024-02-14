@@ -26,11 +26,9 @@ public class CardSmallChangeScriptableObj : ScriptableObject
     public int value;
     public int value2;
     public int count;
-    public bool house3s2;
     public bool house2s1;
     public bool Condominium;
-    public bool CommercialBuilding;
-    public bool Apartment;
+
 
     public bool canLoan;
 

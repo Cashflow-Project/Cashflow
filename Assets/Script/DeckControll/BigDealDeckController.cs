@@ -112,7 +112,7 @@ public class BigDealDeckController : MonoBehaviourPunCallbacks
     {
         GameManager.instace.playerList[GameManager.instace.activePlayer].money = GameManager.instace.playerList[GameManager.instace.activePlayer].money - usedCards[cardcount - 1].DownPayment;
         photonView.RPC("UpdateMoney", RpcTarget.All, GameManager.instace.playerList[GameManager.instace.activePlayer].money, GameManager.instace.activePlayer);
-        
+        photonView.RPC("UpdateKeepForDeal", RpcTarget.All);
         UIController.instance.drawButton.SetActive(false);
         UIController.instance.cardShow.enabled = false;
         UIController.instance.payButton.SetActive(false);
@@ -185,6 +185,69 @@ public class BigDealDeckController : MonoBehaviourPunCallbacks
         }
         GameManager.instace.playerList[GameManager.instace.activePlayer].DealList.Add(myDeal);
         GameManager.instace.playerList[GameManager.instace.activePlayer].income = GameManager.instace.playerList[GameManager.instace.activePlayer].income + usedCards[cardcount - 1].CashflowIncome;
+    }
+
+    [PunRPC]
+    void UpdateKeepForDeal()
+    {
+        //Deal collect
+
+        if (BigDealDeckController.instance.usedCards[BigDealDeckController.instance.cardcount - 1].house3s2 == true)
+        {
+            GameManager.house3s2Keep myHouse3n2 = new GameManager.house3s2Keep();
+            myHouse3n2.CardName = usedCards[cardcount - 1].cardName;
+            myHouse3n2.BusinessValue = usedCards[cardcount - 1].BusinessValue;
+            myHouse3n2.DownPayment = usedCards[cardcount - 1].DownPayment;
+            myHouse3n2.BankLoan = usedCards[cardcount - 1].BankLoan;
+            myHouse3n2.CashflowIncome = usedCards[cardcount - 1].CashflowIncome;
+            GameManager.instace.playerList[GameManager.instace.activePlayer].income += usedCards[cardcount - 1].CashflowIncome;
+            GameManager.instace.playerList[GameManager.instace.activePlayer].getmoney = GameManager.instace.playerList[GameManager.instace.activePlayer].allRecieve - GameManager.instace.playerList[GameManager.instace.activePlayer].paid;
+            GameManager.instace.playerList[GameManager.instace.activePlayer].house3s2List.Add(myHouse3n2);
+            GameManager.instace.playerList[GameManager.instace.activePlayer].hasHome32 = true;
+        }
+        if (BigDealDeckController.instance.usedCards[BigDealDeckController.instance.cardcount - 1].CommercialBuilding == true)
+        {
+            GameManager.CommercialBuildingKeep myCommercialBuilding = new GameManager.CommercialBuildingKeep();
+            myCommercialBuilding.CardName = usedCards[cardcount - 1].cardName;
+            myCommercialBuilding.BusinessValue = usedCards[cardcount - 1].BusinessValue;
+            myCommercialBuilding.DownPayment = usedCards[cardcount - 1].DownPayment;
+            myCommercialBuilding.BankLoan = usedCards[cardcount - 1].BankLoan;
+            myCommercialBuilding.CashflowIncome = usedCards[cardcount - 1].CashflowIncome;
+            myCommercialBuilding.count = usedCards[cardcount - 1].count;
+            GameManager.instace.playerList[GameManager.instace.activePlayer].income += usedCards[cardcount - 1].CashflowIncome;
+            GameManager.instace.playerList[GameManager.instace.activePlayer].getmoney = GameManager.instace.playerList[GameManager.instace.activePlayer].allRecieve - GameManager.instace.playerList[GameManager.instace.activePlayer].paid;
+            GameManager.instace.playerList[GameManager.instace.activePlayer].CommercialBuildingList.Add(myCommercialBuilding);
+            GameManager.instace.playerList[GameManager.instace.activePlayer].hascommercialBuilding = true;
+        }
+        if (BigDealDeckController.instance.usedCards[BigDealDeckController.instance.cardcount - 1].Apartment == true)
+        {
+            GameManager.ApartmentKeep myApartment = new GameManager.ApartmentKeep();
+            myApartment.CardName = usedCards[cardcount - 1].cardName;
+            myApartment.BusinessValue = usedCards[cardcount - 1].BusinessValue;
+            myApartment.DownPayment = usedCards[cardcount - 1].DownPayment;
+            myApartment.BankLoan = usedCards[cardcount - 1].BankLoan;
+            myApartment.CashflowIncome = usedCards[cardcount - 1].CashflowIncome;
+            myApartment.count = usedCards[cardcount - 1].count;
+            GameManager.instace.playerList[GameManager.instace.activePlayer].income += usedCards[cardcount - 1].CashflowIncome;
+            GameManager.instace.playerList[GameManager.instace.activePlayer].getmoney = GameManager.instace.playerList[GameManager.instace.activePlayer].allRecieve - GameManager.instace.playerList[GameManager.instace.activePlayer].paid;
+            GameManager.instace.playerList[GameManager.instace.activePlayer].ApartmentList.Add(myApartment);
+            GameManager.instace.playerList[GameManager.instace.activePlayer].hasApartment = true;
+        }
+        if (BigDealDeckController.instance.usedCards[BigDealDeckController.instance.cardcount - 1].Business == true)
+        {
+            GameManager.BusinessKeep myBusiness = new GameManager.BusinessKeep();
+            myBusiness.CardName = usedCards[cardcount - 1].cardName;
+            myBusiness.BusinessValue = usedCards[cardcount - 1].BusinessValue;
+            myBusiness.DownPayment = usedCards[cardcount - 1].DownPayment;
+            myBusiness.BankLoan = usedCards[cardcount - 1].BankLoan;
+            myBusiness.CashflowIncome = usedCards[cardcount - 1].CashflowIncome;
+
+            GameManager.instace.playerList[GameManager.instace.activePlayer].income += usedCards[cardcount - 1].CashflowIncome;
+            GameManager.instace.playerList[GameManager.instace.activePlayer].getmoney = GameManager.instace.playerList[GameManager.instace.activePlayer].allRecieve - GameManager.instace.playerList[GameManager.instace.activePlayer].paid;
+            GameManager.instace.playerList[GameManager.instace.activePlayer].BusinessList.Add(myBusiness);
+            GameManager.instace.playerList[GameManager.instace.activePlayer].hasBusiness = true;
+        }
+
     }
 
     [PunRPC]

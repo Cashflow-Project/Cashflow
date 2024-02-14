@@ -32,23 +32,75 @@ public class GameManager : MonoBehaviourPunCallbacks
     }
 
     [System.Serializable]
-    public class OtherInvestKeep
+    public class house3s2Keep
     {
         public string CardName;
+        public int BusinessValue;
+        public int DownPayment;
+        public int BankLoan;
+        public int CashflowIncome;
+
+    }
+    [System.Serializable]
+    public class house2s1Keep
+    {
+        public string CardName;
+        public int BusinessValue;
+        public int DownPayment;
+        public int BankLoan;
+        public int CashflowIncome;
 
     }
 
     [System.Serializable]
-    public class InvestKeep
+    public class CondominiumKeep
     {
         public string CardName;
-        public int countShare;
-        public int pricePerShare;
-        public int sumValue;
-        public bool ON2U;
-        public bool MYT4U;
-        public bool GRO4US;
-        public bool OK4U;
+        public int BusinessValue;
+        public int DownPayment;
+        public int BankLoan;
+        public int CashflowIncome;
+
+        public int count;
+    }
+
+    [System.Serializable]
+    public class CommercialBuildingKeep
+    {
+        public string CardName;
+        public int BusinessValue;
+        public int DownPayment;
+        public int BankLoan;
+        public int CashflowIncome;
+
+        public int count;
+    }
+    [System.Serializable]
+    public class ApartmentKeep
+    {
+        public string CardName;
+        public int BusinessValue;
+        public int DownPayment;
+        public int BankLoan;
+        public int CashflowIncome;
+        public int count;
+    }
+    [System.Serializable]
+    public class BusinessKeep
+    {
+        public string CardName;
+        public int BusinessValue;
+        public int DownPayment;
+        public int BankLoan;
+        public int CashflowIncome;
+    }
+
+
+    [System.Serializable]
+    public class OtherInvestKeep
+    {
+        public string CardName;
+
     }
 
     [System.Serializable]
@@ -165,6 +217,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         public bool hasCondominium21;
         public bool hascommercialBuilding;
         public bool hasApartment;
+        public bool hasBusiness;
         public int GoldCoins;
 
         public bool isInRedRoute = false;
@@ -173,19 +226,25 @@ public class GameManager : MonoBehaviourPunCallbacks
         public int KeepCount;
         public bool EnterOuter;
         public List<DealKeep> DealList = new List<DealKeep>();
-        public List<InvestKeep> InvestList = new List<InvestKeep>();
+        
 
         public List<ON2UKeep> ON2UList = new List<ON2UKeep>();
         public List<MYT4UKeep> MYT4UList = new List<MYT4UKeep>();
         public List<GRO4USKeep> GRO4USList = new List<GRO4USKeep>();
         public List<OK4UKeep> OK4UList = new List<OK4UKeep>();
 
+        public List<house3s2Keep> house3s2List = new List<house3s2Keep>();
+        public List<house2s1Keep> house2s1List = new List<house2s1Keep>();
+        public List<CondominiumKeep> CondominiumList = new List<CondominiumKeep>();
+        public List<CommercialBuildingKeep> CommercialBuildingList = new List<CommercialBuildingKeep>();
+        public List<ApartmentKeep> ApartmentList = new List<ApartmentKeep>();
+        public List<BusinessKeep> BusinessList = new List<BusinessKeep>();
+
         public List<OtherInvestKeep> OtherInvestList = new List<OtherInvestKeep>();
         public List<Note> Keep = new List<Note>();
 
     }
 
-    
     public List<Entity> playerList = new List<Entity>();
     public List<Entity> SortplayerList = new List<Entity>();
 

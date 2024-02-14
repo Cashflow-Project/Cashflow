@@ -214,48 +214,39 @@ public class SmallDealDeckController : MonoBehaviourPunCallbacks
     void UpdateKeepForDeal()
     {
         //Deal collect
-        GameManager.DealKeep myDeal = new GameManager.DealKeep();
-        myDeal.CardName = usedCards[cardcount - 1].cardName;
-        myDeal.BusinessValue = usedCards[cardcount - 1].BusinessValue;
-        myDeal.DownPayment = usedCards[cardcount - 1].DownPayment;
-        myDeal.BankLoan = usedCards[cardcount - 1].BankLoan;
-        myDeal.CashflowIncome = usedCards[cardcount - 1].CashflowIncome;
-        GameManager.instace.playerList[GameManager.instace.activePlayer].income += usedCards[cardcount - 1].CashflowIncome;
-        myDeal.count = usedCards[cardcount - 1].count;
-        GameManager.instace.playerList[GameManager.instace.activePlayer].getmoney = GameManager.instace.playerList[GameManager.instace.activePlayer].allRecieve - GameManager.instace.playerList[GameManager.instace.activePlayer].paid;
-        GameManager.instace.playerList[GameManager.instace.activePlayer].DealList.Add(myDeal);
-       
+        if (SmallDealDeckController.instance.usedCards[SmallDealDeckController.instance.cardcount - 1].house2s1 == true)
+        {
+            GameManager.house2s1Keep myHouse2n1 = new GameManager.house2s1Keep();
+            myHouse2n1.CardName = usedCards[cardcount - 1].cardName;
+            myHouse2n1.BusinessValue = usedCards[cardcount - 1].BusinessValue;
+            myHouse2n1.DownPayment = usedCards[cardcount - 1].DownPayment;
+            myHouse2n1.BankLoan = usedCards[cardcount - 1].BankLoan;
+            myHouse2n1.CashflowIncome = usedCards[cardcount - 1].CashflowIncome;
+            GameManager.instace.playerList[GameManager.instace.activePlayer].income += usedCards[cardcount - 1].CashflowIncome;
+            GameManager.instace.playerList[GameManager.instace.activePlayer].getmoney = GameManager.instace.playerList[GameManager.instace.activePlayer].allRecieve - GameManager.instace.playerList[GameManager.instace.activePlayer].paid;
+            GameManager.instace.playerList[GameManager.instace.activePlayer].house2s1List.Add(myHouse2n1);
+            GameManager.instace.playerList[GameManager.instace.activePlayer].hasHome21 = true;
+        }
+
+        if (SmallDealDeckController.instance.usedCards[SmallDealDeckController.instance.cardcount - 1].Condominium == true)
+        {
+            GameManager.CondominiumKeep myCondominium = new GameManager.CondominiumKeep();
+            myCondominium.CardName = usedCards[cardcount - 1].cardName;
+            myCondominium.BusinessValue = usedCards[cardcount - 1].BusinessValue;
+            myCondominium.DownPayment = usedCards[cardcount - 1].DownPayment;
+            myCondominium.BankLoan = usedCards[cardcount - 1].BankLoan;
+            myCondominium.CashflowIncome = usedCards[cardcount - 1].CashflowIncome;
+            myCondominium.count = usedCards[cardcount - 1].count;
+            GameManager.instace.playerList[GameManager.instace.activePlayer].income += usedCards[cardcount - 1].CashflowIncome;
+            GameManager.instace.playerList[GameManager.instace.activePlayer].getmoney = GameManager.instace.playerList[GameManager.instace.activePlayer].allRecieve - GameManager.instace.playerList[GameManager.instace.activePlayer].paid;
+            GameManager.instace.playerList[GameManager.instace.activePlayer].CondominiumList.Add(myCondominium);
+            GameManager.instace.playerList[GameManager.instace.activePlayer].hasCondominium21 = true;
+        }
+
+        
     }
 
-    [PunRPC]
-    void UpdateKeepForInvest()
-    {
-        //invest collect
-        GameManager.InvestKeep myInvest = new GameManager.InvestKeep();
-        myInvest.CardName = usedCards[cardcount - 1].cardName;
-        myInvest.countShare = usedCards[cardcount - 1].count;
-        myInvest.pricePerShare = usedCards[cardcount - 1].value;
-        if (usedCards[cardcount - 1].ON2U == true)
-        {
-            myInvest.ON2U = true;
-            GameManager.instace.playerList[GameManager.instace.activePlayer].hasON2U = true;
-        }
-        if (usedCards[cardcount - 1].MYT4U == true)
-        {
-            myInvest.MYT4U = true;
-            GameManager.instace.playerList[GameManager.instace.activePlayer].hasMYT4U = true;
-        }
-        if (usedCards[cardcount - 1].GRO4US == true)
-        {
-            myInvest.GRO4US = true;
-            GameManager.instace.playerList[GameManager.instace.activePlayer].hasGRO4US = true;
-        }
-        if (usedCards[cardcount - 1].OK4U == true)
-        {
-            myInvest.OK4U = true;
-            GameManager.instace.playerList[GameManager.instace.activePlayer].hasOK4U = true;
-        }
-    }
+    
     [PunRPC]
     void CalculateSmallDealRPC(int money)
     {

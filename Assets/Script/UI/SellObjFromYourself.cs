@@ -56,40 +56,6 @@ public class SellObjFromYourself : MonoBehaviourPunCallbacks
         UIController.instance.drawButton.SetActive(false);
     }
 
-    private void UpdateInvestItemList()
-    {
-        //clear the current list of item
-        for (int i = 0; i < _investItemList.Count; i++)
-        {
-            Destroy(_investItemList[i].gameObject);
-        }
-
-        _investItemList.Clear();
-
-        for(int j = 0;j < GameManager.instace.playerList.Count; j++)
-        {
-            
-            //generate a new list with update info
-            for (int i = 0; i < GameManager.instace.playerList[j].InvestList.Count; i++)
-            {
-               
-                //skip empty 
-                if (GameManager.instace.playerList[j].InvestList.Count == 0)
-                {
-                    continue;
-                }
-
-                SellItemUI newItem = Instantiate(SellItemUIPrefab);
-                newItem.sellObjFromYourselfParent = this;
-                newItem.SetItemName(GameManager.instace.playerList[j].InvestList[i].CardName);
-                newItem.SetCountInItem(GameManager.instace.playerList[j].InvestList[i].countShare.ToString());
-                newItem.transform.SetParent(sellListParent);
-
-                _investItemList.Add(newItem);
-            }
-        }
-       
-    }
 
     private void UpdateON2UItemList()
     {
