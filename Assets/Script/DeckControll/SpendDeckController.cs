@@ -217,7 +217,7 @@ public class SpendDeckController : MonoBehaviourPunCallbacks
     {
         GameManager.instace.playerList[x].money = money;
         GameManager.Note myNote = new GameManager.Note();
-        myNote.CardName = usedCards[cardcount - 1].cardName;
+        myNote.CardName = "- " + usedCards[cardcount - 1].cardName;
         myNote.price = usedCards[cardcount - 1].payCost;
         GameManager.instace.playerList[GameManager.instace.activePlayer].Keep.Add(myNote);
         GameManager.instace.playerList[GameManager.instace.activePlayer].KeepCount++;

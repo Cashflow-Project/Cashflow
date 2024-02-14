@@ -176,8 +176,9 @@ public class Player1 : MonoBehaviourPunCallbacks
         {
             Debug.Log("in blue route");
             photonView.RPC("valueUpdate", RpcTarget.All);
+            photonView.RPC("PlayerMarketDraw", RpcTarget.All);
             //UIController.instance.passButton.SetActive(IsMyTurn());
-            photonView.RPC("EndTurnPlayer", RpcTarget.All);
+            //photonView.RPC("EndTurnPlayer", RpcTarget.All);
             //GameManager.instace.state = GameManager.States.SWITCH_PLAYER;
         }
         //purple1 route
@@ -416,6 +417,12 @@ public class Player1 : MonoBehaviourPunCallbacks
     }
 
     [PunRPC]
+    void PlayerMarketDraw()
+    {
+        UIController.instance.MarketDrawButton.SetActive(IsMyTurn());
+    }
+
+    [PunRPC]
     void PlayerChooseSmallBig()
     {
         UIController.instance.ChooseBigSmall.SetActive(IsMyTurn());
@@ -427,12 +434,13 @@ public class Player1 : MonoBehaviourPunCallbacks
         GameManager.instace.playerList[x].money = money;
         //note collect
         GameManager.Note myNote = new GameManager.Note();
-        myNote.CardName = "Month Income";
+        myNote.CardName = "+ " + "Month Income";
         myNote.price = GameManager.instace.playerList[GameManager.instace.activePlayer].getmoney;
         GameManager.instace.playerList[GameManager.instace.activePlayer].Keep.Add(myNote);
         GameManager.instace.playerList[GameManager.instace.activePlayer].KeepCount++;
 
     }
+
     [PunRPC]
     void valueUpdate()
     {

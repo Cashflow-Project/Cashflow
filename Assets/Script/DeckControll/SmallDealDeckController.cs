@@ -193,7 +193,7 @@ public class SmallDealDeckController : MonoBehaviourPunCallbacks
         GameManager.instace.playerList[x].money = money;
         //note collect
         GameManager.Note myNote = new GameManager.Note();
-        myNote.CardName = usedCards[cardcount - 1].cardName;
+        myNote.CardName = "- " + usedCards[cardcount - 1].cardName;
         myNote.price = usedCards[cardcount - 1].DownPayment;
         if(usedCards[cardcount - 1].GoldCoins == true)
         {

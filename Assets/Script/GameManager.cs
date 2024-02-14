@@ -40,6 +40,8 @@ public class GameManager : MonoBehaviourPunCallbacks
         public int BankLoan;
         public int CashflowIncome;
 
+        public bool isSelected;
+
     }
     [System.Serializable]
     public class house2s1Keep
@@ -50,6 +52,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         public int BankLoan;
         public int CashflowIncome;
 
+        public bool isSelected;
     }
 
     [System.Serializable]
@@ -62,6 +65,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         public int CashflowIncome;
 
         public int count;
+        public bool isSelected;
     }
 
     [System.Serializable]
@@ -74,6 +78,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         public int CashflowIncome;
 
         public int count;
+        public bool isSelected;
     }
     [System.Serializable]
     public class ApartmentKeep
@@ -83,7 +88,9 @@ public class GameManager : MonoBehaviourPunCallbacks
         public int DownPayment;
         public int BankLoan;
         public int CashflowIncome;
+
         public int count;
+        public bool isSelected;
     }
     [System.Serializable]
     public class BusinessKeep
@@ -93,6 +100,8 @@ public class GameManager : MonoBehaviourPunCallbacks
         public int DownPayment;
         public int BankLoan;
         public int CashflowIncome;
+
+        public bool isSelected;
     }
 
 

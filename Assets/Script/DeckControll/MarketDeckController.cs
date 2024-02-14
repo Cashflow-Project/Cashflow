@@ -55,7 +55,7 @@ public class MarketDeckController : MonoBehaviourPunCallbacks
         UIController.instance.cancelButton.SetActive(false);
         UIController.instance.passButton.SetActive(false);
         UIController.instance.payButton.SetActive(false);
-
+        UIController.instance.MarketDrawButton.SetActive(false);
 
         activeCards.Clear();
         tempDeck.AddRange(deckToUse);
@@ -87,7 +87,7 @@ public class MarketDeckController : MonoBehaviourPunCallbacks
 
         UIController.instance.payButton.SetActive(true);
         UIController.instance.drawButton.SetActive(false);
-
+        UIController.instance.MarketDrawButton.SetActive(false);
         photonView.RPC("ShowCardToAllPlayerRPC", RpcTarget.All);
 
 

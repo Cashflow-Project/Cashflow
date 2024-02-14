@@ -85,7 +85,7 @@ public class UIInvestConfirm : MonoBehaviourPunCallbacks
         GameManager.instace.playerList[x].money = money;
         //note collect
         GameManager.Note myNote = new GameManager.Note();
-        myNote.CardName = SmallDealDeckController.instance.usedCards[SmallDealDeckController.instance.cardcount - 1].cardName + " " + inputNum.text;
+        myNote.CardName = "- " + SmallDealDeckController.instance.usedCards[SmallDealDeckController.instance.cardcount - 1].cardName + " " + inputNum.text;
         myNote.price = Int32.Parse(sumCalculate.text);
         GameManager.instace.playerList[GameManager.instace.activePlayer].Keep.Add(myNote);
         GameManager.instace.playerList[GameManager.instace.activePlayer].KeepCount++;

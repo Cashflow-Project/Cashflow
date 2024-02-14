@@ -13,6 +13,9 @@ public class MarketCard : MonoBehaviourPunCallbacks
     public bool canLoan;
     public Image cardArt;
 
+    public int Cost;
+    public int percentCard;
+
     private Vector3 targetPoint;
     private Quaternion targetRot;
     public float moveSpeed =5f, rotateSpeed = 540f;
@@ -43,8 +46,9 @@ public class MarketCard : MonoBehaviourPunCallbacks
 
     public void setupCard()
     {
-
-        cardArt.sprite = cardGMSO.cardSprite;
+        Cost = cardGMSO.Cost;
+        percentCard = cardGMSO.percentCard;
+        //cardArt.sprite = cardGMSO.cardSprite;
     }
     // Update is called once per frame
     void Update()

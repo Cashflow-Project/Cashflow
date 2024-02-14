@@ -15,6 +15,7 @@ public class UIController : MonoBehaviour
 
     public GameObject InvestCanvas;
     public GameObject SellListCanvas;
+    public GameObject SellListFromMarketCanvas;
     public Text infoText;
     public Image cardShow;
     public Text roomname;
@@ -34,8 +35,7 @@ public class UIController : MonoBehaviour
     public GameObject drawButton;
     public GameObject ChooseBigSmall;
     public GameObject SellButton;
-
-
+    public GameObject MarketDrawButton;
     // Start is called before the first frame update
     void Start()
     {
@@ -64,16 +64,26 @@ public class UIController : MonoBehaviour
     {
         SpendDeckController.instance.DrawCardToHand();
         GameManager.instace.playerList[GameManager.instace.activePlayer].isDrawButtonOn = false;
+        drawButton.SetActive(false);
+    }
+
+    public void DrawMarketCard()
+    {
+        MarketDeckController.instance.DrawCardToHand();
+        MarketDrawButton.SetActive(false);
     }
 
     public void DrawBigCard()
     {
         BigDealDeckController.instance.DrawCardToHand();
+        ChooseBigSmall.SetActive(false);
+
     }
 
     public void DrawSmallCard()
     {
         SmallDealDeckController.instance.DrawCardToHand();
+        ChooseBigSmall.SetActive(false);
     }
 
     public void PayCost()
@@ -100,6 +110,18 @@ public class UIController : MonoBehaviour
     public void Sell()
     {
         SellListCanvas.SetActive(true);
+        payButton.SetActive(false);
+        SmallPayButton.SetActive(false);
+        BigPayButton.SetActive(false);
+        cancelButton.SetActive(false);
+        drawButton.SetActive(false);
+        ChooseBigSmall.SetActive(false);
+        SellButton.SetActive(false);
+    }
+
+    public void MarketSell()
+    {
+        SellListFromMarketCanvas.SetActive(true);
         payButton.SetActive(false);
         SmallPayButton.SetActive(false);
         BigPayButton.SetActive(false);
