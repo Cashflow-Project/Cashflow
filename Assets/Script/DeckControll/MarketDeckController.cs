@@ -85,9 +85,10 @@ public class MarketDeckController : MonoBehaviourPunCallbacks
         MarketCard newCard = Instantiate(cardsToSpawns, transform.position, transform.rotation);
         newCard.cardGMSO = activeCards[0];
 
-        UIController.instance.payButton.SetActive(true);
+        UIController.instance.payButton.SetActive(false);
         UIController.instance.drawButton.SetActive(false);
         UIController.instance.MarketDrawButton.SetActive(false);
+        UIController.instance.cancelButton.SetActive(true);
         photonView.RPC("ShowCardToAllPlayerRPC", RpcTarget.All);
 
 
