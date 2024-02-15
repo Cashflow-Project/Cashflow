@@ -24,5 +24,6 @@ public class SellItemUI : MonoBehaviour
     public void SellPressed()
     {
         UIController.instance.investSellCanvas.SetActive(true);
-}
+        UIController.instance.SellListCanvas.SetActive(false);
+    }
 }

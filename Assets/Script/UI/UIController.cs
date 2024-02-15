@@ -113,7 +113,7 @@ public class UIController : MonoBehaviour
         payButton.SetActive(false);
         SmallPayButton.SetActive(false);
         BigPayButton.SetActive(false);
-        cancelButton.SetActive(false);
+        //cancelButton.SetActive(false);
         drawButton.SetActive(false);
         ChooseBigSmall.SetActive(false);
         SellButton.SetActive(false);
