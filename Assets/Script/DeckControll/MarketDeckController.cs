@@ -169,7 +169,7 @@ public class MarketDeckController : MonoBehaviourPunCallbacks
         myNote.CardName = usedCards[cardcount - 1].cardName;
         myNote.price = usedCards[cardcount - 1].Cost;
         GameManager.instace.playerList[GameManager.instace.activePlayer].Keep.Add(myNote);
-        GameManager.instace.playerList[GameManager.instace.activePlayer].KeepCount++;
+
 
     }
 

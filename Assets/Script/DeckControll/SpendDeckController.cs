@@ -220,8 +220,6 @@ public class SpendDeckController : MonoBehaviourPunCallbacks
         myNote.CardName = "- " + usedCards[cardcount - 1].cardName;
         myNote.price = usedCards[cardcount - 1].payCost;
         GameManager.instace.playerList[GameManager.instace.activePlayer].Keep.Add(myNote);
-        GameManager.instace.playerList[GameManager.instace.activePlayer].KeepCount++;
-
     }
 
     [PunRPC]

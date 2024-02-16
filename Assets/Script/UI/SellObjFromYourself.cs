@@ -57,7 +57,7 @@ public class SellObjFromYourself : MonoBehaviourPunCallbacks
     }
 
 
-    private void UpdateON2UItemList()
+    public void UpdateON2UItemList()
     {
         //clear the current list of item
         for (int i = 0; i < _investItemList.Count; i++)
@@ -90,7 +90,7 @@ public class SellObjFromYourself : MonoBehaviourPunCallbacks
         }
     }
 
-    private void UpdateMYT4UItemList()
+    public void UpdateMYT4UItemList()
     {
         //clear the current list of item
         for (int i = 0; i < _investItemList.Count; i++)
@@ -123,7 +123,7 @@ public class SellObjFromYourself : MonoBehaviourPunCallbacks
         }
     }
 
-    private void UpdateGRO4USItemList()
+    public void UpdateGRO4USItemList()
     {
         //clear the current list of item
         for (int i = 0; i < _investItemList.Count; i++)
@@ -156,7 +156,7 @@ public class SellObjFromYourself : MonoBehaviourPunCallbacks
         }
     }
 
-    private void UpdateOK4UItemList()
+    public void UpdateOK4UItemList()
     {
         //clear the current list of item
         for (int i = 0; i < _investItemList.Count; i++)

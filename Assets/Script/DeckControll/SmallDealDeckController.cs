@@ -200,7 +200,7 @@ public class SmallDealDeckController : MonoBehaviourPunCallbacks
             myNote.price = usedCards[cardcount - 1].value;
         }
         GameManager.instace.playerList[GameManager.instace.activePlayer].Keep.Add(myNote);
-        GameManager.instace.playerList[GameManager.instace.activePlayer].KeepCount++;
+
         
     }
     [PunRPC]

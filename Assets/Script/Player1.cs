@@ -75,9 +75,10 @@ public class Player1 : MonoBehaviourPunCallbacks
         
     }
 
-    [PunRPC]
+    //[PunRPC]
     IEnumerator Move()
     {
+        Debug.Log("in move func");
         if (GameManager.instace.playerList[GameManager.instace.activePlayer].EnterOuter == true)
         {
             GameManager.instace.playerList[GameManager.instace.activePlayer].EnterOuter = false;
@@ -100,11 +101,14 @@ public class Player1 : MonoBehaviourPunCallbacks
         {
             routePosition++;
             routePosition %= fullRoute.Count;
+            Debug.Log(fullRoute[routePosition].gameObject.transform.position);
             Vector3 nextPos = fullRoute[routePosition].gameObject.transform.position;
             Vector3 startPos = fullRoute[routePosition].gameObject.transform.position;
+            Debug.Log(nextPos);
             photonView.RPC("valueUpdate", RpcTarget.All);
             //while (MoveToNextNode(nextPos,8f)){yield return null;}
             while (MoveInArcToNextNode(startPos, nextPos, 8f)) { yield return null; }
+            //Debug.Log(routePosition % fullRoute.Count);
             //orange pass
             if (routePosition % fullRoute.Count == 6 || routePosition % fullRoute.Count == 14 || routePosition % fullRoute.Count == 22)
             {
@@ -116,15 +120,26 @@ public class Player1 : MonoBehaviourPunCallbacks
                 photonView.RPC("UpdateMoney", RpcTarget.All, GameManager.instace.playerList[GameManager.instace.activePlayer].money, GameManager.instace.activePlayer);
                 //GameManager.instace.state = GameManager.States.SWITCH_PLAYER;
             }
+            //blue2 route
+            /*
+            if (routePosition % fullRoute.Count == 25)
+            {
+                steps--;
+            }
+            */
             yield return new WaitForSeconds(0.1f);
             cTime = 0;
             steps--;
             doneSteps++;
             //Debug.Log(doneSteps);
         }
+        /*
+        if ()
+        {
+            lastNode = fullRoute[routePosition];
 
-
-        /** lastNode = fullRoute[routePosition];
+        }*/
+        /** 
         if (lastNode.isTaken)
         {
             //return to start base node
@@ -171,8 +186,9 @@ public class Player1 : MonoBehaviourPunCallbacks
             photonView.RPC("EndTurnPlayer", RpcTarget.All);
             //GameManager.instace.state = GameManager.States.SWITCH_PLAYER;
         }
+
         //blue route
-        if (routePosition % fullRoute.Count == 8 || routePosition % fullRoute.Count == 16 || routePosition % fullRoute.Count == 24)
+        if (routePosition % fullRoute.Count == 8 || routePosition % fullRoute.Count == 16 || routePosition % fullRoute.Count == 0)
         {
             Debug.Log("in blue route");
             photonView.RPC("valueUpdate", RpcTarget.All);
@@ -181,6 +197,7 @@ public class Player1 : MonoBehaviourPunCallbacks
             //photonView.RPC("EndTurnPlayer", RpcTarget.All);
             //GameManager.instace.state = GameManager.States.SWITCH_PLAYER;
         }
+        
         //purple1 route
         if (routePosition % fullRoute.Count == 4)
         {
@@ -219,7 +236,7 @@ public class Player1 : MonoBehaviourPunCallbacks
             //GameManager.instace.state = GameManager.States.SWITCH_PLAYER;
         }
         //GameManager.instace.state = GameManager.States.SWITCH_PLAYER;
-        
+        //isMoving = false;
     }
 
     bool MoveInArcToNextNode(Vector3 startPos,Vector3 lastPos,float speed)
@@ -397,6 +414,7 @@ public class Player1 : MonoBehaviourPunCallbacks
     [PunRPC]
     void MovePlayer()
     {
+        Debug.Log(Move());
         StartCoroutine(Move());
         //photonView.RPC("Move1", RpcTarget.All);
     }
@@ -437,7 +455,6 @@ public class Player1 : MonoBehaviourPunCallbacks
         myNote.CardName = "+ " + "Month Income";
         myNote.price = GameManager.instace.playerList[GameManager.instace.activePlayer].getmoney;
         GameManager.instace.playerList[GameManager.instace.activePlayer].Keep.Add(myNote);
-        GameManager.instace.playerList[GameManager.instace.activePlayer].KeepCount++;
 
     }
 

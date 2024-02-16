@@ -232,7 +232,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         public bool isInRedRoute = false;
         public bool isDrawButtonOn = false;
         public bool isSpendAlready = false;
-        public int KeepCount;
+
         public bool EnterOuter;
         public List<DealKeep> DealList = new List<DealKeep>();
         

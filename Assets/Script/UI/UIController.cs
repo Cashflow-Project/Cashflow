@@ -110,6 +110,22 @@ public class UIController : MonoBehaviour
     public void Sell()
     {
         SellListCanvas.SetActive(true);
+        if (SmallDealDeckController.instance.usedCards[SmallDealDeckController.instance.cardcount - 1].ON2U == true && GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].hasON2U == true)
+        {
+            SellObjFromYourself.instance.UpdateON2UItemList();
+        }
+        if (SmallDealDeckController.instance.usedCards[SmallDealDeckController.instance.cardcount - 1].MYT4U == true && GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].hasMYT4U == true)
+        {
+            SellObjFromYourself.instance.UpdateMYT4UItemList();
+        }
+        if (SmallDealDeckController.instance.usedCards[SmallDealDeckController.instance.cardcount - 1].GRO4US == true && GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].hasGRO4US == true)
+        {
+            SellObjFromYourself.instance.UpdateGRO4USItemList();
+        }
+        if (SmallDealDeckController.instance.usedCards[SmallDealDeckController.instance.cardcount - 1].OK4U == true && GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].hasOK4U == true)
+        {
+            SellObjFromYourself.instance.UpdateOK4UItemList();
+        }
         payButton.SetActive(false);
         SmallPayButton.SetActive(false);
         BigPayButton.SetActive(false);

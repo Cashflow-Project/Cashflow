@@ -154,7 +154,7 @@ public class BigDealDeckController : MonoBehaviourPunCallbacks
         myNote.CardName = "- " + usedCards[cardcount - 1].cardName;
         myNote.price = usedCards[cardcount - 1].DownPayment;
         GameManager.instace.playerList[GameManager.instace.activePlayer].Keep.Add(myNote);
-        GameManager.instace.playerList[GameManager.instace.activePlayer].KeepCount++;
+
         //invest collect
         GameManager.DealKeep myDeal = new GameManager.DealKeep();
         myDeal.CardName = usedCards[cardcount - 1].cardName;
