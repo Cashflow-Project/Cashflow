@@ -18,6 +18,17 @@ public class SellObjFromYourself : MonoBehaviourPunCallbacks
     // Start is called before the first frame update
     void Start()
     {
+        
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+
+    private void OnEnable()
+    {
         if (SmallDealDeckController.instance.usedCards[SmallDealDeckController.instance.cardcount - 1].ON2U == true && GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].hasON2U == true)
         {
             UpdateON2UItemList();
@@ -34,13 +45,11 @@ public class SellObjFromYourself : MonoBehaviourPunCallbacks
         {
             UpdateOK4UItemList();
         }
-        //UpdateInvestItemList();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnBecameVisible()
     {
-        
+
     }
 
     public void CancelList()
@@ -54,17 +63,21 @@ public class SellObjFromYourself : MonoBehaviourPunCallbacks
         UIController.instance.payButton.SetActive(false);
         UIController.instance.cancelButton.SetActive(true);
         UIController.instance.drawButton.SetActive(false);
+
+        for (int i = 0; i < _investItemList.Count; i++)
+        {
+            Destroy(_investItemList[i].gameObject);
+        }
+        _investItemList.Clear();
     }
 
 
     public void UpdateON2UItemList()
     {
-        //clear the current list of item
         for (int i = 0; i < _investItemList.Count; i++)
         {
             Destroy(_investItemList[i].gameObject);
         }
-
         _investItemList.Clear();
 
         for (int j = 0; j < GameManager.instace.playerList.Count; j++)
@@ -92,12 +105,10 @@ public class SellObjFromYourself : MonoBehaviourPunCallbacks
 
     public void UpdateMYT4UItemList()
     {
-        //clear the current list of item
         for (int i = 0; i < _investItemList.Count; i++)
         {
             Destroy(_investItemList[i].gameObject);
         }
-
         _investItemList.Clear();
 
         for (int j = 0; j < GameManager.instace.playerList.Count; j++)
@@ -125,12 +136,10 @@ public class SellObjFromYourself : MonoBehaviourPunCallbacks
 
     public void UpdateGRO4USItemList()
     {
-        //clear the current list of item
         for (int i = 0; i < _investItemList.Count; i++)
         {
             Destroy(_investItemList[i].gameObject);
         }
-
         _investItemList.Clear();
 
         for (int j = 0; j < GameManager.instace.playerList.Count; j++)
@@ -158,12 +167,10 @@ public class SellObjFromYourself : MonoBehaviourPunCallbacks
 
     public void UpdateOK4UItemList()
     {
-        //clear the current list of item
         for (int i = 0; i < _investItemList.Count; i++)
         {
             Destroy(_investItemList[i].gameObject);
         }
-
         _investItemList.Clear();
 
         for (int j = 0; j < GameManager.instace.playerList.Count; j++)

@@ -18,20 +18,14 @@ public class UIInvestConfirm : MonoBehaviourPunCallbacks
     // Start is called before the first frame update
     void Start()
     {
-        UIController.instance.payButton.SetActive(false);
-        UIController.instance.SmallPayButton.SetActive(false);
-        UIController.instance.BigPayButton.SetActive(false);
-        UIController.instance.cancelButton.SetActive(false);
-        UIController.instance.drawButton.SetActive(false);
-        UIController.instance.ChooseBigSmall.SetActive(false);
-        UIController.instance.SellButton.SetActive(false);
+
     }
 
     // Update is called once per frame
     void Update()
     {
         var isNumeric = int.TryParse(inputNum.text, out int n);
-        if (!isNumeric || Int32.Parse(inputNum.text) <= 0 || Int32.Parse(inputNum.text) % 1 != 0)
+        if (!isNumeric || Int32.Parse(inputNum.text) <= 0 || Int32.Parse(inputNum.text) % 1 != 0 || Int32.Parse(sumCalculate.text) > GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].money)
         {
             BuyButton.interactable = false;
         }
@@ -45,30 +39,33 @@ public class UIInvestConfirm : MonoBehaviourPunCallbacks
 
     public void OkClick()
     {
-        GameManager.instace.playerList[GameManager.instace.activePlayer].money = GameManager.instace.playerList[GameManager.instace.activePlayer].money - Int32.Parse(sumCalculate.text);
-        SetAllFalse();
-        photonView.RPC("UpdateMoney", RpcTarget.All, GameManager.instace.playerList[GameManager.instace.activePlayer].money, GameManager.instace.activePlayer);
-        photonView.RPC("UpdateKeepForInvest", RpcTarget.All);
-        UIController.instance.passButton.SetActive(true);
+        if(GameManager.instace.playerList[GameManager.instace.activePlayer].money >= Int32.Parse(sumCalculate.text))
+        {
+            GameManager.instace.playerList[GameManager.instace.activePlayer].money = GameManager.instace.playerList[GameManager.instace.activePlayer].money - Int32.Parse(sumCalculate.text);
+            SetAllFalse();
+            UIController.instance.BlurBg.SetActive(false);
+            photonView.RPC("UpdateMoney", RpcTarget.All, GameManager.instace.playerList[GameManager.instace.activePlayer].money, GameManager.instace.activePlayer);
+            photonView.RPC("UpdateKeepForInvest", RpcTarget.All);
+            UIController.instance.passButton.SetActive(true);
+        }
+        else
+        {
+            UIController.instance.LoanCanvas.SetActive(true);
+            UIController.instance.BlurBg.SetActive(true);
+        }
+        
     }
 
     public void CancelClick()
     {
         UIController.instance.InvestCanvas.SetActive(false);
-
-        UIController.instance.payButton.SetActive(false);
-        UIController.instance.SmallPayButton.SetActive(true);
-        UIController.instance.BigPayButton.SetActive(false);
-        UIController.instance.cancelButton.SetActive(true);
-        UIController.instance.ChooseBigSmall.SetActive(false);
-
+        UIController.instance.BlurBg.SetActive(false);
     }
 
     public void SetAllFalse()
     {
 
         UIController.instance.InvestCanvas.SetActive(false);
-
         UIController.instance.ChooseBigSmall.SetActive(false);
         UIController.instance.SmallPayButton.SetActive(false);
         UIController.instance.SellButton.SetActive(false);

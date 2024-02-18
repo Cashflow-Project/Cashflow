@@ -103,6 +103,7 @@ public class Timer : MonoBehaviour
                 UIController.instance.SetAllFalse(false);
                 GameManager.instace.ActivateButton(false);
                 UIController.instance.passButton.SetActive(false);
+
                 GameManager.instace.playerList[GameManager.instace.activePlayer].isInRedRoute = false;
                 ResetTimer();
                 GameManager.instace.state = GameManager.States.SWITCH_PLAYER;

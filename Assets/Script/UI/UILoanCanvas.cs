@@ -43,6 +43,7 @@ public class UILoanCanvas : MonoBehaviourPunCallbacks
     {
         photonView.RPC("UpdateLoan", RpcTarget.All);
         UIController.instance.LoanCanvas.SetActive(false);
+        UIController.instance.BlurBg.SetActive(false);
         photonView.RPC("UpdateMoney", RpcTarget.All, GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].money, PhotonNetwork.LocalPlayer.ActorNumber - 1);
         photonView.RPC("valueUpdate", RpcTarget.All);
         
@@ -51,6 +52,7 @@ public class UILoanCanvas : MonoBehaviourPunCallbacks
     public void CancelClick()
     {
         UIController.instance.LoanCanvas.SetActive(false);
+        UIController.instance.BlurBg.SetActive(false);
     }
 
     [PunRPC]

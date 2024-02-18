@@ -9,7 +9,7 @@ public class SellItemUI : MonoBehaviour
     public SellObjFromYourself sellObjFromYourselfParent;
     [SerializeField] public TMP_Text itemName;
     [SerializeField] public TMP_Text itemCount;
-    
+    [SerializeField] public Button itemSellBtn;
 
     public void SetItemName(string _itemName)
     {
@@ -25,5 +25,6 @@ public class SellItemUI : MonoBehaviour
     {
         UIController.instance.investSellCanvas.SetActive(true);
         UIController.instance.SellListCanvas.SetActive(false);
+
     }
 }

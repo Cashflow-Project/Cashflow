@@ -21,6 +21,7 @@ public class UIController : MonoBehaviour
     public Text roomname;
     public GameObject LoanCanvas;
     public GameObject investSellCanvas;
+
     private void Awake()
     {
         instance = this;
@@ -36,6 +37,10 @@ public class UIController : MonoBehaviour
     public GameObject ChooseBigSmall;
     public GameObject SellButton;
     public GameObject MarketDrawButton;
+    public GameObject MarketSellButton;
+    public GameObject MarketPayButton;
+
+    public GameObject BlurBg;
     // Start is called before the first frame update
     void Start()
     {
@@ -110,51 +115,28 @@ public class UIController : MonoBehaviour
     public void Sell()
     {
         SellListCanvas.SetActive(true);
-        if (SmallDealDeckController.instance.usedCards[SmallDealDeckController.instance.cardcount - 1].ON2U == true && GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].hasON2U == true)
-        {
-            SellObjFromYourself.instance.UpdateON2UItemList();
-        }
-        if (SmallDealDeckController.instance.usedCards[SmallDealDeckController.instance.cardcount - 1].MYT4U == true && GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].hasMYT4U == true)
-        {
-            SellObjFromYourself.instance.UpdateMYT4UItemList();
-        }
-        if (SmallDealDeckController.instance.usedCards[SmallDealDeckController.instance.cardcount - 1].GRO4US == true && GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].hasGRO4US == true)
-        {
-            SellObjFromYourself.instance.UpdateGRO4USItemList();
-        }
-        if (SmallDealDeckController.instance.usedCards[SmallDealDeckController.instance.cardcount - 1].OK4U == true && GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].hasOK4U == true)
-        {
-            SellObjFromYourself.instance.UpdateOK4UItemList();
-        }
-        payButton.SetActive(false);
-        SmallPayButton.SetActive(false);
-        BigPayButton.SetActive(false);
-        //cancelButton.SetActive(false);
-        drawButton.SetActive(false);
-        ChooseBigSmall.SetActive(false);
-        SellButton.SetActive(false);
+        
+        BlurBg.SetActive(true);
+
     }
 
     public void MarketSell()
     {
         SellListFromMarketCanvas.SetActive(true);
-        payButton.SetActive(false);
-        SmallPayButton.SetActive(false);
-        BigPayButton.SetActive(false);
-        cancelButton.SetActive(false);
-        drawButton.SetActive(false);
-        ChooseBigSmall.SetActive(false);
-        SellButton.SetActive(false);
+        BlurBg.SetActive(true);
     }
 
     public void CloseSellList()
     {
         SellListCanvas.SetActive(false);
+        BlurBg.SetActive(false);
+
     }
     public void SetAllFalse(bool on)
     {
 
         cardShow.enabled = on;
+        GameManager.instace.diceButton.SetActive(on);
         payButton.SetActive(on);
         SmallPayButton.SetActive(on);
         BigPayButton.SetActive(on);
@@ -165,10 +147,6 @@ public class UIController : MonoBehaviour
 
     }
 
-    public void Loan()
-    {
-
-    }
 
     public void Quit()
     {

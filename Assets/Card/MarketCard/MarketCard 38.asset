@@ -26,6 +26,7 @@ MonoBehaviour:
   CommercialBuilding: 0
   Apartment: 0
   notSell: 1
+  destroy: 1
   canLoan: 0
   increseFromSameCost: 0
   cardSprite: {fileID: 21300000, guid: 1e6de9feb320472449f181744e72b8e0, type: 3}

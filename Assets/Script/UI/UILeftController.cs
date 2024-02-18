@@ -172,6 +172,7 @@ public class UILeftController : MonoBehaviour
     public void OpenLoanCanvas()
     {
         UIController.instance.LoanCanvas.SetActive(true);
+        UIController.instance.BlurBg.SetActive(true);
     }
 
     public void SetPage1Value()

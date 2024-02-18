@@ -89,44 +89,59 @@ public class MarketDeckController : MonoBehaviourPunCallbacks
         UIController.instance.drawButton.SetActive(false);
         UIController.instance.SellButton.SetActive(false);
         UIController.instance.MarketDrawButton.SetActive(false);
-        UIController.instance.cancelButton.SetActive(true);
+        //UIController.instance.cancelButton.SetActive(true);
         photonView.RPC("ShowCardToAllPlayerRPC", RpcTarget.All);
 
 
         photonView.RPC("AddToUseCard", RpcTarget.All);
-
+        photonView.RPC("whoCanSell", RpcTarget.All);
         Destroy(newCard.gameObject, 1);
     }
 
     public void SellCost()
     {
+        if (usedCards[cardcount - 1].house3s2 == true && usedCards[cardcount - 1].house2s1 == true 
+            && usedCards[cardcount - 1].Condominium == true && usedCards[cardcount - 1].CommercialBuilding == true 
+            && usedCards[cardcount - 1].Apartment == true)
+        {
+            UIController.instance.SellListFromMarketCanvas.SetActive(true);
+            UIController.instance.BlurBg.SetActive(true);
 
-            //Debug.Log("7");
-            //photonView.RPC("CalculateSpendRPChasChild", RpcTarget.All, GameManager.instace.playerList[GameManager.instace.activePlayer].money);
-            GameManager.instace.playerList[GameManager.instace.activePlayer].money = GameManager.instace.playerList[GameManager.instace.activePlayer].money - usedCards[cardcount - 1].Cost;
-            photonView.RPC("UpdateMoney", RpcTarget.All, GameManager.instace.playerList[GameManager.instace.activePlayer].money, GameManager.instace.activePlayer);
-            //GameManager.instace.playerList[GameManager.instace.activePlayer].Keep[GameManager.instace.playerList[GameManager.instace.activePlayer].KeepCount].CardName = usedCards[cardcount - 1].cardName;
-            //GameManager.instace.playerList[GameManager.instace.activePlayer].Keep[GameManager.instace.playerList[GameManager.instace.activePlayer].KeepCount].price = usedCards[cardcount - 1].payCost;
-
-            UIController.instance.drawButton.SetActive(false);
-            UIController.instance.cardShow.enabled = false;
-            //UIController.instance.cancelButton.SetActive(false);
-            //UIController.instance.loanButton.SetActive(false);
-            UIController.instance.payButton.SetActive(false);
-            GameManager.instace.playerList[GameManager.instace.activePlayer].isSpendAlready = true;
-            UIController.instance.passButton.SetActive(true);
-            //photonView.RPC("EndTurnPlayer", RpcTarget.All);
-
+        }
+        else if (usedCards[cardcount - 1].GoldCoins == true)
+        {
+           
+        }
+            
 
     }
 
-    public void Loan()
+    public void PayCost()
     {
+        if (GameManager.instace.playerList[GameManager.instace.activePlayer].money >= usedCards[cardcount - 1].Cost)
+        {
+            if (usedCards[cardcount - 1].destroy == true )
+            {
+                
+            }
+            else
+            {
+                
+            }
+            
+            
+        }
+        else
+        {
+            UIController.instance.LoanCanvas.SetActive(true);
+            UIController.instance.BlurBg.SetActive(true);
+        }
+
+
+        photonView.RPC("valueUpdate", RpcTarget.All);
+
 
     }
-
-
-
     private bool IsMyTurn()
     {
         // Replace with your logic. This could be checking against a player list, an ID, etc.
@@ -187,5 +202,34 @@ public class MarketDeckController : MonoBehaviourPunCallbacks
 
         GameManager.instace.playerList[GameManager.instace.activePlayer].money = GameManager.instace.playerList[GameManager.instace.activePlayer].money - usedCards[cardcount - 1].Cost;
         GameManager.instace.playerList[GameManager.instace.activePlayer].money = money;
+    }
+
+    [PunRPC]
+    void whoCanSell()
+    {
+        if (usedCards[cardcount - 1].GoldCoins == true && GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].hasGoldCoins == true)
+        {
+            UIController.instance.MarketSellButton.SetActive(true);
+        }
+        if (usedCards[cardcount - 1].house3s2 == true && GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].hasHome32 == true)
+        {
+            UIController.instance.MarketSellButton.SetActive(true);
+        }
+        if (usedCards[cardcount - 1].house2s1 == true && GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].hasHome21 == true)
+        {
+            UIController.instance.MarketSellButton.SetActive(true);
+        }
+        if (usedCards[cardcount - 1].Condominium == true && GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].hasCondominium21 == true)
+        {
+            UIController.instance.MarketSellButton.SetActive(true);
+        }
+        if (usedCards[cardcount - 1].CommercialBuilding == true && GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].hascommercialBuilding == true)
+        {
+            UIController.instance.MarketSellButton.SetActive(true);
+        }
+        if (usedCards[cardcount - 1].Apartment == true && GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].hasApartment == true)
+        {
+            UIController.instance.MarketSellButton.SetActive(true);
+        }
     }
 }

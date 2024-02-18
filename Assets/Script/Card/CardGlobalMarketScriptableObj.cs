@@ -23,6 +23,7 @@ public class CardGlobalMarketScriptableObj : ScriptableObject
     public bool Apartment;
 
     public bool notSell;
+    public bool destroy;
     public bool canLoan;
     public bool increseFromSameCost;
     public Sprite cardSprite;

@@ -139,33 +139,30 @@ public class SpendDeckController : MonoBehaviourPunCallbacks
 
         if(usedCards[cardcount - 1].hasChildsOrNot == true && GameManager.instace.playerList[GameManager.instace.activePlayer].hasChild == false)
         {
-            //photonView.RPC("CalculateSpendRPCNoChildCardHave", RpcTarget.All, GameManager.instace.playerList[GameManager.instace.activePlayer].money);
             UIController.instance.drawButton.SetActive(false);
             UIController.instance.cardShow.enabled = false;
-            //UIController.instance.cancelButton.SetActive(false);
-            //UIController.instance.loanButton.SetActive(false);
             UIController.instance.payButton.SetActive(false);
             GameManager.instace.playerList[GameManager.instace.activePlayer].isSpendAlready = true;
             UIController.instance.passButton.SetActive(true);
-            //photonView.RPC("EndTurnPlayer", RpcTarget.All);
         }
         else
         {
-            //Debug.Log("7");
-            //photonView.RPC("CalculateSpendRPChasChild", RpcTarget.All, GameManager.instace.playerList[GameManager.instace.activePlayer].money);
-            GameManager.instace.playerList[GameManager.instace.activePlayer].money = GameManager.instace.playerList[GameManager.instace.activePlayer].money - usedCards[cardcount - 1].payCost;
-            photonView.RPC("UpdateMoney", RpcTarget.All, GameManager.instace.playerList[GameManager.instace.activePlayer].money, GameManager.instace.activePlayer);
-            //GameManager.instace.playerList[GameManager.instace.activePlayer].Keep[GameManager.instace.playerList[GameManager.instace.activePlayer].KeepCount].CardName = usedCards[cardcount - 1].cardName;
-            //GameManager.instace.playerList[GameManager.instace.activePlayer].Keep[GameManager.instace.playerList[GameManager.instace.activePlayer].KeepCount].price = usedCards[cardcount - 1].payCost;
-            
-            UIController.instance.drawButton.SetActive(false);
-            UIController.instance.cardShow.enabled = false;
-            //UIController.instance.cancelButton.SetActive(false);
-            //UIController.instance.loanButton.SetActive(false);
-            UIController.instance.payButton.SetActive(false);
-            GameManager.instace.playerList[GameManager.instace.activePlayer].isSpendAlready = true;
-            UIController.instance.passButton.SetActive(true);
-            //photonView.RPC("EndTurnPlayer", RpcTarget.All);
+            if (GameManager.instace.playerList[GameManager.instace.activePlayer].money > usedCards[cardcount - 1].payCost)
+            {
+                GameManager.instace.playerList[GameManager.instace.activePlayer].money = GameManager.instace.playerList[GameManager.instace.activePlayer].money - usedCards[cardcount - 1].payCost;
+                photonView.RPC("UpdateMoney", RpcTarget.All, GameManager.instace.playerList[GameManager.instace.activePlayer].money, GameManager.instace.activePlayer);
+                UIController.instance.drawButton.SetActive(false);
+                UIController.instance.cardShow.enabled = false;
+                UIController.instance.payButton.SetActive(false);
+                GameManager.instace.playerList[GameManager.instace.activePlayer].isSpendAlready = true;
+                UIController.instance.passButton.SetActive(true);
+            }
+            else
+            {
+                UIController.instance.LoanCanvas.SetActive(true);
+                UIController.instance.BlurBg.SetActive(true);
+            }
+
         }
         
 
