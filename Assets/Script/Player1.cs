@@ -75,7 +75,7 @@ public class Player1 : MonoBehaviourPunCallbacks
         
     }
 
-    //[PunRPC]
+    [PunRPC]
     IEnumerator Move()
     {
         Debug.Log("in move func");

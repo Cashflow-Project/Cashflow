@@ -34,11 +34,13 @@ public class Timer : MonoBehaviourPunCallbacks
 
     void Update()
     {
-        if (PhotonNetwork.IsMasterClient)
+        if (photonView.IsMine)
         {
             if (Countdown && timer > 0)
             {
                 timer -= Time.deltaTime;
+                
+                //photonView.RPC("SyncCountdownTime", RpcTarget.All, timer);
                 UpdateTimerDisplay(timer);
             }
             else if (!Countdown && timer < timerDuration)
@@ -115,9 +117,94 @@ public class Timer : MonoBehaviourPunCallbacks
             {
                 ResetTimer();
             }
-
-            photonView.RPC("TimeUpdateDisplayPunRPC", RpcTarget.All, timer);
         }
+        else
+        {
+            if (Countdown && timer > 0)
+            {
+                timer -= Time.deltaTime;
+                UpdateTimerDisplay(timer);
+
+            }
+            else if (!Countdown && timer < timerDuration)
+            {
+                timer += Time.deltaTime;
+                UpdateTimerDisplay(timer);
+            }
+            else
+            {
+                Flash();
+                if ((GameManager.instace.state == GameManager.States.START_TURN || GameManager.instace.state == GameManager.States.ROLL_DICE)
+                    && GameManager.instace.playerList[GameManager.instace.activePlayer].isInRedRoute == false)
+                {
+                    GameManager.instace.ActivateButton(false);
+                    UIController.instance.InvestCanvas.SetActive(false);
+                    UIController.instance.passButton.SetActive(false);
+                    ResetTimer();
+                    GameManager.instace.state = GameManager.States.SWITCH_PLAYER;
+                }
+                else if (GameManager.instace.state == GameManager.States.WAITING && GameManager.instace.playerList[GameManager.instace.activePlayer].isInRedRoute == false)
+                {
+                    UIController.instance.SetAllFalse(false);
+                    GameManager.instace.ActivateButton(false);
+                    UIController.instance.InvestCanvas.SetActive(false);
+                    UIController.instance.passButton.SetActive(false);
+                    ResetTimer();
+                    GameManager.instace.state = GameManager.States.SWITCH_PLAYER;
+                }
+                else if (GameManager.instace.state == GameManager.States.WAITING && GameManager.instace.playerList[GameManager.instace.activePlayer].isInRedRoute == true
+                    && GameManager.instace.playerList[GameManager.instace.activePlayer].isDrawButtonOn == true
+                    && GameManager.instace.playerList[GameManager.instace.activePlayer].isSpendAlready == false)
+                {
+                    UIController.instance.drawButton.SetActive(false);
+                    GameManager.instace.playerList[GameManager.instace.activePlayer].isDrawButtonOn = false;
+                    SpendDeckController.instance.DrawCardToHand();
+                    //delay
+                    SpendDeckController.instance.PayCost();
+                    //GameManager.instace.playerList[GameManager.instace.activePlayer].isSpendAlready = true;
+                    UIController.instance.SetAllFalse(false);
+                    GameManager.instace.ActivateButton(false);
+                    UIController.instance.passButton.SetActive(false);
+                    GameManager.instace.playerList[GameManager.instace.activePlayer].isInRedRoute = false;
+                    ResetTimer();
+                    GameManager.instace.state = GameManager.States.SWITCH_PLAYER;
+                }
+                else if (GameManager.instace.state == GameManager.States.WAITING && GameManager.instace.playerList[GameManager.instace.activePlayer].isInRedRoute == true
+                    && GameManager.instace.playerList[GameManager.instace.activePlayer].isDrawButtonOn == false
+                    && GameManager.instace.playerList[GameManager.instace.activePlayer].isSpendAlready == false)
+                {
+
+                    SpendDeckController.instance.PayCost();
+                    UIController.instance.SetAllFalse(false);
+                    GameManager.instace.ActivateButton(false);
+                    UIController.instance.passButton.SetActive(false);
+                    GameManager.instace.playerList[GameManager.instace.activePlayer].isInRedRoute = false;
+                    ResetTimer();
+                    GameManager.instace.state = GameManager.States.SWITCH_PLAYER;
+                }
+                else if (GameManager.instace.state == GameManager.States.WAITING && GameManager.instace.playerList[GameManager.instace.activePlayer].isInRedRoute == true
+                    && GameManager.instace.playerList[GameManager.instace.activePlayer].isDrawButtonOn == false
+                    && GameManager.instace.playerList[GameManager.instace.activePlayer].isSpendAlready == true)
+                {
+
+                    UIController.instance.SetAllFalse(false);
+                    GameManager.instace.ActivateButton(false);
+                    UIController.instance.passButton.SetActive(false);
+
+                    GameManager.instace.playerList[GameManager.instace.activePlayer].isInRedRoute = false;
+                    ResetTimer();
+                    GameManager.instace.state = GameManager.States.SWITCH_PLAYER;
+                }
+            }
+            if (GameManager.instace.state == GameManager.States.START_TURN)
+            {
+                ResetTimer();
+            }
+        }
+       
+
+            //photonView.RPC("TimeUpdateDisplayPunRPC", RpcTarget.All, timer);
+
             
     }
 
@@ -134,7 +221,7 @@ public class Timer : MonoBehaviourPunCallbacks
         SetTextDisplay(true);
     }
 
-    private void UpdateTimerDisplay(float time)
+    public void UpdateTimerDisplay(float time)
     {
         float minites = Mathf.FloorToInt(time / 60);
         float seconds = Mathf.FloorToInt(time % 60);
@@ -195,5 +282,11 @@ public class Timer : MonoBehaviourPunCallbacks
         secondMinutes.text = currentTime[1].ToString();
         firstSeconds.text = currentTime[2].ToString();
         secondSeconds.text = currentTime[3].ToString();
+    }
+
+    [PunRPC]
+    void SyncCountdownTime(float syncedCountdownTime)
+    {
+        timer = syncedCountdownTime;
     }
 }

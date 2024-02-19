@@ -301,7 +301,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         RandomFirstPlayer();
         playerJobSetting();
         ActivateButton(false);
-
+        
     }
    
     
