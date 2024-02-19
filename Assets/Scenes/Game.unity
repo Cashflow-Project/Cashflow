@@ -905,7 +905,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2031792509}
         m_TargetAssemblyTypeName: UIController, Assembly-CSharp
-        m_MethodName: CloseSellList
+        m_MethodName: CloseMarketSellList
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6346,6 +6346,8 @@ GameObject:
   m_Component:
   - component: {fileID: 470323410}
   - component: {fileID: 470323411}
+  - component: {fileID: 470323413}
+  - component: {fileID: 470323412}
   m_Layer: 5
   m_Name: Timer
   m_TagString: Untagged
@@ -6394,6 +6396,45 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_HorizontalFit: 2
   m_VerticalFit: 0
+--- !u!114 &470323412
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 470323409}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
+--- !u!114 &470323413
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 470323409}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents:
+  - {fileID: 470323412}
+  sceneViewId: 19
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1001 &483717114
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13005,7 +13046,7 @@ GameObject:
   m_Component:
   - component: {fileID: 899185119}
   - component: {fileID: 899185121}
-  - component: {fileID: 899185120}
+  - component: {fileID: 899185122}
   m_Layer: 5
   m_Name: ScorllArea
   m_TagString: Untagged
@@ -13034,22 +13075,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0.086891, y: -75.021}
   m_SizeDelta: {x: 1108.7, y: 374.44}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &899185120
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 899185118}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2425109376678ee4691938863eb4ba05, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  SellListWindow: {fileID: 414029207}
-  SellItemUIPrefab: {fileID: 5795612599875439950, guid: 9cd531b6e8bc41d47bdc630dfd3238ce, type: 3}
-  sellListParent: {fileID: 414029208}
-  _investItemList: []
 --- !u!114 &899185121
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13080,6 +13105,22 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &899185122
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 899185118}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d18cb6af2d978c049a291fee6ec1d38f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SellMarketListWindow: {fileID: 414029207}
+  MarketSellItemUIPrefab: {fileID: 6555522688920771850, guid: 36e562c9ea7e98c499e8ad6c3c9c5b0f, type: 3}
+  MarketSellListParent: {fileID: 414029208}
+  _MarketItemList: []
 --- !u!1 &913146513
 GameObject:
   m_ObjectHideFlags: 0
@@ -20644,7 +20685,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1532423396
 RectTransform:
   m_ObjectHideFlags: 0

@@ -132,6 +132,13 @@ public class UIController : MonoBehaviour
         BlurBg.SetActive(false);
 
     }
+
+    public void CloseMarketSellList()
+    {
+        SellListFromMarketCanvas.SetActive(false);
+        BlurBg.SetActive(false);
+    }
+
     public void SetAllFalse(bool on)
     {
 

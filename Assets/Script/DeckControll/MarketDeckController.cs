@@ -110,11 +110,16 @@ public class MarketDeckController : MonoBehaviourPunCallbacks
         }
         else if (usedCards[cardcount - 1].GoldCoins == true)
         {
-           
+
+        }
+        else
+        {
+            UIController.instance.cancelButton.SetActive(true);
         }
             
 
     }
+    
 
     public void PayCost()
     {

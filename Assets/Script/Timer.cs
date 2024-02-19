@@ -1,9 +1,9 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using Photon.Pun;
 
-
-public class Timer : MonoBehaviour
+public class Timer : MonoBehaviourPunCallbacks
 {
 
     public static Timer instace;

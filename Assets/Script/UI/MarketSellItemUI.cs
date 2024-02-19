@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Photon.Pun;
+using System;
 
-public class MarketSellItemUI : MonoBehaviour
+public class MarketSellItemUI : MonoBehaviourPunCallbacks
 {
     public SellObjFromMarketCard MarketSellObjFromYourselfParent;
     [SerializeField] public TMP_Text itemName;
@@ -12,6 +14,12 @@ public class MarketSellItemUI : MonoBehaviour
     [SerializeField] public TMP_Text itemIncome;
     [SerializeField] public TMP_Text itemPrice;
     [SerializeField] public Button itemMarketSellBtn;
+    [SerializeField] public bool isSelected;
+
+    public void SetItemSelect(bool _itemSelect)
+    {
+        _itemSelect = isSelected;
+    }
 
     public void SetItemName(string _itemName)
     {
@@ -65,7 +73,11 @@ public class MarketSellItemUI : MonoBehaviour
 
     public void SellPressed()
     {
-        MarketDeckController.instance.SellCost();
-
+        isSelected = true;
     }
+
+   
+
+
+    
 }

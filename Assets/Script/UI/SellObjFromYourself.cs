@@ -52,24 +52,6 @@ public class SellObjFromYourself : MonoBehaviourPunCallbacks
 
     }
 
-    public void CancelList()
-    {
-        UIController.instance.ChooseBigSmall.SetActive(false);
-        UIController.instance.SmallPayButton.SetActive(true);
-        UIController.instance.SellButton.SetActive(false);
-
-
-        UIController.instance.BigPayButton.SetActive(false);
-        UIController.instance.payButton.SetActive(false);
-        UIController.instance.cancelButton.SetActive(true);
-        UIController.instance.drawButton.SetActive(false);
-
-        for (int i = 0; i < _investItemList.Count; i++)
-        {
-            Destroy(_investItemList[i].gameObject);
-        }
-        _investItemList.Clear();
-    }
 
 
     public void UpdateON2UItemList()

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
-
+using System;
 public class SellObjFromMarketCard : MonoBehaviourPunCallbacks
 {
     public static SellObjFromMarketCard instance;
@@ -12,17 +12,7 @@ public class SellObjFromMarketCard : MonoBehaviourPunCallbacks
     [SerializeField] private Transform MarketSellListParent;
     public List<MarketSellItemUI> _MarketItemList = new List<MarketSellItemUI>();
 
-    // Start is called before the first frame update
-    void Start()
-    {
 
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
 
     private void OnEnable()
     {
@@ -32,24 +22,6 @@ public class SellObjFromMarketCard : MonoBehaviourPunCallbacks
     }
 
 
-    public void CancelList()
-    {
-        UIController.instance.ChooseBigSmall.SetActive(false);
-        UIController.instance.SmallPayButton.SetActive(true);
-        UIController.instance.SellButton.SetActive(false);
-
-
-        UIController.instance.BigPayButton.SetActive(false);
-        UIController.instance.payButton.SetActive(false);
-        UIController.instance.cancelButton.SetActive(true);
-        UIController.instance.drawButton.SetActive(false);
-
-        for (int i = 0; i < _MarketItemList.Count; i++)
-        {
-            Destroy(_MarketItemList[i].gameObject);
-        }
-        _MarketItemList.Clear();
-    }
 
 
     public void UpdateMarketItemList()
@@ -81,6 +53,7 @@ public class SellObjFromMarketCard : MonoBehaviourPunCallbacks
                     newItem.SetItemDownPayment(GameManager.instace.playerList[j].house3s2List[i].DownPayment.ToString());
                     newItem.SetItemIncome(GameManager.instace.playerList[j].house3s2List[i].CashflowIncome.ToString());
                     newItem.SetPriceInItem(GameManager.instace.playerList[j].house3s2List[i].DownPayment, 0);
+                    newItem.SetItemSelect(GameManager.instace.playerList[j].house3s2List[i].isSelected);
                     newItem.transform.SetParent(MarketSellListParent);
 
                     _MarketItemList.Add(newItem);
@@ -106,6 +79,10 @@ public class SellObjFromMarketCard : MonoBehaviourPunCallbacks
                         newItem.SetItemDownPayment(GameManager.instace.playerList[j].house2s1List[i].DownPayment.ToString());
                         newItem.SetItemIncome(GameManager.instace.playerList[j].house2s1List[i].CashflowIncome.ToString());
                         newItem.SetPriceInItem(GameManager.instace.playerList[j].house2s1List[i].DownPayment, 0);
+                        newItem.SetItemSelect(GameManager.instace.playerList[j].house2s1List[i].isSelected);
+                        
+
+
                         newItem.transform.SetParent(MarketSellListParent);
 
                         _MarketItemList.Add(newItem);
@@ -132,6 +109,7 @@ public class SellObjFromMarketCard : MonoBehaviourPunCallbacks
                         newItem.SetItemDownPayment(GameManager.instace.playerList[j].CondominiumList[i].DownPayment.ToString());
                         newItem.SetItemIncome(GameManager.instace.playerList[j].CondominiumList[i].CashflowIncome.ToString());
                         newItem.SetPriceInItem(GameManager.instace.playerList[j].CondominiumList[i].DownPayment, 0);
+                        newItem.SetItemSelect(GameManager.instace.playerList[j].CondominiumList[i].isSelected);
                         newItem.transform.SetParent(MarketSellListParent);
 
                         _MarketItemList.Add(newItem);
@@ -158,6 +136,7 @@ public class SellObjFromMarketCard : MonoBehaviourPunCallbacks
                         newItem.SetItemDownPayment(GameManager.instace.playerList[j].CommercialBuildingList[i].DownPayment.ToString());
                         newItem.SetItemIncome(GameManager.instace.playerList[j].CommercialBuildingList[i].CashflowIncome.ToString());
                         newItem.SetPriceInItem(GameManager.instace.playerList[j].CommercialBuildingList[i].DownPayment, GameManager.instace.playerList[j].CommercialBuildingList[i].count );
+                        newItem.SetItemSelect(GameManager.instace.playerList[j].CommercialBuildingList[i].isSelected);
                         newItem.transform.SetParent(MarketSellListParent);
 
                         _MarketItemList.Add(newItem);
@@ -184,13 +163,21 @@ public class SellObjFromMarketCard : MonoBehaviourPunCallbacks
                         newItem.SetItemDownPayment(GameManager.instace.playerList[j].ApartmentList[i].DownPayment.ToString());
                         newItem.SetItemIncome(GameManager.instace.playerList[j].ApartmentList[i].CashflowIncome.ToString());
                         newItem.SetPriceInItem(GameManager.instace.playerList[j].ApartmentList[i].DownPayment, GameManager.instace.playerList[j].ApartmentList[i].count);
+                        newItem.SetItemSelect(GameManager.instace.playerList[j].ApartmentList[i].isSelected);
                         newItem.transform.SetParent(MarketSellListParent);
 
                         _MarketItemList.Add(newItem);
                     }
+
+
+
+
+
                 }
             }
         
         }
     }
+
+   
 }

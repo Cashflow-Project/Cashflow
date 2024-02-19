@@ -147,7 +147,7 @@ public class SpendDeckController : MonoBehaviourPunCallbacks
         }
         else
         {
-            if (GameManager.instace.playerList[GameManager.instace.activePlayer].money > usedCards[cardcount - 1].payCost)
+            if (GameManager.instace.playerList[GameManager.instace.activePlayer].money >= usedCards[cardcount - 1].payCost)
             {
                 GameManager.instace.playerList[GameManager.instace.activePlayer].money = GameManager.instace.playerList[GameManager.instace.activePlayer].money - usedCards[cardcount - 1].payCost;
                 photonView.RPC("UpdateMoney", RpcTarget.All, GameManager.instace.playerList[GameManager.instace.activePlayer].money, GameManager.instace.activePlayer);
