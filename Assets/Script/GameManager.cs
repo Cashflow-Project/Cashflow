@@ -273,6 +273,14 @@ public class GameManager : MonoBehaviourPunCallbacks
     public Text TurnUI;
     [HideInInspector]public int rolledhumanDice;
 
+    public GameObject player1;
+    public GameObject player2;
+    public GameObject player3;
+    public GameObject player4;
+    public GameObject player5;
+    public GameObject player6;
+
+
     public PhotonView photonView;
     public Dice dice;
     public Dice dice2;
@@ -665,6 +673,11 @@ public class GameManager : MonoBehaviourPunCallbacks
             playerList[3].playerType = Entity.PlayerTypes.NO_PLAYER;
             playerList[4].playerType = Entity.PlayerTypes.NO_PLAYER;
             playerList[5].playerType = Entity.PlayerTypes.NO_PLAYER;
+            player2.SetActive(false);
+            player3.SetActive(false);
+            player4.SetActive(false);
+            player5.SetActive(false);
+            player6.SetActive(false);
         }
         if (PhotonNetwork.CurrentRoom.PlayerCount == 2)
         {
@@ -674,6 +687,10 @@ public class GameManager : MonoBehaviourPunCallbacks
             playerList[3].playerType = Entity.PlayerTypes.NO_PLAYER;
             playerList[4].playerType = Entity.PlayerTypes.NO_PLAYER;
             playerList[5].playerType = Entity.PlayerTypes.NO_PLAYER;
+            player3.SetActive(false);
+            player4.SetActive(false);
+            player5.SetActive(false);
+            player6.SetActive(false);
         }
         if (PhotonNetwork.CurrentRoom.PlayerCount == 3)
         {
@@ -682,6 +699,9 @@ public class GameManager : MonoBehaviourPunCallbacks
             playerList[3].playerType = Entity.PlayerTypes.NO_PLAYER;
             playerList[4].playerType = Entity.PlayerTypes.NO_PLAYER;
             playerList[5].playerType = Entity.PlayerTypes.NO_PLAYER;
+            player4.SetActive(false);
+            player5.SetActive(false);
+            player6.SetActive(false);
         }
         if (PhotonNetwork.CurrentRoom.PlayerCount == 4)
         {
@@ -689,6 +709,8 @@ public class GameManager : MonoBehaviourPunCallbacks
 
             playerList[4].playerType = Entity.PlayerTypes.NO_PLAYER;
             playerList[5].playerType = Entity.PlayerTypes.NO_PLAYER;
+            player5.SetActive(false);
+            player6.SetActive(false);
         }
         if (PhotonNetwork.CurrentRoom.PlayerCount == 5)
         {
@@ -696,6 +718,7 @@ public class GameManager : MonoBehaviourPunCallbacks
             Debug.Log("5 player in room");
 
             playerList[5].playerType = Entity.PlayerTypes.NO_PLAYER;
+            player6.SetActive(false);
         }
     }
 
