@@ -25,7 +25,7 @@ public class Player1 : MonoBehaviourPunCallbacks
 
     int routePosition;
     int startNodeIndex;
-
+    bool remiderPosition = false;
     int steps;
     int doneSteps;
     public int turncounts = 1;
@@ -96,11 +96,20 @@ public class Player1 : MonoBehaviourPunCallbacks
         }
         isMoving = true;
 
-       
         while (steps > 0)
         {
+            if (routePosition != 24 && remiderPosition == true)
+            {
+                routePosition++;
+                remiderPosition = false;
+
+            }
             routePosition++;
             routePosition %= fullRoute.Count;
+            //Debug.Log(routePosition % fullRoute.Count);
+            Debug.Log(routePosition);
+            Debug.Log(fullRoute.Count);
+            Debug.Log(routePosition % fullRoute.Count);
             Debug.Log(fullRoute[routePosition].gameObject.transform.position);
             Vector3 nextPos = fullRoute[routePosition].gameObject.transform.position;
             Vector3 startPos = fullRoute[routePosition].gameObject.transform.position;
@@ -113,130 +122,114 @@ public class Player1 : MonoBehaviourPunCallbacks
             if (routePosition % fullRoute.Count == 6 || routePosition % fullRoute.Count == 14 || routePosition % fullRoute.Count == 22)
             {
                 Debug.Log("pass orange route");
-                //UIController.instance.passButton.SetActive(IsMyTurn());
-                //photonView.RPC("EndTurnPlayer", RpcTarget.All);
-                photonView.RPC("valueUpdate", RpcTarget.All); 
+                photonView.RPC("valueUpdate", RpcTarget.All);
                 GameManager.instace.playerList[GameManager.instace.activePlayer].money = GameManager.instace.playerList[GameManager.instace.activePlayer].money + GameManager.instace.playerList[GameManager.instace.activePlayer].getmoney;
                 photonView.RPC("UpdateMoney", RpcTarget.All, GameManager.instace.playerList[GameManager.instace.activePlayer].money, GameManager.instace.activePlayer);
-                //GameManager.instace.state = GameManager.States.SWITCH_PLAYER;
             }
-            //blue2 route
-            /*
-            if (routePosition % fullRoute.Count == 25)
+
+            
+            if (routePosition == 24 )
             {
-                steps--;
+               
+                remiderPosition = true;
+
             }
-            */
+            
             yield return new WaitForSeconds(0.1f);
             cTime = 0;
             steps--;
             doneSteps++;
             //Debug.Log(doneSteps);
         }
-        /*
-        if ()
-        {
-            lastNode = fullRoute[routePosition];
 
-        }*/
-        /** 
-        if (lastNode.isTaken)
-        {
-            //return to start base node
-            lastNode.player.ReturnToBase();
-        }
-        currentNode.player = null;
-        currentNode.isTaken = false;
-
-        lastNode.player = this;
-        lastNode.isTaken = true;
-
-        currentNode = lastNode;
-        lastNode = null;**/
-        /**
-        if (winCondition())
-        {
-            GameManager.instace.ReportWinning();
-        }**/
-
+       
         isMoving = false;
-        //green route
-        if (routePosition % 2 == 1)
-        {
-            Debug.Log("in green route");
-            //UIController.instance.passButton.SetActive(IsMyTurn());
-            photonView.RPC("valueUpdate", RpcTarget.All);
-            photonView.RPC("PlayerChooseSmallBig", RpcTarget.All);
-            //GameManager.instace.state = GameManager.States.SWITCH_PLAYER;
-        }
-        //red route
-        if (routePosition % fullRoute.Count == 2 || routePosition % fullRoute.Count == 10 || routePosition % fullRoute.Count == 18)
-        {
-            Debug.Log("in red route");
-            photonView.RPC("valueUpdate", RpcTarget.All);
-            //UIController.instance.drawButton.SetActive(IsMyTurn());
-            photonView.RPC("PlayerDraw", RpcTarget.All);
-        }
-        //orange route
-        if (routePosition % fullRoute.Count == 6 || routePosition % fullRoute.Count == 14 || routePosition % fullRoute.Count == 22)
-        {
-            Debug.Log("in orange route");
-            photonView.RPC("valueUpdate", RpcTarget.All);
-            //UIController.instance.passButton.SetActive(IsMyTurn());
-            photonView.RPC("EndTurnPlayer", RpcTarget.All);
-            //GameManager.instace.state = GameManager.States.SWITCH_PLAYER;
-        }
 
-        //blue route
-        if (routePosition % fullRoute.Count == 8 || routePosition % fullRoute.Count == 16 || routePosition % fullRoute.Count == 0)
+
+        if (isMoving == false)
         {
-            Debug.Log("in blue route");
-            photonView.RPC("valueUpdate", RpcTarget.All);
-            photonView.RPC("PlayerMarketDraw", RpcTarget.All);
-            //UIController.instance.passButton.SetActive(IsMyTurn());
-            //photonView.RPC("EndTurnPlayer", RpcTarget.All);
-            //GameManager.instace.state = GameManager.States.SWITCH_PLAYER;
-        }
-        
-        //purple1 route
-        if (routePosition % fullRoute.Count == 4)
-        {
-            Debug.Log("in purple 1 route");
-            photonView.RPC("valueUpdate", RpcTarget.All);
-            //UIController.instance.passButton.SetActive(IsMyTurn());
-            photonView.RPC("EndTurnPlayer", RpcTarget.All);
-            //GameManager.instace.state = GameManager.States.SWITCH_PLAYER;
-        }
-        //purple2 route
-        if (routePosition % fullRoute.Count == 12)
-        {
-            Debug.Log("in purple 2 route");
-            photonView.RPC("valueUpdate", RpcTarget.All);
-            //UIController.instance.passButton.SetActive(IsMyTurn());
-            photonView.RPC("hasJob", RpcTarget.All);
-            photonView.RPC("EndTurnPlayer", RpcTarget.All);
-            //GameManager.instace.state = GameManager.States.SWITCH_PLAYER;
             
-        }
-        //purple3 route
-        if (routePosition % fullRoute.Count == 20)
-        {
-            Debug.Log("in purple 3 route");
-            photonView.RPC("GetChild", RpcTarget.All);
-            photonView.RPC("valueUpdate", RpcTarget.All);
-            photonView.RPC("EndTurnPlayer", RpcTarget.All);
-            //UIController.instance.passButton.SetActive(IsMyTurn());
-            /*
-            GameManager.instace.playerList[GameManager.instace.activePlayer].hasChild = true;
-            if (GameManager.instace.playerList[GameManager.instace.activePlayer].child <= 3)
+            //red route
+            if (routePosition % fullRoute.Count == 2 || routePosition % fullRoute.Count == 10 || routePosition % fullRoute.Count == 18)
             {
-                GameManager.instace.playerList[GameManager.instace.activePlayer].child += 1;
+                Debug.Log("in red route");
+                photonView.RPC("valueUpdate", RpcTarget.All);
+                //UIController.instance.drawButton.SetActive(IsMyTurn());
+                photonView.RPC("PlayerDraw", RpcTarget.All);
+            }
+            //orange route
+            if (routePosition % fullRoute.Count == 6 || routePosition % fullRoute.Count == 14 || routePosition % fullRoute.Count == 22)
+            {
+                Debug.Log("in orange route");
+                photonView.RPC("valueUpdate", RpcTarget.All);
+                //UIController.instance.passButton.SetActive(IsMyTurn());
+                photonView.RPC("EndTurnPlayer", RpcTarget.All);
+                //GameManager.instace.state = GameManager.States.SWITCH_PLAYER;
+            }
+
+            //blue route
+            if (routePosition % fullRoute.Count == 8 || routePosition % fullRoute.Count == 16 || routePosition == 24)
+            {
+                Debug.Log("in blue route");
+                photonView.RPC("valueUpdate", RpcTarget.All);
+                Debug.Log(routePosition % fullRoute.Count + " " + steps + " " + routePosition + " " + isMoving + " " + doneSteps);
+                photonView.RPC("PlayerMarketDraw", RpcTarget.All);
+
+            }/*
+            if (routePosition % fullRoute.Count == 8 || routePosition % fullRoute.Count == 16 ||  fullRoute.Count - routePosition == 1)
+            {
+                //
+                Debug.Log("in blue route");
+                photonView.RPC("valueUpdate", RpcTarget.All);
+                Debug.Log(routePosition % fullRoute.Count + " " + steps + " " + routePosition + " " + isMoving + " " + doneSteps);
+                photonView.RPC("PlayerMarketDraw", RpcTarget.All);
+                //UIController.instance.passButton.SetActive(IsMyTurn());
+                //photonView.RPC("EndTurnPlayer", RpcTarget.All);
+                //GameManager.instace.state = GameManager.States.SWITCH_PLAYER;
             }*/
 
-            //GameManager.instace.state = GameManager.States.SWITCH_PLAYER;
+            //purple1 route
+            if (routePosition % fullRoute.Count == 4)
+            {
+                Debug.Log("in purple 1 route");
+                photonView.RPC("valueUpdate", RpcTarget.All);
+                //UIController.instance.passButton.SetActive(IsMyTurn());
+                photonView.RPC("EndTurnPlayer", RpcTarget.All);
+                //GameManager.instace.state = GameManager.States.SWITCH_PLAYER;
+            }
+            //purple2 route
+            if (routePosition % fullRoute.Count == 12)
+            {
+                Debug.Log("in purple 2 route");
+                photonView.RPC("valueUpdate", RpcTarget.All);
+                //UIController.instance.passButton.SetActive(IsMyTurn());
+                photonView.RPC("hasJob", RpcTarget.All);
+                photonView.RPC("EndTurnPlayer", RpcTarget.All);
+                //GameManager.instace.state = GameManager.States.SWITCH_PLAYER;
+
+            }
+            //purple3 route
+            if (routePosition % fullRoute.Count == 20)
+            {
+                Debug.Log("in purple 3 route");
+                photonView.RPC("GetChild", RpcTarget.All);
+                photonView.RPC("valueUpdate", RpcTarget.All);
+                photonView.RPC("EndTurnPlayer", RpcTarget.All);
+
+            }
+            //green route
+            if (routePosition % 2 == 1)
+            {
+                Debug.Log("in green route");
+                //UIController.instance.passButton.SetActive(IsMyTurn());
+                photonView.RPC("valueUpdate", RpcTarget.All);
+                photonView.RPC("PlayerChooseSmallBig", RpcTarget.All);
+                //GameManager.instace.state = GameManager.States.SWITCH_PLAYER;
+            }
+
         }
-        //GameManager.instace.state = GameManager.States.SWITCH_PLAYER;
-        //isMoving = false;
+
+
     }
 
     bool MoveInArcToNextNode(Vector3 startPos,Vector3 lastPos,float speed)
@@ -351,7 +344,7 @@ public class Player1 : MonoBehaviourPunCallbacks
     {
         if (IsMyTurn())
         {
-            selector.SetActive(true);
+            //selector.SetActive(true);
             photonView.RPC("hasTurnToEveryone", RpcTarget.All, on);
             //GameManager.instace.playerList[GameManager.instace.activePlayer].hasTurn = on;
             hasTurn = on;
@@ -437,6 +430,7 @@ public class Player1 : MonoBehaviourPunCallbacks
     [PunRPC]
     void PlayerMarketDraw()
     {
+        Debug.Log(routePosition % fullRoute.Count + " " + steps + " " + routePosition + " " + isMoving + " " + doneSteps);
         UIController.instance.MarketDrawButton.SetActive(IsMyTurn());
     }
 

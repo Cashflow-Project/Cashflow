@@ -24,7 +24,7 @@ public class Timer : MonoBehaviourPunCallbacks
     public TMP_Text firstSeconds;
     [SerializeField]
     public TMP_Text secondSeconds;
-
+    private bool isSynchronizing;
     public float flashTimer;
     public float flashDuration = 1f;
     void Start()
@@ -39,8 +39,6 @@ public class Timer : MonoBehaviourPunCallbacks
             if (Countdown && timer > 0)
             {
                 timer -= Time.deltaTime;
-                
-                //photonView.RPC("SyncCountdownTime", RpcTarget.All, timer);
                 UpdateTimerDisplay(timer);
             }
             else if (!Countdown && timer < timerDuration)
@@ -50,81 +48,23 @@ public class Timer : MonoBehaviourPunCallbacks
             }
             else
             {
+                //timer <= 0
                 Flash();
-                if ((GameManager.instace.state == GameManager.States.START_TURN || GameManager.instace.state == GameManager.States.ROLL_DICE)
-                    && GameManager.instace.playerList[GameManager.instace.activePlayer].isInRedRoute == false)
-                {
-                    GameManager.instace.ActivateButton(false);
-                    UIController.instance.InvestCanvas.SetActive(false);
-                    UIController.instance.passButton.SetActive(false);
-                    ResetTimer();
-                    GameManager.instace.state = GameManager.States.SWITCH_PLAYER;
-                }
-                else if (GameManager.instace.state == GameManager.States.WAITING && GameManager.instace.playerList[GameManager.instace.activePlayer].isInRedRoute == false)
-                {
-                    UIController.instance.SetAllFalse(false);
-                    GameManager.instace.ActivateButton(false);
-                    UIController.instance.InvestCanvas.SetActive(false);
-                    UIController.instance.passButton.SetActive(false);
-                    ResetTimer();
-                    GameManager.instace.state = GameManager.States.SWITCH_PLAYER;
-                }
-                else if (GameManager.instace.state == GameManager.States.WAITING && GameManager.instace.playerList[GameManager.instace.activePlayer].isInRedRoute == true
-                    && GameManager.instace.playerList[GameManager.instace.activePlayer].isDrawButtonOn == true
-                    && GameManager.instace.playerList[GameManager.instace.activePlayer].isSpendAlready == false)
-                {
-                    UIController.instance.drawButton.SetActive(false);
-                    GameManager.instace.playerList[GameManager.instace.activePlayer].isDrawButtonOn = false;
-                    SpendDeckController.instance.DrawCardToHand();
-                    //delay
-                    SpendDeckController.instance.PayCost();
-                    //GameManager.instace.playerList[GameManager.instace.activePlayer].isSpendAlready = true;
-                    UIController.instance.SetAllFalse(false);
-                    GameManager.instace.ActivateButton(false);
-                    UIController.instance.passButton.SetActive(false);
-                    GameManager.instace.playerList[GameManager.instace.activePlayer].isInRedRoute = false;
-                    ResetTimer();
-                    GameManager.instace.state = GameManager.States.SWITCH_PLAYER;
-                }
-                else if (GameManager.instace.state == GameManager.States.WAITING && GameManager.instace.playerList[GameManager.instace.activePlayer].isInRedRoute == true
-                    && GameManager.instace.playerList[GameManager.instace.activePlayer].isDrawButtonOn == false
-                    && GameManager.instace.playerList[GameManager.instace.activePlayer].isSpendAlready == false)
-                {
-
-                    SpendDeckController.instance.PayCost();
-                    UIController.instance.SetAllFalse(false);
-                    GameManager.instace.ActivateButton(false);
-                    UIController.instance.passButton.SetActive(false);
-                    GameManager.instace.playerList[GameManager.instace.activePlayer].isInRedRoute = false;
-                    ResetTimer();
-                    GameManager.instace.state = GameManager.States.SWITCH_PLAYER;
-                }
-                else if (GameManager.instace.state == GameManager.States.WAITING && GameManager.instace.playerList[GameManager.instace.activePlayer].isInRedRoute == true
-                    && GameManager.instace.playerList[GameManager.instace.activePlayer].isDrawButtonOn == false
-                    && GameManager.instace.playerList[GameManager.instace.activePlayer].isSpendAlready == true)
-                {
-
-                    UIController.instance.SetAllFalse(false);
-                    GameManager.instace.ActivateButton(false);
-                    UIController.instance.passButton.SetActive(false);
-
-                    GameManager.instace.playerList[GameManager.instace.activePlayer].isInRedRoute = false;
-                    ResetTimer();
-                    GameManager.instace.state = GameManager.States.SWITCH_PLAYER;
-                }
+                photonView.RPC("TimeLessThanZero", RpcTarget.All);
             }
+            /*
             if (GameManager.instace.state == GameManager.States.START_TURN)
             {
                 ResetTimer();
-            }
+            }*/
         }
         else
         {
+            //SynchronizeTimer();
             if (Countdown && timer > 0)
             {
                 timer -= Time.deltaTime;
                 UpdateTimerDisplay(timer);
-
             }
             else if (!Countdown && timer < timerDuration)
             {
@@ -133,79 +73,50 @@ public class Timer : MonoBehaviourPunCallbacks
             }
             else
             {
+                //timer <= 0
                 Flash();
-                if ((GameManager.instace.state == GameManager.States.START_TURN || GameManager.instace.state == GameManager.States.ROLL_DICE)
-                    && GameManager.instace.playerList[GameManager.instace.activePlayer].isInRedRoute == false)
-                {
-                    GameManager.instace.ActivateButton(false);
-                    UIController.instance.InvestCanvas.SetActive(false);
-                    UIController.instance.passButton.SetActive(false);
-                    ResetTimer();
-                    GameManager.instace.state = GameManager.States.SWITCH_PLAYER;
-                }
-                else if (GameManager.instace.state == GameManager.States.WAITING && GameManager.instace.playerList[GameManager.instace.activePlayer].isInRedRoute == false)
-                {
-                    UIController.instance.SetAllFalse(false);
-                    GameManager.instace.ActivateButton(false);
-                    UIController.instance.InvestCanvas.SetActive(false);
-                    UIController.instance.passButton.SetActive(false);
-                    ResetTimer();
-                    GameManager.instace.state = GameManager.States.SWITCH_PLAYER;
-                }
-                else if (GameManager.instace.state == GameManager.States.WAITING && GameManager.instace.playerList[GameManager.instace.activePlayer].isInRedRoute == true
-                    && GameManager.instace.playerList[GameManager.instace.activePlayer].isDrawButtonOn == true
-                    && GameManager.instace.playerList[GameManager.instace.activePlayer].isSpendAlready == false)
-                {
-                    UIController.instance.drawButton.SetActive(false);
-                    GameManager.instace.playerList[GameManager.instace.activePlayer].isDrawButtonOn = false;
-                    SpendDeckController.instance.DrawCardToHand();
-                    //delay
-                    SpendDeckController.instance.PayCost();
-                    //GameManager.instace.playerList[GameManager.instace.activePlayer].isSpendAlready = true;
-                    UIController.instance.SetAllFalse(false);
-                    GameManager.instace.ActivateButton(false);
-                    UIController.instance.passButton.SetActive(false);
-                    GameManager.instace.playerList[GameManager.instace.activePlayer].isInRedRoute = false;
-                    ResetTimer();
-                    GameManager.instace.state = GameManager.States.SWITCH_PLAYER;
-                }
-                else if (GameManager.instace.state == GameManager.States.WAITING && GameManager.instace.playerList[GameManager.instace.activePlayer].isInRedRoute == true
-                    && GameManager.instace.playerList[GameManager.instace.activePlayer].isDrawButtonOn == false
-                    && GameManager.instace.playerList[GameManager.instace.activePlayer].isSpendAlready == false)
-                {
-
-                    SpendDeckController.instance.PayCost();
-                    UIController.instance.SetAllFalse(false);
-                    GameManager.instace.ActivateButton(false);
-                    UIController.instance.passButton.SetActive(false);
-                    GameManager.instace.playerList[GameManager.instace.activePlayer].isInRedRoute = false;
-                    ResetTimer();
-                    GameManager.instace.state = GameManager.States.SWITCH_PLAYER;
-                }
-                else if (GameManager.instace.state == GameManager.States.WAITING && GameManager.instace.playerList[GameManager.instace.activePlayer].isInRedRoute == true
-                    && GameManager.instace.playerList[GameManager.instace.activePlayer].isDrawButtonOn == false
-                    && GameManager.instace.playerList[GameManager.instace.activePlayer].isSpendAlready == true)
-                {
-
-                    UIController.instance.SetAllFalse(false);
-                    GameManager.instace.ActivateButton(false);
-                    UIController.instance.passButton.SetActive(false);
-
-                    GameManager.instace.playerList[GameManager.instace.activePlayer].isInRedRoute = false;
-                    ResetTimer();
-                    GameManager.instace.state = GameManager.States.SWITCH_PLAYER;
-                }
+                photonView.RPC("TimeLessThanZero", RpcTarget.All);
+                
             }
+            /*
             if (GameManager.instace.state == GameManager.States.START_TURN)
             {
                 ResetTimer();
-            }
+            }*/
         }
-       
 
-            //photonView.RPC("TimeUpdateDisplayPunRPC", RpcTarget.All, timer);
+        if (GameManager.instace.state == GameManager.States.START_TURN)
+        {
+            ResetTimer();
+        }
 
-            
+    }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting)
+        {
+            // Send the timer value to other players
+            stream.SendNext(timer);
+        }
+        else
+        {
+            // Receive the timer value from the network
+            timer = (float)stream.ReceiveNext();
+        }
+    }
+
+    private void SynchronizeTimer()
+    {
+        if (!isSynchronizing)
+        {
+            isSynchronizing = true;
+
+            // Use Photon's OnPhotonSerializeView to synchronize the timer value
+            photonView.RequestOwnership(); // Ensure ownership to update the timer
+
+            isSynchronizing = false;
+        }
     }
 
     public void ResetTimer()
@@ -272,21 +183,70 @@ public class Timer : MonoBehaviourPunCallbacks
     }
 
     [PunRPC]
-    void TimeUpdateDisplayPunRPC(float time)
+    void TimeLessThanZero()
     {
-       float minites = Mathf.FloorToInt(time / 60);
-        float seconds = Mathf.FloorToInt(time % 60);
+            if ((GameManager.instace.state == GameManager.States.START_TURN || GameManager.instace.state == GameManager.States.ROLL_DICE)
+                    && GameManager.instace.playerList[GameManager.instace.activePlayer].isInRedRoute == false)
+            {
+                GameManager.instace.ActivateButton(false);
+                UIController.instance.InvestCanvas.SetActive(false);
+                UIController.instance.passButton.SetActive(false);
+                ResetTimer();
+                GameManager.instace.state = GameManager.States.SWITCH_PLAYER;
+            }
+            else if (GameManager.instace.state == GameManager.States.WAITING && GameManager.instace.playerList[GameManager.instace.activePlayer].isInRedRoute == false)
+            {
+                UIController.instance.SetAllFalse(false);
+                GameManager.instace.ActivateButton(false);
+                UIController.instance.InvestCanvas.SetActive(false);
+                UIController.instance.passButton.SetActive(false);
+                ResetTimer();
+                GameManager.instace.state = GameManager.States.SWITCH_PLAYER;
+            }
+            else if (GameManager.instace.state == GameManager.States.WAITING && GameManager.instace.playerList[GameManager.instace.activePlayer].isInRedRoute == true
+                && GameManager.instace.playerList[GameManager.instace.activePlayer].isDrawButtonOn == true
+                && GameManager.instace.playerList[GameManager.instace.activePlayer].isSpendAlready == false)
+            {
+                UIController.instance.drawButton.SetActive(false);
+                GameManager.instace.playerList[GameManager.instace.activePlayer].isDrawButtonOn = false;
+                SpendDeckController.instance.DrawCardToHand();
+                //delay
+                SpendDeckController.instance.PayCost();
+                //GameManager.instace.playerList[GameManager.instace.activePlayer].isSpendAlready = true;
+                UIController.instance.SetAllFalse(false);
+                GameManager.instace.ActivateButton(false);
+                UIController.instance.passButton.SetActive(false);
+                GameManager.instace.playerList[GameManager.instace.activePlayer].isInRedRoute = false;
+                ResetTimer();
+                GameManager.instace.state = GameManager.States.SWITCH_PLAYER;
+            }
+            else if (GameManager.instace.state == GameManager.States.WAITING && GameManager.instace.playerList[GameManager.instace.activePlayer].isInRedRoute == true
+                && GameManager.instace.playerList[GameManager.instace.activePlayer].isDrawButtonOn == false
+                && GameManager.instace.playerList[GameManager.instace.activePlayer].isSpendAlready == false)
+            {
 
-        string currentTime = string.Format("{00:00}{01:00}",minites,seconds);
-        firstMinutes.text = currentTime[0].ToString();
-        secondMinutes.text = currentTime[1].ToString();
-        firstSeconds.text = currentTime[2].ToString();
-        secondSeconds.text = currentTime[3].ToString();
-    }
+                SpendDeckController.instance.PayCost();
+                UIController.instance.SetAllFalse(false);
+                GameManager.instace.ActivateButton(false);
+                UIController.instance.passButton.SetActive(false);
+                GameManager.instace.playerList[GameManager.instace.activePlayer].isInRedRoute = false;
+                ResetTimer();
+                GameManager.instace.state = GameManager.States.SWITCH_PLAYER;
+            }
+            else if (GameManager.instace.state == GameManager.States.WAITING && GameManager.instace.playerList[GameManager.instace.activePlayer].isInRedRoute == true
+                && GameManager.instace.playerList[GameManager.instace.activePlayer].isDrawButtonOn == false
+                && GameManager.instace.playerList[GameManager.instace.activePlayer].isSpendAlready == true)
+            {
 
-    [PunRPC]
-    void SyncCountdownTime(float syncedCountdownTime)
-    {
-        timer = syncedCountdownTime;
+                UIController.instance.SetAllFalse(false);
+                GameManager.instace.ActivateButton(false);
+                UIController.instance.passButton.SetActive(false);
+
+                GameManager.instace.playerList[GameManager.instace.activePlayer].isInRedRoute = false;
+                ResetTimer();
+                GameManager.instace.state = GameManager.States.SWITCH_PLAYER;
+            }
+        
+        
     }
 }

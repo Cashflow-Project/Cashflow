@@ -1266,7 +1266,6 @@ public class GameManager : MonoBehaviourPunCallbacks
         {
             if (moveablePlayers.Count > 0)
             {
-                moveablePlayers[i].SetSelector(true);
                 moveablePlayers[i].tohasturn();
 
             }

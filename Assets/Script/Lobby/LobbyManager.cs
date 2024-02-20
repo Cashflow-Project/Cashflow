@@ -28,11 +28,12 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     [SerializeField] private Transform _playerListParent;
 
     [SerializeField] private GameObject _roomListWindow;
+
     [SerializeField] private GameObject _playerListWindow;
     [SerializeField] private GameObject _createRoomWindow;
 
-    private List<RoomItemUI> _roomList = new List<RoomItemUI>();
-    private List<PlayerItemUI> _playerList = new List<PlayerItemUI>();
+    public List<RoomItemUI> _roomList = new List<RoomItemUI>();
+    public List<PlayerItemUI> _playerList = new List<PlayerItemUI>();
 
 
     //public GameObject createObj;
@@ -123,14 +124,12 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     private void Connect()
     {
         PhotonNetwork.NickName = "Player " + Random.Range(0,500);
-
-        //_playerItemUIPrefab.SetName(_nameInput.text);
-        //PhotonNetwork.NickName = _playerItemUIPrefab._playerName.text;
+        
         PhotonNetwork.ConnectUsingSettings();
         PhotonNetwork.AutomaticallySyncScene = true;
     }
 
-    private void UpdateRoomList(List<RoomInfo> roomList)
+    public void UpdateRoomList(List<RoomInfo> roomList)
     {
         //clear the current list of room
         for(int i = 0;i < _roomList.Count; i++)
