@@ -77,8 +77,6 @@ public class UILeftController : MonoBehaviour
         page2.enabled = false;
 
         set1.SetActive(true);
-        set2.SetActive(false);
-        set3.SetActive(false);
 
         SetPage1Value();
         SetPage2Value();

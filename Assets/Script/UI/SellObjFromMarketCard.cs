@@ -12,13 +12,32 @@ public class SellObjFromMarketCard : MonoBehaviourPunCallbacks
     [SerializeField] private Transform MarketSellListParent;
     public List<MarketSellItemUI> _MarketItemList = new List<MarketSellItemUI>();
 
-
-
-    private void OnEnable()
+    void Update()
     {
+        if (MarketDeckController.instance.usedCards[MarketDeckController.instance.cardcount - 1].house3s2 == true
+            || MarketDeckController.instance.usedCards[MarketDeckController.instance.cardcount - 1].house2s1 == true
+            || MarketDeckController.instance.usedCards[MarketDeckController.instance.cardcount - 1].Condominium == true
+            || MarketDeckController.instance.usedCards[MarketDeckController.instance.cardcount - 1].CommercialBuilding == true
+            || MarketDeckController.instance.usedCards[MarketDeckController.instance.cardcount - 1].Apartment == true)
+        {
+            UpdateItemSelect();
+        }
+
         
-        UpdateMarketItemList();
-      
+    }
+
+   private void OnEnable()
+    {
+        if (MarketDeckController.instance.usedCards[MarketDeckController.instance.cardcount - 1].house3s2 == true 
+            || MarketDeckController.instance.usedCards[MarketDeckController.instance.cardcount - 1].house2s1 == true
+            || MarketDeckController.instance.usedCards[MarketDeckController.instance.cardcount - 1].Condominium == true
+            || MarketDeckController.instance.usedCards[MarketDeckController.instance.cardcount - 1].CommercialBuilding == true
+            || MarketDeckController.instance.usedCards[MarketDeckController.instance.cardcount - 1].Apartment == true)
+        {
+            UpdateMarketItemList();
+        }
+        
+
     }
 
 
@@ -26,12 +45,172 @@ public class SellObjFromMarketCard : MonoBehaviourPunCallbacks
 
     public void UpdateMarketItemList()
     {
-        for (int i = 0; i < _MarketItemList.Count; i++)
-        {
-            Destroy(_MarketItemList[i].gameObject);
-        }
-        _MarketItemList.Clear();
+        
+            for (int i = 0; i < _MarketItemList.Count; i++)
+            {
+                Destroy(_MarketItemList[i].gameObject);
+            }
+            _MarketItemList.Clear();
 
+
+            if (MarketDeckController.instance.usedCards[MarketDeckController.instance.cardcount - 1].house3s2 == true && GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].hasHome32 == true)
+            {
+                for (int j = 0; j < GameManager.instace.playerList.Count; j++)
+                {
+                    //generate a new list with update info
+                    for (int i = 0; i < GameManager.instace.playerList[j].house3s2List.Count; i++)
+                    {
+
+                        //skip empty 
+                        if (GameManager.instace.playerList[j].house3s2List.Count == 0)
+                        {
+                            continue;
+                        }
+                        if (GameManager.instace.playerList[j].house3s2List[i].isSelected == false)
+                        {
+                            MarketSellItemUI newItem = Instantiate(MarketSellItemUIPrefab);
+                            newItem.MarketSellObjFromYourselfParent = this;
+                            newItem.SetItemName(GameManager.instace.playerList[j].house3s2List[i].CardName);
+                            newItem.SetItemDownPayment(GameManager.instace.playerList[j].house3s2List[i].DownPayment.ToString());
+                            newItem.SetItemIncome(GameManager.instace.playerList[j].house3s2List[i].CashflowIncome.ToString());
+                            newItem.SetPriceInItem(GameManager.instace.playerList[j].house3s2List[i].BusinessValue, 0, GameManager.instace.playerList[j].house3s2List[i].BankLoan);
+                            newItem.SetItemSelect(GameManager.instace.playerList[j].house3s2List[i].isSelected);
+                            newItem.transform.SetParent(MarketSellListParent);
+
+                            _MarketItemList.Add(newItem);
+                        }
+
+                    }
+                }
+            }
+                if (MarketDeckController.instance.usedCards[MarketDeckController.instance.cardcount - 1].house2s1 == true && GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].hasHome21 == true)
+                {
+                    for (int j = 0; j < GameManager.instace.playerList.Count; j++)
+                    {
+                        //generate a new list with update info
+                        for (int i = 0; i < GameManager.instace.playerList[j].house2s1List.Count; i++)
+                        {
+
+                            //skip empty 
+                            if (GameManager.instace.playerList[j].house2s1List.Count == 0)
+                            {
+                                continue;
+                            }
+                            if (GameManager.instace.playerList[j].house2s1List[i].isSelected == false)
+                            {
+                                MarketSellItemUI newItem = Instantiate(MarketSellItemUIPrefab);
+                                newItem.MarketSellObjFromYourselfParent = this;
+                                newItem.SetItemName(GameManager.instace.playerList[j].house2s1List[i].CardName);
+                                newItem.SetItemDownPayment(GameManager.instace.playerList[j].house2s1List[i].DownPayment.ToString());
+                                newItem.SetItemIncome(GameManager.instace.playerList[j].house2s1List[i].CashflowIncome.ToString());
+                                newItem.SetPriceInItem(GameManager.instace.playerList[j].house2s1List[i].BusinessValue, 0, GameManager.instace.playerList[j].house2s1List[i].BankLoan);
+                                newItem.SetItemSelect(GameManager.instace.playerList[j].house2s1List[i].isSelected);
+
+                                newItem.transform.SetParent(MarketSellListParent);
+
+                                _MarketItemList.Add(newItem);
+                            }
+
+                        }
+                    }
+                }
+                if (MarketDeckController.instance.usedCards[MarketDeckController.instance.cardcount - 1].Condominium == true && GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].hasCondominium21 == true)
+                {
+                    for (int j = 0; j < GameManager.instace.playerList.Count; j++)
+                    {
+                        //generate a new list with update info
+                        for (int i = 0; i < GameManager.instace.playerList[j].CondominiumList.Count; i++)
+                        {
+
+                            //skip empty 
+                            if (GameManager.instace.playerList[j].CondominiumList.Count == 0)
+                            {
+                                continue;
+                            }
+                            if (GameManager.instace.playerList[j].CondominiumList[i].isSelected == false)
+                            {
+                                MarketSellItemUI newItem = Instantiate(MarketSellItemUIPrefab);
+                                newItem.MarketSellObjFromYourselfParent = this;
+                                newItem.SetItemName(GameManager.instace.playerList[j].CondominiumList[i].CardName);
+                                newItem.SetItemDownPayment(GameManager.instace.playerList[j].CondominiumList[i].DownPayment.ToString());
+                                newItem.SetItemIncome(GameManager.instace.playerList[j].CondominiumList[i].CashflowIncome.ToString());
+                                newItem.SetPriceInItem(GameManager.instace.playerList[j].CondominiumList[i].BusinessValue, 0, GameManager.instace.playerList[j].CondominiumList[i].BankLoan);
+                                newItem.SetItemSelect(GameManager.instace.playerList[j].CondominiumList[i].isSelected);
+                                newItem.transform.SetParent(MarketSellListParent);
+
+                                _MarketItemList.Add(newItem);
+                            }
+
+                        }
+                    }
+                }
+                if (MarketDeckController.instance.usedCards[MarketDeckController.instance.cardcount - 1].CommercialBuilding == true && GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].hascommercialBuilding == true)
+                {
+                    for (int j = 0; j < GameManager.instace.playerList.Count; j++)
+                    {
+                        //generate a new list with update info
+                        for (int i = 0; i < GameManager.instace.playerList[j].CommercialBuildingList.Count; i++)
+                        {
+
+                            //skip empty 
+                            if (GameManager.instace.playerList[j].CommercialBuildingList.Count == 0)
+                            {
+                                continue;
+                            }
+                            if (GameManager.instace.playerList[j].CommercialBuildingList[i].isSelected == false)
+                            {
+                                MarketSellItemUI newItem = Instantiate(MarketSellItemUIPrefab);
+                                newItem.MarketSellObjFromYourselfParent = this;
+                                newItem.SetItemName(GameManager.instace.playerList[j].CommercialBuildingList[i].CardName);
+                                newItem.SetItemDownPayment(GameManager.instace.playerList[j].CommercialBuildingList[i].DownPayment.ToString());
+                                newItem.SetItemIncome(GameManager.instace.playerList[j].CommercialBuildingList[i].CashflowIncome.ToString());
+                                newItem.SetPriceInItem(GameManager.instace.playerList[j].CommercialBuildingList[i].DownPayment, GameManager.instace.playerList[j].CommercialBuildingList[i].count, GameManager.instace.playerList[j].CommercialBuildingList[i].BankLoan);
+                                newItem.SetItemSelect(GameManager.instace.playerList[j].CommercialBuildingList[i].isSelected);
+                                newItem.transform.SetParent(MarketSellListParent);
+
+                                _MarketItemList.Add(newItem);
+                            }
+
+                        }
+                    }
+                }
+                if (MarketDeckController.instance.usedCards[MarketDeckController.instance.cardcount - 1].Apartment == true && GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].hasApartment == true)
+                {
+                    for (int j = 0; j < GameManager.instace.playerList.Count; j++)
+                    {
+                        //generate a new list with update info
+                        for (int i = 0; i < GameManager.instace.playerList[j].ApartmentList.Count; i++)
+                        {
+
+                            //skip empty 
+                            if (GameManager.instace.playerList[j].ApartmentList.Count == 0)
+                            {
+                                continue;
+                            }
+                            if (GameManager.instace.playerList[j].ApartmentList[i].isSelected == false)
+                            {
+                                MarketSellItemUI newItem = Instantiate(MarketSellItemUIPrefab);
+                                newItem.MarketSellObjFromYourselfParent = this;
+                                newItem.SetItemName(GameManager.instace.playerList[j].ApartmentList[i].CardName);
+                                newItem.SetItemDownPayment(GameManager.instace.playerList[j].ApartmentList[i].DownPayment.ToString());
+                                newItem.SetItemIncome(GameManager.instace.playerList[j].ApartmentList[i].CashflowIncome.ToString());
+                                newItem.SetPriceInItem(GameManager.instace.playerList[j].ApartmentList[i].BusinessValue, GameManager.instace.playerList[j].ApartmentList[i].count, GameManager.instace.playerList[j].ApartmentList[i].BankLoan);
+                                newItem.SetItemSelect(GameManager.instace.playerList[j].ApartmentList[i].isSelected);
+                                newItem.transform.SetParent(MarketSellListParent);
+
+                                _MarketItemList.Add(newItem);
+                            }
+
+                        }
+
+                    }
+                }
+
+            
+        }
+
+    public void UpdateItemSelect()
+    {
 
         if (MarketDeckController.instance.usedCards[MarketDeckController.instance.cardcount - 1].house3s2 == true && GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].hasHome32 == true)
         {
@@ -46,147 +225,122 @@ public class SellObjFromMarketCard : MonoBehaviourPunCallbacks
                     {
                         continue;
                     }
-                    if (GameManager.instace.playerList[j].house3s2List[i].isSelected == false)
+                    if (_MarketItemList[i].isSelected == true)
                     {
-                        MarketSellItemUI newItem = Instantiate(MarketSellItemUIPrefab);
-                        newItem.MarketSellObjFromYourselfParent = this;
-                        newItem.SetItemName(GameManager.instace.playerList[j].house3s2List[i].CardName);
-                        newItem.SetItemDownPayment(GameManager.instace.playerList[j].house3s2List[i].DownPayment.ToString());
-                        newItem.SetItemIncome(GameManager.instace.playerList[j].house3s2List[i].CashflowIncome.ToString());
-                        newItem.SetPriceInItem(GameManager.instace.playerList[j].house3s2List[i].BusinessValue, 0, GameManager.instace.playerList[j].house3s2List[i].BankLoan);
-                        newItem.SetItemSelect(GameManager.instace.playerList[j].house3s2List[i].isSelected);
-                        newItem.transform.SetParent(MarketSellListParent);
-
-                        _MarketItemList.Add(newItem);
+                        GameManager.instace.playerList[j].house3s2List[i].isSelected = _MarketItemList[i].isSelected;
+                        if (GameManager.instace.playerList[j].house3s2List[i].isSelected == true)
+                        {
+                            GameManager.instace.playerList[j].house3s2List.RemoveAt(i);
+                        }
                     }
-                        
+                   
+
                 }
             }
+        }
         if (MarketDeckController.instance.usedCards[MarketDeckController.instance.cardcount - 1].house2s1 == true && GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].hasHome21 == true)
         {
-                for (int j = 0; j < GameManager.instace.playerList.Count; j++)
+            for (int j = 0; j < GameManager.instace.playerList.Count; j++)
+            {
+                //generate a new list with update info
+                for (int i = 0; i < GameManager.instace.playerList[j].house2s1List.Count; i++)
                 {
-                    //generate a new list with update info
-                    for (int i = 0; i < GameManager.instace.playerList[j].house2s1List.Count; i++)
+
+                    //skip empty 
+                    if (GameManager.instace.playerList[j].house2s1List.Count == 0)
                     {
-
-                        //skip empty 
-                        if (GameManager.instace.playerList[j].house2s1List.Count == 0)
-                        {
-                            continue;
-                        }
-                        if(GameManager.instace.playerList[j].house2s1List[i].isSelected == false)
-                        {
-                            MarketSellItemUI newItem = Instantiate(MarketSellItemUIPrefab);
-                            newItem.MarketSellObjFromYourselfParent = this;
-                            newItem.SetItemName(GameManager.instace.playerList[j].house2s1List[i].CardName);
-                            newItem.SetItemDownPayment(GameManager.instace.playerList[j].house2s1List[i].DownPayment.ToString());
-                            newItem.SetItemIncome(GameManager.instace.playerList[j].house2s1List[i].CashflowIncome.ToString());
-                            newItem.SetPriceInItem(GameManager.instace.playerList[j].house2s1List[i].BusinessValue, 0, GameManager.instace.playerList[j].house2s1List[i].BankLoan);
-                            newItem.SetItemSelect(GameManager.instace.playerList[j].house2s1List[i].isSelected);
-
-                            newItem.transform.SetParent(MarketSellListParent);
-
-                            _MarketItemList.Add(newItem);
-                        }
-                        
+                        continue;
                     }
+                    if (_MarketItemList[i].isSelected == true)
+                    {
+                        GameManager.instace.playerList[j].house2s1List[i].isSelected = _MarketItemList[i + GameManager.instace.playerList[j].house3s2List.Count].isSelected;
+                        if (GameManager.instace.playerList[j].house2s1List[i].isSelected == true)
+                        {
+                            GameManager.instace.playerList[j].house2s1List.RemoveAt(i);
+                        }
+                    }
+      
+
                 }
             }
+        }
         if (MarketDeckController.instance.usedCards[MarketDeckController.instance.cardcount - 1].Condominium == true && GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].hasCondominium21 == true)
         {
-                for (int j = 0; j < GameManager.instace.playerList.Count; j++)
+            for (int j = 0; j < GameManager.instace.playerList.Count; j++)
+            {
+                //generate a new list with update info
+                for (int i = 0; i < GameManager.instace.playerList[j].CondominiumList.Count; i++)
                 {
-                    //generate a new list with update info
-                    for (int i = 0; i < GameManager.instace.playerList[j].CondominiumList.Count; i++)
+
+                    //skip empty 
+                    if (GameManager.instace.playerList[j].CondominiumList.Count == 0)
                     {
-
-                        //skip empty 
-                        if (GameManager.instace.playerList[j].CondominiumList.Count == 0)
-                        {
-                            continue;
-                        }
-                        if (GameManager.instace.playerList[j].CondominiumList[i].isSelected == false)
-                        {
-                            MarketSellItemUI newItem = Instantiate(MarketSellItemUIPrefab);
-                            newItem.MarketSellObjFromYourselfParent = this;
-                            newItem.SetItemName(GameManager.instace.playerList[j].CondominiumList[i].CardName);
-                            newItem.SetItemDownPayment(GameManager.instace.playerList[j].CondominiumList[i].DownPayment.ToString());
-                            newItem.SetItemIncome(GameManager.instace.playerList[j].CondominiumList[i].CashflowIncome.ToString());
-                            newItem.SetPriceInItem(GameManager.instace.playerList[j].CondominiumList[i].BusinessValue, 0, GameManager.instace.playerList[j].CondominiumList[i].BankLoan);
-                            newItem.SetItemSelect(GameManager.instace.playerList[j].CondominiumList[i].isSelected);
-                            newItem.transform.SetParent(MarketSellListParent);
-
-                            _MarketItemList.Add(newItem);
-                        }
-                            
+                        continue;
                     }
+                    if (_MarketItemList[i].isSelected == true)
+                    {
+                        GameManager.instace.playerList[j].CondominiumList[i].isSelected = _MarketItemList[i + GameManager.instace.playerList[j].house3s2List.Count + GameManager.instace.playerList[j].house2s1List.Count].isSelected;
+                        if (GameManager.instace.playerList[j].CondominiumList[i].isSelected == true)
+                        {
+                            GameManager.instace.playerList[j].CondominiumList.RemoveAt(i);
+                        }
+                    }
+
                 }
             }
+        }
         if (MarketDeckController.instance.usedCards[MarketDeckController.instance.cardcount - 1].CommercialBuilding == true && GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].hascommercialBuilding == true)
         {
-                for (int j = 0; j < GameManager.instace.playerList.Count; j++)
+            for (int j = 0; j < GameManager.instace.playerList.Count; j++)
+            {
+                //generate a new list with update info
+                for (int i = 0; i < GameManager.instace.playerList[j].CommercialBuildingList.Count; i++)
                 {
-                    //generate a new list with update info
-                    for (int i = 0; i < GameManager.instace.playerList[j].CommercialBuildingList.Count; i++)
+
+                    //skip empty 
+                    if (GameManager.instace.playerList[j].CommercialBuildingList.Count == 0)
                     {
-
-                        //skip empty 
-                        if (GameManager.instace.playerList[j].CommercialBuildingList.Count == 0)
-                        {
-                            continue;
-                        }
-                        if (GameManager.instace.playerList[j].CommercialBuildingList[i].isSelected == false)
-                        {
-                            MarketSellItemUI newItem = Instantiate(MarketSellItemUIPrefab);
-                            newItem.MarketSellObjFromYourselfParent = this;
-                            newItem.SetItemName(GameManager.instace.playerList[j].CommercialBuildingList[i].CardName);
-                            newItem.SetItemDownPayment(GameManager.instace.playerList[j].CommercialBuildingList[i].DownPayment.ToString());
-                            newItem.SetItemIncome(GameManager.instace.playerList[j].CommercialBuildingList[i].CashflowIncome.ToString());
-                            newItem.SetPriceInItem(GameManager.instace.playerList[j].CommercialBuildingList[i].DownPayment, GameManager.instace.playerList[j].CommercialBuildingList[i].count, GameManager.instace.playerList[j].CommercialBuildingList[i].BankLoan);
-                            newItem.SetItemSelect(GameManager.instace.playerList[j].CommercialBuildingList[i].isSelected);
-                            newItem.transform.SetParent(MarketSellListParent);
-
-                            _MarketItemList.Add(newItem);
-                        }
-                            
+                        continue;
                     }
+                    if (_MarketItemList[i].isSelected == true)
+                    {
+                        GameManager.instace.playerList[j].CommercialBuildingList[i].isSelected = _MarketItemList[i + GameManager.instace.playerList[j].house3s2List.Count + GameManager.instace.playerList[j].house2s1List.Count + GameManager.instace.playerList[j].CondominiumList.Count].isSelected;
+                        if (GameManager.instace.playerList[j].CommercialBuildingList[i].isSelected == true)
+                        {
+                            GameManager.instace.playerList[j].CommercialBuildingList.RemoveAt(i);
+                        }
+                    }
+
                 }
             }
+        }
         if (MarketDeckController.instance.usedCards[MarketDeckController.instance.cardcount - 1].Apartment == true && GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].hasApartment == true)
         {
-                for (int j = 0; j < GameManager.instace.playerList.Count; j++)
+            for (int j = 0; j < GameManager.instace.playerList.Count; j++)
+            {
+                //generate a new list with update info
+                for (int i = 0; i < GameManager.instace.playerList[j].ApartmentList.Count; i++)
                 {
-                    //generate a new list with update info
-                    for (int i = 0; i < GameManager.instace.playerList[j].ApartmentList.Count; i++)
+                    //skip empty 
+                    if (GameManager.instace.playerList[j].ApartmentList.Count == 0)
                     {
-
-                        //skip empty 
-                        if (GameManager.instace.playerList[j].ApartmentList.Count == 0)
+                        continue;
+                    }
+                    if (_MarketItemList[i].isSelected == true)
+                    {
+                        GameManager.instace.playerList[j].ApartmentList[i].isSelected = _MarketItemList[i + GameManager.instace.playerList[j].house3s2List.Count + GameManager.instace.playerList[j].house2s1List.Count + GameManager.instace.playerList[j].CondominiumList.Count + GameManager.instace.playerList[j].CommercialBuildingList.Count].isSelected;
+                        if(GameManager.instace.playerList[j].ApartmentList[i].isSelected == true)
                         {
-                            continue;
+                            GameManager.instace.playerList[j].ApartmentList.RemoveAt(i);
                         }
-                        if (GameManager.instace.playerList[j].ApartmentList[i].isSelected == false)
-                        {
-                            MarketSellItemUI newItem = Instantiate(MarketSellItemUIPrefab);
-                            newItem.MarketSellObjFromYourselfParent = this;
-                            newItem.SetItemName(GameManager.instace.playerList[j].ApartmentList[i].CardName);
-                            newItem.SetItemDownPayment(GameManager.instace.playerList[j].ApartmentList[i].DownPayment.ToString());
-                            newItem.SetItemIncome(GameManager.instace.playerList[j].ApartmentList[i].CashflowIncome.ToString());
-                            newItem.SetPriceInItem(GameManager.instace.playerList[j].ApartmentList[i].BusinessValue, GameManager.instace.playerList[j].ApartmentList[i].count, GameManager.instace.playerList[j].ApartmentList[i].BankLoan);
-                            newItem.SetItemSelect(GameManager.instace.playerList[j].ApartmentList[i].isSelected);
-                            newItem.transform.SetParent(MarketSellListParent);
-
-                            _MarketItemList.Add(newItem);
-                        }
-                            
                     }
 
                 }
-            }
-        
-        }
-    }
 
-   
+            }
+        }
+
+
+    }
 }
+

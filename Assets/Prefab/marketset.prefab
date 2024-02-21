@@ -405,7 +405,7 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 0
+          m_BoolArgument: 1
         m_CallState: 2
 --- !u!1 &5456857351758367688
 GameObject:
@@ -598,6 +598,7 @@ MonoBehaviour:
   itemIncome: {fileID: 725232225181413287}
   itemPrice: {fileID: 2372235683266955711}
   itemMarketSellBtn: {fileID: 3728781808972263632}
+  isSelected: 0
 --- !u!1 &7156714059299601149
 GameObject:
   m_ObjectHideFlags: 0

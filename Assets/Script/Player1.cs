@@ -75,7 +75,6 @@ public class Player1 : MonoBehaviourPunCallbacks
         
     }
 
-    [PunRPC]
     IEnumerator Move()
     {
         Debug.Log("in move func");
@@ -150,7 +149,7 @@ public class Player1 : MonoBehaviourPunCallbacks
 
         if (isMoving == false)
         {
-            
+            /*
             //red route
             if (routePosition % fullRoute.Count == 2 || routePosition % fullRoute.Count == 10 || routePosition % fullRoute.Count == 18)
             {
@@ -211,7 +210,7 @@ public class Player1 : MonoBehaviourPunCallbacks
                 photonView.RPC("valueUpdate", RpcTarget.All);
                 photonView.RPC("EndTurnPlayer", RpcTarget.All);
 
-            }
+            }*/
             //green route
             if (routePosition % 2 == 1)
             {
@@ -220,6 +219,14 @@ public class Player1 : MonoBehaviourPunCallbacks
                 photonView.RPC("valueUpdate", RpcTarget.All);
                 photonView.RPC("PlayerChooseSmallBig", RpcTarget.All);
                 //GameManager.instace.state = GameManager.States.SWITCH_PLAYER;
+            }
+            else
+            {
+                Debug.Log("in blue route");
+                remiderPosition = false;
+                photonView.RPC("valueUpdate", RpcTarget.All);
+                Debug.Log(routePosition % fullRoute.Count + " " + steps + " " + routePosition + " " + isMoving + " " + doneSteps);
+                photonView.RPC("PlayerMarketDraw", RpcTarget.All);
             }
 
         }

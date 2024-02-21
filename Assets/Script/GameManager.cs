@@ -753,7 +753,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 
             GameManager.instace.playerList[i].firstMoney = 35000;
 
-            GameManager.instace.playerList[i].money = GameManager.instace.playerList[i].firstMoney;
+            
 
             GameManager.instace.playerList[i].salary = 132000;
             GameManager.instace.playerList[i].income = 0;
@@ -787,13 +787,13 @@ public class GameManager : MonoBehaviourPunCallbacks
             GameManager.instace.playerList[i].hasChild = false;
             GameManager.instace.playerList[i].hasDonate = false;
             GameManager.instace.playerList[i].hasOutside = false;
-
+            GameManager.instace.playerList[i].money = GameManager.instace.playerList[i].firstMoney + GameManager.instace.playerList[i].getmoney;
         }
         //---------------------------------------------------------------------lawer-----------------------------------------------------------------
         if (GameManager.instace.playerList[i].playerJob == GameManager.Entity.Jobs.LAWER)
         {
             GameManager.instace.playerList[i].firstMoney = 20000;
-            GameManager.instace.playerList[i].money = GameManager.instace.playerList[i].firstMoney;
+            
             GameManager.instace.playerList[i].salary = 75000;
             GameManager.instace.playerList[i].income = 0;
             GameManager.instace.playerList[i].allRecieve = GameManager.instace.playerList[i].salary + GameManager.instace.playerList[i].income;
@@ -826,12 +826,13 @@ public class GameManager : MonoBehaviourPunCallbacks
             GameManager.instace.playerList[i].hasChild = false;
             GameManager.instace.playerList[i].hasDonate = false;
             GameManager.instace.playerList[i].hasOutside = false;
+            GameManager.instace.playerList[i].money = GameManager.instace.playerList[i].firstMoney + GameManager.instace.playerList[i].getmoney;
         }
         //---------------------------------------------------------------------police-----------------------------------------------------------------
         if (GameManager.instace.playerList[i].playerJob == GameManager.Entity.Jobs.POLICE)
         {
             GameManager.instace.playerList[i].firstMoney = 5000;
-            GameManager.instace.playerList[i].money = GameManager.instace.playerList[i].firstMoney;
+            
             GameManager.instace.playerList[i].salary = 30000;
             GameManager.instace.playerList[i].income = 0;
             GameManager.instace.playerList[i].allRecieve = GameManager.instace.playerList[i].salary + GameManager.instace.playerList[i].income;
@@ -863,12 +864,13 @@ public class GameManager : MonoBehaviourPunCallbacks
             GameManager.instace.playerList[i].hasChild = false;
             GameManager.instace.playerList[i].hasDonate = false;
             GameManager.instace.playerList[i].hasOutside = false;
+            GameManager.instace.playerList[i].money = GameManager.instace.playerList[i].firstMoney + GameManager.instace.playerList[i].getmoney;
         }
         //---------------------------------------------------------------------truck driver-----------------------------------------------------------------
         if (GameManager.instace.playerList[i].playerJob == GameManager.Entity.Jobs.TRUCK_DRIVER)
         {
             GameManager.instace.playerList[i].firstMoney = 8000;
-            GameManager.instace.playerList[i].money = GameManager.instace.playerList[i].firstMoney;
+
             GameManager.instace.playerList[i].salary = 25000;
             GameManager.instace.playerList[i].income = 0;
             GameManager.instace.playerList[i].allRecieve = GameManager.instace.playerList[i].salary + GameManager.instace.playerList[i].income;
@@ -899,12 +901,13 @@ public class GameManager : MonoBehaviourPunCallbacks
             GameManager.instace.playerList[i].hasChild = false;
             GameManager.instace.playerList[i].hasDonate = false;
             GameManager.instace.playerList[i].hasOutside = false;
+            GameManager.instace.playerList[i].money = GameManager.instace.playerList[i].firstMoney + GameManager.instace.playerList[i].getmoney;
         }
         //---------------------------------------------------------------------teacher-----------------------------------------------------------------
         if (GameManager.instace.playerList[i].playerJob == GameManager.Entity.Jobs.TEACHER)
         {
             GameManager.instace.playerList[i].firstMoney = 4000;
-            GameManager.instace.playerList[i].money = GameManager.instace.playerList[i].firstMoney;
+
             GameManager.instace.playerList[i].salary = 33000;
             GameManager.instace.playerList[i].income = 0;
             GameManager.instace.playerList[i].allRecieve = GameManager.instace.playerList[i].salary + GameManager.instace.playerList[i].income;
@@ -935,12 +938,13 @@ public class GameManager : MonoBehaviourPunCallbacks
             GameManager.instace.playerList[i].hasChild = false;
             GameManager.instace.playerList[i].hasDonate = false;
             GameManager.instace.playerList[i].hasOutside = false;
+            GameManager.instace.playerList[i].money = GameManager.instace.playerList[i].firstMoney + GameManager.instace.playerList[i].getmoney;
         }
         //---------------------------------------------------------------------machanic-----------------------------------------------------------------
         if (GameManager.instace.playerList[i].playerJob == GameManager.Entity.Jobs.MACHANIC)
         {
             GameManager.instace.playerList[i].firstMoney = 7000;
-            GameManager.instace.playerList[i].money = GameManager.instace.playerList[i].firstMoney;
+
             GameManager.instace.playerList[i].salary = 20000;
             GameManager.instace.playerList[i].income = 0;
             GameManager.instace.playerList[i].allRecieve = GameManager.instace.playerList[i].salary + GameManager.instace.playerList[i].income;
@@ -971,12 +975,13 @@ public class GameManager : MonoBehaviourPunCallbacks
             GameManager.instace.playerList[i].hasChild = false;
             GameManager.instace.playerList[i].hasDonate = false;
             GameManager.instace.playerList[i].hasOutside = false;
+            GameManager.instace.playerList[i].money = GameManager.instace.playerList[i].firstMoney + GameManager.instace.playerList[i].getmoney;
         }
         //---------------------------------------------------------------------nurse-----------------------------------------------------------------
         if (GameManager.instace.playerList[i].playerJob == GameManager.Entity.Jobs.NURSE)
         {
             GameManager.instace.playerList[i].firstMoney = 5000;
-            GameManager.instace.playerList[i].money = GameManager.instace.playerList[i].firstMoney;
+
             GameManager.instace.playerList[i].salary = 31000;
             GameManager.instace.playerList[i].income = 0;
             GameManager.instace.playerList[i].allRecieve = GameManager.instace.playerList[i].salary + GameManager.instace.playerList[i].income;
@@ -1007,12 +1012,13 @@ public class GameManager : MonoBehaviourPunCallbacks
             GameManager.instace.playerList[i].hasChild = false;
             GameManager.instace.playerList[i].hasDonate = false;
             GameManager.instace.playerList[i].hasOutside = false;
+            GameManager.instace.playerList[i].money = GameManager.instace.playerList[i].firstMoney + GameManager.instace.playerList[i].getmoney;
         }
         //---------------------------------------------------------------------secretary-----------------------------------------------------------------
         if (GameManager.instace.playerList[i].playerJob == GameManager.Entity.Jobs.SECRETARY)
         {
             GameManager.instace.playerList[i].firstMoney = 7000;
-            GameManager.instace.playerList[i].money = GameManager.instace.playerList[i].firstMoney;
+
             GameManager.instace.playerList[i].salary = 25000;
             GameManager.instace.playerList[i].income = 0;
             GameManager.instace.playerList[i].allRecieve = GameManager.instace.playerList[i].salary + GameManager.instace.playerList[i].income;
@@ -1043,12 +1049,13 @@ public class GameManager : MonoBehaviourPunCallbacks
             GameManager.instace.playerList[i].hasChild = false;
             GameManager.instace.playerList[i].hasDonate = false;
             GameManager.instace.playerList[i].hasOutside = false;
+            GameManager.instace.playerList[i].money = GameManager.instace.playerList[i].firstMoney + GameManager.instace.playerList[i].getmoney;
         }
         //---------------------------------------------------------------------cleaning staff-----------------------------------------------------------------
         if (GameManager.instace.playerList[i].playerJob == GameManager.Entity.Jobs.CLEANING_STAFF)
         {
             GameManager.instace.playerList[i].firstMoney = 6000;
-            GameManager.instace.playerList[i].money = GameManager.instace.playerList[i].firstMoney;
+
             GameManager.instace.playerList[i].salary = 16000;
             GameManager.instace.playerList[i].income = 0;
             GameManager.instace.playerList[i].allRecieve = GameManager.instace.playerList[i].salary + GameManager.instace.playerList[i].income;
@@ -1079,12 +1086,13 @@ public class GameManager : MonoBehaviourPunCallbacks
             GameManager.instace.playerList[i].hasChild = false;
             GameManager.instace.playerList[i].hasDonate = false;
             GameManager.instace.playerList[i].hasOutside = false;
+            GameManager.instace.playerList[i].money = GameManager.instace.playerList[i].firstMoney + GameManager.instace.playerList[i].getmoney;
         }
         //---------------------------------------------------------------------manager-----------------------------------------------------------------
         if (GameManager.instace.playerList[i].playerJob == GameManager.Entity.Jobs.MANAGER)
         {
             GameManager.instace.playerList[i].firstMoney = 4000;
-            GameManager.instace.playerList[i].money = GameManager.instace.playerList[i].firstMoney;
+
             GameManager.instace.playerList[i].salary = 46000;
             GameManager.instace.playerList[i].income = 0;
             GameManager.instace.playerList[i].allRecieve = GameManager.instace.playerList[i].salary + GameManager.instace.playerList[i].income;
@@ -1115,12 +1123,13 @@ public class GameManager : MonoBehaviourPunCallbacks
             GameManager.instace.playerList[i].hasChild = false;
             GameManager.instace.playerList[i].hasDonate = false;
             GameManager.instace.playerList[i].hasOutside = false;
+            GameManager.instace.playerList[i].money = GameManager.instace.playerList[i].firstMoney + GameManager.instace.playerList[i].getmoney;
         }
         //---------------------------------------------------------------------pilot-----------------------------------------------------------------
         if (GameManager.instace.playerList[i].playerJob == GameManager.Entity.Jobs.PILOT)
         {
             GameManager.instace.playerList[i].firstMoney = 25000;
-            GameManager.instace.playerList[i].money = GameManager.instace.playerList[i].firstMoney;
+
             GameManager.instace.playerList[i].salary = 95000;
             GameManager.instace.playerList[i].income = 0;
             GameManager.instace.playerList[i].allRecieve = GameManager.instace.playerList[i].salary + GameManager.instace.playerList[i].income;
@@ -1151,12 +1160,13 @@ public class GameManager : MonoBehaviourPunCallbacks
             GameManager.instace.playerList[i].hasChild = false;
             GameManager.instace.playerList[i].hasDonate = false;
             GameManager.instace.playerList[i].hasOutside = false;
+            GameManager.instace.playerList[i].money = GameManager.instace.playerList[i].firstMoney + GameManager.instace.playerList[i].getmoney;
         }
         //---------------------------------------------------------------------engineer-----------------------------------------------------------------
         if (GameManager.instace.playerList[i].playerJob == GameManager.Entity.Jobs.ENGINEER)
         {
             GameManager.instace.playerList[i].firstMoney = 4000;
-            GameManager.instace.playerList[i].money = GameManager.instace.playerList[i].firstMoney;
+
             GameManager.instace.playerList[i].salary = 49000;
             GameManager.instace.playerList[i].income = 0;
             GameManager.instace.playerList[i].allRecieve = GameManager.instace.playerList[i].salary + GameManager.instace.playerList[i].income;
@@ -1187,6 +1197,7 @@ public class GameManager : MonoBehaviourPunCallbacks
             GameManager.instace.playerList[i].hasChild = false;
             GameManager.instace.playerList[i].hasDonate = false;
             GameManager.instace.playerList[i].hasOutside = false;
+            GameManager.instace.playerList[i].money = GameManager.instace.playerList[i].firstMoney + GameManager.instace.playerList[i].getmoney;
 
         }
 
