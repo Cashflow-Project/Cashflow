@@ -9,7 +9,7 @@ using Photon.Realtime;
 using System;
 using UnityEngine.SceneManagement;
 
-public class UIController : MonoBehaviour
+public class UIController : MonoBehaviourPunCallbacks
 {
     public static UIController instance;
 
@@ -17,10 +17,17 @@ public class UIController : MonoBehaviour
     public GameObject SellListCanvas;
     public GameObject SellListFromMarketCanvas;
     public Text infoText;
+    public TMP_Text MyMoneyText;
     public Image cardShow;
     public Text roomname;
     public GameObject LoanCanvas;
     public GameObject investSellCanvas;
+
+    public GameObject PayLoanCanvas;
+    public GameObject PayHouseDebtCanvas;
+    public GameObject PayLearnDebtCanvas;
+    public GameObject PayCarDebtCanvas;
+    public GameObject PayCreditDebtCanvas;
 
     private void Awake()
     {
@@ -52,7 +59,7 @@ public class UIController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        MyMoneyText.text = GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].money.ToString();
     }
 
     public void showMessage(string text)

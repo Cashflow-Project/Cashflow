@@ -47,11 +47,6 @@ public class SellObjFromYourself : MonoBehaviourPunCallbacks
         }
     }
 
-    private void OnBecameVisible()
-    {
-
-    }
-
 
 
     public void UpdateON2UItemList()

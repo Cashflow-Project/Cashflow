@@ -91,8 +91,6 @@ public class MarketDeckController : MonoBehaviourPunCallbacks
         UIController.instance.MarketDrawButton.SetActive(false);
         UIController.instance.cancelButton.SetActive(true);
         photonView.RPC("ShowCardToAllPlayerRPC", RpcTarget.All);
-
-
         photonView.RPC("AddToUseCard", RpcTarget.All);
         photonView.RPC("whoCanSell", RpcTarget.All);
         Destroy(newCard.gameObject, 1);
@@ -123,7 +121,7 @@ public class MarketDeckController : MonoBehaviourPunCallbacks
 
     public void PayCost()
     {
-        if (GameManager.instace.playerList[GameManager.instace.activePlayer].money >= usedCards[cardcount - 1].Cost)
+        if (GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].money >= usedCards[cardcount - 1].Cost)
         {
             if (usedCards[cardcount - 1].destroy == true )
             {
@@ -236,5 +234,15 @@ public class MarketDeckController : MonoBehaviourPunCallbacks
         {
             UIController.instance.MarketSellButton.SetActive(true);
         }
+    }
+
+    [PunRPC]
+    void valueUpdate()
+    {
+        GameManager.instace.playerList[GameManager.instace.activePlayer].allRecieve = GameManager.instace.playerList[GameManager.instace.activePlayer].salary + GameManager.instace.playerList[GameManager.instace.activePlayer].income;
+        GameManager.instace.playerList[GameManager.instace.activePlayer].InstallmentsBank = GameManager.instace.playerList[GameManager.instace.activePlayer].loanBank / 10;
+        GameManager.instace.playerList[GameManager.instace.activePlayer].sumChild = GameManager.instace.playerList[GameManager.instace.activePlayer].child * GameManager.instace.playerList[GameManager.instace.activePlayer].perChild;
+        GameManager.instace.playerList[GameManager.instace.activePlayer].paid = GameManager.instace.playerList[GameManager.instace.activePlayer].tax + GameManager.instace.playerList[GameManager.instace.activePlayer].homeMortgage + GameManager.instace.playerList[GameManager.instace.activePlayer].learnMortgage + GameManager.instace.playerList[GameManager.instace.activePlayer].carMortgage + GameManager.instace.playerList[GameManager.instace.activePlayer].creditcardMortgage + GameManager.instace.playerList[GameManager.instace.activePlayer].extraPay + GameManager.instace.playerList[GameManager.instace.activePlayer].InstallmentsBank + GameManager.instace.playerList[GameManager.instace.activePlayer].sumChild;
+        GameManager.instace.playerList[GameManager.instace.activePlayer].getmoney = GameManager.instace.playerList[GameManager.instace.activePlayer].allRecieve - GameManager.instace.playerList[GameManager.instace.activePlayer].paid;
     }
 }

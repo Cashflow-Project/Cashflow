@@ -13,7 +13,10 @@ public class UILeftController : MonoBehaviour
     public Canvas page1;
     public Canvas page2;
 
-    
+    public GameObject set1;
+    public GameObject set2;
+    public GameObject set3;
+
 
     public GameObject opPage1;
     public GameObject opPage2;
@@ -21,6 +24,21 @@ public class UILeftController : MonoBehaviour
     public GameObject opPage2_1;
     public GameObject Loan1;
     public GameObject Loan2;
+
+    public GameObject housePay;
+    public GameObject learnPay;
+    public GameObject carPay;
+    public GameObject creditPay;
+    public GameObject loanPay;
+
+    public TMP_Text ON2Ucount;
+    public TMP_Text ON2U;
+    public TMP_Text GRO4UScount;
+    public TMP_Text GRO4US;
+    public TMP_Text OK4U;
+    public TMP_Text OK4Ucount;
+    public TMP_Text MYT4U;
+    public TMP_Text MYT4Ucount;
 
     public TMP_Text income1;
     public TMP_Text income2;
@@ -46,7 +64,8 @@ public class UILeftController : MonoBehaviour
     public TMP_Text creditCard1;
     public TMP_Text loan1;
     public TMP_Text Job;
-
+    public TMP_Text MyMoney;
+    public TMP_Text Goldcoins;
     public TMP_Text firstmoneyP2;
     public TMP_Text leftmoneyP2;
     public TMP_Text allMoneyP2;
@@ -57,12 +76,9 @@ public class UILeftController : MonoBehaviour
         page1.enabled = false;
         page2.enabled = false;
 
-        opPage1.SetActive(true);
-        opPage2.SetActive(true);
-        Loan1.SetActive(true);
-        opPage1_1.SetActive(false);
-        opPage2_1.SetActive(false);
-        Loan2.SetActive(false);
+        set1.SetActive(true);
+        set2.SetActive(false);
+        set3.SetActive(false);
 
         SetPage1Value();
         SetPage2Value();
@@ -83,13 +99,8 @@ public class UILeftController : MonoBehaviour
         SetPage1Value();
         page1.enabled = true;
         page2.enabled = false;
+        set1.SetActive(false);
 
-        opPage1.SetActive(false);
-        opPage2.SetActive(false);
-        Loan1.SetActive(false);
-        opPage1_1.SetActive(true);
-        opPage2_1.SetActive(true);
-        Loan2.SetActive(true);
     }
 
     public void OperPage2()
@@ -97,14 +108,7 @@ public class UILeftController : MonoBehaviour
         SetPage2Value();
         page1.enabled = false;
         page2.enabled = true;
-
-        opPage1.SetActive(false);
-        opPage2.SetActive(false);
-        Loan1.SetActive(false);
-        opPage1_1.SetActive(true);
-        opPage2_1.SetActive(true);
-        Loan2.SetActive(true);
-
+        set1.SetActive(false);
     }
 
     public void closePage1()
@@ -115,25 +119,13 @@ public class UILeftController : MonoBehaviour
         {
             page1.enabled = true;
             page2.enabled = false;
-
-            opPage1.SetActive(false);
-            opPage2.SetActive(false);
-            opPage1_1.SetActive(true);
-            opPage2_1.SetActive(true);
-            Loan1.SetActive(false);
-            Loan2.SetActive(true);
+            set1.SetActive(false);
         }
         else
         {
             page1.enabled = false;
             page2.enabled = false;
-
-            opPage1.SetActive(true);
-            opPage2.SetActive(true);
-            opPage1_1.SetActive(false);
-            opPage2_1.SetActive(false);
-            Loan1.SetActive(true);
-            Loan2.SetActive(false);
+            set1.SetActive(true);
         }
 
     }
@@ -146,25 +138,13 @@ public class UILeftController : MonoBehaviour
         {
             page1.enabled = false;
             page2.enabled = false;
-
-            opPage1.SetActive(true);
-            opPage2.SetActive(true);
-            opPage1_1.SetActive(false);
-            opPage2_1.SetActive(false);
-            Loan1.SetActive(true);
-            Loan2.SetActive(false);
+            set1.SetActive(true);
         }
         else
         {
             page1.enabled = false;
             page2.enabled = true;
-
-            opPage1.SetActive(false);
-            opPage2.SetActive(false);
-            opPage1_1.SetActive(true);
-            opPage2_1.SetActive(true);
-            Loan1.SetActive(false);
-            Loan2.SetActive(true);
+            set1.SetActive(false);
         }
 
     }
@@ -183,7 +163,8 @@ public class UILeftController : MonoBehaviour
     }
     public void SetPage2Value()
     {
-        Job.text = GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].playerJob.ToString() + " actorNum " + PhotonNetwork.LocalPlayer.ActorNumber;
+        Job.text = GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].playerJob.ToString();
+        MyMoney.text = GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].money.ToString();
         income1.text = GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].income.ToString();
         income2.text = GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].income.ToString();
 
@@ -201,6 +182,8 @@ public class UILeftController : MonoBehaviour
         addOn.text = GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].extraPay.ToString();
         loan.text = GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].InstallmentsBank.ToString();
 
+        Goldcoins.text = GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].GoldCoins.ToString();
+
         child1.text = GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].child.ToString();
         child2.text = GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].perChild.ToString();
         allChild.text = GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].sumChild.ToString();
@@ -211,7 +194,97 @@ public class UILeftController : MonoBehaviour
         creditCard1.text = GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].creditDebt.ToString();
         loan1.text = GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].loanBank.ToString();
 
-    }
+        if (GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].homeDebt == 0)
+        {
+            housePay.SetActive(false);
+        }
+        if (GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].homeDebt > 0)
+        {
+            housePay.SetActive(true);
+        }
 
+        if (GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].learnDebt == 0)
+        {
+            learnPay.SetActive(false);
+        }
+        if (GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].learnDebt > 0)
+        {
+            learnPay.SetActive(true);
+        }
+
+        if (GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].carDebt == 0)
+        {
+            carPay.SetActive(false);
+        }
+        if (GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].carDebt > 0)
+        {
+            carPay.SetActive(true);
+        }
+
+        if (GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].creditDebt == 0)
+        {
+            creditPay.SetActive(false);
+        }
+        if (GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].creditDebt > 0)
+        {
+            creditPay.SetActive(true);
+        }
+
+        if (GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].loanBank == 0)
+        {
+            loanPay.SetActive(false);
+        }
+        if (GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].loanBank > 0)
+        {
+            loanPay.SetActive(true);
+        }
+
+        if(GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].ON2UList.Count > 0)
+        {
+            ON2Ucount.text = GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].ON2UList[0].countShare.ToString();
+            ON2U.text = GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].ON2UList[0].pricePerShare.ToString();
+        }
+        if (GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].GRO4USList.Count > 0)
+        {
+            GRO4UScount.text = GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].GRO4USList[0].countShare.ToString();
+            GRO4US.text = GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].GRO4USList[0].pricePerShare.ToString();
+        }
+        if (GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].OK4UList.Count > 0)
+        {
+            OK4Ucount.text = GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].OK4UList[0].countShare.ToString();
+            OK4U.text = GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].OK4UList[0].pricePerShare.ToString();
+        }
+        if (GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].MYT4UList.Count > 0)
+        {
+            MYT4Ucount.text = GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].MYT4UList[0].countShare.ToString();
+            MYT4U.text = GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].MYT4UList[0].pricePerShare.ToString();
+        }
+}
+
+    public void PayLoan()
+    {
+        UIController.instance.PayLoanCanvas.SetActive(true);
+        UIController.instance.BlurBg.SetActive(true);
+    }
+    public void PayHouseDebt()
+    {
+        UIController.instance.PayHouseDebtCanvas.SetActive(true);
+        UIController.instance.BlurBg.SetActive(true);
+    }
+    public void PayLearnDebt()
+    {
+        UIController.instance.PayLearnDebtCanvas.SetActive(true);
+        UIController.instance.BlurBg.SetActive(true);
+    }
+    public void PayCarDebt()
+    {
+        UIController.instance.PayCarDebtCanvas.SetActive(true);
+        UIController.instance.BlurBg.SetActive(true);
+    }
+    public void PayCreditDebt()
+    {
+        UIController.instance.PayCreditDebtCanvas.SetActive(true);
+        UIController.instance.BlurBg.SetActive(true);
+    }
 }
 

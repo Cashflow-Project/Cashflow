@@ -92,6 +92,11 @@ MonoBehaviour:
   - TimeUpdateDisplayPunRPC
   - SyncCountdownTime
   - TimeLessThanZero
+  - UpdatePayLoan
+  - UpdatePayCarDebt
+  - UpdatePayCreditDebt
+  - UpdatePayHouseDebt
+  - UpdatePayLearnDebt
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

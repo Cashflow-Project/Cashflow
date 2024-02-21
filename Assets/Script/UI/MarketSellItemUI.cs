@@ -34,46 +34,39 @@ public class MarketSellItemUI : MonoBehaviourPunCallbacks
     {
         itemIncome.text = _itemIncome;
     }
-    public void SetPriceInItem(int _itemPrice,int count)
+    public void SetPriceInItem(int countPrice,int count,int mortgage)
     {
         if (MarketDeckController.instance.usedCards[MarketDeckController.instance.cardcount - 1].increseFromSameCost == true 
             && MarketDeckController.instance.usedCards[MarketDeckController.instance.cardcount - 1].percentCard == 0 
-            && MarketDeckController.instance.usedCards[MarketDeckController.instance.cardcount - 1].Cost > 0 && count == 0)
+            && MarketDeckController.instance.usedCards[MarketDeckController.instance.cardcount - 1].Cost > 0)
         {
-            itemPrice.text = (_itemPrice + MarketDeckController.instance.usedCards[MarketDeckController.instance.cardcount - 1].Cost).ToString();
+            itemPrice.text = ((countPrice + MarketDeckController.instance.usedCards[MarketDeckController.instance.cardcount - 1].Cost) - mortgage).ToString();
         }
         else if (MarketDeckController.instance.usedCards[MarketDeckController.instance.cardcount - 1].increseFromSameCost == true
+            && MarketDeckController.instance.usedCards[MarketDeckController.instance.cardcount - 1].percentCard > 0
+            && MarketDeckController.instance.usedCards[MarketDeckController.instance.cardcount - 1].Cost == 0 )
+        {
+            itemPrice.text = (countPrice + (countPrice * MarketDeckController.instance.usedCards[MarketDeckController.instance.cardcount - 1].percentCard / 100) - mortgage).ToString();
+        }
+  
+        else if (MarketDeckController.instance.usedCards[MarketDeckController.instance.cardcount - 1].increseFromSameCost == false
+            && MarketDeckController.instance.usedCards[MarketDeckController.instance.cardcount - 1].percentCard == 0
+            && MarketDeckController.instance.usedCards[MarketDeckController.instance.cardcount - 1].Cost > 0 && count == 0)
+        {
+            itemPrice.text = (MarketDeckController.instance.usedCards[MarketDeckController.instance.cardcount - 1].Cost - mortgage).ToString();
+        }
+        else if (MarketDeckController.instance.usedCards[MarketDeckController.instance.cardcount - 1].increseFromSameCost == false
             && MarketDeckController.instance.usedCards[MarketDeckController.instance.cardcount - 1].percentCard == 0
             && MarketDeckController.instance.usedCards[MarketDeckController.instance.cardcount - 1].Cost > 0 && count > 0)
         {
-            itemPrice.text = (_itemPrice + (MarketDeckController.instance.usedCards[MarketDeckController.instance.cardcount - 1].Cost * count)).ToString();
-        }
-        else if (MarketDeckController.instance.usedCards[MarketDeckController.instance.cardcount - 1].increseFromSameCost == true
-            && MarketDeckController.instance.usedCards[MarketDeckController.instance.cardcount - 1].percentCard > 0
-            && MarketDeckController.instance.usedCards[MarketDeckController.instance.cardcount - 1].Cost == 0 && count == 0)
-        {
-            itemPrice.text = (_itemPrice + (_itemPrice * MarketDeckController.instance.usedCards[MarketDeckController.instance.cardcount - 1].percentCard / 100)).ToString();
-        }
-        else if (MarketDeckController.instance.usedCards[MarketDeckController.instance.cardcount - 1].increseFromSameCost == true
-            && MarketDeckController.instance.usedCards[MarketDeckController.instance.cardcount - 1].percentCard > 0
-            && MarketDeckController.instance.usedCards[MarketDeckController.instance.cardcount - 1].Cost == 0 && count > 0)
-        {
-            //wait
-            itemPrice.text = (_itemPrice + (_itemPrice * MarketDeckController.instance.usedCards[MarketDeckController.instance.cardcount - 1].percentCard / 100)).ToString();
-        }
-        else if (MarketDeckController.instance.usedCards[MarketDeckController.instance.cardcount - 1].increseFromSameCost == false && count == 0)
-        {
-            itemPrice.text = MarketDeckController.instance.usedCards[MarketDeckController.instance.cardcount - 1].Cost.ToString();
-        }
-        else if (MarketDeckController.instance.usedCards[MarketDeckController.instance.cardcount - 1].increseFromSameCost == false && count > 0)
-        {
-            itemPrice.text = (MarketDeckController.instance.usedCards[MarketDeckController.instance.cardcount - 1].Cost * count).ToString();
+            itemPrice.text = ((MarketDeckController.instance.usedCards[MarketDeckController.instance.cardcount - 1].Cost * count) - mortgage).ToString();
         }
     }
 
     public void SellPressed()
     {
         isSelected = true;
+        
     }
 
    

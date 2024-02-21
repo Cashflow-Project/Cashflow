@@ -41,7 +41,7 @@ public class SmallDealCard : MonoBehaviourPunCallbacks
 
     private bool justPressed;
 
-    public CardPlacePoint assignedPlace;
+    //public CardPlacePoint assignedPlace;
     // Start is called before the first frame update
     void Start()
     {

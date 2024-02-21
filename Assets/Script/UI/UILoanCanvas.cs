@@ -71,7 +71,7 @@ public class UILoanCanvas : MonoBehaviourPunCallbacks
     {
         GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].money += Int32.Parse(LoanInputNum.text);
         GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].loanBank += Int32.Parse(LoanInputNum.text);
-        GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].InstallmentsBank += Int32.Parse(LoanInputNum.text);
+        
     }
 
     [PunRPC]

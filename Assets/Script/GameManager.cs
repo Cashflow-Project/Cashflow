@@ -281,7 +281,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     public GameObject player6;
 
 
-    public PhotonView photonView;
+    //public PhotonView photonView;
     public Dice dice;
     public Dice dice2;
 
@@ -290,7 +290,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     {
         instace = this;
 
-        photonView = GetComponent<PhotonView>();
+        //photonView = GetComponent<PhotonView>();
      
 
     }

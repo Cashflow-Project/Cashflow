@@ -98,10 +98,17 @@ public class Player1 : MonoBehaviourPunCallbacks
 
         while (steps > 0)
         {
+            /*
             if (routePosition != 24 && remiderPosition == true)
             {
                 routePosition++;
                 remiderPosition = false;
+
+            }*/
+            if (routePosition % fullRoute.Count == 0 && fullRoute.Count - routePosition == fullRoute.Count)
+            {
+
+                remiderPosition = true;
 
             }
             routePosition++;
@@ -128,12 +135,7 @@ public class Player1 : MonoBehaviourPunCallbacks
             }
 
             
-            if (routePosition == 24 )
-            {
-               
-                remiderPosition = true;
-
-            }
+            
             
             yield return new WaitForSeconds(0.1f);
             cTime = 0;
@@ -167,26 +169,19 @@ public class Player1 : MonoBehaviourPunCallbacks
                 //GameManager.instace.state = GameManager.States.SWITCH_PLAYER;
             }
 
-            //blue route
-            if (routePosition % fullRoute.Count == 8 || routePosition % fullRoute.Count == 16 || routePosition == 24)
-            {
-                Debug.Log("in blue route");
-                photonView.RPC("valueUpdate", RpcTarget.All);
-                Debug.Log(routePosition % fullRoute.Count + " " + steps + " " + routePosition + " " + isMoving + " " + doneSteps);
-                photonView.RPC("PlayerMarketDraw", RpcTarget.All);
 
-            }/*
-            if (routePosition % fullRoute.Count == 8 || routePosition % fullRoute.Count == 16 ||  fullRoute.Count - routePosition == 1)
+            if (routePosition % fullRoute.Count == 8 || routePosition % fullRoute.Count == 16 ||  (routePosition % fullRoute.Count == 0 && fullRoute.Count - routePosition == fullRoute.Count && remiderPosition))
             {
                 //
                 Debug.Log("in blue route");
+                remiderPosition = false;
                 photonView.RPC("valueUpdate", RpcTarget.All);
                 Debug.Log(routePosition % fullRoute.Count + " " + steps + " " + routePosition + " " + isMoving + " " + doneSteps);
                 photonView.RPC("PlayerMarketDraw", RpcTarget.All);
                 //UIController.instance.passButton.SetActive(IsMyTurn());
                 //photonView.RPC("EndTurnPlayer", RpcTarget.All);
                 //GameManager.instace.state = GameManager.States.SWITCH_PLAYER;
-            }*/
+            }
 
             //purple1 route
             if (routePosition % fullRoute.Count == 4)
@@ -259,74 +254,18 @@ public class Player1 : MonoBehaviourPunCallbacks
         //StartCoroutine(MoveOut());
     }
 
-    IEnumerator MoveOut()
-    {
-        if (isMoving)
-        {
-            yield break;
-        }
-        isMoving = true;
 
-        while (steps > 0)
-        {
-            //routePosition++;
-            routePosition %= fullRoute.Count;
-            Vector3 nextPos = fullRoute[routePosition].gameObject.transform.position;
-            //while (MoveToNextNode(nextPos, 8f)) { yield return null; }
-            Vector3 startPos = baseNode.gameObject.transform.position;
-            while (MoveInArcToNextNode(startPos, nextPos, 4f)) { yield return null; }
-
-            yield return new WaitForSeconds(0.1f);
-            cTime = 0;
-            steps--;
-            doneSteps++;
-
-        }
-
-        //update node
-        /**lastNode = fullRoute[routePosition];
-         if (lastNode.isTaken)
-         {
-             //return to start base node
-            lastNode.player.ReturnToBase();
-         }
-         lastNode.player = this;
-         lastNode.isTaken = true;
-
-         currentNode = lastNode;
-         lastNode = null;
-
-        **/
-        //report to game manager
-        GameManager.instace.state = GameManager.States.ROLL_DICE;
-        isMoving = false;
-
-    }
-
-
-    public bool CheckPossible(int DiceNumber)
-    {
-        int tempPos = routePosition + DiceNumber;
-        if(tempPos >= fullRoute.Count)
-        {
-            return true;
-        }
-        return !fullRoute[tempPos].isTaken;
-    }
 
     
 
     public void StartTheMove(int DiceNumber)
     {
         steps = DiceNumber;
-
-        //Debug.Log("Turns player "+ playerid + " Turn'"+ turncounts);
         photonView.RPC("MovePlayer", RpcTarget.All);
-        //StartCoroutine(Move());
-        //turncounts++;
+
     }
 
-
+    //wait change
     bool winCondition()
     {
         for (int i = 0; i < outerRoute.childNodeList.Count; i++)
@@ -344,7 +283,6 @@ public class Player1 : MonoBehaviourPunCallbacks
     {
         if (IsMyTurn())
         {
-            //selector.SetActive(true);
             photonView.RPC("hasTurnToEveryone", RpcTarget.All, on);
             //GameManager.instace.playerList[GameManager.instace.activePlayer].hasTurn = on;
             hasTurn = on;
@@ -355,7 +293,6 @@ public class Player1 : MonoBehaviourPunCallbacks
     {
      if (GameManager.instace.playerList[GameManager.instace.activePlayer].hasTurn)
      {
-            //photonView.RPC("MovingPlayer", RpcTarget.All, GameManager.instace.rolledhumanDice);
             StartTheMove(GameManager.instace.rolledhumanDice);
             /*
             if (GameManager.instace.dice2.diceValue > 0)
@@ -444,6 +381,7 @@ public class Player1 : MonoBehaviourPunCallbacks
     void UpdateMoney(int money, int x)
     {
         GameManager.instace.playerList[x].money = money;
+        UIController.instance.MyMoneyText.text = GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].money.ToString();
         //note collect
         GameManager.Note myNote = new GameManager.Note();
         myNote.CardName = "+ " + "Month Income";
@@ -455,6 +393,7 @@ public class Player1 : MonoBehaviourPunCallbacks
     [PunRPC]
     void valueUpdate()
     {
+        UIController.instance.MyMoneyText.text = GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].money.ToString();
         GameManager.instace.playerList[GameManager.instace.activePlayer].allRecieve = GameManager.instace.playerList[GameManager.instace.activePlayer].salary + GameManager.instace.playerList[GameManager.instace.activePlayer].income;
         GameManager.instace.playerList[GameManager.instace.activePlayer].InstallmentsBank = GameManager.instace.playerList[GameManager.instace.activePlayer].loanBank / 10;
         GameManager.instace.playerList[GameManager.instace.activePlayer].sumChild = GameManager.instace.playerList[GameManager.instace.activePlayer].child * GameManager.instace.playerList[GameManager.instace.activePlayer].perChild;

@@ -178,7 +178,7 @@ public class SpendDeckController : MonoBehaviourPunCallbacks
     private bool IsMyTurn()
     {
         // Replace with your logic. This could be checking against a player list, an ID, etc.
-        return GameManager.instace.activePlayer == GameManager.instace.activePlayer;
+        return GameManager.instace.activePlayer == PhotonNetwork.LocalPlayer.ActorNumber - 1;
     }
 
     [PunRPC]
@@ -213,6 +213,7 @@ public class SpendDeckController : MonoBehaviourPunCallbacks
     void UpdateMoney(int money,int x)
     {
         GameManager.instace.playerList[x].money = money;
+        UIController.instance.MyMoneyText.text = GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].money.ToString();
         GameManager.Note myNote = new GameManager.Note();
         myNote.CardName = "- " + usedCards[cardcount - 1].cardName;
         myNote.price = usedCards[cardcount - 1].payCost;

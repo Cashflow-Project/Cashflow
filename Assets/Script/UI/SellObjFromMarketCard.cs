@@ -46,17 +46,20 @@ public class SellObjFromMarketCard : MonoBehaviourPunCallbacks
                     {
                         continue;
                     }
+                    if (GameManager.instace.playerList[j].house3s2List[i].isSelected == false)
+                    {
+                        MarketSellItemUI newItem = Instantiate(MarketSellItemUIPrefab);
+                        newItem.MarketSellObjFromYourselfParent = this;
+                        newItem.SetItemName(GameManager.instace.playerList[j].house3s2List[i].CardName);
+                        newItem.SetItemDownPayment(GameManager.instace.playerList[j].house3s2List[i].DownPayment.ToString());
+                        newItem.SetItemIncome(GameManager.instace.playerList[j].house3s2List[i].CashflowIncome.ToString());
+                        newItem.SetPriceInItem(GameManager.instace.playerList[j].house3s2List[i].BusinessValue, 0, GameManager.instace.playerList[j].house3s2List[i].BankLoan);
+                        newItem.SetItemSelect(GameManager.instace.playerList[j].house3s2List[i].isSelected);
+                        newItem.transform.SetParent(MarketSellListParent);
 
-                    MarketSellItemUI newItem = Instantiate(MarketSellItemUIPrefab);
-                    newItem.MarketSellObjFromYourselfParent = this;
-                    newItem.SetItemName(GameManager.instace.playerList[j].house3s2List[i].CardName);
-                    newItem.SetItemDownPayment(GameManager.instace.playerList[j].house3s2List[i].DownPayment.ToString());
-                    newItem.SetItemIncome(GameManager.instace.playerList[j].house3s2List[i].CashflowIncome.ToString());
-                    newItem.SetPriceInItem(GameManager.instace.playerList[j].house3s2List[i].DownPayment, 0);
-                    newItem.SetItemSelect(GameManager.instace.playerList[j].house3s2List[i].isSelected);
-                    newItem.transform.SetParent(MarketSellListParent);
-
-                    _MarketItemList.Add(newItem);
+                        _MarketItemList.Add(newItem);
+                    }
+                        
                 }
             }
         if (MarketDeckController.instance.usedCards[MarketDeckController.instance.cardcount - 1].house2s1 == true && GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].hasHome21 == true)
@@ -72,20 +75,21 @@ public class SellObjFromMarketCard : MonoBehaviourPunCallbacks
                         {
                             continue;
                         }
+                        if(GameManager.instace.playerList[j].house2s1List[i].isSelected == false)
+                        {
+                            MarketSellItemUI newItem = Instantiate(MarketSellItemUIPrefab);
+                            newItem.MarketSellObjFromYourselfParent = this;
+                            newItem.SetItemName(GameManager.instace.playerList[j].house2s1List[i].CardName);
+                            newItem.SetItemDownPayment(GameManager.instace.playerList[j].house2s1List[i].DownPayment.ToString());
+                            newItem.SetItemIncome(GameManager.instace.playerList[j].house2s1List[i].CashflowIncome.ToString());
+                            newItem.SetPriceInItem(GameManager.instace.playerList[j].house2s1List[i].BusinessValue, 0, GameManager.instace.playerList[j].house2s1List[i].BankLoan);
+                            newItem.SetItemSelect(GameManager.instace.playerList[j].house2s1List[i].isSelected);
 
-                        MarketSellItemUI newItem = Instantiate(MarketSellItemUIPrefab);
-                        newItem.MarketSellObjFromYourselfParent = this;
-                        newItem.SetItemName(GameManager.instace.playerList[j].house2s1List[i].CardName);
-                        newItem.SetItemDownPayment(GameManager.instace.playerList[j].house2s1List[i].DownPayment.ToString());
-                        newItem.SetItemIncome(GameManager.instace.playerList[j].house2s1List[i].CashflowIncome.ToString());
-                        newItem.SetPriceInItem(GameManager.instace.playerList[j].house2s1List[i].DownPayment, 0);
-                        newItem.SetItemSelect(GameManager.instace.playerList[j].house2s1List[i].isSelected);
+                            newItem.transform.SetParent(MarketSellListParent);
+
+                            _MarketItemList.Add(newItem);
+                        }
                         
-
-
-                        newItem.transform.SetParent(MarketSellListParent);
-
-                        _MarketItemList.Add(newItem);
                     }
                 }
             }
@@ -102,17 +106,20 @@ public class SellObjFromMarketCard : MonoBehaviourPunCallbacks
                         {
                             continue;
                         }
+                        if (GameManager.instace.playerList[j].CondominiumList[i].isSelected == false)
+                        {
+                            MarketSellItemUI newItem = Instantiate(MarketSellItemUIPrefab);
+                            newItem.MarketSellObjFromYourselfParent = this;
+                            newItem.SetItemName(GameManager.instace.playerList[j].CondominiumList[i].CardName);
+                            newItem.SetItemDownPayment(GameManager.instace.playerList[j].CondominiumList[i].DownPayment.ToString());
+                            newItem.SetItemIncome(GameManager.instace.playerList[j].CondominiumList[i].CashflowIncome.ToString());
+                            newItem.SetPriceInItem(GameManager.instace.playerList[j].CondominiumList[i].BusinessValue, 0, GameManager.instace.playerList[j].CondominiumList[i].BankLoan);
+                            newItem.SetItemSelect(GameManager.instace.playerList[j].CondominiumList[i].isSelected);
+                            newItem.transform.SetParent(MarketSellListParent);
 
-                        MarketSellItemUI newItem = Instantiate(MarketSellItemUIPrefab);
-                        newItem.MarketSellObjFromYourselfParent = this;
-                        newItem.SetItemName(GameManager.instace.playerList[j].CondominiumList[i].CardName);
-                        newItem.SetItemDownPayment(GameManager.instace.playerList[j].CondominiumList[i].DownPayment.ToString());
-                        newItem.SetItemIncome(GameManager.instace.playerList[j].CondominiumList[i].CashflowIncome.ToString());
-                        newItem.SetPriceInItem(GameManager.instace.playerList[j].CondominiumList[i].DownPayment, 0);
-                        newItem.SetItemSelect(GameManager.instace.playerList[j].CondominiumList[i].isSelected);
-                        newItem.transform.SetParent(MarketSellListParent);
-
-                        _MarketItemList.Add(newItem);
+                            _MarketItemList.Add(newItem);
+                        }
+                            
                     }
                 }
             }
@@ -129,17 +136,20 @@ public class SellObjFromMarketCard : MonoBehaviourPunCallbacks
                         {
                             continue;
                         }
+                        if (GameManager.instace.playerList[j].CommercialBuildingList[i].isSelected == false)
+                        {
+                            MarketSellItemUI newItem = Instantiate(MarketSellItemUIPrefab);
+                            newItem.MarketSellObjFromYourselfParent = this;
+                            newItem.SetItemName(GameManager.instace.playerList[j].CommercialBuildingList[i].CardName);
+                            newItem.SetItemDownPayment(GameManager.instace.playerList[j].CommercialBuildingList[i].DownPayment.ToString());
+                            newItem.SetItemIncome(GameManager.instace.playerList[j].CommercialBuildingList[i].CashflowIncome.ToString());
+                            newItem.SetPriceInItem(GameManager.instace.playerList[j].CommercialBuildingList[i].DownPayment, GameManager.instace.playerList[j].CommercialBuildingList[i].count, GameManager.instace.playerList[j].CommercialBuildingList[i].BankLoan);
+                            newItem.SetItemSelect(GameManager.instace.playerList[j].CommercialBuildingList[i].isSelected);
+                            newItem.transform.SetParent(MarketSellListParent);
 
-                        MarketSellItemUI newItem = Instantiate(MarketSellItemUIPrefab);
-                        newItem.MarketSellObjFromYourselfParent = this;
-                        newItem.SetItemName(GameManager.instace.playerList[j].CommercialBuildingList[i].CardName);
-                        newItem.SetItemDownPayment(GameManager.instace.playerList[j].CommercialBuildingList[i].DownPayment.ToString());
-                        newItem.SetItemIncome(GameManager.instace.playerList[j].CommercialBuildingList[i].CashflowIncome.ToString());
-                        newItem.SetPriceInItem(GameManager.instace.playerList[j].CommercialBuildingList[i].DownPayment, GameManager.instace.playerList[j].CommercialBuildingList[i].count );
-                        newItem.SetItemSelect(GameManager.instace.playerList[j].CommercialBuildingList[i].isSelected);
-                        newItem.transform.SetParent(MarketSellListParent);
-
-                        _MarketItemList.Add(newItem);
+                            _MarketItemList.Add(newItem);
+                        }
+                            
                     }
                 }
             }
@@ -156,22 +166,21 @@ public class SellObjFromMarketCard : MonoBehaviourPunCallbacks
                         {
                             continue;
                         }
+                        if (GameManager.instace.playerList[j].ApartmentList[i].isSelected == false)
+                        {
+                            MarketSellItemUI newItem = Instantiate(MarketSellItemUIPrefab);
+                            newItem.MarketSellObjFromYourselfParent = this;
+                            newItem.SetItemName(GameManager.instace.playerList[j].ApartmentList[i].CardName);
+                            newItem.SetItemDownPayment(GameManager.instace.playerList[j].ApartmentList[i].DownPayment.ToString());
+                            newItem.SetItemIncome(GameManager.instace.playerList[j].ApartmentList[i].CashflowIncome.ToString());
+                            newItem.SetPriceInItem(GameManager.instace.playerList[j].ApartmentList[i].BusinessValue, GameManager.instace.playerList[j].ApartmentList[i].count, GameManager.instace.playerList[j].ApartmentList[i].BankLoan);
+                            newItem.SetItemSelect(GameManager.instace.playerList[j].ApartmentList[i].isSelected);
+                            newItem.transform.SetParent(MarketSellListParent);
 
-                        MarketSellItemUI newItem = Instantiate(MarketSellItemUIPrefab);
-                        newItem.MarketSellObjFromYourselfParent = this;
-                        newItem.SetItemName(GameManager.instace.playerList[j].ApartmentList[i].CardName);
-                        newItem.SetItemDownPayment(GameManager.instace.playerList[j].ApartmentList[i].DownPayment.ToString());
-                        newItem.SetItemIncome(GameManager.instace.playerList[j].ApartmentList[i].CashflowIncome.ToString());
-                        newItem.SetPriceInItem(GameManager.instace.playerList[j].ApartmentList[i].DownPayment, GameManager.instace.playerList[j].ApartmentList[i].count);
-                        newItem.SetItemSelect(GameManager.instace.playerList[j].ApartmentList[i].isSelected);
-                        newItem.transform.SetParent(MarketSellListParent);
-
-                        _MarketItemList.Add(newItem);
+                            _MarketItemList.Add(newItem);
+                        }
+                            
                     }
-
-
-
-
 
                 }
             }

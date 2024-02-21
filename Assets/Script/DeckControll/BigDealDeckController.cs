@@ -161,6 +161,7 @@ public class BigDealDeckController : MonoBehaviourPunCallbacks
     void UpdateMoney(int money,int x)
     {
         GameManager.instace.playerList[x].money = money;
+        UIController.instance.MyMoneyText.text = GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].money.ToString();
         //note collect
         GameManager.Note myNote = new GameManager.Note();
         myNote.CardName = "- " + usedCards[cardcount - 1].cardName;
@@ -279,6 +280,7 @@ public class BigDealDeckController : MonoBehaviourPunCallbacks
     [PunRPC]
     void valueUpdate()
     {
+        UIController.instance.MyMoneyText.text = GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].money.ToString();
         GameManager.instace.playerList[GameManager.instace.activePlayer].allRecieve = GameManager.instace.playerList[GameManager.instace.activePlayer].salary + GameManager.instace.playerList[GameManager.instace.activePlayer].income;
         GameManager.instace.playerList[GameManager.instace.activePlayer].InstallmentsBank = GameManager.instace.playerList[GameManager.instace.activePlayer].loanBank / 10;
         GameManager.instace.playerList[GameManager.instace.activePlayer].sumChild = GameManager.instace.playerList[GameManager.instace.activePlayer].child * GameManager.instace.playerList[GameManager.instace.activePlayer].perChild;
