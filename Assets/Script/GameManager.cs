@@ -297,6 +297,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     void Start()
     {
+        //PhotonNetwork.ConnectUsingSettings();
         playerInRoomChecking();
         RandomFirstPlayer();
         playerJobSetting();
@@ -307,7 +308,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     
     void Update()
     {
-        
+
         //----------------------------------------------------------------------------HUMAN
         if (playerList[activePlayer].playerType == Entity.PlayerTypes.HUMAN && IsMyTurnSure())
         {
@@ -484,7 +485,7 @@ public class GameManager : MonoBehaviourPunCallbacks
             
             //SET NEXT PLAYER
         SetNextActivePlayer();
-        Debug.Log(activePlayer);
+        //Debug.Log(activePlayer);
         //playerInRoomChecking();
         switchingPlayer = false;
     

@@ -218,6 +218,6 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     public void OnStartGamePressed()
     {
         PhotonNetwork.LoadLevel("Game");
-
+        roomItemUIPrefab.enabled = false;
     }
 }

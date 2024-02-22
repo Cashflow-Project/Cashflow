@@ -164,8 +164,28 @@ public class UIController : MonoBehaviourPunCallbacks
 
     public void Quit()
     {
-        PhotonNetwork.LeaveRoom();
-        SceneManager.LoadScene("Lobby");
+        photonView.RPC("UpdateToAllPlayerState", RpcTarget.All, PhotonNetwork.LocalPlayer.ActorNumber - 1);
+        
+        //PhotonNetwork.LeaveRoom();
+        //PhotonNetwork.Disconnect();
+        //PhotonNetwork.LoadLevel("Lobby");
+    }
+
+    [PunRPC]
+    void UpdateToAllPlayerState(int x)
+    {
+        GameManager.instace.playerList[x].playerType = GameManager.Entity.PlayerTypes.NO_PLAYER;
+        if (IsMyTurn())
+        {
+            GameManager.instace.state = GameManager.States.SWITCH_PLAYER;
+        }
+        UIController.instance.BlurBg.SetActive(true);
+    }
+
+    private bool IsMyTurn()
+    {
+        // Replace with your logic. This could be checking against a player list, an ID, etc.
+        return GameManager.instace.activePlayer == PhotonNetwork.LocalPlayer.ActorNumber - 1;
     }
 
 }

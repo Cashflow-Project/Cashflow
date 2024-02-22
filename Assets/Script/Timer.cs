@@ -186,21 +186,27 @@ public class Timer : MonoBehaviourPunCallbacks
     void TimeLessThanZero()
     {
             if ((GameManager.instace.state == GameManager.States.START_TURN || GameManager.instace.state == GameManager.States.ROLL_DICE)
-                    && GameManager.instace.playerList[GameManager.instace.activePlayer].isInRedRoute == false)
+                    && GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].isInRedRoute == false)
             {
                 GameManager.instace.ActivateButton(false);
                 UIController.instance.InvestCanvas.SetActive(false);
                 UIController.instance.passButton.SetActive(false);
+                UIController.instance.SellListFromMarketCanvas.SetActive(false);
+                UIController.instance.MarketPayButton.SetActive(false); ;
+                UIController.instance.MarketSellButton.SetActive(false);
                 ResetTimer();
                 GameManager.instace.state = GameManager.States.SWITCH_PLAYER;
             }
-            else if (GameManager.instace.state == GameManager.States.WAITING && GameManager.instace.playerList[GameManager.instace.activePlayer].isInRedRoute == false)
+            else if (GameManager.instace.state == GameManager.States.WAITING && GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].isInRedRoute == false)
             {
                 UIController.instance.SetAllFalse(false);
                 GameManager.instace.ActivateButton(false);
                 UIController.instance.InvestCanvas.SetActive(false);
                 UIController.instance.passButton.SetActive(false);
-                ResetTimer();
+                UIController.instance.SellListFromMarketCanvas.SetActive(false);
+                UIController.instance.MarketPayButton.SetActive(false); ;
+                UIController.instance.MarketSellButton.SetActive(false);
+            ResetTimer();
                 GameManager.instace.state = GameManager.States.SWITCH_PLAYER;
             }
             else if (GameManager.instace.state == GameManager.States.WAITING && GameManager.instace.playerList[GameManager.instace.activePlayer].isInRedRoute == true

@@ -63,7 +63,7 @@ public class MarketSellItemUI : MonoBehaviourPunCallbacks
         {
             itemPrice.text = ((MarketDeckController.instance.usedCards[MarketDeckController.instance.cardcount - 1].Cost * count) - mortgage).ToString();
         }
-        /*
+        
         if (Int32.Parse(itemPrice.text) < 0)
         {
             itemMarketSellBtn.enabled = false;
@@ -71,7 +71,7 @@ public class MarketSellItemUI : MonoBehaviourPunCallbacks
         if (Int32.Parse(itemPrice.text) > 0)
         {
             itemMarketSellBtn.enabled = true;
-        }*/
+        }
     }
 
     public void SellPressed()
