@@ -154,9 +154,24 @@ public class LobbyManager : MonoBehaviourPunCallbacks
             newRoomItem.SetPlayerInRoom(roomList[i].PlayerCount.ToString() + " /6");
             //newRoomItem.playerInRoom.text =  roomList[i].PlayerCount.ToString() + " /6";
             newRoomItem.transform.SetParent(roomListParent);
-
+            ScaleObjectWithScreenSize(newRoomItem.gameObject);
             _roomList.Add(newRoomItem);
         }
+    }
+    void ScaleObjectWithScreenSize(GameObject obj)
+    {
+        RectTransform rectTransform = obj.GetComponent<RectTransform>();
+
+        // Get the screen dimensions
+        float screenWidth = Screen.width;
+        float screenHeight = Screen.height;
+
+        // You may need to adjust these values based on your specific requirements
+        float scaleFactorX = screenWidth / 1920f; // 1920 is a reference width
+        float scaleFactorY = screenHeight / 1080f; // 1080 is a reference height
+
+        // Apply the scale to the object's RectTransform
+        rectTransform.localScale = new Vector3(scaleFactorX, scaleFactorY, 1f);
     }
 
     private void UpdatePlayerList()
@@ -178,7 +193,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
             newPlayerItem.transform.SetParent(_playerListParent);
             newPlayerItem.SetName(player.Value.NickName);
             //Debug.Log("name player ");
-
+            ScaleObjectWithScreenSize(newPlayerItem.gameObject);
             _playerList.Add(newPlayerItem);
             
         }
