@@ -129,7 +129,9 @@ public class Player1 : MonoBehaviourPunCallbacks
                 {
                     //lose
                     GameManager.instace.playerList[GameManager.instace.activePlayer].playerType = GameManager.Entity.PlayerTypes.NO_PLAYER;
+                    GameManager.instace.state = GameManager.States.SWITCH_PLAYER;
                     UIController.instance.BlurBg.SetActive(true);
+                    UIController.instance.lostShow.SetActive(true);
                 }
             }
 

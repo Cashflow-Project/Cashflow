@@ -12,7 +12,7 @@ using UnityEngine.SceneManagement;
 public class UIController : MonoBehaviourPunCallbacks
 {
     public static UIController instance;
-
+    public GameObject lostShow;
     public GameObject InvestCanvas;
     public GameObject SellListCanvas;
     public GameObject SellListFromMarketCanvas;
@@ -22,6 +22,8 @@ public class UIController : MonoBehaviourPunCallbacks
     public Text roomname;
     public GameObject LoanCanvas;
     public GameObject investSellCanvas;
+
+    public GameObject GoldCoinsSell;
 
     public GameObject PayLoanCanvas;
     public GameObject PayHouseDebtCanvas;
@@ -180,6 +182,8 @@ public class UIController : MonoBehaviourPunCallbacks
             GameManager.instace.state = GameManager.States.SWITCH_PLAYER;
         }
         UIController.instance.BlurBg.SetActive(true);
+        //PhotonNetwork.LeaveRoom();
+
     }
 
     private bool IsMyTurn()

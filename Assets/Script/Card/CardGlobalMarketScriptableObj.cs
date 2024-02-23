@@ -26,5 +26,6 @@ public class CardGlobalMarketScriptableObj : ScriptableObject
     public bool destroy;
     public bool canLoan;
     public bool increseFromSameCost;
+    public bool increaseIncome;
     public Sprite cardSprite;
 }
