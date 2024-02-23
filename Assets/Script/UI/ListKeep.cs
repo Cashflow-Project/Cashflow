@@ -51,11 +51,11 @@ public class ListKeep : MonoBehaviour
                 newItem.transform.SetParent(KeepListParent);
 
                 _KeepItemList.Add(newItem);
-
+                /*
                 ItemLine lineItem = Instantiate(ItemLinePrefab);
                 lineItem.itemLineParent = this;
                 lineItem.transform.SetParent(KeepListParent);
-                _LineItemList.Add(lineItem);
+                _LineItemList.Add(lineItem);*/
             }
         }
     }
