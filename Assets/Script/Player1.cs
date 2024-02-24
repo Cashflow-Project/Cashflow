@@ -316,18 +316,34 @@ public class Player1 : MonoBehaviourPunCallbacks
      if (GameManager.instace.playerList[GameManager.instace.activePlayer].hasTurn)
      {
 
-            
-                GameManager.instace.rolledhumanDice = GameManager.instace.rolledhumanDice + GameManager.instace.dice2.diceValue - GameManager.instace.dice.diceValue;
-            
-            
-            StartTheMove(GameManager.instace.rolledhumanDice);
-            
-            
-     }
+            if (GameManager.instace.playerList[GameManager.instace.activePlayer].hasDonate)
+            {
+                StartCoroutine(WaitForDiceRoll());
+            }
+            else
+            {
+                GameManager.instace.rolledhumanDice = GameManager.instace.dice2.diceValue + GameManager.instace.dice.diceValue;
+                StartTheMove(GameManager.instace.rolledhumanDice);
+
+            }
+
+        }
      
         GameManager.instace.DeactivateAllSelector();
     }
-    
+
+
+    IEnumerator WaitForDiceRoll()
+    {
+        while (GameManager.instace.dice.diceValue == 0 || GameManager.instace.dice2.diceValue == 0)
+        {
+            yield return null; // Wait for the next frame
+        }
+
+        GameManager.instace.rolledhumanDice = GameManager.instace.dice2.diceValue + GameManager.instace.dice.diceValue;
+        StartTheMove(GameManager.instace.rolledhumanDice);
+    }
+
     private bool IsMyTurn()
     {
         // Replace with your logic. This could be checking against a player list, an ID, etc.
