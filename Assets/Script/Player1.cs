@@ -191,14 +191,10 @@ public class Player1 : MonoBehaviourPunCallbacks
                 photonView.RPC("valueUpdate", RpcTarget.All);
 
                 //test if donate
-                GameManager.instace.playerList[GameManager.instace.activePlayer].money -= GameManager.instace.playerList[GameManager.instace.activePlayer].allRecieve / 10;
-                photonView.RPC("UpdateMoneyDonate", RpcTarget.All, GameManager.instace.playerList[GameManager.instace.activePlayer].money, GameManager.instace.activePlayer);
-                GameManager.instace.playerList[GameManager.instace.activePlayer].hasDonate = true;
-                GameManager.instace.playerList[GameManager.instace.activePlayer].hasDonateCount = 4;
-                photonView.RPC("setDonate", RpcTarget.All, GameManager.instace.playerList[GameManager.instace.activePlayer].hasDonate, GameManager.instace.playerList[GameManager.instace.activePlayer].hasDonateCount);
-                photonView.RPC("valueUpdate", RpcTarget.All);
-                //UIController.instance.passButton.SetActive(IsMyTurn());
-                photonView.RPC("EndTurnPlayer", RpcTarget.All);
+                photonView.RPC("ShowDonateCardToAllPlayerRPC", RpcTarget.All);
+                UIController.instance.PayDonateBtn.SetActive(true);
+                UIController.instance.cancelButton.SetActive(true);
+                
                 //GameManager.instace.state = GameManager.States.SWITCH_PLAYER;
             }
             //purple2 route
@@ -260,6 +256,7 @@ public class Player1 : MonoBehaviourPunCallbacks
         return lastPos != (transform.position = Vector3.Lerp(transform.position, myPos, cTime));
     }
 
+    
     
 
     public bool ReturnIsOut()
@@ -472,6 +469,13 @@ public class Player1 : MonoBehaviourPunCallbacks
     {
         GameManager.instace.playerList[GameManager.instace.activePlayer].hasDonate = isDonate;
         GameManager.instace.playerList[GameManager.instace.activePlayer].hasDonateCount = count;
+    }
+
+    [PunRPC]
+    void ShowDonateCardToAllPlayerRPC()
+    {
+        UIController.instance.cardShow.enabled = true;
+        UIController.instance.cardShow.sprite = UIController.instance.DonateCard;
     }
 }
     

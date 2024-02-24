@@ -60,7 +60,7 @@ public class Timer : MonoBehaviourPunCallbacks
         }
         else
         {
-            //SynchronizeTimer();
+
             if (Countdown && timer > 0)
             {
                 timer -= Time.deltaTime;
@@ -106,18 +106,7 @@ public class Timer : MonoBehaviourPunCallbacks
         }
     }
 
-    private void SynchronizeTimer()
-    {
-        if (!isSynchronizing)
-        {
-            isSynchronizing = true;
 
-            // Use Photon's OnPhotonSerializeView to synchronize the timer value
-            photonView.RequestOwnership(); // Ensure ownership to update the timer
-
-            isSynchronizing = false;
-        }
-    }
 
     public void ResetTimer()
     {

@@ -64,6 +64,9 @@ public class UIController : MonoBehaviourPunCallbacks
     public GameObject MarketSellButton;
     public GameObject MarketPayButton;
 
+    public Sprite DonateCard;
+    public GameObject PayDonateBtn;
+
     public GameObject BlurBg;
     // Start is called before the first frame update
     void Start()
@@ -129,6 +132,11 @@ public class UIController : MonoBehaviourPunCallbacks
     {
         BigDealDeckController.instance.BuyCost();
     }
+
+    public void PayDonate()
+    {
+        DonateCalculate();
+    }
     public void Cancel()
     {
         SetAllFalse(false);
@@ -191,7 +199,7 @@ public class UIController : MonoBehaviourPunCallbacks
         drawButton.SetActive(on);
         ChooseBigSmall.SetActive(on);
         SellButton.SetActive(on);
-
+        PayDonateBtn.SetActive(on);
     }
 
 
@@ -223,4 +231,60 @@ public class UIController : MonoBehaviourPunCallbacks
         return GameManager.instace.activePlayer == PhotonNetwork.LocalPlayer.ActorNumber - 1;
     }
 
+    public void DonateCalculate()
+    {
+        if (GameManager.instace.playerList[GameManager.instace.activePlayer].money >= GameManager.instace.playerList[GameManager.instace.activePlayer].allRecieve / 10)
+        {
+            GameManager.instace.playerList[GameManager.instace.activePlayer].money -= GameManager.instace.playerList[GameManager.instace.activePlayer].allRecieve / 10;
+            photonView.RPC("UpdateMoneyDonate", RpcTarget.All, GameManager.instace.playerList[GameManager.instace.activePlayer].money, GameManager.instace.activePlayer);
+            GameManager.instace.playerList[GameManager.instace.activePlayer].hasDonate = true;
+            GameManager.instace.playerList[GameManager.instace.activePlayer].hasDonateCount = 4;
+            photonView.RPC("setDonate", RpcTarget.All, GameManager.instace.playerList[GameManager.instace.activePlayer].hasDonate, GameManager.instace.playerList[GameManager.instace.activePlayer].hasDonateCount);
+            photonView.RPC("valueUpdate", RpcTarget.All);
+            //UIController.instance.passButton.SetActive(IsMyTurn());
+            photonView.RPC("EndTurnPlayer", RpcTarget.All);
+        }
+        else
+        {
+            UIController.instance.LoanCanvas.SetActive(true);
+            UIController.instance.BlurBg.SetActive(true);
+        }
+
+    }
+    [PunRPC]
+    void UpdateMoneyDonate(int money, int x)
+    {
+        GameManager.instace.playerList[x].money = money;
+        UIController.instance.MyMoneyText.text = GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].money.ToString();
+        //note collect
+        GameManager.Note myNote = new GameManager.Note();
+        myNote.CardName = "- " + "Donate";
+        myNote.price = GameManager.instace.playerList[GameManager.instace.activePlayer].allRecieve / 10;
+        GameManager.instace.playerList[GameManager.instace.activePlayer].Keep.Add(myNote);
+
+    }
+    [PunRPC]
+    void valueUpdate()
+    {
+        UIController.instance.MyMoneyText.text = GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].money.ToString();
+        GameManager.instace.playerList[GameManager.instace.activePlayer].allRecieve = GameManager.instace.playerList[GameManager.instace.activePlayer].salary + GameManager.instace.playerList[GameManager.instace.activePlayer].income;
+        GameManager.instace.playerList[GameManager.instace.activePlayer].InstallmentsBank = GameManager.instace.playerList[GameManager.instace.activePlayer].loanBank / 10;
+        GameManager.instace.playerList[GameManager.instace.activePlayer].sumChild = GameManager.instace.playerList[GameManager.instace.activePlayer].child * GameManager.instace.playerList[GameManager.instace.activePlayer].perChild;
+        GameManager.instace.playerList[GameManager.instace.activePlayer].paid = GameManager.instace.playerList[GameManager.instace.activePlayer].tax + GameManager.instace.playerList[GameManager.instace.activePlayer].homeMortgage + GameManager.instace.playerList[GameManager.instace.activePlayer].learnMortgage + GameManager.instace.playerList[GameManager.instace.activePlayer].carMortgage + GameManager.instace.playerList[GameManager.instace.activePlayer].creditcardMortgage + GameManager.instace.playerList[GameManager.instace.activePlayer].extraPay + GameManager.instace.playerList[GameManager.instace.activePlayer].InstallmentsBank + GameManager.instace.playerList[GameManager.instace.activePlayer].sumChild;
+        GameManager.instace.playerList[GameManager.instace.activePlayer].getmoney = GameManager.instace.playerList[GameManager.instace.activePlayer].allRecieve - GameManager.instace.playerList[GameManager.instace.activePlayer].paid;
+    }
+
+    [PunRPC]
+    void setDonate(bool isDonate, int count)
+    {
+        GameManager.instace.playerList[GameManager.instace.activePlayer].hasDonate = isDonate;
+        GameManager.instace.playerList[GameManager.instace.activePlayer].hasDonateCount = count;
+    }
+
+    [PunRPC]
+    void EndTurnPlayer()
+    {
+        UIController.instance.passButton.SetActive(IsMyTurn());
+
+    }
 }
