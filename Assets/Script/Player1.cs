@@ -190,11 +190,13 @@ public class Player1 : MonoBehaviourPunCallbacks
                 Debug.Log("in purple 1 route");
                 photonView.RPC("valueUpdate", RpcTarget.All);
 
-                //test
+                //test if donate
+                GameManager.instace.playerList[GameManager.instace.activePlayer].money -= GameManager.instace.playerList[GameManager.instace.activePlayer].allRecieve / 10;
+                photonView.RPC("UpdateMoneyDonate", RpcTarget.All, GameManager.instace.playerList[GameManager.instace.activePlayer].money, GameManager.instace.activePlayer);
                 GameManager.instace.playerList[GameManager.instace.activePlayer].hasDonate = true;
                 GameManager.instace.playerList[GameManager.instace.activePlayer].hasDonateCount = 4;
                 photonView.RPC("setDonate", RpcTarget.All, GameManager.instace.playerList[GameManager.instace.activePlayer].hasDonate, GameManager.instace.playerList[GameManager.instace.activePlayer].hasDonateCount);
-                
+                photonView.RPC("valueUpdate", RpcTarget.All);
                 //UIController.instance.passButton.SetActive(IsMyTurn());
                 photonView.RPC("EndTurnPlayer", RpcTarget.All);
                 //GameManager.instace.state = GameManager.States.SWITCH_PLAYER;
@@ -442,6 +444,18 @@ public class Player1 : MonoBehaviourPunCallbacks
 
     }
 
+    [PunRPC]
+    void UpdateMoneyDonate(int money, int x)
+    {
+        GameManager.instace.playerList[x].money = money;
+        UIController.instance.MyMoneyText.text = GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].money.ToString();
+        //note collect
+        GameManager.Note myNote = new GameManager.Note();
+        myNote.CardName = "- " + "Donate";
+        myNote.price = GameManager.instace.playerList[GameManager.instace.activePlayer].allRecieve /10;
+        GameManager.instace.playerList[GameManager.instace.activePlayer].Keep.Add(myNote);
+
+    }
     [PunRPC]
     void valueUpdate()
     {
