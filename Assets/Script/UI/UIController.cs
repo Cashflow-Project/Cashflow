@@ -12,6 +12,11 @@ using UnityEngine.SceneManagement;
 public class UIController : MonoBehaviourPunCallbacks
 {
     public static UIController instance;
+
+    public Canvas left_page1;
+    public Canvas left_page2;
+    public GameObject left_set1;
+
     public GameObject lostShow;
     public GameObject lost_SeemoreBtn;
     public GameObject lost_outBtn;
@@ -160,9 +165,14 @@ public class UIController : MonoBehaviourPunCallbacks
 
     public void SeeMore()
     {
-        UILeftController.instance.page1.enabled = false;
-        UILeftController.instance.page2.enabled = false;
-        UILeftController.instance.set1.SetActive(true);
+        
+        if(left_page1.enabled == true || left_page2.enabled == true)
+        {
+            left_page1.enabled = false;
+            left_page2.enabled = false;
+            left_set1.SetActive(true);
+        }
+        
         winShow.SetActive(false);
         lostShow.SetActive(false);
         BlurBg.SetActive(false);

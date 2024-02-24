@@ -192,7 +192,7 @@ public class Player1 : MonoBehaviourPunCallbacks
 
                 //test
                 GameManager.instace.playerList[GameManager.instace.activePlayer].hasDonate = true;
-                GameManager.instace.playerList[GameManager.instace.activePlayer].hasDonateCount = 3;
+                GameManager.instace.playerList[GameManager.instace.activePlayer].hasDonateCount = 4;
                 photonView.RPC("setDonate", RpcTarget.All, GameManager.instace.playerList[GameManager.instace.activePlayer].hasDonate, GameManager.instace.playerList[GameManager.instace.activePlayer].hasDonateCount);
                 
                 //UIController.instance.passButton.SetActive(IsMyTurn());

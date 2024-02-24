@@ -6,7 +6,7 @@ using TMPro;
 using UnityEngine.UI;
 using Photon.Pun;
 using Photon.Realtime;
-public class UILeftController : MonoBehaviour
+public class UILeftController : MonoBehaviourPunCallbacks
 {
     public static UILeftController instance;
 

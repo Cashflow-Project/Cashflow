@@ -7522,7 +7522,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 785, y: -405}
+  m_AnchoredPosition: {x: 814.2, y: 473.6}
   m_SizeDelta: {x: 324.6017, y: 109.7218}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &398863200
@@ -42269,6 +42269,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c0f57a3fe15f694d8c8085c608e2dc3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  left_page1: {fileID: 802567845}
+  left_page2: {fileID: 1162882238}
+  left_set1: {fileID: 2085944972}
   lostShow: {fileID: 1383113274}
   lost_SeemoreBtn: {fileID: 982830705}
   lost_outBtn: {fileID: 1610918926}
@@ -43390,8 +43393,8 @@ MonoBehaviour:
     hasTurn: 0
     hasOutside: 0
     hasDonate: 0
-    hasJob1: 1
-    hasJob2: 1
+    hasJobCount: 0
+    hasDonateCount: 0
     hasON2U: 0
     hasMYT4U: 0
     hasGRO4US: 0
@@ -43453,8 +43456,8 @@ MonoBehaviour:
     hasTurn: 0
     hasOutside: 0
     hasDonate: 0
-    hasJob1: 1
-    hasJob2: 1
+    hasJobCount: 0
+    hasDonateCount: 0
     hasON2U: 0
     hasMYT4U: 0
     hasGRO4US: 0
@@ -43516,8 +43519,8 @@ MonoBehaviour:
     hasTurn: 0
     hasOutside: 0
     hasDonate: 0
-    hasJob1: 1
-    hasJob2: 1
+    hasJobCount: 0
+    hasDonateCount: 0
     hasON2U: 0
     hasMYT4U: 0
     hasGRO4US: 0
@@ -43579,8 +43582,8 @@ MonoBehaviour:
     hasTurn: 0
     hasOutside: 0
     hasDonate: 0
-    hasJob1: 1
-    hasJob2: 1
+    hasJobCount: 0
+    hasDonateCount: 0
     hasON2U: 0
     hasMYT4U: 0
     hasGRO4US: 0
@@ -43642,8 +43645,8 @@ MonoBehaviour:
     hasTurn: 0
     hasOutside: 0
     hasDonate: 0
-    hasJob1: 1
-    hasJob2: 1
+    hasJobCount: 0
+    hasDonateCount: 0
     hasON2U: 0
     hasMYT4U: 0
     hasGRO4US: 0
@@ -43705,8 +43708,8 @@ MonoBehaviour:
     hasTurn: 0
     hasOutside: 0
     hasDonate: 0
-    hasJob1: 1
-    hasJob2: 1
+    hasJobCount: 0
+    hasDonateCount: 0
     hasON2U: 0
     hasMYT4U: 0
     hasGRO4US: 0
