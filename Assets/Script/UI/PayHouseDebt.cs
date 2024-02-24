@@ -66,6 +66,7 @@ public class PayHouseDebt : MonoBehaviourPunCallbacks
     {
         GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].money -= Int32.Parse(HouseDebtNum.text);
         GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].homeDebt-= Int32.Parse(HouseDebtNum.text);
+        GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].homeMortgage -= Int32.Parse(HouseDebtNum.text) *10;
     }
 
     [PunRPC]

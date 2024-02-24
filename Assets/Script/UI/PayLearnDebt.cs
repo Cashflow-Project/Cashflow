@@ -65,7 +65,8 @@ public class PayLearnDebt : MonoBehaviourPunCallbacks
     void UpdatePayLearnDebt()
     {
         GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].money -= Int32.Parse(LearnDebtNum.text);
-        GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].carDebt -= Int32.Parse(LearnDebtNum.text);
+        GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].learnDebt -= Int32.Parse(LearnDebtNum.text);
+        GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].learnMortgage -= Int32.Parse(LearnDebtNum.text) * 10;
     }
 
     [PunRPC]
