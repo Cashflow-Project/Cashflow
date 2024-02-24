@@ -213,8 +213,9 @@ public class GameManager : MonoBehaviourPunCallbacks
         
         public bool hasOutside;
         public bool hasDonate;
-        public bool hasJob1 = true;
-        public bool hasJob2 = true;
+
+        public int hasJobCount;
+        public int hasDonateCount;
 
         public bool hasON2U;
         public bool hasMYT4U;
@@ -316,36 +317,49 @@ public class GameManager : MonoBehaviourPunCallbacks
             {
                 case States.START_TURN:
                     {
+                       
                         if (playerList[activePlayer].income > playerList[activePlayer].paid)
                         {
                             playerList[activePlayer].EnterOuter = true;
                             playerList[activePlayer].hasOutside = true;
+                            GameManager.instace.playerList[GameManager.instace.activePlayer].playerType = GameManager.Entity.PlayerTypes.NO_PLAYER;
+                            GameManager.instace.state = GameManager.States.SWITCH_PLAYER;
+                            UIController.instance.BlurBg.SetActive(true);
+                            UIController.instance.winShow.SetActive(true);
                         }
+
                         Debug.Log(IsMyTurnSure());
                         Debug.Log("Localplayer now " + PhotonNetwork.LocalPlayer.ActorNumber);
                         Debug.Log("activeplayer now " + activePlayer);
                         playerList[activePlayer].myPlayers[0].SetSelector(true);
+                        if(playerList[activePlayer].hasDonateCount > 0)
+                        {
+                            playerList[activePlayer].hasDonateCount--;
+                            if(playerList[activePlayer].hasDonateCount == 0)
+                            {
+                                playerList[activePlayer].hasDonate = false;
+                                photonView.RPC("setDonate", RpcTarget.All, playerList[activePlayer].hasDonate, playerList[activePlayer].hasDonateCount);
+                            }
+                        }
+                        
                         playerList[activePlayer].myPlayers[0].turncounts++;
 
                         photonView.RPC("turnCountRPC", RpcTarget.All, playerList[activePlayer].myPlayers[0].turncounts);
 
 
-                        if (playerList[activePlayer].hasJob1 == true && playerList[activePlayer].hasJob2 == true)
+                        if (playerList[activePlayer].hasJobCount == 0)
                             {
                                 state = States.ROLL_DICE;
                             }
-                            else
+                        else if (playerList[activePlayer].hasJobCount > 0)
                             {
-                                if (playerList[activePlayer].hasJob1 == true && playerList[activePlayer].hasJob2 == false)
-                                {
-                                photonView.RPC("hasJob2", RpcTarget.All);
-                            }
-                                if (playerList[activePlayer].hasJob1 == false && playerList[activePlayer].hasJob2 == false)
-                                {
-                                photonView.RPC("hasJob1", RpcTarget.All);
-                            }
+                            playerList[activePlayer].hasJobCount--;
+                            photonView.RPC("setJobCount", RpcTarget.All, playerList[activePlayer].hasJobCount);
+                            
                                 state = States.SWITCH_PLAYER;
-                            }
+
+                            
+                        }
 
                         playerList[activePlayer].isSpendAlready = false;
 
@@ -353,10 +367,10 @@ public class GameManager : MonoBehaviourPunCallbacks
                     break;
                 case States.ROLL_DICE:
                     {
-
+                            
                             //Deactivate Highlight
                             ActivateButton(true);
-                        
+                            
                         
                         state = States.WAITING;
                     }
@@ -379,8 +393,9 @@ public class GameManager : MonoBehaviourPunCallbacks
 
                             //Deactivate Highlight
                             playerList[activePlayer].myPlayers[0].SetSelector(false);
+                        dice.Reset();
+                        dice2.Reset();
 
-                        
                             StartCoroutine(SwitchPlayer());
                         
                         state = States.WAITING;
@@ -436,6 +451,7 @@ public class GameManager : MonoBehaviourPunCallbacks
                 _diceNumber = _diceNumber + dice2.diceValue;
             }
             rolledhumanDice = _diceNumber;
+
             photonView.RPC("HumanRollD", RpcTarget.All);
             //HumanRollDice();
         }
@@ -443,35 +459,8 @@ public class GameManager : MonoBehaviourPunCallbacks
         UIController.instance.showMessage("Roll Dice Number:" + _diceNumber);
     }
 
-    /*
-    void MoveAPlayer(int DiceNumber)
-    {
-        List<Player1> moveablePlayers = new List<Player1>();
-        moveablePlayers.Add(playerList[activePlayer].myPlayers[0]);
-        if (moveablePlayers.Count > 0)
-        {
-            moveablePlayers[activePlayer].StartTheMove(DiceNumber);
-            /*
-            int num = moveablePlayers.Count;
-            moveablePlayers[num-1].StartTheMove(DiceNumber);
-            state = States.WAITING;
-            return;
-        }
-        Debug.Log("Should switch player ");
-        state = States.SWITCH_PLAYER;
-    }*/
 
-                        /*public override void OnRoomPropertiesUpdate(Hashtable propertiesThatChanged)
-                        {
-                            object activePlayerObj;
-                            if (propertiesThatChanged.TryGetValue("activePlayer", out activePlayerObj))
-                            {
-                                activePlayer = (int)activePlayerObj;
-
-                                // Here you can update your game UI, gameplay logic, etc., based on the turn change.
-                            }
-                        }*/
-                        IEnumerator SwitchPlayer()
+    IEnumerator SwitchPlayer()
     {
         
         Debug.Log(activePlayer);
@@ -603,9 +592,9 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     public void DoubleRoll()
     {
-        dice.RollDice();
-        dice2.RollDice();
-        //Dice.instace.diceValue = dice.diceValue + dice2.diceValue;
+        photonView.RPC("rollDice", RpcTarget.All);
+        photonView.RPC("rollDice2", RpcTarget.All);
+
         ActivateButton(false);
     }
     public void PassTurn()
@@ -623,8 +612,6 @@ public class GameManager : MonoBehaviourPunCallbacks
 
         List<Player1> moveablePlayers = new List<Player1>();
         moveablePlayers.Add(playerList[activePlayer].myPlayers[0]);
-        //moveablePlayers[activePlayer].SetSelector(true);
-        //moveablePlayers[activePlayer].tohasturn();
         
         for (int i = 0; i < moveablePlayers.Count; i++)
         {
@@ -783,8 +770,8 @@ public class GameManager : MonoBehaviourPunCallbacks
 
             GameManager.instace.playerList[i].getmoney = GameManager.instace.playerList[i].allRecieve - GameManager.instace.playerList[i].paid;
 
-            GameManager.instace.playerList[i].hasJob1 = true;
-            GameManager.instace.playerList[i].hasJob2 = true;
+            GameManager.instace.playerList[i].hasJobCount = 0;
+
             GameManager.instace.playerList[i].hasChild = false;
             GameManager.instace.playerList[i].hasDonate = false;
             GameManager.instace.playerList[i].hasOutside = false;
@@ -822,8 +809,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 
             GameManager.instace.playerList[i].getmoney = GameManager.instace.playerList[i].allRecieve - GameManager.instace.playerList[i].paid;
 
-            GameManager.instace.playerList[i].hasJob1 = true;
-            GameManager.instace.playerList[i].hasJob2 = true;
+            GameManager.instace.playerList[i].hasJobCount = 0;
             GameManager.instace.playerList[i].hasChild = false;
             GameManager.instace.playerList[i].hasDonate = false;
             GameManager.instace.playerList[i].hasOutside = false;
@@ -860,8 +846,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 
             GameManager.instace.playerList[i].getmoney = GameManager.instace.playerList[i].allRecieve - GameManager.instace.playerList[i].paid;
 
-            GameManager.instace.playerList[i].hasJob1 = true;
-            GameManager.instace.playerList[i].hasJob2 = true;
+            GameManager.instace.playerList[i].hasJobCount = 0;
             GameManager.instace.playerList[i].hasChild = false;
             GameManager.instace.playerList[i].hasDonate = false;
             GameManager.instace.playerList[i].hasOutside = false;
@@ -897,8 +882,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 
             GameManager.instace.playerList[i].getmoney = GameManager.instace.playerList[i].allRecieve - GameManager.instace.playerList[i].paid;
 
-            GameManager.instace.playerList[i].hasJob1 = true;
-            GameManager.instace.playerList[i].hasJob2 = true;
+            GameManager.instace.playerList[i].hasJobCount = 0;
             GameManager.instace.playerList[i].hasChild = false;
             GameManager.instace.playerList[i].hasDonate = false;
             GameManager.instace.playerList[i].hasOutside = false;
@@ -934,8 +918,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 
             GameManager.instace.playerList[i].getmoney = GameManager.instace.playerList[i].allRecieve - GameManager.instace.playerList[i].paid;
 
-            GameManager.instace.playerList[i].hasJob1 = true;
-            GameManager.instace.playerList[i].hasJob2 = true;
+            GameManager.instace.playerList[i].hasJobCount = 0;
             GameManager.instace.playerList[i].hasChild = false;
             GameManager.instace.playerList[i].hasDonate = false;
             GameManager.instace.playerList[i].hasOutside = false;
@@ -971,8 +954,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 
             GameManager.instace.playerList[i].getmoney = GameManager.instace.playerList[i].allRecieve - GameManager.instace.playerList[i].paid;
 
-            GameManager.instace.playerList[i].hasJob1 = true;
-            GameManager.instace.playerList[i].hasJob2 = true;
+            GameManager.instace.playerList[i].hasJobCount = 0;
             GameManager.instace.playerList[i].hasChild = false;
             GameManager.instace.playerList[i].hasDonate = false;
             GameManager.instace.playerList[i].hasOutside = false;
@@ -1008,8 +990,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 
             GameManager.instace.playerList[i].getmoney = GameManager.instace.playerList[i].allRecieve - GameManager.instace.playerList[i].paid;
 
-            GameManager.instace.playerList[i].hasJob1 = true;
-            GameManager.instace.playerList[i].hasJob2 = true;
+            GameManager.instace.playerList[i].hasJobCount = 0;
             GameManager.instace.playerList[i].hasChild = false;
             GameManager.instace.playerList[i].hasDonate = false;
             GameManager.instace.playerList[i].hasOutside = false;
@@ -1045,8 +1026,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 
             GameManager.instace.playerList[i].getmoney = GameManager.instace.playerList[i].allRecieve - GameManager.instace.playerList[i].paid;
 
-            GameManager.instace.playerList[i].hasJob1 = true;
-            GameManager.instace.playerList[i].hasJob2 = true;
+            GameManager.instace.playerList[i].hasJobCount = 0;
             GameManager.instace.playerList[i].hasChild = false;
             GameManager.instace.playerList[i].hasDonate = false;
             GameManager.instace.playerList[i].hasOutside = false;
@@ -1082,8 +1062,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 
             GameManager.instace.playerList[i].getmoney = GameManager.instace.playerList[i].allRecieve - GameManager.instace.playerList[i].paid;
 
-            GameManager.instace.playerList[i].hasJob1 = true;
-            GameManager.instace.playerList[i].hasJob2 = true;
+            GameManager.instace.playerList[i].hasJobCount = 0;
             GameManager.instace.playerList[i].hasChild = false;
             GameManager.instace.playerList[i].hasDonate = false;
             GameManager.instace.playerList[i].hasOutside = false;
@@ -1119,8 +1098,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 
             GameManager.instace.playerList[i].getmoney = GameManager.instace.playerList[i].allRecieve - GameManager.instace.playerList[i].paid;
 
-            GameManager.instace.playerList[i].hasJob1 = true;
-            GameManager.instace.playerList[i].hasJob2 = true;
+            GameManager.instace.playerList[i].hasJobCount = 0;
             GameManager.instace.playerList[i].hasChild = false;
             GameManager.instace.playerList[i].hasDonate = false;
             GameManager.instace.playerList[i].hasOutside = false;
@@ -1156,8 +1134,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 
             GameManager.instace.playerList[i].getmoney = GameManager.instace.playerList[i].allRecieve - GameManager.instace.playerList[i].paid;
 
-            GameManager.instace.playerList[i].hasJob1 = true;
-            GameManager.instace.playerList[i].hasJob2 = true;
+            GameManager.instace.playerList[i].hasJobCount = 0;
             GameManager.instace.playerList[i].hasChild = false;
             GameManager.instace.playerList[i].hasDonate = false;
             GameManager.instace.playerList[i].hasOutside = false;
@@ -1193,8 +1170,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 
             GameManager.instace.playerList[i].getmoney = GameManager.instace.playerList[i].allRecieve - GameManager.instace.playerList[i].paid;
 
-            GameManager.instace.playerList[i].hasJob1 = true;
-            GameManager.instace.playerList[i].hasJob2 = true;
+            GameManager.instace.playerList[i].hasJobCount = 0;
             GameManager.instace.playerList[i].hasChild = false;
             GameManager.instace.playerList[i].hasDonate = false;
             GameManager.instace.playerList[i].hasOutside = false;
@@ -1227,19 +1203,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         activePlayer = nextPlayer;
         
     }
-    [PunRPC]
-    void hasJob2()
-    {
-        playerList[activePlayer].hasJob2 = true;
-        Debug.Log("unemployee 2");
-    }
 
-    [PunRPC]
-    void hasJob1()
-    {
-        playerList[activePlayer].hasJob1 = true;
-        Debug.Log("unemployee 1");
-    }
 
     [PunRPC]
     void SetStartingPlayer(int startingPlayer)
@@ -1267,6 +1231,11 @@ public class GameManager : MonoBehaviourPunCallbacks
     }
 
     [PunRPC]
+    void rollDice2()
+    {
+        dice2.RollDice();
+    }
+    [PunRPC]
     void HumanRollD()
     {
         List<Player1> moveablePlayers = new List<Player1>();
@@ -1278,6 +1247,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         {
             if (moveablePlayers.Count > 0)
             {
+                moveablePlayers[i].SetSelector(true);
                 moveablePlayers[i].tohasturn();
 
             }
@@ -1299,5 +1269,18 @@ public class GameManager : MonoBehaviourPunCallbacks
     {
         UIController.instance.SetAllFalse(false);
     }
-    
+
+    [PunRPC]
+    void setJobCount(int count)
+    {
+        playerList[activePlayer].hasJobCount = count;
+
+    }
+
+    [PunRPC]
+    void setDonate(bool isDonate, int count)
+    {
+        GameManager.instace.playerList[GameManager.instace.activePlayer].hasDonate = isDonate;
+        GameManager.instace.playerList[GameManager.instace.activePlayer].hasDonateCount = count;
+    }
 }

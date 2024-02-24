@@ -189,6 +189,12 @@ public class Player1 : MonoBehaviourPunCallbacks
             {
                 Debug.Log("in purple 1 route");
                 photonView.RPC("valueUpdate", RpcTarget.All);
+
+                //test
+                GameManager.instace.playerList[GameManager.instace.activePlayer].hasDonate = true;
+                GameManager.instace.playerList[GameManager.instace.activePlayer].hasDonateCount = 3;
+                photonView.RPC("setDonate", RpcTarget.All, GameManager.instace.playerList[GameManager.instace.activePlayer].hasDonate, GameManager.instace.playerList[GameManager.instace.activePlayer].hasDonateCount);
+                
                 //UIController.instance.passButton.SetActive(IsMyTurn());
                 photonView.RPC("EndTurnPlayer", RpcTarget.All);
                 //GameManager.instace.state = GameManager.States.SWITCH_PLAYER;
@@ -199,7 +205,13 @@ public class Player1 : MonoBehaviourPunCallbacks
                 Debug.Log("in purple 2 route");
                 photonView.RPC("valueUpdate", RpcTarget.All);
                 //UIController.instance.passButton.SetActive(IsMyTurn());
-                photonView.RPC("hasJob", RpcTarget.All);
+                GameManager.instace.playerList[GameManager.instace.activePlayer].money -= GameManager.instace.playerList[GameManager.instace.activePlayer].paid;
+                photonView.RPC("UpdateMoneyNoJob", RpcTarget.All, GameManager.instace.playerList[GameManager.instace.activePlayer].money, GameManager.instace.activePlayer); 
+                GameManager.instace.playerList[GameManager.instace.activePlayer].hasDonate = false;
+                GameManager.instace.playerList[GameManager.instace.activePlayer].hasDonateCount = 0;
+                photonView.RPC("setDonate", RpcTarget.All, GameManager.instace.playerList[GameManager.instace.activePlayer].hasDonate, GameManager.instace.playerList[GameManager.instace.activePlayer].hasDonateCount);
+                photonView.RPC("hasNoJob", RpcTarget.All);
+                photonView.RPC("valueUpdate", RpcTarget.All);
                 photonView.RPC("EndTurnPlayer", RpcTarget.All);
                 //GameManager.instace.state = GameManager.States.SWITCH_PLAYER;
 
@@ -269,6 +281,7 @@ public class Player1 : MonoBehaviourPunCallbacks
 
     public void StartTheMove(int DiceNumber)
     {
+        
         steps = DiceNumber;
         photonView.RPC("MovePlayer", RpcTarget.All);
 
@@ -292,9 +305,9 @@ public class Player1 : MonoBehaviourPunCallbacks
     {
         if (IsMyTurn())
         {
-            photonView.RPC("hasTurnToEveryone", RpcTarget.All, on);
-            //GameManager.instace.playerList[GameManager.instace.activePlayer].hasTurn = on;
             hasTurn = on;
+            photonView.RPC("hasTurnToEveryone", RpcTarget.All, on);
+
         }
     }
   
@@ -302,13 +315,14 @@ public class Player1 : MonoBehaviourPunCallbacks
     {
      if (GameManager.instace.playerList[GameManager.instace.activePlayer].hasTurn)
      {
+
+            
+                GameManager.instace.rolledhumanDice = GameManager.instace.rolledhumanDice + GameManager.instace.dice2.diceValue - GameManager.instace.dice.diceValue;
+            
+            
             StartTheMove(GameManager.instace.rolledhumanDice);
-            /*
-            if (GameManager.instace.dice2.diceValue > 0)
-            {
-                GameManager.instace.rolledhumanDice = GameManager.instace.rolledhumanDice + GameManager.instace.dice2.diceValue;
-            }*/
-            //StartTheMove(GameManager.instace.rolledhumanDice);
+            
+            
      }
      
         GameManager.instace.DeactivateAllSelector();
@@ -327,10 +341,9 @@ public class Player1 : MonoBehaviourPunCallbacks
     }
 
     [PunRPC]
-    void hasJob()
+    void hasNoJob()
     {
-        GameManager.instace.playerList[GameManager.instace.activePlayer].hasJob1 = false;
-        GameManager.instace.playerList[GameManager.instace.activePlayer].hasJob2 = false;
+        GameManager.instace.playerList[GameManager.instace.activePlayer].hasJobCount = 2;
     }
 
     [PunRPC]
@@ -354,6 +367,7 @@ public class Player1 : MonoBehaviourPunCallbacks
     void MovePlayer()
     {
         Debug.Log(Move());
+
         StartCoroutine(Move());
         //photonView.RPC("Move1", RpcTarget.All);
     }
@@ -400,6 +414,19 @@ public class Player1 : MonoBehaviourPunCallbacks
     }
 
     [PunRPC]
+    void UpdateMoneyNoJob(int money, int x)
+    {
+        GameManager.instace.playerList[x].money = money;
+        UIController.instance.MyMoneyText.text = GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].money.ToString();
+        //note collect
+        GameManager.Note myNote = new GameManager.Note();
+        myNote.CardName = "- " + "unemployed";
+        myNote.price = GameManager.instace.playerList[GameManager.instace.activePlayer].paid;
+        GameManager.instace.playerList[GameManager.instace.activePlayer].Keep.Add(myNote);
+
+    }
+
+    [PunRPC]
     void valueUpdate()
     {
         UIController.instance.MyMoneyText.text = GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].money.ToString();
@@ -408,6 +435,13 @@ public class Player1 : MonoBehaviourPunCallbacks
         GameManager.instace.playerList[GameManager.instace.activePlayer].sumChild = GameManager.instace.playerList[GameManager.instace.activePlayer].child * GameManager.instace.playerList[GameManager.instace.activePlayer].perChild;
         GameManager.instace.playerList[GameManager.instace.activePlayer].paid = GameManager.instace.playerList[GameManager.instace.activePlayer].tax + GameManager.instace.playerList[GameManager.instace.activePlayer].homeMortgage + GameManager.instace.playerList[GameManager.instace.activePlayer].learnMortgage + GameManager.instace.playerList[GameManager.instace.activePlayer].carMortgage + GameManager.instace.playerList[GameManager.instace.activePlayer].creditcardMortgage + GameManager.instace.playerList[GameManager.instace.activePlayer].extraPay + GameManager.instace.playerList[GameManager.instace.activePlayer].InstallmentsBank + GameManager.instace.playerList[GameManager.instace.activePlayer].sumChild;
         GameManager.instace.playerList[GameManager.instace.activePlayer].getmoney = GameManager.instace.playerList[GameManager.instace.activePlayer].allRecieve - GameManager.instace.playerList[GameManager.instace.activePlayer].paid;
+    }
+
+    [PunRPC]
+    void setDonate(bool isDonate,int count)
+    {
+        GameManager.instace.playerList[GameManager.instace.activePlayer].hasDonate = isDonate;
+        GameManager.instace.playerList[GameManager.instace.activePlayer].hasDonateCount = count;
     }
 }
     

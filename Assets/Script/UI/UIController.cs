@@ -13,6 +13,14 @@ public class UIController : MonoBehaviourPunCallbacks
 {
     public static UIController instance;
     public GameObject lostShow;
+    public GameObject lost_SeemoreBtn;
+    public GameObject lost_outBtn;
+    public GameObject winShow;
+    public GameObject win_SeemoreBtn;
+    public GameObject win_outBtn;
+    public GameObject flimSeemore;
+
+
     public GameObject InvestCanvas;
     public GameObject SellListCanvas;
     public GameObject SellListFromMarketCanvas;
@@ -30,6 +38,8 @@ public class UIController : MonoBehaviourPunCallbacks
     public GameObject PayLearnDebtCanvas;
     public GameObject PayCarDebtCanvas;
     public GameObject PayCreditDebtCanvas;
+
+    
 
     private void Awake()
     {
@@ -146,6 +156,17 @@ public class UIController : MonoBehaviourPunCallbacks
     {
         SellListFromMarketCanvas.SetActive(false);
         BlurBg.SetActive(false);
+    }
+
+    public void SeeMore()
+    {
+        UILeftController.instance.page1.enabled = false;
+        UILeftController.instance.page2.enabled = false;
+        UILeftController.instance.set1.SetActive(true);
+        winShow.SetActive(false);
+        lostShow.SetActive(false);
+        BlurBg.SetActive(false);
+        flimSeemore.SetActive(true);
     }
 
     public void SetAllFalse(bool on)

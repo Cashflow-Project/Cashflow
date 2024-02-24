@@ -40,13 +40,14 @@ public class Dice : MonoBehaviourPunCallbacks
         }
     }
 
-    void Reset()
+    public void Reset()
     {
         transform.position = initPosition;
         rb.isKinematic = false;
         thrown = false;
         hasLanded = false;
         rb.useGravity = false;
+        diceValue = 0;
     }
 
     void Update()
@@ -87,7 +88,7 @@ public class Dice : MonoBehaviourPunCallbacks
                 diceValue = side.sideValue;
                 //send result to gamemanager
                 //diceValue = 24;
-                diceValue = 6;
+                //diceValue = 4;
                 GameManager.instace.RollDice(diceValue);
             }
         }
