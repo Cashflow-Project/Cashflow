@@ -79,9 +79,10 @@ public class SmallDealDeckController : MonoBehaviourPunCallbacks
     public void DrawCardToHand()
     {
 
-        if (activeCards.Count == 0)
+        if (activeCards.Count <= 0)
         {
-            SetUpDeck();
+            photonView.RPC("setUpdeckToEveryone", RpcTarget.All);
+            //SetUpDeck();
         }
 
         SmallDealCard newCard = Instantiate(cardsToSpawns, transform.position, transform.rotation);
@@ -172,6 +173,13 @@ public class SmallDealDeckController : MonoBehaviourPunCallbacks
     {
         activeCards.Add(tempDeck[selected]);
         tempDeck.RemoveAt(selected);
+
+    }
+
+    [PunRPC]
+    void setUpdeckToEveryone()
+    {
+        SetUpDeck();
 
     }
 

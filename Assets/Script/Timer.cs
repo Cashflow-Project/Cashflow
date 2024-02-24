@@ -11,7 +11,7 @@ public class Timer : MonoBehaviourPunCallbacks
     [SerializeField]
     public bool Countdown = true;
 
-    private float timerDuration = 2f * 60f;
+    private float timerDuration = 1f * 30f;
     public float timer;
 
     [SerializeField]
@@ -177,6 +177,7 @@ public class Timer : MonoBehaviourPunCallbacks
             if ((GameManager.instace.state == GameManager.States.START_TURN || GameManager.instace.state == GameManager.States.ROLL_DICE)
                     && GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].isInRedRoute == false)
             {
+            UIController.instance.cardShow.enabled = false;
                 GameManager.instace.ActivateButton(false);
                 UIController.instance.InvestCanvas.SetActive(false);
                 UIController.instance.passButton.SetActive(false);
@@ -188,7 +189,8 @@ public class Timer : MonoBehaviourPunCallbacks
             }
             else if (GameManager.instace.state == GameManager.States.WAITING && GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].isInRedRoute == false)
             {
-                UIController.instance.SetAllFalse(false);
+            UIController.instance.cardShow.enabled = false;
+            UIController.instance.SetAllFalse(false);
                 GameManager.instace.ActivateButton(false);
                 UIController.instance.InvestCanvas.SetActive(false);
                 UIController.instance.passButton.SetActive(false);
@@ -202,7 +204,8 @@ public class Timer : MonoBehaviourPunCallbacks
                 && GameManager.instace.playerList[GameManager.instace.activePlayer].isDrawButtonOn == true
                 && GameManager.instace.playerList[GameManager.instace.activePlayer].isSpendAlready == false)
             {
-                UIController.instance.drawButton.SetActive(false);
+            UIController.instance.cardShow.enabled = false;
+            UIController.instance.drawButton.SetActive(false);
                 GameManager.instace.playerList[GameManager.instace.activePlayer].isDrawButtonOn = false;
                 SpendDeckController.instance.DrawCardToHand();
                 //delay
@@ -219,8 +222,8 @@ public class Timer : MonoBehaviourPunCallbacks
                 && GameManager.instace.playerList[GameManager.instace.activePlayer].isDrawButtonOn == false
                 && GameManager.instace.playerList[GameManager.instace.activePlayer].isSpendAlready == false)
             {
-
-                SpendDeckController.instance.PayCost();
+            UIController.instance.cardShow.enabled = false;
+            SpendDeckController.instance.PayCost();
                 UIController.instance.SetAllFalse(false);
                 GameManager.instace.ActivateButton(false);
                 UIController.instance.passButton.SetActive(false);
@@ -232,8 +235,8 @@ public class Timer : MonoBehaviourPunCallbacks
                 && GameManager.instace.playerList[GameManager.instace.activePlayer].isDrawButtonOn == false
                 && GameManager.instace.playerList[GameManager.instace.activePlayer].isSpendAlready == true)
             {
-
-                UIController.instance.SetAllFalse(false);
+            UIController.instance.cardShow.enabled = false;
+            UIController.instance.SetAllFalse(false);
                 GameManager.instace.ActivateButton(false);
                 UIController.instance.passButton.SetActive(false);
 

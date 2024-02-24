@@ -102,9 +102,10 @@ public class SpendDeckController : MonoBehaviourPunCallbacks
     public void DrawCardToHand()
     {
 
-        if (activeCards.Count == 0)
+        if (activeCards.Count <= 0)
         {
-            SetUpDeck();
+            photonView.RPC("setUpdeckToEveryone", RpcTarget.All);
+            //SetUpDeck();
         }
 
         SpendCard newCard = Instantiate(cardsToSpawns, transform.position, transform.rotation);
@@ -181,6 +182,12 @@ public class SpendDeckController : MonoBehaviourPunCallbacks
         return GameManager.instace.activePlayer == PhotonNetwork.LocalPlayer.ActorNumber - 1;
     }
 
+    [PunRPC]
+    void setUpdeckToEveryone()
+    {
+        SetUpDeck();
+
+    }
     [PunRPC]
     void EndTurnPlayer()
     {

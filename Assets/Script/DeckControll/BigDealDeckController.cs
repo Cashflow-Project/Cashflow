@@ -76,9 +76,10 @@ public class BigDealDeckController : MonoBehaviourPunCallbacks
     public void DrawCardToHand()
     {
 
-        if (activeCards.Count == 0)
+        if (activeCards.Count <= 0)
         {
-            SetUpDeck();
+            photonView.RPC("setUpdeckToEveryone", RpcTarget.All);
+            //SetUpDeck();
         }
 
         BigDealCard newCard = Instantiate(cardsToSpawns, transform.position, transform.rotation);
@@ -147,6 +148,12 @@ public class BigDealDeckController : MonoBehaviourPunCallbacks
 
     }
 
+    [PunRPC]
+    void setUpdeckToEveryone()
+    {
+        SetUpDeck();
+
+    }
     [PunRPC]
     void AddToUseCard()
     {

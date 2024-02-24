@@ -76,11 +76,13 @@ public class MarketDeckController : MonoBehaviourPunCallbacks
 
     public void DrawCardToHand()
     {
-
-        if (activeCards.Count == 0)
+        Debug.Log(activeCards.Count);
+        if (activeCards.Count <= 0)
         {
-            SetUpDeck();
+            photonView.RPC("setUpdeckToEveryone", RpcTarget.All);
+            //SetUpDeck();
         }
+        Debug.Log(activeCards.Count);
 
         MarketCard newCard = Instantiate(cardsToSpawns, transform.position, transform.rotation);
         newCard.cardGMSO = activeCards[0];
@@ -430,6 +432,14 @@ public class MarketDeckController : MonoBehaviourPunCallbacks
         //activeCards.Add(tempDeck[i]);
         //tempDeck.RemoveAt(i);
         //iterations++;
+
+    }
+
+
+    [PunRPC]
+    void setUpdeckToEveryone()
+    {
+        SetUpDeck();
 
     }
 

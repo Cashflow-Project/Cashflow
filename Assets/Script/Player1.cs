@@ -192,8 +192,7 @@ public class Player1 : MonoBehaviourPunCallbacks
 
                 //test if donate
                 photonView.RPC("ShowDonateCardToAllPlayerRPC", RpcTarget.All);
-                UIController.instance.PayDonateBtn.SetActive(true);
-                UIController.instance.cancelButton.SetActive(true);
+                
                 
                 //GameManager.instace.state = GameManager.States.SWITCH_PLAYER;
             }
@@ -315,7 +314,7 @@ public class Player1 : MonoBehaviourPunCallbacks
      if (GameManager.instace.playerList[GameManager.instace.activePlayer].hasTurn)
      {
 
-            if (GameManager.instace.playerList[GameManager.instace.activePlayer].hasDonate)
+            if (GameManager.instace.playerList[GameManager.instace.activePlayer].isClick2Dice == true)
             {
                 StartCoroutine(WaitForDiceRoll());
             }
@@ -341,12 +340,22 @@ public class Player1 : MonoBehaviourPunCallbacks
 
         GameManager.instace.rolledhumanDice = GameManager.instace.dice2.diceValue + GameManager.instace.dice.diceValue;
         StartTheMove(GameManager.instace.rolledhumanDice);
+        GameManager.instace.playerList[GameManager.instace.activePlayer].isClick2Dice = false;
+        photonView.RPC("CheckClick2Dice", RpcTarget.All, GameManager.instace.playerList[GameManager.instace.activePlayer].isClick2Dice);
+        
+
     }
 
     private bool IsMyTurn()
     {
         // Replace with your logic. This could be checking against a player list, an ID, etc.
         return GameManager.instace.activePlayer == PhotonNetwork.LocalPlayer.ActorNumber - 1;
+    }
+
+    [PunRPC]
+    void CheckClick2Dice(bool is2dice)
+    {
+        GameManager.instace.playerList[GameManager.instace.activePlayer].isClick2Dice = is2dice;
     }
 
     [PunRPC]
@@ -476,6 +485,8 @@ public class Player1 : MonoBehaviourPunCallbacks
     {
         UIController.instance.cardShow.enabled = true;
         UIController.instance.cardShow.sprite = UIController.instance.DonateCard;
+        UIController.instance.PayDonateBtn.SetActive(IsMyTurn());
+        UIController.instance.cancelButton.SetActive(IsMyTurn());
     }
 }
     

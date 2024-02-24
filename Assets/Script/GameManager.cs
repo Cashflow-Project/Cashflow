@@ -213,6 +213,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         
         public bool hasOutside;
         public bool hasDonate;
+        public bool isClick2Dice;
 
         public int hasJobCount;
         public int hasDonateCount;
@@ -317,7 +318,7 @@ public class GameManager : MonoBehaviourPunCallbacks
             {
                 case States.START_TURN:
                     {
-                       
+                       //check win condition
                         if (playerList[activePlayer].income > playerList[activePlayer].paid)
                         {
                             playerList[activePlayer].EnterOuter = true;
@@ -332,21 +333,23 @@ public class GameManager : MonoBehaviourPunCallbacks
                         Debug.Log("Localplayer now " + PhotonNetwork.LocalPlayer.ActorNumber);
                         Debug.Log("activeplayer now " + activePlayer);
                         playerList[activePlayer].myPlayers[0].SetSelector(true);
+                        //check donate
                         if(playerList[activePlayer].hasDonateCount > 0)
                         {
                             playerList[activePlayer].hasDonateCount--;
                             if(playerList[activePlayer].hasDonateCount == 0)
                             {
                                 playerList[activePlayer].hasDonate = false;
-                                photonView.RPC("setDonate", RpcTarget.All, playerList[activePlayer].hasDonate, playerList[activePlayer].hasDonateCount);
+                                
                             }
+                            photonView.RPC("setDonate", RpcTarget.All, playerList[activePlayer].hasDonate, playerList[activePlayer].hasDonateCount);
                         }
                         
                         playerList[activePlayer].myPlayers[0].turncounts++;
 
                         photonView.RPC("turnCountRPC", RpcTarget.All, playerList[activePlayer].myPlayers[0].turncounts);
 
-
+                        //check unemployee
                         if (playerList[activePlayer].hasJobCount == 0)
                             {
                                 state = States.ROLL_DICE;
@@ -370,9 +373,9 @@ public class GameManager : MonoBehaviourPunCallbacks
                             
                             //Deactivate Highlight
                             ActivateButton(true);
-                            
-                        
-                        state = States.WAITING;
+                        photonView.RPC("DiceReset", RpcTarget.All);
+
+                    state = States.WAITING;
                     }
                     break;
                 case States.WAITING:
@@ -393,8 +396,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 
                             //Deactivate Highlight
                             playerList[activePlayer].myPlayers[0].SetSelector(false);
-                        dice.Reset();
-                        dice2.Reset();
+                        
 
                             StartCoroutine(SwitchPlayer());
                         
@@ -468,9 +470,9 @@ public class GameManager : MonoBehaviourPunCallbacks
         {
             yield break;
         }
-            switchingPlayer = true;
+        switchingPlayer = true;
 
-            yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(2);
             
             //SET NEXT PLAYER
         SetNextActivePlayer();
@@ -594,7 +596,8 @@ public class GameManager : MonoBehaviourPunCallbacks
     {
         photonView.RPC("rollDice", RpcTarget.All);
         photonView.RPC("rollDice2", RpcTarget.All);
-
+        playerList[activePlayer].isClick2Dice = true;
+        photonView.RPC("CheckClick2Dice", RpcTarget.All, playerList[activePlayer].isClick2Dice);
         ActivateButton(false);
     }
     public void PassTurn()
@@ -1236,6 +1239,14 @@ public class GameManager : MonoBehaviourPunCallbacks
         dice2.RollDice();
     }
     [PunRPC]
+    void DiceReset()
+    {
+        dice.Reset();
+        dice2.Reset();
+    }
+
+    
+    [PunRPC]
     void HumanRollD()
     {
         List<Player1> moveablePlayers = new List<Player1>();
@@ -1282,5 +1293,11 @@ public class GameManager : MonoBehaviourPunCallbacks
     {
         GameManager.instace.playerList[GameManager.instace.activePlayer].hasDonate = isDonate;
         GameManager.instace.playerList[GameManager.instace.activePlayer].hasDonateCount = count;
+    }
+
+    [PunRPC]
+    void CheckClick2Dice(bool is2dice)
+    {
+        GameManager.instace.playerList[GameManager.instace.activePlayer].isClick2Dice = is2dice;
     }
 }
