@@ -41,7 +41,10 @@ public class PayHouseDebt : MonoBehaviourPunCallbacks
     {
         if (GameManager.instace.playerList[GameManager.instace.activePlayer].money >= Int32.Parse(HouseDebtNum.text))
         {
-            photonView.RPC("UpdatePayHouseDebt", RpcTarget.All);
+            GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].money -= Int32.Parse(HouseDebtNum.text);
+            GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].homeDebt -= Int32.Parse(HouseDebtNum.text);
+            GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].homeMortgage = 0;
+            photonView.RPC("UpdatePayHouseDebt", RpcTarget.All, GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].money, GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].homeDebt, GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].homeMortgage);
             UIController.instance.PayHouseDebtCanvas.SetActive(false);
             UIController.instance.BlurBg.SetActive(false);
             photonView.RPC("UpdateMoney", RpcTarget.All, GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].money, PhotonNetwork.LocalPlayer.ActorNumber - 1);
@@ -62,11 +65,11 @@ public class PayHouseDebt : MonoBehaviourPunCallbacks
     }
 
     [PunRPC]
-    void UpdatePayHouseDebt()
+    void UpdatePayHouseDebt(int money,int homeDebt,int homeMortgage)
     {
-        GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].money -= Int32.Parse(HouseDebtNum.text);
-        GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].homeDebt-= Int32.Parse(HouseDebtNum.text);
-        GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].homeMortgage = 0;
+        GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].money = money;
+        GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].homeDebt = homeDebt;
+        GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].homeMortgage = homeMortgage;
     }
 
     [PunRPC]

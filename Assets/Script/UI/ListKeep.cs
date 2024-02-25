@@ -1,8 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public class ListKeep : MonoBehaviour
+using TMPro;
+using UnityEngine.UI;
+using Photon.Pun;
+using Photon.Realtime;
+using System;
+using UnityEngine.SceneManagement;
+public class ListKeep : MonoBehaviourPunCallbacks
 {
     public static ListKeep instance;
 
@@ -48,31 +53,25 @@ public class ListKeep : MonoBehaviour
         }
         _KeepItemList.Clear();
 
-        for (int j = 0; j < GameManager.instace.playerList.Count; j++)
-        {
             //generate a new list with update info
-            for (int i = 0; i < GameManager.instace.playerList[j].Keep.Count; i++)
+            for (int i = 0; i < GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].Keep.Count; i++)
             {
 
                 //skip empty 
-                if (GameManager.instace.playerList[j].Keep.Count == 0)
+                if (GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].Keep.Count == 0)
                 {
                     continue;
                 }
 
                 ItemKeep newItem = Instantiate(ItemKeepPrefab);
                 newItem.itemKeepParent = this;
-                newItem.SetItemName(GameManager.instace.playerList[j].Keep[i].CardName);
-                newItem.SetPriceInItem((GameManager.instace.playerList[j].Keep[i].price).ToString());
+                newItem.SetItemName(GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].Keep[i].CardName);
+                newItem.SetPriceInItem((GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].Keep[i].price).ToString());
                 newItem.transform.SetParent(KeepListParent);
                 ScaleObjectWithScreenSize(newItem.gameObject);
                 _KeepItemList.Add(newItem);
-                /*
-                ItemLine lineItem = Instantiate(ItemLinePrefab);
-                lineItem.itemLineParent = this;
-                lineItem.transform.SetParent(KeepListParent);
-                _LineItemList.Add(lineItem);*/
+
             }
         }
-    }
+    
 }

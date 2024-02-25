@@ -41,7 +41,10 @@ public class PayLearnDebt : MonoBehaviourPunCallbacks
     {
         if (GameManager.instace.playerList[GameManager.instace.activePlayer].money >= Int32.Parse(LearnDebtNum.text))
         {
-            photonView.RPC("UpdatePayLearnDebt", RpcTarget.All);
+            GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].money -= Int32.Parse(LearnDebtNum.text);
+            GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].learnDebt -= Int32.Parse(LearnDebtNum.text);
+            GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].learnMortgage = 0;
+            photonView.RPC("UpdatePayLearnDebt", RpcTarget.All, GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].money, GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].learnDebt, GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].learnMortgage);
             UIController.instance.PayLearnDebtCanvas.SetActive(false);
             UIController.instance.BlurBg.SetActive(false);
             photonView.RPC("UpdateMoney", RpcTarget.All, GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].money, PhotonNetwork.LocalPlayer.ActorNumber - 1);
@@ -62,11 +65,11 @@ public class PayLearnDebt : MonoBehaviourPunCallbacks
     }
 
     [PunRPC]
-    void UpdatePayLearnDebt()
+    void UpdatePayLearnDebt(int money,int learnDebt,int learnMortgage)
     {
-        GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].money -= Int32.Parse(LearnDebtNum.text);
-        GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].learnDebt -= Int32.Parse(LearnDebtNum.text);
-        GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].learnMortgage = 0;
+        GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].money = money;
+        GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].learnDebt = learnDebt;
+        GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].learnMortgage = learnMortgage;
     }
 
     [PunRPC]

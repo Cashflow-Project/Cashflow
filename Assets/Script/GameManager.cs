@@ -284,7 +284,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     public GameObject player5;
     public GameObject player6;
 
-
+    public int playerInRoom;
     //public PhotonView photonView;
     public Dice dice;
     public Dice dice2;

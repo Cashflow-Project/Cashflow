@@ -8546,6 +8546,37 @@ MonoBehaviour:
   deckToUse:
   - {fileID: 11400000, guid: 2a5697dafdd9f14429ff97e444b53673, type: 2}
   - {fileID: 11400000, guid: 6312793e712311b42979bed7a71ee349, type: 2}
+  - {fileID: 11400000, guid: 819fba9661495c74e9c84a79b0d2c0bd, type: 2}
+  - {fileID: 11400000, guid: 3a944269579c92b43981d2a75877ca12, type: 2}
+  - {fileID: 11400000, guid: 72ea026d4d2500a4ba231584741c71ae, type: 2}
+  - {fileID: 11400000, guid: c905b704468dbf04caf20f8199998f68, type: 2}
+  - {fileID: 11400000, guid: 027c59347992c014f99b3f222c2de005, type: 2}
+  - {fileID: 11400000, guid: 55241ea97a202914e807a71d9e22662b, type: 2}
+  - {fileID: 11400000, guid: 0a8a1475aeb004d4eb1a2dfc664ed8eb, type: 2}
+  - {fileID: 11400000, guid: fd842b1fd05c5554c9c52dacb20d5ac5, type: 2}
+  - {fileID: 11400000, guid: 4a9189bf70a4eb741afeeb25d9766040, type: 2}
+  - {fileID: 11400000, guid: 326dbc427e63c6a4fab1a13b05a04912, type: 2}
+  - {fileID: 11400000, guid: cd7ef56132fb72c43ace741dbde31364, type: 2}
+  - {fileID: 11400000, guid: 38c041fbad5483b43aad9757cb192f44, type: 2}
+  - {fileID: 11400000, guid: 027231a8b1d66a84597ed6fa8ebaac1b, type: 2}
+  - {fileID: 11400000, guid: dea407194236aa846a7d59dc9b92001e, type: 2}
+  - {fileID: 11400000, guid: bec417e21257aa34198ec71eb5c0a821, type: 2}
+  - {fileID: 11400000, guid: ab816f95a9d8c5a43bcebb9d36c34e1a, type: 2}
+  - {fileID: 11400000, guid: 81e3bb9a5900a5a4392cb8f188cf40bd, type: 2}
+  - {fileID: 11400000, guid: 6ba0cc47c10623c44ba371a82747f745, type: 2}
+  - {fileID: 11400000, guid: 44836e72156c5ce4db9663fba8f43fd9, type: 2}
+  - {fileID: 11400000, guid: b40f5f4b454ca2448a795680c8dde808, type: 2}
+  - {fileID: 11400000, guid: 96aff4067bbdf4c4bbea08d672fece53, type: 2}
+  - {fileID: 11400000, guid: cdc80c83d4a7dd94dbfb11962442900f, type: 2}
+  - {fileID: 11400000, guid: 864ac8f4797687547ad4c9bc61bc24d7, type: 2}
+  - {fileID: 11400000, guid: 1fbebb78529cc4f4b923987a812f3057, type: 2}
+  - {fileID: 11400000, guid: 658bf9bfec156814b998b69797fbd493, type: 2}
+  - {fileID: 11400000, guid: 6d67c699816c34942850e9f80def8462, type: 2}
+  - {fileID: 11400000, guid: e98eaf0e39d82324b86338d6c2a53e2b, type: 2}
+  - {fileID: 11400000, guid: bc2f89fe5798af140af4ba2b78686514, type: 2}
+  - {fileID: 11400000, guid: a4b59dc7a6357e642a11d5427e2ab933, type: 2}
+  - {fileID: 11400000, guid: d208cf6caa9e5e14dba15faf1e01dca3, type: 2}
+  - {fileID: 11400000, guid: 440c951aa04e37d43ba9e1ba1ec75539, type: 2}
   activeCards: []
   usedCards: []
   tempDeck: []
@@ -16943,6 +16974,7 @@ GameObject:
   - component: {fileID: 837899334}
   - component: {fileID: 837899336}
   - component: {fileID: 837899335}
+  - component: {fileID: 837899337}
   m_Layer: 5
   m_Name: ScorllArea
   m_TagString: Untagged
@@ -17019,6 +17051,20 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &837899337
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 837899333}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3312d7739989d2b4e91e6319e9a96d76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Padding: {x: 0, y: 0, z: 0, w: 0}
+  m_Softness: {x: 0, y: 0}
 --- !u!1001 &838704764
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -34255,7 +34301,42 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardcount: 0
   deckToUse:
+  - {fileID: 11400000, guid: 662f8a11a5436674c90c2d13a98c3a10, type: 2}
+  - {fileID: 11400000, guid: 6815fe18553525f41808ae2bdaeb4b33, type: 2}
+  - {fileID: 11400000, guid: 3c14edbe262db5d4fb351693665819a7, type: 2}
+  - {fileID: 11400000, guid: a9f75a98ed9254b4cb6ce00712c7057d, type: 2}
   - {fileID: 11400000, guid: 2014813ac6ef52349bf8a54d78024089, type: 2}
+  - {fileID: 11400000, guid: 8d00515b4728a1e4ea670083c7a9406c, type: 2}
+  - {fileID: 11400000, guid: 77c6103b94a0d2d4096e6cf82a6970e5, type: 2}
+  - {fileID: 11400000, guid: 411ba89a7ddfdaa4c81afc36590094e3, type: 2}
+  - {fileID: 11400000, guid: 715b6fcad7070f540b2dacf664b2610a, type: 2}
+  - {fileID: 11400000, guid: a756b9e815c5f06439e2ac7da560dd8e, type: 2}
+  - {fileID: 11400000, guid: a3eb14c1e6bb7224095558b9bb6becf9, type: 2}
+  - {fileID: 11400000, guid: 93f8da68726bb3a4788bbd813c21a64e, type: 2}
+  - {fileID: 11400000, guid: 1d37c97463703844f9b280275737a11f, type: 2}
+  - {fileID: 11400000, guid: 9aba472c3edba9a4195b4f5b1ab82c8f, type: 2}
+  - {fileID: 11400000, guid: 90449cf866b98234e9dc2a5b7d174c2e, type: 2}
+  - {fileID: 11400000, guid: 55d2d94917c5d3e4f96a9e36beae83da, type: 2}
+  - {fileID: 11400000, guid: 4febf43018d130e46a5232e755ceb971, type: 2}
+  - {fileID: 11400000, guid: 005345bf20f9fbd46b25da9d7817763b, type: 2}
+  - {fileID: 11400000, guid: 09e45716354db7440b17f70bf4efd150, type: 2}
+  - {fileID: 11400000, guid: c51b9712e4effbd4e8239d5a58a046ff, type: 2}
+  - {fileID: 11400000, guid: 42edaf753e5ccfe44939b9a0bfbfd03f, type: 2}
+  - {fileID: 11400000, guid: aa6aa77ecb6a70c46b140c2e8170151b, type: 2}
+  - {fileID: 11400000, guid: 4e1b2c9a51a0e814fa9f7469b2c223d2, type: 2}
+  - {fileID: 11400000, guid: 7c0c07a44b8175f4dbbf3e7e1fd85fc1, type: 2}
+  - {fileID: 11400000, guid: 8edc0e063a79c5345bbfd5493f2289fc, type: 2}
+  - {fileID: 11400000, guid: 0e93ed911c4660e44836f9b322f6ba62, type: 2}
+  - {fileID: 11400000, guid: 37f69e82eca7a48419397e4d151f90b5, type: 2}
+  - {fileID: 11400000, guid: 2e7d16547c2d7c64bbb3e69f0acec086, type: 2}
+  - {fileID: 11400000, guid: 94cb37077fc00224daf6fcc3ea73ff7b, type: 2}
+  - {fileID: 11400000, guid: e5ef0e7603cc5434f8bbcc2f47f8528b, type: 2}
+  - {fileID: 11400000, guid: 71f8f1f63851c084abc2780a3f5f2ab8, type: 2}
+  - {fileID: 11400000, guid: d3b2c31cc262bde4db2ca9da7d093912, type: 2}
+  - {fileID: 11400000, guid: d6c5500992e37d94baec3906bde8b164, type: 2}
+  - {fileID: 11400000, guid: efc8dd559a85e5a418ef8588b65cfe4b, type: 2}
+  - {fileID: 11400000, guid: 94494ca59f10d204aa3d1b009471e522, type: 2}
+  - {fileID: 11400000, guid: 6ad6755667f2593448a42fe6a2b158bf, type: 2}
   activeCards: []
   usedCards: []
   tempDeck: []
@@ -44402,6 +44483,7 @@ MonoBehaviour:
     isSpendAlready: 0
     remiderPosition: 0
     EnterOuter: 0
+    isOpenPage1: 0
     DealList: []
     ON2UList: []
     MYT4UList: []
@@ -44467,6 +44549,7 @@ MonoBehaviour:
     isSpendAlready: 0
     remiderPosition: 0
     EnterOuter: 0
+    isOpenPage1: 0
     DealList: []
     ON2UList: []
     MYT4UList: []
@@ -44532,6 +44615,7 @@ MonoBehaviour:
     isSpendAlready: 0
     remiderPosition: 0
     EnterOuter: 0
+    isOpenPage1: 0
     DealList: []
     ON2UList: []
     MYT4UList: []
@@ -44597,6 +44681,7 @@ MonoBehaviour:
     isSpendAlready: 0
     remiderPosition: 0
     EnterOuter: 0
+    isOpenPage1: 0
     DealList: []
     ON2UList: []
     MYT4UList: []
@@ -44662,6 +44747,7 @@ MonoBehaviour:
     isSpendAlready: 0
     remiderPosition: 0
     EnterOuter: 0
+    isOpenPage1: 0
     DealList: []
     ON2UList: []
     MYT4UList: []
@@ -44727,6 +44813,7 @@ MonoBehaviour:
     isSpendAlready: 0
     remiderPosition: 0
     EnterOuter: 0
+    isOpenPage1: 0
     DealList: []
     ON2UList: []
     MYT4UList: []
@@ -44753,6 +44840,7 @@ MonoBehaviour:
   player4: {fileID: 5802866406652890847}
   player5: {fileID: 8233510427711155220}
   player6: {fileID: 4593130497661815667}
+  playerInRoom: 0
   dice: {fileID: 653728795}
   dice2: {fileID: 196013045}
 --- !u!4 &2104681977

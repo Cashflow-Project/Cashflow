@@ -11,7 +11,7 @@ public class Timer : MonoBehaviourPunCallbacks
     [SerializeField]
     public bool Countdown = true;
 
-    private float timerDuration = 1f * 30f;
+    private float timerDuration = 1f * 90f;
     public float timer;
 
     [SerializeField]

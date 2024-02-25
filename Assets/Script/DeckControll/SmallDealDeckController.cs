@@ -45,6 +45,7 @@ public class SmallDealDeckController : MonoBehaviourPunCallbacks
         UIController.instance.BigPayButton.SetActive(false);
         UIController.instance.SmallPayButton.SetActive(false);
         UIController.instance.SellButton.SetActive(false);
+
     }
 
     // Update is called once per frame
@@ -283,6 +284,24 @@ public class SmallDealDeckController : MonoBehaviourPunCallbacks
         {
             UIController.instance.SellButton.SetActive(true);
         }
+
+        if (usedCards[cardcount - 1].ON2U == true && GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].hasON2U == false)
+        {
+            UIController.instance.cancelButton.SetActive(false);
+        }
+        if (usedCards[cardcount - 1].MYT4U == true && GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].hasMYT4U == false)
+        {
+            UIController.instance.cancelButton.SetActive(false);
+        }
+        if (usedCards[cardcount - 1].GRO4US == true && GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].hasGRO4US == false)
+        {
+            UIController.instance.cancelButton.SetActive(false);
+        }
+        if (usedCards[cardcount - 1].OK4U == true && GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].hasOK4U == false)
+        {
+            UIController.instance.cancelButton.SetActive(false);
+        }
+
     }
 
     [PunRPC]

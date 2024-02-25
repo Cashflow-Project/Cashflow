@@ -41,7 +41,10 @@ public class PayCreditDebt : MonoBehaviourPunCallbacks
     {
         if (GameManager.instace.playerList[GameManager.instace.activePlayer].money >= Int32.Parse(CreditDebtNum.text))
         {
-            photonView.RPC("UpdatePayCreditDebt", RpcTarget.All);
+            GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].money -= Int32.Parse(CreditDebtNum.text);
+            GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].creditDebt -= Int32.Parse(CreditDebtNum.text);
+            GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].creditcardMortgage = 0;
+            photonView.RPC("UpdatePayCreditDebt", RpcTarget.All, GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].money, GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].creditDebt, GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].creditcardMortgage);
             UIController.instance.PayCreditDebtCanvas.SetActive(false);
             UIController.instance.BlurBg.SetActive(false);
             photonView.RPC("UpdateMoney", RpcTarget.All, GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].money, PhotonNetwork.LocalPlayer.ActorNumber - 1);
@@ -62,11 +65,11 @@ public class PayCreditDebt : MonoBehaviourPunCallbacks
     }
 
     [PunRPC]
-    void UpdatePayCreditDebt()
+    void UpdatePayCreditDebt(int money,int creditDebt,int creditcardMortgage)
     {
-        GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].money -= Int32.Parse(CreditDebtNum.text);
-        GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].creditDebt -= Int32.Parse(CreditDebtNum.text);
-        GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].creditcardMortgage = 0;
+        GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].money = money;
+        GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].creditDebt = creditDebt;
+        GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].creditcardMortgage = creditcardMortgage;
     }
 
     [PunRPC]
@@ -86,7 +89,7 @@ public class PayCreditDebt : MonoBehaviourPunCallbacks
         GameManager.Note myNote = new GameManager.Note();
         myNote.CardName = "- " + " Pay CreditDebt";
         myNote.price = Int32.Parse(CreditDebtNum.text);
-        GameManager.instace.playerList[GameManager.instace.activePlayer].Keep.Add(myNote);
+        GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].Keep.Add(myNote);
 
     }
 }

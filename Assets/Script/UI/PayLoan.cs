@@ -43,7 +43,9 @@ public class PayLoan : MonoBehaviourPunCallbacks
 
     public void PayClick()
     {
-        photonView.RPC("UpdatePayLoan", RpcTarget.All);
+        GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].money -= Int32.Parse(PayLoanInputNum.text);
+        GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].loanBank -= Int32.Parse(PayLoanInputNum.text);
+        photonView.RPC("UpdatePayLoan", RpcTarget.All, GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].money, GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].loanBank);
         UIController.instance.PayLoanCanvas.SetActive(false);
         UIController.instance.BlurBg.SetActive(false);
         photonView.RPC("UpdateMoney", RpcTarget.All, GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].money, PhotonNetwork.LocalPlayer.ActorNumber - 1);
@@ -71,10 +73,10 @@ public class PayLoan : MonoBehaviourPunCallbacks
 
     }
     [PunRPC]
-    void UpdatePayLoan()
+    void UpdatePayLoan(int money,int loanBank)
     {
-        GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].money -= Int32.Parse(PayLoanInputNum.text);
-        GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].loanBank -= Int32.Parse(PayLoanInputNum.text);
+        GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].money = money;
+        GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].loanBank = loanBank;
     }
 
     [PunRPC]
@@ -94,7 +96,7 @@ public class PayLoan : MonoBehaviourPunCallbacks
         GameManager.Note myNote = new GameManager.Note();
         myNote.CardName = "- " +  " Pay Loan" ;
         myNote.price = Int32.Parse(PayLoanInputNum.text);
-        GameManager.instace.playerList[GameManager.instace.activePlayer].Keep.Add(myNote);
+        GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].Keep.Add(myNote);
 
     }
 }

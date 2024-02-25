@@ -95,7 +95,12 @@ public class MarketDeckController : MonoBehaviourPunCallbacks
         
 
         photonView.RPC("whoCanSell", RpcTarget.All);
-        if (usedCards[cardcount - 1].destroy == true)
+        if (usedCards[cardcount - 1].destroy == true
+                && (GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].hasHome32
+                || GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].hasHome21
+                || GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].hasCondominium21
+                || GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].hascommercialBuilding
+                || GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].hasApartment))
         {
             UIController.instance.MarketPayButton.SetActive(true);
         }
@@ -120,12 +125,10 @@ public class MarketDeckController : MonoBehaviourPunCallbacks
         else if (usedCards[cardcount - 1].GoldCoins == true)
         {
             UIController.instance.GoldCoinsSell.SetActive(true);
+            UIController.instance.cancelButton.SetActive(false);
             UIController.instance.BlurBg.SetActive(true);
         }
-        else
-        {
-            UIController.instance.cancelButton.SetActive(true);
-        }
+        
             
 
     }
@@ -153,7 +156,7 @@ public class MarketDeckController : MonoBehaviourPunCallbacks
                 UIController.instance.SellButton.SetActive(false);
                 UIController.instance.cancelButton.SetActive(false);
                 UIController.instance.SmallPayButton.SetActive(false);
-                UIController.instance.MarketPayButton.SetActive(false); ;
+                UIController.instance.MarketPayButton.SetActive(false);
                 UIController.instance.MarketSellButton.SetActive(false);
                 UIController.instance.passButton.SetActive(true);
 
@@ -177,7 +180,19 @@ public class MarketDeckController : MonoBehaviourPunCallbacks
         {
             //lose
             GameManager.instace.playerList[GameManager.instace.activePlayer].playerType = GameManager.Entity.PlayerTypes.NO_PLAYER;
-            GameManager.instace.state = GameManager.States.SWITCH_PLAYER;
+            GameManager.instace.playerInRoom = 0;
+            for (int i = 0; i < GameManager.instace.playerList.Count; i++)
+            {
+                if (GameManager.instace.playerList[i].playerType == GameManager.Entity.PlayerTypes.NO_PLAYER)
+                {
+                    GameManager.instace.playerInRoom++;
+                }
+
+            }
+            if (GameManager.instace.playerInRoom > 0)
+            {
+                GameManager.instace.state = GameManager.States.SWITCH_PLAYER;
+            }
             UIController.instance.BlurBg.SetActive(true);
             UIController.instance.lostShow.SetActive(true);
         }

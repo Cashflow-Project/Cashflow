@@ -157,10 +157,23 @@ public class SpendDeckController : MonoBehaviourPunCallbacks
             {
                 //lose
                 GameManager.instace.playerList[GameManager.instace.activePlayer].playerType = GameManager.Entity.PlayerTypes.NO_PLAYER;
-                GameManager.instace.state = GameManager.States.SWITCH_PLAYER;
+
+                GameManager.instace.playerInRoom = 0;
+                for (int i = 0; i < GameManager.instace.playerList.Count; i++)
+                {
+                    if(GameManager.instace.playerList[i].playerType == GameManager.Entity.PlayerTypes.NO_PLAYER)
+                    {
+                        GameManager.instace.playerInRoom++;
+                    }
+                    
+                }
+                if(GameManager.instace.playerInRoom > 0)
+                {
+                    GameManager.instace.state = GameManager.States.SWITCH_PLAYER;
+                }
                 UIController.instance.BlurBg.SetActive(true);
                 UIController.instance.lostShow.SetActive(true);
-            }
+            } 
             else
             {
                 UIController.instance.LoanCanvas.SetActive(true);
