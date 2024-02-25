@@ -25,7 +25,7 @@ public class Player1 : MonoBehaviourPunCallbacks
 
     int routePosition;
     int startNodeIndex;
-    bool remiderPosition = false;
+    
     int steps;
     int doneSteps;
     public int turncounts = 1;
@@ -98,10 +98,10 @@ public class Player1 : MonoBehaviourPunCallbacks
         while (steps > 0)
         {
 
-            if (routePosition % fullRoute.Count == 0 && fullRoute.Count - routePosition == fullRoute.Count)
+            if (routePosition % fullRoute.Count == 23)
             {
 
-                remiderPosition = true;
+                GameManager.instace.playerList[GameManager.instace.activePlayer].remiderPosition = true;
 
             }
             routePosition++;
@@ -156,6 +156,7 @@ public class Player1 : MonoBehaviourPunCallbacks
             if (routePosition % fullRoute.Count == 2 || routePosition % fullRoute.Count == 10 || routePosition % fullRoute.Count == 18)
             {
                 Debug.Log("in red route");
+                photonView.RPC("setUpDeckSpendToEveryone", RpcTarget.All);
                 photonView.RPC("valueUpdate", RpcTarget.All);
                 //UIController.instance.drawButton.SetActive(IsMyTurn());
                 photonView.RPC("PlayerDraw", RpcTarget.All);
@@ -171,11 +172,13 @@ public class Player1 : MonoBehaviourPunCallbacks
             }
 
 
-            if (routePosition % fullRoute.Count == 8 || routePosition % fullRoute.Count == 16 ||  (routePosition % fullRoute.Count == 0 && fullRoute.Count - routePosition == fullRoute.Count && remiderPosition))
+            if (routePosition % fullRoute.Count == 8 || routePosition % fullRoute.Count == 16 
+                ||  (routePosition % fullRoute.Count == 0 && fullRoute.Count - routePosition == fullRoute.Count && GameManager.instace.playerList[GameManager.instace.activePlayer].remiderPosition == true))
             {
                 //
                 Debug.Log("in blue route");
-                remiderPosition = false;
+                GameManager.instace.playerList[GameManager.instace.activePlayer].remiderPosition = false;
+                photonView.RPC("setUpDeckMarketToEveryone", RpcTarget.All);
                 photonView.RPC("valueUpdate", RpcTarget.All);
                 Debug.Log(routePosition % fullRoute.Count + " " + steps + " " + routePosition + " " + isMoving + " " + doneSteps);
                 photonView.RPC("PlayerMarketDraw", RpcTarget.All);
@@ -226,6 +229,8 @@ public class Player1 : MonoBehaviourPunCallbacks
             if (routePosition % 2 == 1)
             {
                 Debug.Log("in green route");
+                photonView.RPC("setUpDeckSmallDealToEveryone", RpcTarget.All);
+                photonView.RPC("setUpDeckBigDealToEveryone", RpcTarget.All);
                 //UIController.instance.passButton.SetActive(IsMyTurn());
                 photonView.RPC("valueUpdate", RpcTarget.All);
                 photonView.RPC("PlayerChooseSmallBig", RpcTarget.All);
@@ -487,6 +492,42 @@ public class Player1 : MonoBehaviourPunCallbacks
         UIController.instance.cardShow.sprite = UIController.instance.DonateCard;
         UIController.instance.PayDonateBtn.SetActive(IsMyTurn());
         UIController.instance.cancelButton.SetActive(IsMyTurn());
+    }
+
+    [PunRPC]
+    void setUpDeckMarketToEveryone()
+    {
+        if (MarketDeckController.instance.activeCards.Count <= 1)
+        {
+            MarketDeckController.instance.SetUpDeck();
+        }
+    }
+
+    [PunRPC]
+    void setUpDeckSmallDealToEveryone()
+    {
+        if (SmallDealDeckController.instance.activeCards.Count <= 1)
+        {
+            SmallDealDeckController.instance.SetUpDeck();
+        }
+    }
+
+    [PunRPC]
+    void setUpDeckBigDealToEveryone()
+    {
+        if (BigDealDeckController.instance.activeCards.Count <= 1)
+        {
+            BigDealDeckController.instance.SetUpDeck();
+        }
+    }
+
+    [PunRPC]
+    void setUpDeckSpendToEveryone()
+    {
+        if (SpendDeckController.instance.activeCards.Count <= 1)
+        {
+            SpendDeckController.instance.SetUpDeck();
+        }
     }
 }
     

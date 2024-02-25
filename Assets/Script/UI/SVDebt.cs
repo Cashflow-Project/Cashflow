@@ -20,6 +20,22 @@ public class SVDebt : MonoBehaviourPunCallbacks
         
     }
 
+    void ScaleObjectWithScreenSize(GameObject obj)
+    {
+        RectTransform rectTransform = obj.GetComponent<RectTransform>();
+
+        // Get the screen dimensions
+        float screenWidth = Screen.width;
+        float screenHeight = Screen.height;
+
+        // You may need to adjust these values based on your specific requirements
+        float scaleFactorX = screenWidth / 1920f; // 1920 is a reference width
+        float scaleFactorY = screenHeight / 1080f; // 1080 is a reference height
+
+        // Apply the scale to the object's RectTransform
+        rectTransform.localScale = new Vector3(scaleFactorX, scaleFactorY, 1f);
+    }
+
     public void UpdateSVDebtItemList()
     {
         for (int i = 0; i < _SVDebtItemList.Count; i++)
@@ -49,7 +65,7 @@ public class SVDebt : MonoBehaviourPunCallbacks
                         newItem.SetItemName(GameManager.instace.playerList[j].house3s2List[i].CardName);
                         newItem.SetDebtInItem(GameManager.instace.playerList[j].house3s2List[i].BankLoan.ToString());
                         newItem.transform.SetParent(SVDebtListParent);
-
+                        ScaleObjectWithScreenSize(newItem.gameObject);
                         _SVDebtItemList.Add(newItem);
                     }
 
@@ -76,7 +92,7 @@ public class SVDebt : MonoBehaviourPunCallbacks
                         newItem.SetItemName(GameManager.instace.playerList[j].house2s1List[i].CardName);
                         newItem.SetDebtInItem(GameManager.instace.playerList[j].house2s1List[i].BankLoan.ToString());
                         newItem.transform.SetParent(SVDebtListParent);
-
+                        ScaleObjectWithScreenSize(newItem.gameObject);
                         _SVDebtItemList.Add(newItem);
 
                     }
@@ -103,7 +119,7 @@ public class SVDebt : MonoBehaviourPunCallbacks
                         newItem.SetItemName(GameManager.instace.playerList[j].CondominiumList[i].CardName);
                         newItem.SetDebtInItem(GameManager.instace.playerList[j].CondominiumList[i].BankLoan.ToString());
                         newItem.transform.SetParent(SVDebtListParent);
-
+                        ScaleObjectWithScreenSize(newItem.gameObject);
                         _SVDebtItemList.Add(newItem);
                     }
 
@@ -130,7 +146,7 @@ public class SVDebt : MonoBehaviourPunCallbacks
                         newItem.SetItemName(GameManager.instace.playerList[j].CommercialBuildingList[i].CardName);
                         newItem.SetDebtInItem(GameManager.instace.playerList[j].CommercialBuildingList[i].BankLoan.ToString());
                         newItem.transform.SetParent(SVDebtListParent);
-
+                        ScaleObjectWithScreenSize(newItem.gameObject);
                         _SVDebtItemList.Add(newItem);
                     }
 
@@ -157,7 +173,7 @@ public class SVDebt : MonoBehaviourPunCallbacks
                         newItem.SetItemName(GameManager.instace.playerList[j].ApartmentList[i].CardName);
                         newItem.SetDebtInItem(GameManager.instace.playerList[j].ApartmentList[i].BankLoan.ToString());
                         newItem.transform.SetParent(SVDebtListParent);
-
+                        ScaleObjectWithScreenSize(newItem.gameObject);
                         _SVDebtItemList.Add(newItem);
 
                     }

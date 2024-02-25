@@ -36,9 +36,15 @@ public class MarketDeckController : MonoBehaviourPunCallbacks
     // Start is called before the first frame update
     void Start()
     {
-        
-        SetUpDeck();
 
+        //photonView.RPC("setUpdeckToEveryone", RpcTarget.All);
+        SetUpDeck();
+        UIController.instance.drawButton.SetActive(false);
+        UIController.instance.cardShow.enabled = false;
+        UIController.instance.cancelButton.SetActive(false);
+        UIController.instance.passButton.SetActive(false);
+        UIController.instance.payButton.SetActive(false);
+        UIController.instance.MarketDrawButton.SetActive(false);
     }
 
     // Update is called once per frame
@@ -50,18 +56,11 @@ public class MarketDeckController : MonoBehaviourPunCallbacks
     public void SetUpDeck()
     {
 
-        UIController.instance.drawButton.SetActive(false);
-        UIController.instance.cardShow.enabled = false;
-        UIController.instance.cancelButton.SetActive(false);
-        UIController.instance.passButton.SetActive(false);
-        UIController.instance.payButton.SetActive(false);
-        UIController.instance.MarketDrawButton.SetActive(false);
 
         activeCards.Clear();
         tempDeck.AddRange(deckToUse);
         if (PhotonNetwork.IsMasterClient)
         {
-
             int iterations = 0;
             while (tempDeck.Count > 0 && iterations < 500)
             {
@@ -76,13 +75,11 @@ public class MarketDeckController : MonoBehaviourPunCallbacks
 
     public void DrawCardToHand()
     {
-        Debug.Log(activeCards.Count);
-        if (activeCards.Count <= 0)
-        {
-            photonView.RPC("setUpdeckToEveryone", RpcTarget.All);
-            //SetUpDeck();
-        }
-        Debug.Log(activeCards.Count);
+
+
+        //SetUpDeck();
+        Debug.Log("Active Card" + activeCards.Count);
+
 
         MarketCard newCard = Instantiate(cardsToSpawns, transform.position, transform.rotation);
         newCard.cardGMSO = activeCards[0];
@@ -94,6 +91,9 @@ public class MarketDeckController : MonoBehaviourPunCallbacks
         UIController.instance.cancelButton.SetActive(false);
         photonView.RPC("ShowCardToAllPlayerRPC", RpcTarget.All);
         photonView.RPC("AddToUseCard", RpcTarget.All);
+
+        
+
         photonView.RPC("whoCanSell", RpcTarget.All);
         if (usedCards[cardcount - 1].destroy == true)
         {
@@ -439,8 +439,9 @@ public class MarketDeckController : MonoBehaviourPunCallbacks
     [PunRPC]
     void setUpdeckToEveryone()
     {
-        SetUpDeck();
 
+    SetUpDeck();
+        
     }
 
     [PunRPC]

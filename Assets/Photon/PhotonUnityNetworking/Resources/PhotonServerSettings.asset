@@ -110,6 +110,11 @@ MonoBehaviour:
   - DiceReset
   - CheckClick2Dice
   - setUpdeckToEveryone
+  - nextPlayerSetRPC
+  - setUpDeckMarketToEveryone
+  - setUpDeckSmallDealToEveryone
+  - setUpDeckBigDealToEveryone
+  - setUpDeckSpendToEveryone
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

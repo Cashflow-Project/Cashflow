@@ -35,9 +35,16 @@ public class SmallDealDeckController : MonoBehaviourPunCallbacks
     // Start is called before the first frame update
     void Start()
     {
-        
+        //photonView.RPC("setUpdeckToEveryone", RpcTarget.All);
         SetUpDeck();
-
+        UIController.instance.drawButton.SetActive(false);
+        UIController.instance.cardShow.enabled = false;
+        UIController.instance.cancelButton.SetActive(false);
+        UIController.instance.passButton.SetActive(false);
+        UIController.instance.payButton.SetActive(false);
+        UIController.instance.BigPayButton.SetActive(false);
+        UIController.instance.SmallPayButton.SetActive(false);
+        UIController.instance.SellButton.SetActive(false);
     }
 
     // Update is called once per frame
@@ -49,14 +56,7 @@ public class SmallDealDeckController : MonoBehaviourPunCallbacks
     public void SetUpDeck()
     {
 
-        UIController.instance.drawButton.SetActive(false);
-        UIController.instance.cardShow.enabled = false;
-        UIController.instance.cancelButton.SetActive(false);
-        UIController.instance.passButton.SetActive(false);
-        UIController.instance.payButton.SetActive(false);
-        UIController.instance.BigPayButton.SetActive(false);
-        UIController.instance.SmallPayButton.SetActive(false);
-        UIController.instance.SellButton.SetActive(false);
+        
 
 
         activeCards.Clear();
@@ -79,11 +79,6 @@ public class SmallDealDeckController : MonoBehaviourPunCallbacks
     public void DrawCardToHand()
     {
 
-        if (activeCards.Count <= 0)
-        {
-            photonView.RPC("setUpdeckToEveryone", RpcTarget.All);
-            //SetUpDeck();
-        }
 
         SmallDealCard newCard = Instantiate(cardsToSpawns, transform.position, transform.rotation);
         newCard.cardSCSO = activeCards[0];

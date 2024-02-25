@@ -177,7 +177,7 @@ public class Timer : MonoBehaviourPunCallbacks
             if ((GameManager.instace.state == GameManager.States.START_TURN || GameManager.instace.state == GameManager.States.ROLL_DICE)
                     && GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].isInRedRoute == false)
             {
-            UIController.instance.cardShow.enabled = false;
+                UIController.instance.cardShow.enabled = false;
                 GameManager.instace.ActivateButton(false);
                 UIController.instance.InvestCanvas.SetActive(false);
                 UIController.instance.passButton.SetActive(false);

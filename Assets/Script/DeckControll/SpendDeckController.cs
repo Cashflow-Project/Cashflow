@@ -39,8 +39,13 @@ public class SpendDeckController : MonoBehaviourPunCallbacks
     void Start()
     {
         //PhotonPeer.RegisterType(typeof(CardSpendScriptableObj), 0, CardSpendScriptableObjSerialization.Serialize, CardSpendScriptableObjSerialization.Deserialize);
+        //photonView.RPC("setUpdeckToEveryone", RpcTarget.All);
         SetUpDeck();
-
+        UIController.instance.drawButton.SetActive(false);
+        UIController.instance.cardShow.enabled = false;
+        UIController.instance.cancelButton.SetActive(false);
+        UIController.instance.passButton.SetActive(false);
+        UIController.instance.payButton.SetActive(false);
     }
 
     // Update is called once per frame
@@ -52,13 +57,7 @@ public class SpendDeckController : MonoBehaviourPunCallbacks
     public void SetUpDeck()
     {
         
-        UIController.instance.drawButton.SetActive(false);
-        UIController.instance.cardShow.enabled = false;
-        UIController.instance.cancelButton.SetActive(false);
-        UIController.instance.passButton.SetActive(false);
-        //photonView.RPC("EndTurnPlayer", RpcTarget.All, false);
-        //UIController.instance.loanButton.SetActive(false);
-        UIController.instance.payButton.SetActive(false);
+        
 
         //photonView.RPC("CreateSpendDeckStart", RpcTarget.All);
         /*
@@ -78,6 +77,7 @@ public class SpendDeckController : MonoBehaviourPunCallbacks
         }*/
         activeCards.Clear();
         tempDeck.AddRange(deckToUse);
+        
         if (PhotonNetwork.IsMasterClient)
         {
             //activeCards.Clear();
@@ -102,11 +102,6 @@ public class SpendDeckController : MonoBehaviourPunCallbacks
     public void DrawCardToHand()
     {
 
-        if (activeCards.Count <= 0)
-        {
-            photonView.RPC("setUpdeckToEveryone", RpcTarget.All);
-            //SetUpDeck();
-        }
 
         SpendCard newCard = Instantiate(cardsToSpawns, transform.position, transform.rotation);
         newCard.cardSpendSO = activeCards[0];

@@ -40,7 +40,21 @@ public class SellObjFromMarketCard : MonoBehaviourPunCallbacks
     }
 
 
+    void ScaleObjectWithScreenSize(GameObject obj)
+    {
+        RectTransform rectTransform = obj.GetComponent<RectTransform>();
 
+        // Get the screen dimensions
+        float screenWidth = Screen.width;
+        float screenHeight = Screen.height;
+
+        // You may need to adjust these values based on your specific requirements
+        float scaleFactorX = screenWidth / 1920f; // 1920 is a reference width
+        float scaleFactorY = screenHeight / 1080f; // 1080 is a reference height
+
+        // Apply the scale to the object's RectTransform
+        rectTransform.localScale = new Vector3(scaleFactorX, scaleFactorY, 1f);
+    }
 
     public void UpdateMarketItemList()
     {
@@ -76,7 +90,7 @@ public class SellObjFromMarketCard : MonoBehaviourPunCallbacks
                         newItem.SetPriceInItem(GameManager.instace.playerList[j].house3s2List[i].BusinessValue, 0, GameManager.instace.playerList[j].house3s2List[i].BankLoan);
                         newItem.SetItemSelect(GameManager.instace.playerList[j].house3s2List[i].isSelected);
                         newItem.transform.SetParent(MarketSellListParent);
-
+                        ScaleObjectWithScreenSize(newItem.gameObject);
                         _MarketItemList.Add(newItem);
                     }
                     if (GameManager.instace.playerList[j].house3s2List[i].isSelected == true)
@@ -112,7 +126,7 @@ public class SellObjFromMarketCard : MonoBehaviourPunCallbacks
                         newItem.SetItemSelect(GameManager.instace.playerList[j].house2s1List[i].isSelected);
 
                         newItem.transform.SetParent(MarketSellListParent);
-
+                        ScaleObjectWithScreenSize(newItem.gameObject);
                         _MarketItemList.Add(newItem);
                     }
                     if (GameManager.instace.playerList[j].house2s1List[i].isSelected == true)
@@ -146,7 +160,7 @@ public class SellObjFromMarketCard : MonoBehaviourPunCallbacks
                         newItem.SetPriceInItem(GameManager.instace.playerList[j].CondominiumList[i].BusinessValue, 0, GameManager.instace.playerList[j].CondominiumList[i].BankLoan);
                         newItem.SetItemSelect(GameManager.instace.playerList[j].CondominiumList[i].isSelected);
                         newItem.transform.SetParent(MarketSellListParent);
-
+                        ScaleObjectWithScreenSize(newItem.gameObject);
                         _MarketItemList.Add(newItem);
                     }
                     if (GameManager.instace.playerList[j].CondominiumList[i].isSelected == true)
@@ -181,7 +195,7 @@ public class SellObjFromMarketCard : MonoBehaviourPunCallbacks
                         newItem.SetPriceInItem(GameManager.instace.playerList[j].CommercialBuildingList[i].DownPayment, GameManager.instace.playerList[j].CommercialBuildingList[i].count, GameManager.instace.playerList[j].CommercialBuildingList[i].BankLoan);
                         newItem.SetItemSelect(GameManager.instace.playerList[j].CommercialBuildingList[i].isSelected);
                         newItem.transform.SetParent(MarketSellListParent);
-
+                        ScaleObjectWithScreenSize(newItem.gameObject);
                         _MarketItemList.Add(newItem);
                     }
                     if (GameManager.instace.playerList[j].CommercialBuildingList[i].isSelected == true)
@@ -215,7 +229,7 @@ public class SellObjFromMarketCard : MonoBehaviourPunCallbacks
                         newItem.SetPriceInItem(GameManager.instace.playerList[j].ApartmentList[i].BusinessValue, GameManager.instace.playerList[j].ApartmentList[i].count, GameManager.instace.playerList[j].ApartmentList[i].BankLoan);
                         newItem.SetItemSelect(GameManager.instace.playerList[j].ApartmentList[i].isSelected);
                         newItem.transform.SetParent(MarketSellListParent);
-
+                        ScaleObjectWithScreenSize(newItem.gameObject);
                         _MarketItemList.Add(newItem);
                     }
                     if(GameManager.instace.playerList[j].ApartmentList[i].isSelected == true)

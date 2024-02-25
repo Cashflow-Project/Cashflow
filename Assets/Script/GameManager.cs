@@ -231,11 +231,13 @@ public class GameManager : MonoBehaviourPunCallbacks
         public bool hasBusiness;
         public int GoldCoins;
 
-        public bool isInRedRoute = false;
-        public bool isDrawButtonOn = false;
-        public bool isSpendAlready = false;
-
+        public bool isInRedRoute;
+        public bool isDrawButtonOn;
+        public bool isSpendAlready;
+        public bool remiderPosition;
         public bool EnterOuter;
+
+        public bool isOpenPage1;
         public List<DealKeep> DealList = new List<DealKeep>();
         
 
@@ -499,9 +501,11 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     void SetNextActivePlayer()
     {
-        activePlayer++;
-        activePlayer %= playerList.Count;
-        photonView.RPC("nextPlayerRPC", RpcTarget.All, activePlayer);
+        //activePlayer++;
+        //activePlayer %= playerList.Count;
+        photonView.RPC("nextPlayerSetRPC", RpcTarget.All);
+        //photonView.RPC("nextPlayerRPC", RpcTarget.All, activePlayer);
+        /*
         int available = 0;
         for (int i = 0; i < playerList.Count; i++)
         {
@@ -521,9 +525,9 @@ public class GameManager : MonoBehaviourPunCallbacks
             //last one player
             state = States.WAITING;
             return;
-        }
+        }*/
+        
 
-        state = States.START_TURN;
     }
 
     public void ReportTurnPossible(bool possible)
@@ -1202,11 +1206,26 @@ public class GameManager : MonoBehaviourPunCallbacks
     [PunRPC]
     void nextPlayerRPC(int nextPlayer)
     {
-        
         activePlayer = nextPlayer;
         
     }
-
+    [PunRPC]
+    void nextPlayerSetRPC()
+    {
+        activePlayer++;
+        while (playerList[activePlayer].playerType == Entity.PlayerTypes.NO_PLAYER)
+        {
+            activePlayer++;
+            
+            if (activePlayer >= playerList.Count)
+            {
+                activePlayer = 0;
+            }
+            //activePlayer %= playerList.Count;
+        }
+        //activePlayer %= playerList.Count;
+        state = States.START_TURN;
+    }
 
     [PunRPC]
     void SetStartingPlayer(int startingPlayer)
@@ -1215,10 +1234,12 @@ public class GameManager : MonoBehaviourPunCallbacks
         while (playerList[activePlayer].playerType == Entity.PlayerTypes.NO_PLAYER)
         {
             activePlayer++;
+            /*
             if (activePlayer >= playerList.Count)
             {
                 activePlayer = 0;
-            }
+            }*/
+            activePlayer %= playerList.Count;
         }
         Debug.Log("SetStartingPlayer RPC : " + activePlayer);
         UIController.instance.showMessage("Player " + activePlayer + " starts first");

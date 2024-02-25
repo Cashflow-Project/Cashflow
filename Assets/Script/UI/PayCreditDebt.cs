@@ -66,7 +66,7 @@ public class PayCreditDebt : MonoBehaviourPunCallbacks
     {
         GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].money -= Int32.Parse(CreditDebtNum.text);
         GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].creditDebt -= Int32.Parse(CreditDebtNum.text);
-        GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].creditcardMortgage -= Int32.Parse(CreditDebtNum.text) * 10;
+        GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].creditcardMortgage = 0;
     }
 
     [PunRPC]

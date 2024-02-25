@@ -21,6 +21,21 @@ public class SVIncome : MonoBehaviourPunCallbacks
         
     }
 
+    void ScaleObjectWithScreenSize(GameObject obj)
+    {
+        RectTransform rectTransform = obj.GetComponent<RectTransform>();
+
+        // Get the screen dimensions
+        float screenWidth = Screen.width;
+        float screenHeight = Screen.height;
+
+        // You may need to adjust these values based on your specific requirements
+        float scaleFactorX = screenWidth / 1920f; // 1920 is a reference width
+        float scaleFactorY = screenHeight / 1080f; // 1080 is a reference height
+
+        // Apply the scale to the object's RectTransform
+        rectTransform.localScale = new Vector3(scaleFactorX, scaleFactorY, 1f);
+    }
 
     public void UpdateSVIncomeItemList()
     {
@@ -51,7 +66,7 @@ public class SVIncome : MonoBehaviourPunCallbacks
                         newItem.SetItemName(GameManager.instace.playerList[j].house3s2List[i].CardName);
                         newItem.SetIncomeInItem(GameManager.instace.playerList[j].house3s2List[i].CashflowIncome.ToString());
                         newItem.transform.SetParent(SVIncomeListParent);
-
+                        ScaleObjectWithScreenSize(newItem.gameObject);
                         _SVIncomeItemList.Add(newItem);
 
                     }
@@ -78,7 +93,7 @@ public class SVIncome : MonoBehaviourPunCallbacks
                         newItem.SetItemName(GameManager.instace.playerList[j].house2s1List[i].CardName);
                         newItem.SetIncomeInItem(GameManager.instace.playerList[j].house2s1List[i].CashflowIncome.ToString());
                         newItem.transform.SetParent(SVIncomeListParent);
-
+                        ScaleObjectWithScreenSize(newItem.gameObject);
                         _SVIncomeItemList.Add(newItem);
 
                     }
@@ -105,7 +120,7 @@ public class SVIncome : MonoBehaviourPunCallbacks
                         newItem.SetItemName(GameManager.instace.playerList[j].CondominiumList[i].CardName);
                         newItem.SetIncomeInItem(GameManager.instace.playerList[j].CondominiumList[i].CashflowIncome.ToString());
                         newItem.transform.SetParent(SVIncomeListParent);
-
+                        ScaleObjectWithScreenSize(newItem.gameObject);
                         _SVIncomeItemList.Add(newItem);
                     }
 
@@ -132,7 +147,7 @@ public class SVIncome : MonoBehaviourPunCallbacks
                         newItem.SetItemName(GameManager.instace.playerList[j].CommercialBuildingList[i].CardName);
                         newItem.SetIncomeInItem(GameManager.instace.playerList[j].CommercialBuildingList[i].CashflowIncome.ToString());
                         newItem.transform.SetParent(SVIncomeListParent);
-
+                        ScaleObjectWithScreenSize(newItem.gameObject);
                         _SVIncomeItemList.Add(newItem);
                     }
 
@@ -159,7 +174,7 @@ public class SVIncome : MonoBehaviourPunCallbacks
                         newItem.SetItemName(GameManager.instace.playerList[j].ApartmentList[i].CardName);
                         newItem.SetIncomeInItem(GameManager.instace.playerList[j].ApartmentList[i].CashflowIncome.ToString());
                         newItem.transform.SetParent(SVIncomeListParent);
-
+                        ScaleObjectWithScreenSize(newItem.gameObject);
                         _SVIncomeItemList.Add(newItem);
 
                     }

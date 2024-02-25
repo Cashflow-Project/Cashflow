@@ -66,7 +66,7 @@ public class PayCarDebt : MonoBehaviourPunCallbacks
     {
         GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].money -= Int32.Parse(CarDebtNum.text);
         GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].carDebt -= Int32.Parse(CarDebtNum.text);
-        GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].carMortgage -= Int32.Parse(CarDebtNum.text) * 10;
+        GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].carMortgage = 0 ;
     }
 
     [PunRPC]

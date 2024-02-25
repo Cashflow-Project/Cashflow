@@ -36,6 +36,14 @@ public class BigDealDeckController : MonoBehaviourPunCallbacks
     void Start()
     {
         SetUpDeck();
+        UIController.instance.drawButton.SetActive(false);
+        UIController.instance.cardShow.enabled = false;
+        UIController.instance.cancelButton.SetActive(false);
+        UIController.instance.passButton.SetActive(false);
+        UIController.instance.payButton.SetActive(false);
+        UIController.instance.BigPayButton.SetActive(false);
+        UIController.instance.SmallPayButton.SetActive(false);
+        UIController.instance.SellButton.SetActive(false);
     }
 
     // Update is called once per frame
@@ -46,15 +54,7 @@ public class BigDealDeckController : MonoBehaviourPunCallbacks
 
     public void SetUpDeck()
     {
-        
-        UIController.instance.drawButton.SetActive(false);
-        UIController.instance.cardShow.enabled = false;
-        UIController.instance.cancelButton.SetActive(false);
-        UIController.instance.passButton.SetActive(false);
-        UIController.instance.payButton.SetActive(false);
-        UIController.instance.BigPayButton.SetActive(false);
-        UIController.instance.SmallPayButton.SetActive(false);
-        UIController.instance.SellButton.SetActive(false);
+
       
         activeCards.Clear();
         tempDeck.AddRange(deckToUse);
@@ -75,12 +75,6 @@ public class BigDealDeckController : MonoBehaviourPunCallbacks
 
     public void DrawCardToHand()
     {
-
-        if (activeCards.Count <= 0)
-        {
-            photonView.RPC("setUpdeckToEveryone", RpcTarget.All);
-            //SetUpDeck();
-        }
 
         BigDealCard newCard = Instantiate(cardsToSpawns, transform.position, transform.rotation);
         newCard.cardBCSO = activeCards[0];
