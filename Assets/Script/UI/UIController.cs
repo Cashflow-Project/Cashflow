@@ -206,7 +206,7 @@ public class UIController : MonoBehaviourPunCallbacks
     public void Quit()
     {
         photonView.RPC("UpdateToAllPlayerState", RpcTarget.All, PhotonNetwork.LocalPlayer.ActorNumber - 1);
-        
+        UIController.instance.BlurBg.SetActive(true);
     }
 
 
@@ -218,7 +218,16 @@ public class UIController : MonoBehaviourPunCallbacks
         {
             GameManager.instace.state = GameManager.States.SWITCH_PLAYER;
         }
-        UIController.instance.BlurBg.SetActive(true);
+        if (PhotonNetwork.IsMasterClient)
+        {
+            // Find the next player to become the Master Client
+            Player[] players = PhotonNetwork.PlayerListOthers;
+            if (players.Length > 0)
+            {
+                // Transfer Master Client role to the next player
+                PhotonNetwork.SetMasterClient(players[0]);
+            }
+        }
 
 
     }

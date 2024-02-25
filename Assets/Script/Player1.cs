@@ -25,7 +25,7 @@ public class Player1 : MonoBehaviourPunCallbacks
 
     int routePosition;
     int startNodeIndex;
-    
+
     int steps;
     int doneSteps;
     public int turncounts = 1;
@@ -35,7 +35,7 @@ public class Player1 : MonoBehaviourPunCallbacks
     bool isMoving;
 
     bool hasTurn;//human input
-    
+
 
     [Header("SELECTOR")]
     public GameObject selector;
@@ -49,7 +49,7 @@ public class Player1 : MonoBehaviourPunCallbacks
         startNodeIndex = commonRoute.RequestPosition(startNode.gameObject.transform);
 
         CreateFullRoute();
-        
+
         SetSelector(false);
 
     }
@@ -61,9 +61,9 @@ public class Player1 : MonoBehaviourPunCallbacks
             int tempPos = startNodeIndex + i;
             tempPos %= commonRoute.childNodeList.Count;
 
-            fullRoute.Add(commonRoute.childNodeList[tempPos+1].GetComponent<Node>());
+            fullRoute.Add(commonRoute.childNodeList[tempPos + 1].GetComponent<Node>());
         }
-        
+
         for (int i = 0; i < outerRoute.childNodeList.Count; i++)
         {
             outterRoute.Add(outerRoute.childNodeList[i].GetComponent<Node>());
@@ -72,7 +72,7 @@ public class Player1 : MonoBehaviourPunCallbacks
 
     void Update()
     {
-        
+
     }
 
     IEnumerator Move()
@@ -81,9 +81,9 @@ public class Player1 : MonoBehaviourPunCallbacks
         if (GameManager.instace.playerList[GameManager.instace.activePlayer].EnterOuter == true)
         {
             GameManager.instace.playerList[GameManager.instace.activePlayer].EnterOuter = false;
- 
+
         }
-        
+
         if (GameManager.instace.playerList[GameManager.instace.activePlayer].hasOutside == true)
         {
             fullRoute = outterRoute;
@@ -125,7 +125,7 @@ public class Player1 : MonoBehaviourPunCallbacks
                 photonView.RPC("valueUpdate", RpcTarget.All);
                 GameManager.instace.playerList[GameManager.instace.activePlayer].money = GameManager.instace.playerList[GameManager.instace.activePlayer].money + GameManager.instace.playerList[GameManager.instace.activePlayer].getmoney;
                 photonView.RPC("UpdateMoney", RpcTarget.All, GameManager.instace.playerList[GameManager.instace.activePlayer].money, GameManager.instace.activePlayer);
-                if(GameManager.instace.playerList[GameManager.instace.activePlayer].getmoney <= 0 && GameManager.instace.playerList[GameManager.instace.activePlayer].money < Math.Abs(GameManager.instace.playerList[GameManager.instace.activePlayer].getmoney))
+                if (GameManager.instace.playerList[GameManager.instace.activePlayer].getmoney <= 0 && GameManager.instace.playerList[GameManager.instace.activePlayer].money < Math.Abs(GameManager.instace.playerList[GameManager.instace.activePlayer].getmoney))
                 {
                     //lose
                     GameManager.instace.playerList[GameManager.instace.activePlayer].playerType = GameManager.Entity.PlayerTypes.NO_PLAYER;
@@ -135,9 +135,9 @@ public class Player1 : MonoBehaviourPunCallbacks
                 }
             }
 
-            
-            
-            
+
+
+
             yield return new WaitForSeconds(0.1f);
             cTime = 0;
             steps--;
@@ -145,13 +145,13 @@ public class Player1 : MonoBehaviourPunCallbacks
             //Debug.Log(doneSteps);
         }
 
-       
+
         isMoving = false;
 
 
         if (isMoving == false)
         {
-            
+
             //red route
             if (routePosition % fullRoute.Count == 2 || routePosition % fullRoute.Count == 10 || routePosition % fullRoute.Count == 18)
             {
@@ -172,8 +172,8 @@ public class Player1 : MonoBehaviourPunCallbacks
             }
 
 
-            if (routePosition % fullRoute.Count == 8 || routePosition % fullRoute.Count == 16 
-                ||  (routePosition % fullRoute.Count == 0 && fullRoute.Count - routePosition == fullRoute.Count && GameManager.instace.playerList[GameManager.instace.activePlayer].remiderPosition == true))
+            if (routePosition % fullRoute.Count == 8 || routePosition % fullRoute.Count == 16
+                || (routePosition % fullRoute.Count == 0 && fullRoute.Count - routePosition == fullRoute.Count && GameManager.instace.playerList[GameManager.instace.activePlayer].remiderPosition == true))
             {
                 //
                 Debug.Log("in blue route");
@@ -195,8 +195,8 @@ public class Player1 : MonoBehaviourPunCallbacks
 
                 //test if donate
                 photonView.RPC("ShowDonateCardToAllPlayerRPC", RpcTarget.All);
-                
-                
+
+
                 //GameManager.instace.state = GameManager.States.SWITCH_PLAYER;
             }
             //purple2 route
@@ -205,7 +205,7 @@ public class Player1 : MonoBehaviourPunCallbacks
                 Debug.Log("in purple 2 route");
                 photonView.RPC("valueUpdate", RpcTarget.All);
                 //UIController.instance.passButton.SetActive(IsMyTurn());
-                if (((GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].getmoney * 10) - GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].loanBank) > 0  
+                if (((GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].getmoney * 10) - GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].loanBank) > 0
                     && ((GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].getmoney * 10) - GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].loanBank) >= GameManager.instace.playerList[GameManager.instace.activePlayer].paid
                     && GameManager.instace.playerList[GameManager.instace.activePlayer].money < GameManager.instace.playerList[GameManager.instace.activePlayer].paid)
                 {
@@ -230,7 +230,7 @@ public class Player1 : MonoBehaviourPunCallbacks
                     UIController.instance.BlurBg.SetActive(true);
                     UIController.instance.lostShow.SetActive(true);
                 }
-                
+
                 //GameManager.instace.state = GameManager.States.SWITCH_PLAYER;
 
             }
@@ -268,7 +268,7 @@ public class Player1 : MonoBehaviourPunCallbacks
 
     }
 
-    bool MoveInArcToNextNode(Vector3 startPos,Vector3 lastPos,float speed)
+    bool MoveInArcToNextNode(Vector3 startPos, Vector3 lastPos, float speed)
     {
         cTime += speed * Time.deltaTime;
         Vector3 myPos = Vector3.Lerp(startPos, lastPos, cTime);
@@ -278,8 +278,8 @@ public class Player1 : MonoBehaviourPunCallbacks
         return lastPos != (transform.position = Vector3.Lerp(transform.position, myPos, cTime));
     }
 
-    
-    
+
+
 
     public bool ReturnIsOut()
     {
@@ -292,17 +292,17 @@ public class Player1 : MonoBehaviourPunCallbacks
         isOut = true;
         routePosition = 0;
         //start coroutine
-        
+
         //StartCoroutine(MoveOut());
     }
 
 
 
-    
+
 
     public void StartTheMove(int DiceNumber)
     {
-        
+
         steps = DiceNumber;
         photonView.RPC("MovePlayer", RpcTarget.All);
 
@@ -331,11 +331,11 @@ public class Player1 : MonoBehaviourPunCallbacks
 
         }
     }
-  
+
     public void tohasturn()
     {
-     if (GameManager.instace.playerList[GameManager.instace.activePlayer].hasTurn)
-     {
+        if (GameManager.instace.playerList[GameManager.instace.activePlayer].hasTurn)
+        {
 
             if (GameManager.instace.playerList[GameManager.instace.activePlayer].isClick2Dice == true)
             {
@@ -349,7 +349,7 @@ public class Player1 : MonoBehaviourPunCallbacks
             }
 
         }
-     
+
         GameManager.instace.DeactivateAllSelector();
     }
 
@@ -365,7 +365,7 @@ public class Player1 : MonoBehaviourPunCallbacks
         StartTheMove(GameManager.instace.rolledhumanDice);
         GameManager.instace.playerList[GameManager.instace.activePlayer].isClick2Dice = false;
         photonView.RPC("CheckClick2Dice", RpcTarget.All, GameManager.instace.playerList[GameManager.instace.activePlayer].isClick2Dice);
-        
+
 
     }
 
@@ -423,7 +423,7 @@ public class Player1 : MonoBehaviourPunCallbacks
     void EndTurnPlayer()
     {
         UIController.instance.passButton.SetActive(IsMyTurn());
-        
+
     }
 
     [PunRPC]
@@ -481,7 +481,7 @@ public class Player1 : MonoBehaviourPunCallbacks
         //note collect
         GameManager.Note myNote = new GameManager.Note();
         myNote.CardName = "- " + "Donate";
-        myNote.price = GameManager.instace.playerList[GameManager.instace.activePlayer].allRecieve /10;
+        myNote.price = GameManager.instace.playerList[GameManager.instace.activePlayer].allRecieve / 10;
         GameManager.instace.playerList[GameManager.instace.activePlayer].Keep.Add(myNote);
 
     }
@@ -497,7 +497,7 @@ public class Player1 : MonoBehaviourPunCallbacks
     }
 
     [PunRPC]
-    void setDonate(bool isDonate,int count)
+    void setDonate(bool isDonate, int count)
     {
         GameManager.instace.playerList[GameManager.instace.activePlayer].hasDonate = isDonate;
         GameManager.instace.playerList[GameManager.instace.activePlayer].hasDonateCount = count;
@@ -556,9 +556,9 @@ public class Player1 : MonoBehaviourPunCallbacks
         GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].loanBank -= loan;
     }
 
-    
+
     [PunRPC]
-    void UpdateLoanMoney(int money, int x,int loan)
+    void UpdateLoanMoney(int money, int x, int loan)
     {
         GameManager.instace.playerList[x].money = money;
         //note collect
@@ -569,4 +569,4 @@ public class Player1 : MonoBehaviourPunCallbacks
 
     }
 }
-    
+

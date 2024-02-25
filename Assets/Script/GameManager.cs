@@ -149,13 +149,13 @@ public class GameManager : MonoBehaviourPunCallbacks
     public class Note
     {
         public string CardName;
-        public int price; 
+        public int price;
     }
 
     [System.Serializable]
     public class Entity
     {
-       
+
         public string playerName;
         public enum PlayerTypes
         {
@@ -185,7 +185,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         public int allRecieve;
         public int getmoney;
         //��¨��
-        
+
         public int tax;
         public int homeMortgage;
         public int learnMortgage;
@@ -210,7 +210,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 
         public Player1[] myPlayers;
         public bool hasTurn;
-        
+
         public bool hasOutside;
         public bool hasDonate;
         public bool isClick2Dice;
@@ -239,7 +239,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 
         public bool isOpenPage1;
         public List<DealKeep> DealList = new List<DealKeep>();
-        
+
 
         public List<ON2UKeep> ON2UList = new List<ON2UKeep>();
         public List<MYT4UKeep> MYT4UList = new List<MYT4UKeep>();
@@ -264,7 +264,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     //STATEMACHINE
     public enum States
     {
-        WAITING,ROLL_DICE,ACTION,SWITCH_PLAYER,START_TURN
+        WAITING, ROLL_DICE, ACTION, SWITCH_PLAYER, START_TURN
     }
     public States state;
 
@@ -275,7 +275,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     public GameObject diceButton;
     public GameObject DoublediceButton;
     public Text TurnUI;
-    [HideInInspector]public int rolledhumanDice;
+    [HideInInspector] public int rolledhumanDice;
 
     public GameObject player1;
     public GameObject player2;
@@ -295,7 +295,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         instace = this;
 
         //photonView = GetComponent<PhotonView>();
-     
+
 
     }
 
@@ -306,10 +306,10 @@ public class GameManager : MonoBehaviourPunCallbacks
         RandomFirstPlayer();
         playerJobSetting();
         ActivateButton(false);
-        
+
     }
-   
-    
+
+
     void Update()
     {
 
@@ -320,7 +320,7 @@ public class GameManager : MonoBehaviourPunCallbacks
             {
                 case States.START_TURN:
                     {
-                       //check win condition
+                        //check win condition
                         if (playerList[activePlayer].income > playerList[activePlayer].paid)
                         {
                             playerList[activePlayer].EnterOuter = true;
@@ -336,34 +336,34 @@ public class GameManager : MonoBehaviourPunCallbacks
                         Debug.Log("activeplayer now " + activePlayer);
                         playerList[activePlayer].myPlayers[0].SetSelector(true);
                         //check donate
-                        if(playerList[activePlayer].hasDonateCount > 0)
+                        if (playerList[activePlayer].hasDonateCount > 0)
                         {
                             playerList[activePlayer].hasDonateCount--;
-                            if(playerList[activePlayer].hasDonateCount == 0)
+                            if (playerList[activePlayer].hasDonateCount == 0)
                             {
                                 playerList[activePlayer].hasDonate = false;
-                                
+
                             }
                             photonView.RPC("setDonate", RpcTarget.All, playerList[activePlayer].hasDonate, playerList[activePlayer].hasDonateCount);
                         }
-                        
+
                         playerList[activePlayer].myPlayers[0].turncounts++;
 
                         photonView.RPC("turnCountRPC", RpcTarget.All, playerList[activePlayer].myPlayers[0].turncounts);
 
                         //check unemployee
                         if (playerList[activePlayer].hasJobCount == 0)
-                            {
-                                state = States.ROLL_DICE;
-                            }
+                        {
+                            state = States.ROLL_DICE;
+                        }
                         else if (playerList[activePlayer].hasJobCount > 0)
-                            {
+                        {
                             playerList[activePlayer].hasJobCount--;
                             photonView.RPC("setJobCount", RpcTarget.All, playerList[activePlayer].hasJobCount);
-                            
-                                state = States.SWITCH_PLAYER;
 
-                            
+                            state = States.SWITCH_PLAYER;
+
+
                         }
 
                         playerList[activePlayer].isSpendAlready = false;
@@ -372,18 +372,18 @@ public class GameManager : MonoBehaviourPunCallbacks
                     break;
                 case States.ROLL_DICE:
                     {
-                            
-                            //Deactivate Highlight
-                            ActivateButton(true);
+
+                        //Deactivate Highlight
+                        ActivateButton(true);
                         photonView.RPC("DiceReset", RpcTarget.All);
 
-                    state = States.WAITING;
+                        state = States.WAITING;
                     }
                     break;
                 case States.WAITING:
                     {
-                        
-                        
+
+
                     }
                     break;
                 case States.ACTION:
@@ -393,21 +393,21 @@ public class GameManager : MonoBehaviourPunCallbacks
                     break;
                 case States.SWITCH_PLAYER:
                     {
-                        
-                            //Deactivate button
 
-                            //Deactivate Highlight
-                            playerList[activePlayer].myPlayers[0].SetSelector(false);
-                        
+                        //Deactivate button
 
-                            StartCoroutine(SwitchPlayer());
-                        
+                        //Deactivate Highlight
+                        playerList[activePlayer].myPlayers[0].SetSelector(false);
+
+
+                        StartCoroutine(SwitchPlayer());
+
                         state = States.WAITING;
-                        
+
                     }
                     break;
             }
-            
+
         }
         //----------------------------------------------------------------------------NO PLAYER
         if (playerList[activePlayer].playerType == Entity.PlayerTypes.NO_PLAYER)
@@ -421,7 +421,7 @@ public class GameManager : MonoBehaviourPunCallbacks
                     break;
                 case States.ROLL_DICE:
                     {
-                        
+
                     }
                     break;
                 case States.WAITING:
@@ -443,11 +443,11 @@ public class GameManager : MonoBehaviourPunCallbacks
             }
         }
     }
-  
+
     public void RollDice(int _diceNumber)
     {
         int DiceNumber = _diceNumber;
-       
+
         if (playerList[activePlayer].playerType == Entity.PlayerTypes.HUMAN)
         {
             if (dice2.diceValue > 0)
@@ -466,22 +466,22 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     IEnumerator SwitchPlayer()
     {
-        
+
         Debug.Log(activePlayer);
-        if (switchingPlayer || GameManager.instace.activePlayer != activePlayer )
+        if (switchingPlayer || GameManager.instace.activePlayer != activePlayer)
         {
             yield break;
         }
         switchingPlayer = true;
 
         yield return new WaitForSeconds(2);
-            
-            //SET NEXT PLAYER
+
+        //SET NEXT PLAYER
         SetNextActivePlayer();
         //Debug.Log(activePlayer);
         //playerInRoomChecking();
         switchingPlayer = false;
-    
+
 
     }
     IEnumerator noPlayerPassturn()
@@ -526,7 +526,7 @@ public class GameManager : MonoBehaviourPunCallbacks
             state = States.WAITING;
             return;
         }*/
-        
+
 
     }
 
@@ -534,7 +534,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     {
 
         turnPossible = possible;
-       
+
     }
 
 
@@ -542,15 +542,15 @@ public class GameManager : MonoBehaviourPunCallbacks
     {
         //show some ui
         playerList[activePlayer].hasOutside = true;
-/*
-        for (int i = 0; i < SaveSettings.winners.Length; i++)
-        {
-            if (SaveSettings.winners[i] == "")
-            {
-                SaveSettings.winners[i] = playerList[activePlayer].playerName;
-                break;
-            }
-        }*/
+        /*
+                for (int i = 0; i < SaveSettings.winners.Length; i++)
+                {
+                    if (SaveSettings.winners[i] == "")
+                    {
+                        SaveSettings.winners[i] = playerList[activePlayer].playerName;
+                        break;
+                    }
+                }*/
 
     }
 
@@ -577,7 +577,7 @@ public class GameManager : MonoBehaviourPunCallbacks
             DoublediceButton.SetActive(on);
         }
     }
-    
+
     public void DeactivateAllSelector()
     {
         for (int i = 0; i < playerList.Count; i++)
@@ -608,10 +608,10 @@ public class GameManager : MonoBehaviourPunCallbacks
     {
         UIController.instance.passButton.SetActive(false);
         playerList[activePlayer].isInRedRoute = false;
-        
-        photonView.RPC("setOtherOff", RpcTarget.All); 
+
+        photonView.RPC("setOtherOff", RpcTarget.All);
         state = States.SWITCH_PLAYER;
-        
+
     }
 
     public void HumanRollDice()
@@ -619,14 +619,14 @@ public class GameManager : MonoBehaviourPunCallbacks
 
         List<Player1> moveablePlayers = new List<Player1>();
         moveablePlayers.Add(playerList[activePlayer].myPlayers[0]);
-        
+
         for (int i = 0; i < moveablePlayers.Count; i++)
         {
             if (moveablePlayers.Count > 0)
             {
                 moveablePlayers[i].SetSelector(true);
                 moveablePlayers[i].tohasturn();
-                
+
             }
             else
             {
@@ -634,9 +634,9 @@ public class GameManager : MonoBehaviourPunCallbacks
                 state = States.SWITCH_PLAYER;
             }
         }
-    } 
+    }
 
-    List <Player1> PossiblePlayer()
+    List<Player1> PossiblePlayer()
     {
         List<Player1> tempList = new List<Player1>();
 
@@ -654,7 +654,7 @@ public class GameManager : MonoBehaviourPunCallbacks
             {
                 photonView.RPC("SetStartingPlayer", RpcTarget.All, randomPlayer);
             }
- 
+
         }
     }
 
@@ -717,7 +717,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         }
     }
 
-    
+
     public void playerJobSetting()
     {
         if (PhotonNetwork.IsMasterClient)
@@ -725,7 +725,7 @@ public class GameManager : MonoBehaviourPunCallbacks
             for (int i = 0; i < GameManager.instace.playerList.Count; i++)
             {
                 GameManager.instace.playerList[i].playerJob = GameManager.RandomEnum.Of<GameManager.Entity.Jobs>();
-                photonView.RPC("SetPlayerJob", RpcTarget.All, playerList[i].playerJob,i);
+                photonView.RPC("SetPlayerJob", RpcTarget.All, playerList[i].playerJob, i);
                 //CheckingJob(i);
             }
 
@@ -748,7 +748,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 
             GameManager.instace.playerList[i].firstMoney = 35000;
 
-            
+
 
             GameManager.instace.playerList[i].salary = 132000;
             GameManager.instace.playerList[i].income = 0;
@@ -788,7 +788,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         if (GameManager.instace.playerList[i].playerJob == GameManager.Entity.Jobs.LAWER)
         {
             GameManager.instace.playerList[i].firstMoney = 20000;
-            
+
             GameManager.instace.playerList[i].salary = 75000;
             GameManager.instace.playerList[i].income = 0;
             GameManager.instace.playerList[i].allRecieve = GameManager.instace.playerList[i].salary + GameManager.instace.playerList[i].income;
@@ -826,7 +826,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         if (GameManager.instace.playerList[i].playerJob == GameManager.Entity.Jobs.POLICE)
         {
             GameManager.instace.playerList[i].firstMoney = 5000;
-            
+
             GameManager.instace.playerList[i].salary = 30000;
             GameManager.instace.playerList[i].income = 0;
             GameManager.instace.playerList[i].allRecieve = GameManager.instace.playerList[i].salary + GameManager.instace.playerList[i].income;
@@ -1185,12 +1185,12 @@ public class GameManager : MonoBehaviourPunCallbacks
 
         }
 
-    
-}
+
+    }
 
 
     [PunRPC]
-    void SetPlayerJob(Entity.Jobs jobPlayer,int i)
+    void SetPlayerJob(Entity.Jobs jobPlayer, int i)
     {
         Debug.Log("SetPlayerJob RPC called with jobPlayer: " + jobPlayer);
         playerList[i].playerJob = jobPlayer;
@@ -1207,7 +1207,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     void nextPlayerRPC(int nextPlayer)
     {
         activePlayer = nextPlayer;
-        
+
     }
     [PunRPC]
     void nextPlayerSetRPC()
@@ -1216,7 +1216,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         while (playerList[activePlayer].playerType == Entity.PlayerTypes.NO_PLAYER)
         {
             activePlayer++;
-            
+
             if (activePlayer >= playerList.Count)
             {
                 activePlayer = 0;
@@ -1266,7 +1266,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         dice2.Reset();
     }
 
-    
+
     [PunRPC]
     void HumanRollD()
     {

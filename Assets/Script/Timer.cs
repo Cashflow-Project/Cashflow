@@ -76,7 +76,7 @@ public class Timer : MonoBehaviourPunCallbacks
                 //timer <= 0
                 Flash();
                 photonView.RPC("TimeLessThanZero", RpcTarget.All);
-                
+
             }
             /*
             if (GameManager.instace.state == GameManager.States.START_TURN)
@@ -126,7 +126,7 @@ public class Timer : MonoBehaviourPunCallbacks
         float minites = Mathf.FloorToInt(time / 60);
         float seconds = Mathf.FloorToInt(time % 60);
 
-        string currentTime = string.Format("{00:00}{01:00}",minites,seconds);
+        string currentTime = string.Format("{00:00}{01:00}", minites, seconds);
         firstMinutes.text = currentTime[0].ToString();
         secondMinutes.text = currentTime[1].ToString();
         firstSeconds.text = currentTime[2].ToString();
@@ -135,7 +135,7 @@ public class Timer : MonoBehaviourPunCallbacks
 
     private void Flash()
     {
-        if(Countdown && timer != 0)
+        if (Countdown && timer != 0)
         {
             timer = 0;
             UpdateTimerDisplay(timer);
@@ -151,11 +151,13 @@ public class Timer : MonoBehaviourPunCallbacks
         if (flashTimer <= 0)
         {
             flashTimer = flashDuration;
-        }else if(flashTimer >= flashDuration/2)
+        }
+        else if (flashTimer >= flashDuration / 2)
         {
             flashTimer -= Time.deltaTime;
             SetTextDisplay(false);
-        }else
+        }
+        else
         {
             flashTimer -= Time.deltaTime;
             SetTextDisplay(true);
@@ -174,77 +176,81 @@ public class Timer : MonoBehaviourPunCallbacks
     [PunRPC]
     void TimeLessThanZero()
     {
-            if ((GameManager.instace.state == GameManager.States.START_TURN || GameManager.instace.state == GameManager.States.ROLL_DICE)
-                    && GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].isInRedRoute == false)
-            {
-                UIController.instance.cardShow.enabled = false;
-                GameManager.instace.ActivateButton(false);
-                UIController.instance.InvestCanvas.SetActive(false);
-                UIController.instance.passButton.SetActive(false);
-                UIController.instance.SellListFromMarketCanvas.SetActive(false);
-                UIController.instance.MarketPayButton.SetActive(false); ;
-                UIController.instance.MarketSellButton.SetActive(false);
-                ResetTimer();
-                GameManager.instace.state = GameManager.States.SWITCH_PLAYER;
-            }
-            else if (GameManager.instace.state == GameManager.States.WAITING && GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].isInRedRoute == false)
-            {
+        if ((GameManager.instace.state == GameManager.States.START_TURN || GameManager.instace.state == GameManager.States.ROLL_DICE)
+                && GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].isInRedRoute == false)
+        {
+            UIController.instance.cardShow.enabled = false;
+            GameManager.instace.ActivateButton(false);
+            UIController.instance.InvestCanvas.SetActive(false);
+            UIController.instance.passButton.SetActive(false);
+            UIController.instance.ChooseBigSmall.SetActive(false);
+            UIController.instance.SellListFromMarketCanvas.SetActive(false);
+            UIController.instance.MarketDrawButton.SetActive(false);
+            UIController.instance.MarketPayButton.SetActive(false); ;
+            UIController.instance.MarketSellButton.SetActive(false);
+            ResetTimer();
+            GameManager.instace.state = GameManager.States.SWITCH_PLAYER;
+        }
+        else if (GameManager.instace.state == GameManager.States.WAITING && GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].isInRedRoute == false)
+        {
             UIController.instance.cardShow.enabled = false;
             UIController.instance.SetAllFalse(false);
-                GameManager.instace.ActivateButton(false);
-                UIController.instance.InvestCanvas.SetActive(false);
-                UIController.instance.passButton.SetActive(false);
-                UIController.instance.SellListFromMarketCanvas.SetActive(false);
-                UIController.instance.MarketPayButton.SetActive(false); ;
-                UIController.instance.MarketSellButton.SetActive(false);
+            GameManager.instace.ActivateButton(false);
+            UIController.instance.InvestCanvas.SetActive(false);
+            UIController.instance.passButton.SetActive(false);
+            UIController.instance.ChooseBigSmall.SetActive(false);
+            UIController.instance.SellListFromMarketCanvas.SetActive(false);
+            UIController.instance.MarketDrawButton.SetActive(false);
+            UIController.instance.MarketPayButton.SetActive(false); ;
+            UIController.instance.MarketSellButton.SetActive(false);
             ResetTimer();
-                GameManager.instace.state = GameManager.States.SWITCH_PLAYER;
-            }
-            else if (GameManager.instace.state == GameManager.States.WAITING && GameManager.instace.playerList[GameManager.instace.activePlayer].isInRedRoute == true
-                && GameManager.instace.playerList[GameManager.instace.activePlayer].isDrawButtonOn == true
-                && GameManager.instace.playerList[GameManager.instace.activePlayer].isSpendAlready == false)
-            {
+            GameManager.instace.state = GameManager.States.SWITCH_PLAYER;
+        }
+        else if (GameManager.instace.state == GameManager.States.WAITING && GameManager.instace.playerList[GameManager.instace.activePlayer].isInRedRoute == true
+            && GameManager.instace.playerList[GameManager.instace.activePlayer].isDrawButtonOn == true
+            && GameManager.instace.playerList[GameManager.instace.activePlayer].isSpendAlready == false)
+        {
             UIController.instance.cardShow.enabled = false;
             UIController.instance.drawButton.SetActive(false);
-                GameManager.instace.playerList[GameManager.instace.activePlayer].isDrawButtonOn = false;
-                SpendDeckController.instance.DrawCardToHand();
-                //delay
-                SpendDeckController.instance.PayCost();
-                //GameManager.instace.playerList[GameManager.instace.activePlayer].isSpendAlready = true;
-                UIController.instance.SetAllFalse(false);
-                GameManager.instace.ActivateButton(false);
-                UIController.instance.passButton.SetActive(false);
-                GameManager.instace.playerList[GameManager.instace.activePlayer].isInRedRoute = false;
-                ResetTimer();
-                GameManager.instace.state = GameManager.States.SWITCH_PLAYER;
-            }
-            else if (GameManager.instace.state == GameManager.States.WAITING && GameManager.instace.playerList[GameManager.instace.activePlayer].isInRedRoute == true
-                && GameManager.instace.playerList[GameManager.instace.activePlayer].isDrawButtonOn == false
-                && GameManager.instace.playerList[GameManager.instace.activePlayer].isSpendAlready == false)
-            {
+            GameManager.instace.playerList[GameManager.instace.activePlayer].isDrawButtonOn = false;
+            SpendDeckController.instance.DrawCardToHand();
+            //delay
+            SpendDeckController.instance.PayCost();
+            //GameManager.instace.playerList[GameManager.instace.activePlayer].isSpendAlready = true;
+            UIController.instance.SetAllFalse(false);
+            GameManager.instace.ActivateButton(false);
+            UIController.instance.passButton.SetActive(false);
+            GameManager.instace.playerList[GameManager.instace.activePlayer].isInRedRoute = false;
+            ResetTimer();
+            GameManager.instace.state = GameManager.States.SWITCH_PLAYER;
+        }
+        else if (GameManager.instace.state == GameManager.States.WAITING && GameManager.instace.playerList[GameManager.instace.activePlayer].isInRedRoute == true
+            && GameManager.instace.playerList[GameManager.instace.activePlayer].isDrawButtonOn == false
+            && GameManager.instace.playerList[GameManager.instace.activePlayer].isSpendAlready == false)
+        {
             UIController.instance.cardShow.enabled = false;
             SpendDeckController.instance.PayCost();
-                UIController.instance.SetAllFalse(false);
-                GameManager.instace.ActivateButton(false);
-                UIController.instance.passButton.SetActive(false);
-                GameManager.instace.playerList[GameManager.instace.activePlayer].isInRedRoute = false;
-                ResetTimer();
-                GameManager.instace.state = GameManager.States.SWITCH_PLAYER;
-            }
-            else if (GameManager.instace.state == GameManager.States.WAITING && GameManager.instace.playerList[GameManager.instace.activePlayer].isInRedRoute == true
-                && GameManager.instace.playerList[GameManager.instace.activePlayer].isDrawButtonOn == false
-                && GameManager.instace.playerList[GameManager.instace.activePlayer].isSpendAlready == true)
-            {
+            UIController.instance.SetAllFalse(false);
+            GameManager.instace.ActivateButton(false);
+            UIController.instance.passButton.SetActive(false);
+            GameManager.instace.playerList[GameManager.instace.activePlayer].isInRedRoute = false;
+            ResetTimer();
+            GameManager.instace.state = GameManager.States.SWITCH_PLAYER;
+        }
+        else if (GameManager.instace.state == GameManager.States.WAITING && GameManager.instace.playerList[GameManager.instace.activePlayer].isInRedRoute == true
+            && GameManager.instace.playerList[GameManager.instace.activePlayer].isDrawButtonOn == false
+            && GameManager.instace.playerList[GameManager.instace.activePlayer].isSpendAlready == true)
+        {
             UIController.instance.cardShow.enabled = false;
             UIController.instance.SetAllFalse(false);
-                GameManager.instace.ActivateButton(false);
-                UIController.instance.passButton.SetActive(false);
+            GameManager.instace.ActivateButton(false);
+            UIController.instance.passButton.SetActive(false);
 
-                GameManager.instace.playerList[GameManager.instace.activePlayer].isInRedRoute = false;
-                ResetTimer();
-                GameManager.instace.state = GameManager.States.SWITCH_PLAYER;
-            }
-        
-        
+            GameManager.instace.playerList[GameManager.instace.activePlayer].isInRedRoute = false;
+            ResetTimer();
+            GameManager.instace.state = GameManager.States.SWITCH_PLAYER;
+        }
+
+
     }
 }
