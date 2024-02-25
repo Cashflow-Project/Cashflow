@@ -206,11 +206,25 @@ public class UIController : MonoBehaviourPunCallbacks
     public void Quit()
     {
         photonView.RPC("UpdateToAllPlayerState", RpcTarget.All, PhotonNetwork.LocalPlayer.ActorNumber - 1);
+                // Leave the current room
+         PhotonNetwork.LeaveRoom();
+         SceneManager.LoadScene("Lobby");
+        /*
+        if (PhotonNetwork.IsMasterClient)
+        {
+            if (GameManager.instace.playerList.Count > 0)
+            {
+                Player[] players = PhotonNetwork.PlayerListOthers;
+                // Transfer Master Client role to the next player
+                PhotonNetwork.SetMasterClient(players[0]);
+            }
+        }*/
         
         //PhotonNetwork.LeaveRoom();
         //PhotonNetwork.Disconnect();
         //PhotonNetwork.LoadLevel("Lobby");
     }
+
 
     [PunRPC]
     void UpdateToAllPlayerState(int x)

@@ -125,7 +125,7 @@ public class Player1 : MonoBehaviourPunCallbacks
                 photonView.RPC("valueUpdate", RpcTarget.All);
                 GameManager.instace.playerList[GameManager.instace.activePlayer].money = GameManager.instace.playerList[GameManager.instace.activePlayer].money + GameManager.instace.playerList[GameManager.instace.activePlayer].getmoney;
                 photonView.RPC("UpdateMoney", RpcTarget.All, GameManager.instace.playerList[GameManager.instace.activePlayer].money, GameManager.instace.activePlayer);
-                if(GameManager.instace.playerList[GameManager.instace.activePlayer].getmoney < 0 && GameManager.instace.playerList[GameManager.instace.activePlayer].money < Math.Abs(GameManager.instace.playerList[GameManager.instace.activePlayer].getmoney))
+                if(GameManager.instace.playerList[GameManager.instace.activePlayer].getmoney <= 0 && GameManager.instace.playerList[GameManager.instace.activePlayer].money < Math.Abs(GameManager.instace.playerList[GameManager.instace.activePlayer].getmoney))
                 {
                     //lose
                     GameManager.instace.playerList[GameManager.instace.activePlayer].playerType = GameManager.Entity.PlayerTypes.NO_PLAYER;
@@ -205,14 +205,32 @@ public class Player1 : MonoBehaviourPunCallbacks
                 Debug.Log("in purple 2 route");
                 photonView.RPC("valueUpdate", RpcTarget.All);
                 //UIController.instance.passButton.SetActive(IsMyTurn());
+                if (((GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].getmoney * 10) - GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].loanBank) > 0  
+                    && ((GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].getmoney * 10) - GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].loanBank) >= GameManager.instace.playerList[GameManager.instace.activePlayer].paid
+                    && GameManager.instace.playerList[GameManager.instace.activePlayer].money < GameManager.instace.playerList[GameManager.instace.activePlayer].paid)
+                {
+                    //auto loan
+                    photonView.RPC("UpdatePayLoan", RpcTarget.All, GameManager.instace.playerList[GameManager.instace.activePlayer].paid);
+                    photonView.RPC("UpdateLoanMoney", RpcTarget.All, GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].money, PhotonNetwork.LocalPlayer.ActorNumber - 1, GameManager.instace.playerList[GameManager.instace.activePlayer].paid);
+                    photonView.RPC("valueUpdate", RpcTarget.All);
+                }
                 GameManager.instace.playerList[GameManager.instace.activePlayer].money -= GameManager.instace.playerList[GameManager.instace.activePlayer].paid;
-                photonView.RPC("UpdateMoneyNoJob", RpcTarget.All, GameManager.instace.playerList[GameManager.instace.activePlayer].money, GameManager.instace.activePlayer); 
+                photonView.RPC("UpdateMoneyNoJob", RpcTarget.All, GameManager.instace.playerList[GameManager.instace.activePlayer].money, GameManager.instace.activePlayer);
                 GameManager.instace.playerList[GameManager.instace.activePlayer].hasDonate = false;
                 GameManager.instace.playerList[GameManager.instace.activePlayer].hasDonateCount = 0;
                 photonView.RPC("setDonate", RpcTarget.All, GameManager.instace.playerList[GameManager.instace.activePlayer].hasDonate, GameManager.instace.playerList[GameManager.instace.activePlayer].hasDonateCount);
                 photonView.RPC("hasNoJob", RpcTarget.All);
                 photonView.RPC("valueUpdate", RpcTarget.All);
                 photonView.RPC("EndTurnPlayer", RpcTarget.All);
+                if (GameManager.instace.playerList[GameManager.instace.activePlayer].getmoney <= 0 && GameManager.instace.playerList[GameManager.instace.activePlayer].money < GameManager.instace.playerList[GameManager.instace.activePlayer].paid)
+                {
+                    //lose
+                    GameManager.instace.playerList[GameManager.instace.activePlayer].playerType = GameManager.Entity.PlayerTypes.NO_PLAYER;
+                    GameManager.instace.state = GameManager.States.SWITCH_PLAYER;
+                    UIController.instance.BlurBg.SetActive(true);
+                    UIController.instance.lostShow.SetActive(true);
+                }
+                
                 //GameManager.instace.state = GameManager.States.SWITCH_PLAYER;
 
             }
@@ -528,6 +546,27 @@ public class Player1 : MonoBehaviourPunCallbacks
         {
             SpendDeckController.instance.SetUpDeck();
         }
+    }
+
+
+    [PunRPC]
+    void UpdatePayLoan(int loan)
+    {
+        GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].money -= loan;
+        GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].loanBank -= loan;
+    }
+
+    
+    [PunRPC]
+    void UpdateLoanMoney(int money, int x,int loan)
+    {
+        GameManager.instace.playerList[x].money = money;
+        //note collect
+        GameManager.Note myNote = new GameManager.Note();
+        myNote.CardName = "- " + " Pay Loan";
+        myNote.price = loan;
+        GameManager.instace.playerList[GameManager.instace.activePlayer].Keep.Add(myNote);
+
     }
 }
     

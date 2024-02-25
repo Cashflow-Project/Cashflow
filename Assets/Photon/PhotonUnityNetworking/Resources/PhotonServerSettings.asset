@@ -115,6 +115,7 @@ MonoBehaviour:
   - setUpDeckSmallDealToEveryone
   - setUpDeckBigDealToEveryone
   - setUpDeckSpendToEveryone
+  - UpdateLoanMoney
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

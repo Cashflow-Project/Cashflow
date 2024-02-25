@@ -153,6 +153,14 @@ public class SpendDeckController : MonoBehaviourPunCallbacks
                 GameManager.instace.playerList[GameManager.instace.activePlayer].isSpendAlready = true;
                 UIController.instance.passButton.SetActive(true);
             }
+            else if (GameManager.instace.playerList[GameManager.instace.activePlayer].getmoney <= 0 && GameManager.instace.playerList[GameManager.instace.activePlayer].money < usedCards[cardcount - 1].payCost)
+            {
+                //lose
+                GameManager.instace.playerList[GameManager.instace.activePlayer].playerType = GameManager.Entity.PlayerTypes.NO_PLAYER;
+                GameManager.instace.state = GameManager.States.SWITCH_PLAYER;
+                UIController.instance.BlurBg.SetActive(true);
+                UIController.instance.lostShow.SetActive(true);
+            }
             else
             {
                 UIController.instance.LoanCanvas.SetActive(true);
