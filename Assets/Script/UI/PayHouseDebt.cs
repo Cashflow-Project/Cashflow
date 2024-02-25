@@ -44,7 +44,7 @@ public class PayHouseDebt : MonoBehaviourPunCallbacks
             GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].money -= Int32.Parse(HouseDebtNum.text);
             GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].homeDebt -= Int32.Parse(HouseDebtNum.text);
             GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].homeMortgage = 0;
-            photonView.RPC("UpdatePayHouseDebt", RpcTarget.All, GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].money, GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].homeDebt, GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].homeMortgage);
+            photonView.RPC("UpdatePayHouseDebt", RpcTarget.All, GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].money, GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].homeDebt, GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].homeMortgage, PhotonNetwork.LocalPlayer.ActorNumber - 1);
             UIController.instance.PayHouseDebtCanvas.SetActive(false);
             UIController.instance.BlurBg.SetActive(false);
             photonView.RPC("UpdateMoney", RpcTarget.All, GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].money, PhotonNetwork.LocalPlayer.ActorNumber - 1);
@@ -65,11 +65,11 @@ public class PayHouseDebt : MonoBehaviourPunCallbacks
     }
 
     [PunRPC]
-    void UpdatePayHouseDebt(int money,int homeDebt,int homeMortgage)
+    void UpdatePayHouseDebt(int money,int homeDebt,int homeMortgage,int x)
     {
-        GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].money = money;
-        GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].homeDebt = homeDebt;
-        GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].homeMortgage = homeMortgage;
+        GameManager.instace.playerList[x].money = money;
+        GameManager.instace.playerList[x].homeDebt = homeDebt;
+        GameManager.instace.playerList[x].homeMortgage = homeMortgage;
     }
 
     [PunRPC]
@@ -89,7 +89,7 @@ public class PayHouseDebt : MonoBehaviourPunCallbacks
         GameManager.Note myNote = new GameManager.Note();
         myNote.CardName = "- " + " Pay HouseDebt";
         myNote.price = Int32.Parse(HouseDebtNum.text);
-        GameManager.instace.playerList[GameManager.instace.activePlayer].Keep.Add(myNote);
+        GameManager.instace.playerList[x].Keep.Add(myNote);
 
     }
 }

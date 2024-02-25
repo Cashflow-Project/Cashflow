@@ -44,7 +44,7 @@ public class PayCarDebt : MonoBehaviourPunCallbacks
             GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].money -= Int32.Parse(CarDebtNum.text);
             GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].carDebt -= Int32.Parse(CarDebtNum.text);
             GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].carMortgage = 0;
-            photonView.RPC("UpdatePayCarDebt", RpcTarget.All, GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].money, GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].carDebt, GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].carMortgage);
+            photonView.RPC("UpdatePayCarDebt", RpcTarget.All, GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].money, GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].carDebt, GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].carMortgage, PhotonNetwork.LocalPlayer.ActorNumber - 1);
             UIController.instance.PayCarDebtCanvas.SetActive(false);
             UIController.instance.BlurBg.SetActive(false);
             photonView.RPC("UpdateMoney", RpcTarget.All, GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].money, PhotonNetwork.LocalPlayer.ActorNumber - 1);
@@ -65,11 +65,11 @@ public class PayCarDebt : MonoBehaviourPunCallbacks
     }
 
     [PunRPC]
-    void UpdatePayCarDebt(int money,int carDebt,int carMortgage)
+    void UpdatePayCarDebt(int money,int carDebt,int carMortgage,int x)
     {
-        GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].money = money;
-        GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].carDebt = carDebt;
-        GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].carMortgage = carMortgage ;
+        GameManager.instace.playerList[x].money = money;
+        GameManager.instace.playerList[x].carDebt = carDebt;
+        GameManager.instace.playerList[x].carMortgage = carMortgage ;
     }
 
     [PunRPC]
@@ -89,7 +89,7 @@ public class PayCarDebt : MonoBehaviourPunCallbacks
         GameManager.Note myNote = new GameManager.Note();
         myNote.CardName = "- " + " Pay CarDebt";
         myNote.price = Int32.Parse(CarDebtNum.text);
-        GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].Keep.Add(myNote);
+        GameManager.instace.playerList[x].Keep.Add(myNote);
 
     }
 }

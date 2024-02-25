@@ -45,7 +45,7 @@ public class PayLoan : MonoBehaviourPunCallbacks
     {
         GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].money -= Int32.Parse(PayLoanInputNum.text);
         GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].loanBank -= Int32.Parse(PayLoanInputNum.text);
-        photonView.RPC("UpdatePayLoan", RpcTarget.All, GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].money, GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].loanBank);
+        photonView.RPC("UpdatePayLoan", RpcTarget.All, GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].money, GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].loanBank, PhotonNetwork.LocalPlayer.ActorNumber - 1);
         UIController.instance.PayLoanCanvas.SetActive(false);
         UIController.instance.BlurBg.SetActive(false);
         photonView.RPC("UpdateMoney", RpcTarget.All, GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].money, PhotonNetwork.LocalPlayer.ActorNumber - 1);
@@ -73,10 +73,10 @@ public class PayLoan : MonoBehaviourPunCallbacks
 
     }
     [PunRPC]
-    void UpdatePayLoan(int money,int loanBank)
+    void UpdatePayLoan(int money,int loanBank,int x)
     {
-        GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].money = money;
-        GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].loanBank = loanBank;
+        GameManager.instace.playerList[x].money = money;
+        GameManager.instace.playerList[x].loanBank = loanBank;
     }
 
     [PunRPC]
@@ -96,7 +96,7 @@ public class PayLoan : MonoBehaviourPunCallbacks
         GameManager.Note myNote = new GameManager.Note();
         myNote.CardName = "- " +  " Pay Loan" ;
         myNote.price = Int32.Parse(PayLoanInputNum.text);
-        GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].Keep.Add(myNote);
+        GameManager.instace.playerList[x].Keep.Add(myNote);
 
     }
 }
