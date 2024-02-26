@@ -104,7 +104,7 @@ public class SmallDealDeckController : MonoBehaviourPunCallbacks
 
     public void BuyCost()
     {
-        if(GameManager.instace.playerList[GameManager.instace.activePlayer].money >= usedCards[cardcount - 1].DownPayment && (usedCards[cardcount - 1].ON2U == true || usedCards[cardcount - 1].MYT4U == true || usedCards[cardcount - 1].GRO4US == true || usedCards[cardcount - 1].OK4U == true) )
+        if(usedCards[cardcount - 1].ON2U == true || usedCards[cardcount - 1].MYT4U == true || usedCards[cardcount - 1].GRO4US == true || usedCards[cardcount - 1].OK4U == true) 
         {
             
                 UIController.instance.InvestCanvas.SetActive(true);

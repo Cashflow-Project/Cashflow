@@ -420,7 +420,7 @@ public class SellObjFromMarketCard : MonoBehaviourPunCallbacks
         GameManager.instace.playerList[x].money = money;
         //note collect
         GameManager.Note myNote = new GameManager.Note();
-        myNote.CardName = "+ " + "Sell " + _MarketItemList[i].itemName;
+        myNote.CardName = "+ " + "Sell " + _MarketItemList[i].itemName.text;
         myNote.price = Int32.Parse(_MarketItemList[i].itemPrice.text);
         GameManager.instace.playerList[x].Keep.Add(myNote);
 

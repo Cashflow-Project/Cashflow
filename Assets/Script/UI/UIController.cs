@@ -152,6 +152,12 @@ public class UIController : MonoBehaviourPunCallbacks
 
     }
 
+
+    public void MarketPay()
+    {
+        MarketDeckController.instance.PayCost();
+    }
+
     public void MarketSell()
     {
         SellListFromMarketCanvas.SetActive(true);
