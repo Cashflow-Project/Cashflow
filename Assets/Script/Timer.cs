@@ -183,6 +183,7 @@ public class Timer : MonoBehaviourPunCallbacks
             GameManager.instace.ActivateButton(false);
             UIController.instance.InvestCanvas.SetActive(false);
             UIController.instance.passButton.SetActive(false);
+            UIController.instance.SellButton.SetActive(false);
             UIController.instance.ChooseBigSmall.SetActive(false);
             UIController.instance.SellListFromMarketCanvas.SetActive(false);
             UIController.instance.MarketDrawButton.SetActive(false);
@@ -197,6 +198,7 @@ public class Timer : MonoBehaviourPunCallbacks
             UIController.instance.SetAllFalse(false);
             GameManager.instace.ActivateButton(false);
             UIController.instance.InvestCanvas.SetActive(false);
+            UIController.instance.SellButton.SetActive(false);
             UIController.instance.passButton.SetActive(false);
             UIController.instance.ChooseBigSmall.SetActive(false);
             UIController.instance.SellListFromMarketCanvas.SetActive(false);
@@ -212,6 +214,7 @@ public class Timer : MonoBehaviourPunCallbacks
         {
             UIController.instance.cardShow.enabled = false;
             UIController.instance.drawButton.SetActive(false);
+            UIController.instance.SellButton.SetActive(false);
             GameManager.instace.playerList[GameManager.instace.activePlayer].isDrawButtonOn = false;
             SpendDeckController.instance.DrawCardToHand();
             //delay
@@ -231,6 +234,7 @@ public class Timer : MonoBehaviourPunCallbacks
             UIController.instance.cardShow.enabled = false;
             SpendDeckController.instance.PayCost();
             UIController.instance.SetAllFalse(false);
+            UIController.instance.SellButton.SetActive(false);
             GameManager.instace.ActivateButton(false);
             UIController.instance.passButton.SetActive(false);
             GameManager.instace.playerList[GameManager.instace.activePlayer].isInRedRoute = false;
@@ -244,6 +248,7 @@ public class Timer : MonoBehaviourPunCallbacks
             UIController.instance.cardShow.enabled = false;
             UIController.instance.SetAllFalse(false);
             GameManager.instace.ActivateButton(false);
+            UIController.instance.SellButton.SetActive(false);
             UIController.instance.passButton.SetActive(false);
 
             GameManager.instace.playerList[GameManager.instace.activePlayer].isInRedRoute = false;

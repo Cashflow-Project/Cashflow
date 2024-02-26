@@ -268,7 +268,9 @@ public class SellObjFromMarketCard : MonoBehaviourPunCallbacks
                     if (GameManager.instace.playerList[j].house3s2List[i].isSelected == true)
                     {
                         GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].money = GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].money + Int32.Parse(_MarketItemList[i].itemPrice.text);
+                        GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].income -= GameManager.instace.playerList[j].house3s2List[i].CashflowIncome;
                         photonView.RPC("UpdateMoney", RpcTarget.All, GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].money, PhotonNetwork.LocalPlayer.ActorNumber - 1, i);
+                        photonView.RPC("UpdateIncome", RpcTarget.All, GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].income, PhotonNetwork.LocalPlayer.ActorNumber - 1);
                         UIController.instance.SellListFromMarketCanvas.SetActive(false);
                         UIController.instance.BlurBg.SetActive(false);
                         
@@ -300,7 +302,9 @@ public class SellObjFromMarketCard : MonoBehaviourPunCallbacks
                     if (GameManager.instace.playerList[j].house2s1List[i].isSelected == true)
                     {
                         GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].money = GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].money + Int32.Parse(_MarketItemList[i].itemPrice.text);
+                        GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].income -= GameManager.instace.playerList[j].house2s1List[i].CashflowIncome;
                         photonView.RPC("UpdateMoney", RpcTarget.All, GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].money, PhotonNetwork.LocalPlayer.ActorNumber - 1, i);
+                        photonView.RPC("UpdateIncome", RpcTarget.All, GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].income, PhotonNetwork.LocalPlayer.ActorNumber - 1);
                         UIController.instance.SellListFromMarketCanvas.SetActive(false);
                         UIController.instance.BlurBg.SetActive(false);
                         
@@ -331,7 +335,9 @@ public class SellObjFromMarketCard : MonoBehaviourPunCallbacks
                     if (GameManager.instace.playerList[j].CondominiumList[i].isSelected == true)
                     {
                         GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].money = GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].money + Int32.Parse(_MarketItemList[i].itemPrice.text);
+                        GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].income -= GameManager.instace.playerList[j].CondominiumList[i].CashflowIncome;
                         photonView.RPC("UpdateMoney", RpcTarget.All, GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].money, PhotonNetwork.LocalPlayer.ActorNumber - 1, i);
+                        photonView.RPC("UpdateIncome", RpcTarget.All, GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].income, PhotonNetwork.LocalPlayer.ActorNumber - 1);
                         UIController.instance.SellListFromMarketCanvas.SetActive(false);
                         UIController.instance.BlurBg.SetActive(false);
                         
@@ -361,7 +367,9 @@ public class SellObjFromMarketCard : MonoBehaviourPunCallbacks
                     if (GameManager.instace.playerList[j].CommercialBuildingList[i].isSelected == true)
                     {
                         GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].money = GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].money + Int32.Parse(_MarketItemList[i].itemPrice.text);
+                        GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].income -= GameManager.instace.playerList[j].CommercialBuildingList[i].CashflowIncome;
                         photonView.RPC("UpdateMoney", RpcTarget.All, GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].money, PhotonNetwork.LocalPlayer.ActorNumber - 1, i);
+                        photonView.RPC("UpdateIncome", RpcTarget.All, GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].income, PhotonNetwork.LocalPlayer.ActorNumber - 1);
                         UIController.instance.SellListFromMarketCanvas.SetActive(false);
                         UIController.instance.BlurBg.SetActive(false);
                         
@@ -390,7 +398,9 @@ public class SellObjFromMarketCard : MonoBehaviourPunCallbacks
                     if (GameManager.instace.playerList[j].ApartmentList[i].isSelected == true)
                     {
                         GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].money = GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].money + Int32.Parse(_MarketItemList[i].itemPrice.text);
+                        GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].income -= GameManager.instace.playerList[j].ApartmentList[i].CashflowIncome;
                         photonView.RPC("UpdateMoney", RpcTarget.All, GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].money, PhotonNetwork.LocalPlayer.ActorNumber - 1,i);
+                        photonView.RPC("UpdateIncome", RpcTarget.All, GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].income, PhotonNetwork.LocalPlayer.ActorNumber - 1); 
                         UIController.instance.SellListFromMarketCanvas.SetActive(false);
                         UIController.instance.BlurBg.SetActive(false);
                         
@@ -419,6 +429,13 @@ public class SellObjFromMarketCard : MonoBehaviourPunCallbacks
         myNote2.price = GameManager.instace.playerList[x].money;
         GameManager.instace.playerList[x].Keep.Add(myNote2);
     }
+
+    [PunRPC]
+    void UpdateIncome(int income,int x)
+    {
+        GameManager.instace.playerList[x].income = income;
+    }
+
     [PunRPC]
     void whoCanSell()
     {

@@ -271,6 +271,11 @@ public class UIController : MonoBehaviourPunCallbacks
         myNote.price = GameManager.instace.playerList[GameManager.instace.activePlayer].allRecieve / 10;
         GameManager.instace.playerList[GameManager.instace.activePlayer].Keep.Add(myNote);
 
+        GameManager.Note myNote2 = new GameManager.Note();
+        myNote2.CardName = "= ";
+        myNote2.price = GameManager.instace.playerList[x].money;
+        GameManager.instace.playerList[x].Keep.Add(myNote2);
+
     }
     [PunRPC]
     void valueUpdate()

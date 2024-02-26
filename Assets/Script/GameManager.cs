@@ -237,6 +237,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         public bool remiderPosition;
         public bool EnterOuter;
 
+        public int lessIncomeCount;
         public bool isOpenPage1;
         public List<DealKeep> DealList = new List<DealKeep>();
 

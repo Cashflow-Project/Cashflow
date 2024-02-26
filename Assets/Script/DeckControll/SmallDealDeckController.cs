@@ -104,57 +104,51 @@ public class SmallDealDeckController : MonoBehaviourPunCallbacks
 
     public void BuyCost()
     {
-        if(GameManager.instace.playerList[GameManager.instace.activePlayer].money >= usedCards[cardcount - 1].DownPayment)
+        if(GameManager.instace.playerList[GameManager.instace.activePlayer].money >= usedCards[cardcount - 1].DownPayment && (usedCards[cardcount - 1].ON2U == true || usedCards[cardcount - 1].MYT4U == true || usedCards[cardcount - 1].GRO4US == true || usedCards[cardcount - 1].OK4U == true) )
         {
-            if (usedCards[cardcount - 1].ON2U == true || usedCards[cardcount - 1].MYT4U == true || usedCards[cardcount - 1].GRO4US == true || usedCards[cardcount - 1].OK4U == true)
-            {
+            
                 UIController.instance.InvestCanvas.SetActive(true);
                 UIController.instance.BlurBg.SetActive(true);
 
-            }
-            else if (usedCards[cardcount - 1].GoldCoins == true)
-            {
-                GameManager.instace.playerList[GameManager.instace.activePlayer].money = GameManager.instace.playerList[GameManager.instace.activePlayer].money - usedCards[cardcount - 1].value;
-                GameManager.instace.playerList[GameManager.instace.activePlayer].GoldCoins = GameManager.instace.playerList[GameManager.instace.activePlayer].GoldCoins + usedCards[cardcount - 1].count;
-                photonView.RPC("UpdateMoney", RpcTarget.All, GameManager.instace.playerList[GameManager.instace.activePlayer].money, GameManager.instace.activePlayer);
-                photonView.RPC("UpdateGoldcoins", RpcTarget.All, GameManager.instace.playerList[GameManager.instace.activePlayer].GoldCoins, GameManager.instace.activePlayer);
-                UIController.instance.drawButton.SetActive(false);
-                UIController.instance.cardShow.enabled = false;
-                UIController.instance.payButton.SetActive(false);
-                UIController.instance.BigPayButton.SetActive(false);
-                UIController.instance.SellButton.SetActive(false);
-                UIController.instance.cancelButton.SetActive(false);
-                UIController.instance.SmallPayButton.SetActive(false);
-                UIController.instance.passButton.SetActive(true);
-            }
-            else if (usedCards[cardcount - 1].extra1 == true || usedCards[cardcount - 1].extra2 == true || usedCards[cardcount - 1].extra3 == true)
-            {
-                //roll dice
-            }
-            else if (usedCards[cardcount - 1].special == true)
-            {
-                //roll dice card
-            }
-            else
-            {
-                GameManager.instace.playerList[GameManager.instace.activePlayer].money = GameManager.instace.playerList[GameManager.instace.activePlayer].money - usedCards[cardcount - 1].DownPayment;
-                photonView.RPC("UpdateMoney", RpcTarget.All, GameManager.instace.playerList[GameManager.instace.activePlayer].money, GameManager.instace.activePlayer);
-                photonView.RPC("UpdateKeepForDeal", RpcTarget.All);
-                UIController.instance.drawButton.SetActive(false);
-                UIController.instance.cardShow.enabled = false;
-                UIController.instance.payButton.SetActive(false);
-                UIController.instance.BigPayButton.SetActive(false);
-                UIController.instance.SellButton.SetActive(false);
-                UIController.instance.cancelButton.SetActive(false);
-                UIController.instance.SmallPayButton.SetActive(false);
-                UIController.instance.passButton.SetActive(true);
-            }
+        }
+        if (GameManager.instace.playerList[GameManager.instace.activePlayer].money >= usedCards[cardcount - 1].value && usedCards[cardcount - 1].GoldCoins == true)
+        {
+            GameManager.instace.playerList[GameManager.instace.activePlayer].money = GameManager.instace.playerList[GameManager.instace.activePlayer].money - usedCards[cardcount - 1].value;
+            GameManager.instace.playerList[GameManager.instace.activePlayer].GoldCoins = GameManager.instace.playerList[GameManager.instace.activePlayer].GoldCoins + usedCards[cardcount - 1].count;
+            photonView.RPC("UpdateMoney", RpcTarget.All, GameManager.instace.playerList[GameManager.instace.activePlayer].money, GameManager.instace.activePlayer);
+            photonView.RPC("UpdateGoldcoins", RpcTarget.All, GameManager.instace.playerList[GameManager.instace.activePlayer].GoldCoins, GameManager.instace.activePlayer);
+            UIController.instance.drawButton.SetActive(false);
+            UIController.instance.cardShow.enabled = false;
+            UIController.instance.payButton.SetActive(false);
+            UIController.instance.BigPayButton.SetActive(false);
+            UIController.instance.SellButton.SetActive(false);
+            UIController.instance.cancelButton.SetActive(false);
+            UIController.instance.SmallPayButton.SetActive(false);
+            UIController.instance.passButton.SetActive(true);
+        }
+        else if(GameManager.instace.playerList[GameManager.instace.activePlayer].money >= usedCards[cardcount - 1].DownPayment &&(usedCards[cardcount - 1].house2s1 || usedCards[cardcount - 1].Condominium))
+        {
+            GameManager.instace.playerList[GameManager.instace.activePlayer].money = GameManager.instace.playerList[GameManager.instace.activePlayer].money - usedCards[cardcount - 1].DownPayment;
+            photonView.RPC("UpdateMoney", RpcTarget.All, GameManager.instace.playerList[GameManager.instace.activePlayer].money, GameManager.instace.activePlayer);
+            photonView.RPC("UpdateKeepForDeal", RpcTarget.All);
+            UIController.instance.drawButton.SetActive(false);
+            UIController.instance.cardShow.enabled = false;
+            UIController.instance.payButton.SetActive(false);
+            UIController.instance.BigPayButton.SetActive(false);
+            UIController.instance.SellButton.SetActive(false);
+            UIController.instance.cancelButton.SetActive(false);
+            UIController.instance.SmallPayButton.SetActive(false);
+            UIController.instance.passButton.SetActive(true);
         }
         else
         {
             UIController.instance.LoanCanvas.SetActive(true);
             UIController.instance.BlurBg.SetActive(true);
         }
+            
+            
+        
+        
         
 
         photonView.RPC("valueUpdate", RpcTarget.All);

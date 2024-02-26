@@ -46,7 +46,7 @@ public class UIInvestConfirm : MonoBehaviourPunCallbacks
             UIController.instance.BlurBg.SetActive(false);
             photonView.RPC("UpdateMoney", RpcTarget.All, GameManager.instace.playerList[GameManager.instace.activePlayer].money, GameManager.instace.activePlayer);
             photonView.RPC("UpdateKeepForInvest", RpcTarget.All);
-            UIController.instance.passButton.SetActive(true);
+            //UIController.instance.passButton.SetActive(true);
         }
         else
         {
@@ -73,7 +73,7 @@ public class UIInvestConfirm : MonoBehaviourPunCallbacks
         UIController.instance.payButton.SetActive(false);
         UIController.instance.cancelButton.SetActive(false);
         UIController.instance.drawButton.SetActive(false);
-        UIController.instance.cardShow.enabled = false;
+
 
     }
     [PunRPC]

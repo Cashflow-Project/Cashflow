@@ -94,7 +94,7 @@ public class UIInvestSell : MonoBehaviourPunCallbacks
             if (GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].ON2UList[0].countShare > 0)
             {
                 GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].ON2UList[0].countShare -= Int32.Parse(inputNum.text);
-                photonView.RPC("UpdateEachKeepForInvest", RpcTarget.All, GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].ON2UList[0].countShare);
+                photonView.RPC("UpdateEachKeepForInvest", RpcTarget.All, GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].ON2UList[0].countShare, GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].ON2UList[0].pricePerShare);
             }
 
         }
@@ -103,7 +103,7 @@ public class UIInvestSell : MonoBehaviourPunCallbacks
             if (GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].MYT4UList[0].countShare > 0)
             {
                 GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].MYT4UList[0].countShare -= Int32.Parse(inputNum.text);
-                photonView.RPC("UpdateEachKeepForInvest", RpcTarget.All, GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].MYT4UList[0].countShare);
+                photonView.RPC("UpdateEachKeepForInvest", RpcTarget.All, GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].MYT4UList[0].countShare, GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].MYT4UList[0].pricePerShare);
             }
 
         }
@@ -113,7 +113,7 @@ public class UIInvestSell : MonoBehaviourPunCallbacks
             if (GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].GRO4USList[0].countShare > 0)
             {
                 GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].GRO4USList[0].countShare -= Int32.Parse(inputNum.text);
-                photonView.RPC("UpdateEachKeepForInvest", RpcTarget.All, GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].GRO4USList[0].countShare);
+                photonView.RPC("UpdateEachKeepForInvest", RpcTarget.All, GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].GRO4USList[0].countShare, GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].GRO4USList[0].pricePerShare);
             }
 
         }
@@ -123,7 +123,7 @@ public class UIInvestSell : MonoBehaviourPunCallbacks
             if (GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].OK4UList[0].countShare > 0)
             {
                 GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].OK4UList[0].countShare -= Int32.Parse(inputNum.text);
-                photonView.RPC("UpdateEachKeepForInvest", RpcTarget.All, GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].OK4UList[0].countShare);
+                photonView.RPC("UpdateEachKeepForInvest", RpcTarget.All, GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].OK4UList[0].countShare, GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].OK4UList[0].pricePerShare);
             }
 
         }
@@ -171,7 +171,7 @@ public class UIInvestSell : MonoBehaviourPunCallbacks
 
 
     [PunRPC]
-    void UpdateEachKeepForInvest(int countShare)
+    void UpdateEachKeepForInvest(int countShare,int pricePerShare)
     {
         
         if (SmallDealDeckController.instance.usedCards[SmallDealDeckController.instance.cardcount - 1].ON2U == true)
@@ -181,6 +181,7 @@ public class UIInvestSell : MonoBehaviourPunCallbacks
             {
                 
                 GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].ON2UList[0].countShare = countShare;
+                GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].ON2UList[0].pricePerShare = pricePerShare;
                 if (GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].ON2UList[0].countShare == 0)
                 {
                     GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].ON2UList.RemoveAt(0);
@@ -195,6 +196,7 @@ public class UIInvestSell : MonoBehaviourPunCallbacks
             {
 
                 GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].MYT4UList[0].countShare = countShare;
+                GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].MYT4UList[0].pricePerShare = pricePerShare;
                 if (GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].MYT4UList[0].countShare == 0)
                 {
                     GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].MYT4UList.RemoveAt(0);
@@ -210,6 +212,7 @@ public class UIInvestSell : MonoBehaviourPunCallbacks
             {
 
                 GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].GRO4USList[0].countShare = countShare;
+                GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].GRO4USList[0].pricePerShare = pricePerShare;
                 if (GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].GRO4USList[0].countShare == 0)
                 {
                     GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].GRO4USList.RemoveAt(0);
@@ -225,6 +228,7 @@ public class UIInvestSell : MonoBehaviourPunCallbacks
             {
 
                 GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].OK4UList[0].countShare = countShare;
+                GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].OK4UList[0].pricePerShare = pricePerShare;
                 if (GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].OK4UList[0].countShare == 0)
                 {
                     GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].OK4UList.RemoveAt(0);
