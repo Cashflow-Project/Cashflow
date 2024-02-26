@@ -13,10 +13,8 @@ public class ListKeep : MonoBehaviourPunCallbacks
 
     [SerializeField] private GameObject KeepListWindow;
     [SerializeField] private ItemKeep ItemKeepPrefab;
-    [SerializeField] private ItemLine ItemLinePrefab;
     [SerializeField] private Transform KeepListParent; 
     public List<ItemKeep> _KeepItemList = new List<ItemKeep>();
-    public List<ItemLine> _LineItemList = new List<ItemLine>();
     // Start is called before the first frame update
     void Start()
     {
@@ -68,7 +66,7 @@ public class ListKeep : MonoBehaviourPunCallbacks
                 newItem.SetItemName(GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].Keep[i].CardName);
                 newItem.SetPriceInItem((GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].Keep[i].price).ToString());
                 newItem.transform.SetParent(KeepListParent);
-                ScaleObjectWithScreenSize(newItem.gameObject);
+                //ScaleObjectWithScreenSize(newItem.gameObject);
                 _KeepItemList.Add(newItem);
 
             }

@@ -203,9 +203,14 @@ public class SmallDealDeckController : MonoBehaviourPunCallbacks
         {
             myNote.price = usedCards[cardcount - 1].value;
         }
-        GameManager.instace.playerList[GameManager.instace.activePlayer].Keep.Add(myNote);
+        GameManager.instace.playerList[x].Keep.Add(myNote);
 
-        
+
+        GameManager.Note myNote2 = new GameManager.Note();
+        myNote2.CardName = "= ";
+        myNote2.price = GameManager.instace.playerList[x].money;
+        GameManager.instace.playerList[x].Keep.Add(myNote2);
+
     }
     [PunRPC]
     void UpdateGoldcoins(int goldcoins, int x)

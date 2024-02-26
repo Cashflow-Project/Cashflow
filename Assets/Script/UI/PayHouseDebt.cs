@@ -91,5 +91,10 @@ public class PayHouseDebt : MonoBehaviourPunCallbacks
         myNote.price = Int32.Parse(HouseDebtNum.text);
         GameManager.instace.playerList[x].Keep.Add(myNote);
 
+        GameManager.Note myNote2 = new GameManager.Note();
+        myNote2.CardName = "= ";
+        myNote2.price = GameManager.instace.playerList[x].money;
+        GameManager.instace.playerList[x].Keep.Add(myNote2);
+
     }
 }

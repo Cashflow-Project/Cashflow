@@ -73,6 +73,8 @@ public class UILeftController : MonoBehaviourPunCallbacks
     // Start is called before the first frame update
     void Start()
     {
+        
+
         page1.enabled = false;
         page2.enabled = false;
 
@@ -85,6 +87,7 @@ public class UILeftController : MonoBehaviourPunCallbacks
     // Update is called once per frame
     void Update()
     {
+
         if (page2.enabled == true)
         {
             SetPage2Value();
@@ -94,10 +97,11 @@ public class UILeftController : MonoBehaviourPunCallbacks
 
     public void OperPage1()
     {
-        if(GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].isOpenPage1 == false)
+        if (GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].isOpenPage1 == false)
         {
             SetPage1Value();
             GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].isOpenPage1 = true;
+            photonView.RPC("setIsOpen", RpcTarget.All, PhotonNetwork.LocalPlayer.ActorNumber - 1, GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].isOpenPage1);
         }
         page1.enabled = true;
         page2.enabled = false;
@@ -162,7 +166,7 @@ public class UILeftController : MonoBehaviourPunCallbacks
     {
         firstmoneyP2.text = GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].firstMoney.ToString();
         leftmoneyP2.text = (GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].getmoney).ToString();
-        allMoneyP2.text = (GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].money).ToString();
+        allMoneyP2.text = (GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].firstMoney + GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].getmoney).ToString();
     }
     public void SetPage2Value()
     {
@@ -289,5 +293,12 @@ public class UILeftController : MonoBehaviourPunCallbacks
         UIController.instance.PayCreditDebtCanvas.SetActive(true);
         UIController.instance.BlurBg.SetActive(true);
     }
+
+    [PunRPC]
+    public void setIsOpen(int x,bool isOpen)
+    {
+        GameManager.instace.playerList[x].isOpenPage1 = isOpen;
+    }
+    
 }
 

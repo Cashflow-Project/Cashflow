@@ -484,6 +484,10 @@ public class Player1 : MonoBehaviourPunCallbacks
         myNote.price = GameManager.instace.playerList[GameManager.instace.activePlayer].getmoney;
         GameManager.instace.playerList[GameManager.instace.activePlayer].Keep.Add(myNote);
 
+        GameManager.Note myNote2 = new GameManager.Note();
+        myNote2.CardName = "= ";
+        myNote2.price = GameManager.instace.playerList[x].money;
+        GameManager.instace.playerList[x].Keep.Add(myNote2);
     }
 
     [PunRPC]
@@ -497,6 +501,10 @@ public class Player1 : MonoBehaviourPunCallbacks
         myNote.price = GameManager.instace.playerList[GameManager.instace.activePlayer].paid;
         GameManager.instace.playerList[GameManager.instace.activePlayer].Keep.Add(myNote);
 
+        GameManager.Note myNote2 = new GameManager.Note();
+        myNote2.CardName = "= ";
+        myNote2.price = GameManager.instace.playerList[x].money;
+        GameManager.instace.playerList[x].Keep.Add(myNote2);
     }
 
     [PunRPC]
@@ -509,6 +517,11 @@ public class Player1 : MonoBehaviourPunCallbacks
         myNote.CardName = "- " + "Donate";
         myNote.price = GameManager.instace.playerList[GameManager.instace.activePlayer].allRecieve / 10;
         GameManager.instace.playerList[GameManager.instace.activePlayer].Keep.Add(myNote);
+
+        GameManager.Note myNote2 = new GameManager.Note();
+        myNote2.CardName = "= ";
+        myNote2.price = GameManager.instace.playerList[x].money;
+        GameManager.instace.playerList[x].Keep.Add(myNote2);
 
     }
     [PunRPC]
@@ -592,6 +605,11 @@ public class Player1 : MonoBehaviourPunCallbacks
         myNote.CardName = "+ " + " Loan";
         myNote.price = loan;
         GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].Keep.Add(myNote);
+
+        GameManager.Note myNote2 = new GameManager.Note();
+        myNote2.CardName = "= ";
+        myNote2.price = GameManager.instace.playerList[x].money;
+        GameManager.instace.playerList[x].Keep.Add(myNote2);
 
     }
 }

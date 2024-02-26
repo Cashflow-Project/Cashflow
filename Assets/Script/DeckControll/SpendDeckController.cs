@@ -236,11 +236,16 @@ public class SpendDeckController : MonoBehaviourPunCallbacks
     void UpdateMoney(int money,int x)
     {
         GameManager.instace.playerList[x].money = money;
-        UIController.instance.MyMoneyText.text = GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].money.ToString();
+        UIController.instance.MyMoneyText.text = GameManager.instace.playerList[x].money.ToString();
         GameManager.Note myNote = new GameManager.Note();
         myNote.CardName = "- " + usedCards[cardcount - 1].cardName;
         myNote.price = usedCards[cardcount - 1].payCost;
-        GameManager.instace.playerList[GameManager.instace.activePlayer].Keep.Add(myNote);
+        GameManager.instace.playerList[x].Keep.Add(myNote);
+
+        GameManager.Note myNote2 = new GameManager.Note();
+        myNote2.CardName = "= ";
+        myNote2.price = GameManager.instace.playerList[x].money;
+        GameManager.instace.playerList[x].Keep.Add(myNote2);
     }
 
     [PunRPC]
