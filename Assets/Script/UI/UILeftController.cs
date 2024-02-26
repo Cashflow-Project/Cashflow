@@ -87,7 +87,7 @@ public class UILeftController : MonoBehaviourPunCallbacks
     // Update is called once per frame
     void Update()
     {
-
+        
         if (page2.enabled == true)
         {
             SetPage2Value();
@@ -101,7 +101,7 @@ public class UILeftController : MonoBehaviourPunCallbacks
         {
             SetPage1Value();
             GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].isOpenPage1 = true;
-            photonView.RPC("setIsOpen", RpcTarget.All, PhotonNetwork.LocalPlayer.ActorNumber - 1, GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].isOpenPage1);
+
         }
         page1.enabled = true;
         page2.enabled = false;

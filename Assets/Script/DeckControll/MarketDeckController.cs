@@ -107,6 +107,7 @@ public class MarketDeckController : MonoBehaviourPunCallbacks
         if(usedCards[cardcount -1].increaseIncome == true)
         {
             photonView.RPC("UpdateDealIncomeInList", RpcTarget.All);
+            photonView.RPC("valueUpdate", RpcTarget.All);
             UIController.instance.cancelButton.SetActive(true);
         }
         Destroy(newCard.gameObject, 1);
