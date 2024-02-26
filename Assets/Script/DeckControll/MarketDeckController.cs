@@ -107,6 +107,7 @@ public class MarketDeckController : MonoBehaviourPunCallbacks
         if(usedCards[cardcount -1].increaseIncome == true)
         {
             photonView.RPC("UpdateDealIncomeInList", RpcTarget.All, PhotonNetwork.LocalPlayer.ActorNumber - 1);
+            photonView.RPC("UpdateLessIncomeCount", RpcTarget.All, GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].lessIncomeCount, PhotonNetwork.LocalPlayer.ActorNumber - 1);
             photonView.RPC("valueUpdate", RpcTarget.All);
             UIController.instance.cancelButton.SetActive(true);
         }
@@ -440,7 +441,7 @@ public class MarketDeckController : MonoBehaviourPunCallbacks
 
             
         }
-        photonView.RPC("UpdateLessIncomeCount", RpcTarget.All, GameManager.instace.playerList[x].lessIncomeCount, x);
+        
     }
 
     [PunRPC]
