@@ -98,7 +98,13 @@ public class SmallDealDeckController : MonoBehaviourPunCallbacks
         //do somthing for invest on2u ok4u myt4u grou4us to other people
 
         
+        
         photonView.RPC("AddToUseCard", RpcTarget.All);
+
+        if (SmallDealDeckController.instance.usedCards[SmallDealDeckController.instance.cardcount - 1].ON2U == true || SmallDealDeckController.instance.usedCards[SmallDealDeckController.instance.cardcount - 1].MYT4U == true || SmallDealDeckController.instance.usedCards[SmallDealDeckController.instance.cardcount - 1].GRO4US == true || SmallDealDeckController.instance.usedCards[SmallDealDeckController.instance.cardcount - 1].OK4U == true)
+        {
+            photonView.RPC("UpdateEachKeepForInvest", RpcTarget.All, PhotonNetwork.LocalPlayer.ActorNumber - 1);
+        }
         photonView.RPC("whoCanSell", RpcTarget.All);
         Destroy(newCard.gameObject, 1);
     }

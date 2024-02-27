@@ -29,7 +29,7 @@ public class SellObjFromYourself : MonoBehaviourPunCallbacks
 
     private void OnEnable()
     {
-        photonView.RPC("UpdateEachKeepForInvest", RpcTarget.All, PhotonNetwork.LocalPlayer.ActorNumber - 1);
+        
         if (SmallDealDeckController.instance.usedCards[SmallDealDeckController.instance.cardcount - 1].ON2U == true && GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].hasON2U == true)
         {
             UpdateON2UItemList();
