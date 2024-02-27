@@ -228,15 +228,7 @@ public class Player1 : MonoBehaviourPunCallbacks
                     photonView.RPC("UpdateLoanMoney", RpcTarget.All, GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].money, PhotonNetwork.LocalPlayer.ActorNumber - 1, GameManager.instace.playerList[GameManager.instace.activePlayer].paid);
                     photonView.RPC("valueUpdate", RpcTarget.All);
                 }
-                GameManager.instace.playerList[GameManager.instace.activePlayer].money -= GameManager.instace.playerList[GameManager.instace.activePlayer].paid;
-                photonView.RPC("UpdateMoneyNoJob", RpcTarget.All, GameManager.instace.playerList[GameManager.instace.activePlayer].money, GameManager.instace.activePlayer);
-                GameManager.instace.playerList[GameManager.instace.activePlayer].hasDonate = false;
-                GameManager.instace.playerList[GameManager.instace.activePlayer].hasDonateCount = 0;
-                photonView.RPC("setDonate", RpcTarget.All, GameManager.instace.playerList[GameManager.instace.activePlayer].hasDonate, GameManager.instace.playerList[GameManager.instace.activePlayer].hasDonateCount);
-                photonView.RPC("hasNoJob", RpcTarget.All);
-                photonView.RPC("valueUpdate", RpcTarget.All);
-                
-                if (GameManager.instace.playerList[GameManager.instace.activePlayer].getmoney <= 0 && GameManager.instace.playerList[GameManager.instace.activePlayer].money < GameManager.instace.playerList[GameManager.instace.activePlayer].paid)
+                else if (GameManager.instace.playerList[GameManager.instace.activePlayer].getmoney <= 0 && GameManager.instace.playerList[GameManager.instace.activePlayer].money < GameManager.instace.playerList[GameManager.instace.activePlayer].paid)
                 {
                     //lose
                     GameManager.instace.playerList[GameManager.instace.activePlayer].playerType = GameManager.Entity.PlayerTypes.NO_PLAYER;
@@ -256,6 +248,15 @@ public class Player1 : MonoBehaviourPunCallbacks
                     UIController.instance.BlurBg.SetActive(true);
                     UIController.instance.lostShow.SetActive(true);
                 }
+                GameManager.instace.playerList[GameManager.instace.activePlayer].money -= GameManager.instace.playerList[GameManager.instace.activePlayer].paid;
+                photonView.RPC("UpdateMoneyNoJob", RpcTarget.All, GameManager.instace.playerList[GameManager.instace.activePlayer].money, GameManager.instace.activePlayer);
+                GameManager.instace.playerList[GameManager.instace.activePlayer].hasDonate = false;
+                GameManager.instace.playerList[GameManager.instace.activePlayer].hasDonateCount = 0;
+                photonView.RPC("setDonate", RpcTarget.All, GameManager.instace.playerList[GameManager.instace.activePlayer].hasDonate, GameManager.instace.playerList[GameManager.instace.activePlayer].hasDonateCount);
+                photonView.RPC("hasNoJob", RpcTarget.All);
+                photonView.RPC("valueUpdate", RpcTarget.All);
+                
+                
                 photonView.RPC("EndTurnPlayer", RpcTarget.All);
 
 
@@ -498,7 +499,7 @@ public class Player1 : MonoBehaviourPunCallbacks
         //note collect
         GameManager.Note myNote = new GameManager.Note();
         myNote.CardName = "- " + "unemployed";
-        myNote.price = GameManager.instace.playerList[GameManager.instace.activePlayer].paid;
+        myNote.price = GameManager.instace.playerList[x].paid;
         GameManager.instace.playerList[GameManager.instace.activePlayer].Keep.Add(myNote);
 
         GameManager.Note myNote2 = new GameManager.Note();
@@ -528,11 +529,11 @@ public class Player1 : MonoBehaviourPunCallbacks
     void valueUpdate()
     {
         UIController.instance.MyMoneyText.text = GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].money.ToString();
-        GameManager.instace.playerList[GameManager.instace.activePlayer].allRecieve = GameManager.instace.playerList[GameManager.instace.activePlayer].salary + GameManager.instace.playerList[GameManager.instace.activePlayer].income;
-        GameManager.instace.playerList[GameManager.instace.activePlayer].InstallmentsBank = GameManager.instace.playerList[GameManager.instace.activePlayer].loanBank / 10;
-        GameManager.instace.playerList[GameManager.instace.activePlayer].sumChild = GameManager.instace.playerList[GameManager.instace.activePlayer].child * GameManager.instace.playerList[GameManager.instace.activePlayer].perChild;
-        GameManager.instace.playerList[GameManager.instace.activePlayer].paid = GameManager.instace.playerList[GameManager.instace.activePlayer].tax + GameManager.instace.playerList[GameManager.instace.activePlayer].homeMortgage + GameManager.instace.playerList[GameManager.instace.activePlayer].learnMortgage + GameManager.instace.playerList[GameManager.instace.activePlayer].carMortgage + GameManager.instace.playerList[GameManager.instace.activePlayer].creditcardMortgage + GameManager.instace.playerList[GameManager.instace.activePlayer].extraPay + GameManager.instace.playerList[GameManager.instace.activePlayer].InstallmentsBank + GameManager.instace.playerList[GameManager.instace.activePlayer].sumChild;
-        GameManager.instace.playerList[GameManager.instace.activePlayer].getmoney = GameManager.instace.playerList[GameManager.instace.activePlayer].allRecieve - GameManager.instace.playerList[GameManager.instace.activePlayer].paid;
+        GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].allRecieve = GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].salary + GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].income;
+        GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].InstallmentsBank = GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].loanBank / 10;
+        GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].sumChild = GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].child * GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].perChild;
+        GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].paid = GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].tax + GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].homeMortgage + GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].learnMortgage + GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].carMortgage + GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].creditcardMortgage + GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].extraPay + GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].InstallmentsBank + GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].sumChild;
+        GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].getmoney = GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].allRecieve - GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].paid;
     }
 
     [PunRPC]

@@ -76,6 +76,7 @@ public class UIInvestSell : MonoBehaviourPunCallbacks
     public void OkSellClick()
     {
         GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].money = GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].money + Int32.Parse(sumCalculate.text);
+        photonView.RPC("UpdateMoney", RpcTarget.All, GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].money, PhotonNetwork.LocalPlayer.ActorNumber - 1);
         UIController.instance.investSellCanvas.SetActive(false);
         UIController.instance.BlurBg.SetActive(false);
         UIController.instance.drawButton.SetActive(false);
@@ -87,7 +88,7 @@ public class UIInvestSell : MonoBehaviourPunCallbacks
         UIController.instance.SmallPayButton.SetActive(false);
         UIController.instance.passButton.SetActive(false);
 
-        photonView.RPC("UpdateMoney", RpcTarget.All, GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].money, PhotonNetwork.LocalPlayer.ActorNumber - 1);
+        
         if (SmallDealDeckController.instance.usedCards[SmallDealDeckController.instance.cardcount - 1].ON2U == true)
         {
 
@@ -156,6 +157,7 @@ public class UIInvestSell : MonoBehaviourPunCallbacks
     void UpdateMoney(int money, int x)
     {
         GameManager.instace.playerList[x].money = money;
+        UIController.instance.MyMoneyText.text = GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].money.ToString();
         //note collect
         GameManager.Note myNote = new GameManager.Note();
         myNote.CardName = "+ " + "Sell " + SmallDealDeckController.instance.usedCards[SmallDealDeckController.instance.cardcount - 1].cardName + " " + inputNum.text;

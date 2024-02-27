@@ -42,10 +42,10 @@ public class UIInvestConfirm : MonoBehaviourPunCallbacks
         if(GameManager.instace.playerList[GameManager.instace.activePlayer].money >= Int32.Parse(sumCalculate.text))
         {
             GameManager.instace.playerList[GameManager.instace.activePlayer].money = GameManager.instace.playerList[GameManager.instace.activePlayer].money - Int32.Parse(sumCalculate.text);
+            photonView.RPC("UpdateKeepForInvest", RpcTarget.All);
+            photonView.RPC("UpdateMoney", RpcTarget.All, GameManager.instace.playerList[GameManager.instace.activePlayer].money, GameManager.instace.activePlayer);
             SetAllFalse();
             UIController.instance.BlurBg.SetActive(false);
-            photonView.RPC("UpdateMoney", RpcTarget.All, GameManager.instace.playerList[GameManager.instace.activePlayer].money, GameManager.instace.activePlayer);
-            photonView.RPC("UpdateKeepForInvest", RpcTarget.All);
             //UIController.instance.passButton.SetActive(true);
         }
         else
@@ -79,11 +79,12 @@ public class UIInvestConfirm : MonoBehaviourPunCallbacks
     void UpdateMoney(int money, int x)
     {
         GameManager.instace.playerList[x].money = money;
+        UIController.instance.MyMoneyText.text = GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].money.ToString();
         //note collect
         GameManager.Note myNote = new GameManager.Note();
         myNote.CardName = "- " + SmallDealDeckController.instance.usedCards[SmallDealDeckController.instance.cardcount - 1].cardName + " " + inputNum.text;
         myNote.price = Int32.Parse(sumCalculate.text);
-        GameManager.instace.playerList[GameManager.instace.activePlayer].Keep.Add(myNote);
+        GameManager.instace.playerList[x].Keep.Add(myNote);
 
         GameManager.Note myNote2 = new GameManager.Note();
         myNote2.CardName = "= ";
