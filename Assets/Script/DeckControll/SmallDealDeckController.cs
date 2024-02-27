@@ -97,6 +97,7 @@ public class SmallDealDeckController : MonoBehaviourPunCallbacks
 
         //do somthing for invest on2u ok4u myt4u grou4us to other people
 
+        
         photonView.RPC("AddToUseCard", RpcTarget.All);
         photonView.RPC("whoCanSell", RpcTarget.All);
         Destroy(newCard.gameObject, 1);
@@ -107,11 +108,12 @@ public class SmallDealDeckController : MonoBehaviourPunCallbacks
         if(usedCards[cardcount - 1].ON2U == true || usedCards[cardcount - 1].MYT4U == true || usedCards[cardcount - 1].GRO4US == true || usedCards[cardcount - 1].OK4U == true) 
         {
             
+                
                 UIController.instance.InvestCanvas.SetActive(true);
                 UIController.instance.BlurBg.SetActive(true);
 
         }
-        if (GameManager.instace.playerList[GameManager.instace.activePlayer].money >= usedCards[cardcount - 1].value && usedCards[cardcount - 1].GoldCoins == true)
+        else if (GameManager.instace.playerList[GameManager.instace.activePlayer].money >= usedCards[cardcount - 1].value && usedCards[cardcount - 1].GoldCoins == true)
         {
             GameManager.instace.playerList[GameManager.instace.activePlayer].money = GameManager.instace.playerList[GameManager.instace.activePlayer].money - usedCards[cardcount - 1].value;
             GameManager.instace.playerList[GameManager.instace.activePlayer].GoldCoins = GameManager.instace.playerList[GameManager.instace.activePlayer].GoldCoins + usedCards[cardcount - 1].count;
@@ -284,23 +286,25 @@ public class SmallDealDeckController : MonoBehaviourPunCallbacks
             UIController.instance.SellButton.SetActive(true);
         }
 
-        if (usedCards[cardcount - 1].ON2U == true && GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].hasON2U == false)
+        for (int j = 0; j < GameManager.instace.playerList.Count; j++)
         {
-            UIController.instance.cancelButton.SetActive(false);
+            if (usedCards[cardcount - 1].ON2U == true && GameManager.instace.playerList[j].hasON2U == false)
+            {
+                UIController.instance.cancelButton.SetActive(false);
+            }
+            if (usedCards[cardcount - 1].MYT4U == true && GameManager.instace.playerList[j].hasMYT4U == false)
+            {
+                UIController.instance.cancelButton.SetActive(false);
+            }
+            if (usedCards[cardcount - 1].GRO4US == true && GameManager.instace.playerList[j].hasGRO4US == false)
+            {
+                UIController.instance.cancelButton.SetActive(false);
+            }
+            if (usedCards[cardcount - 1].OK4U == true && GameManager.instace.playerList[j].hasOK4U == false)
+            {
+                UIController.instance.cancelButton.SetActive(false);
+            }
         }
-        if (usedCards[cardcount - 1].MYT4U == true && GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].hasMYT4U == false)
-        {
-            UIController.instance.cancelButton.SetActive(false);
-        }
-        if (usedCards[cardcount - 1].GRO4US == true && GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].hasGRO4US == false)
-        {
-            UIController.instance.cancelButton.SetActive(false);
-        }
-        if (usedCards[cardcount - 1].OK4U == true && GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].hasOK4U == false)
-        {
-            UIController.instance.cancelButton.SetActive(false);
-        }
-
     }
 
     [PunRPC]
@@ -312,5 +316,74 @@ public class SmallDealDeckController : MonoBehaviourPunCallbacks
         GameManager.instace.playerList[GameManager.instace.activePlayer].sumChild = GameManager.instace.playerList[GameManager.instace.activePlayer].child * GameManager.instace.playerList[GameManager.instace.activePlayer].perChild;
         GameManager.instace.playerList[GameManager.instace.activePlayer].paid = GameManager.instace.playerList[GameManager.instace.activePlayer].tax + GameManager.instace.playerList[GameManager.instace.activePlayer].homeMortgage + GameManager.instace.playerList[GameManager.instace.activePlayer].learnMortgage + GameManager.instace.playerList[GameManager.instace.activePlayer].carMortgage + GameManager.instace.playerList[GameManager.instace.activePlayer].creditcardMortgage + GameManager.instace.playerList[GameManager.instace.activePlayer].extraPay + GameManager.instace.playerList[GameManager.instace.activePlayer].InstallmentsBank + GameManager.instace.playerList[GameManager.instace.activePlayer].sumChild;
         GameManager.instace.playerList[GameManager.instace.activePlayer].getmoney = GameManager.instace.playerList[GameManager.instace.activePlayer].allRecieve - GameManager.instace.playerList[GameManager.instace.activePlayer].paid;
+    }
+
+    [PunRPC]
+    void UpdateEachKeepForInvest(int x)
+    {
+
+        if (SmallDealDeckController.instance.usedCards[SmallDealDeckController.instance.cardcount - 1].ON2U == true)
+        {
+
+            if (GameManager.instace.playerList[x].ON2UList[0].countShare > 0)
+            {
+
+
+                if (GameManager.instace.playerList[x].ON2UList[0].countShare == 0)
+                {
+                    GameManager.instace.playerList[x].ON2UList.RemoveAt(0);
+                    GameManager.instace.playerList[x].hasON2U = false;
+
+
+                }
+            }
+
+        }
+        if (SmallDealDeckController.instance.usedCards[SmallDealDeckController.instance.cardcount - 1].MYT4U == true)
+        {
+            if (GameManager.instace.playerList[x].MYT4UList[0].countShare > 0)
+            {
+
+                if (GameManager.instace.playerList[x].MYT4UList[0].countShare == 0)
+                {
+                    GameManager.instace.playerList[x].MYT4UList.RemoveAt(0);
+                    GameManager.instace.playerList[x].hasMYT4U = false;
+
+                }
+            }
+
+        }
+        if (SmallDealDeckController.instance.usedCards[SmallDealDeckController.instance.cardcount - 1].GRO4US == true)
+        {
+
+            if (GameManager.instace.playerList[x].GRO4USList[0].countShare > 0)
+            {
+
+
+                if (GameManager.instace.playerList[x].GRO4USList[0].countShare == 0)
+                {
+                    GameManager.instace.playerList[x].GRO4USList.RemoveAt(0);
+                    GameManager.instace.playerList[x].hasGRO4US = false;
+
+                }
+            }
+
+        }
+        if (SmallDealDeckController.instance.usedCards[SmallDealDeckController.instance.cardcount - 1].OK4U == true)
+        {
+
+            if (GameManager.instace.playerList[x].OK4UList[0].countShare > 0)
+            {
+
+
+                if (GameManager.instace.playerList[x].OK4UList[0].countShare == 0)
+                {
+                    GameManager.instace.playerList[x].OK4UList.RemoveAt(0);
+                    GameManager.instace.playerList[x].hasOK4U = false;
+
+                }
+            }
+
+        }
     }
 }

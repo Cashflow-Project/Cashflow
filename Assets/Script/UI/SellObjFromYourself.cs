@@ -29,6 +29,7 @@ public class SellObjFromYourself : MonoBehaviourPunCallbacks
 
     private void OnEnable()
     {
+        photonView.RPC("UpdateEachKeepForInvest", RpcTarget.All, PhotonNetwork.LocalPlayer.ActorNumber - 1);
         if (SmallDealDeckController.instance.usedCards[SmallDealDeckController.instance.cardcount - 1].ON2U == true && GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].hasON2U == true)
         {
             UpdateON2UItemList();
@@ -179,6 +180,76 @@ public class SellObjFromYourself : MonoBehaviourPunCallbacks
                 ScaleObjectWithScreenSize(newItem.gameObject);
                 _investItemList.Add(newItem);
             
+        }
+    }
+
+
+    [PunRPC]
+    void UpdateEachKeepForInvest(int x)
+    {
+
+        if (SmallDealDeckController.instance.usedCards[SmallDealDeckController.instance.cardcount - 1].ON2U == true)
+        {
+
+            if (GameManager.instace.playerList[x].ON2UList[0].countShare > 0)
+            {
+
+
+                if (GameManager.instace.playerList[x].ON2UList[0].countShare == 0)
+                {
+                    GameManager.instace.playerList[x].ON2UList.RemoveAt(0);
+                    GameManager.instace.playerList[x].hasON2U = false;
+
+
+                }
+            }
+
+        }
+        if (SmallDealDeckController.instance.usedCards[SmallDealDeckController.instance.cardcount - 1].MYT4U == true)
+        {
+            if (GameManager.instace.playerList[x].MYT4UList[0].countShare > 0)
+            {
+
+                if (GameManager.instace.playerList[x].MYT4UList[0].countShare == 0)
+                {
+                    GameManager.instace.playerList[x].MYT4UList.RemoveAt(0);
+                    GameManager.instace.playerList[x].hasMYT4U = false;
+
+                }
+            }
+
+        }
+        if (SmallDealDeckController.instance.usedCards[SmallDealDeckController.instance.cardcount - 1].GRO4US == true)
+        {
+
+            if (GameManager.instace.playerList[x].GRO4USList[0].countShare > 0)
+            {
+
+
+                if (GameManager.instace.playerList[x].GRO4USList[0].countShare == 0)
+                {
+                    GameManager.instace.playerList[x].GRO4USList.RemoveAt(0);
+                    GameManager.instace.playerList[x].hasGRO4US = false;
+
+                }
+            }
+
+        }
+        if (SmallDealDeckController.instance.usedCards[SmallDealDeckController.instance.cardcount - 1].OK4U == true)
+        {
+
+            if (GameManager.instace.playerList[x].OK4UList[0].countShare > 0)
+            {
+
+
+                if (GameManager.instace.playerList[x].OK4UList[0].countShare == 0)
+                {
+                    GameManager.instace.playerList[x].OK4UList.RemoveAt(0);
+                    GameManager.instace.playerList[x].hasOK4U = false;
+
+                }
+            }
+
         }
     }
 }

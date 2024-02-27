@@ -31,6 +31,7 @@ public class UIController : MonoBehaviourPunCallbacks
     public GameObject SellListFromMarketCanvas;
     public Text infoText;
     public TMP_Text MyMoneyText;
+    public TMP_Text MyIncomeleftText;
     public Image cardShow;
     public Text roomname;
     public GameObject LoanCanvas;
@@ -44,7 +45,8 @@ public class UIController : MonoBehaviourPunCallbacks
     public GameObject PayCarDebtCanvas;
     public GameObject PayCreditDebtCanvas;
 
-    
+    public GameObject menubar;
+    public GameObject outbar;
 
     private void Awake()
     {
@@ -71,7 +73,8 @@ public class UIController : MonoBehaviourPunCallbacks
     // Start is called before the first frame update
     void Start()
     {
-        roomname.text = PhotonNetwork.CurrentRoom.Name +"actorNum " + PhotonNetwork.LocalPlayer.ActorNumber.ToString();
+        roomname.text = PhotonNetwork.CurrentRoom.Name;
+            //+"actorNum " + PhotonNetwork.LocalPlayer.ActorNumber.ToString();
         
 
     }
@@ -80,6 +83,7 @@ public class UIController : MonoBehaviourPunCallbacks
     void Update()
     {
         MyMoneyText.text = GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].money.ToString();
+        MyIncomeleftText.text = (GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].paid - GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].income).ToString();
     }
 
     public void showMessage(string text)
@@ -208,6 +212,22 @@ public class UIController : MonoBehaviourPunCallbacks
         PayDonateBtn.SetActive(on);
     }
 
+
+    public void menuClick()
+    {
+        outbar.SetActive(true);
+
+        flimSeemore.SetActive(true);
+
+    }
+
+
+    public void outOutBar()
+    {
+        outbar.SetActive(false);
+
+        flimSeemore.SetActive(false);
+    }
 
     public void Quit()
     {

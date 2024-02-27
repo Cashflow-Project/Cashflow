@@ -79,7 +79,7 @@ public class UIInvestSell : MonoBehaviourPunCallbacks
         UIController.instance.investSellCanvas.SetActive(false);
         UIController.instance.BlurBg.SetActive(false);
         UIController.instance.drawButton.SetActive(false);
-        UIController.instance.cardShow.enabled = false;
+        //UIController.instance.cardShow.enabled = false;
         UIController.instance.payButton.SetActive(false);
         UIController.instance.BigPayButton.SetActive(false);
         UIController.instance.SellButton.SetActive(false);
@@ -134,7 +134,7 @@ public class UIInvestSell : MonoBehaviourPunCallbacks
     public void CancelClick()
     {
         UIController.instance.investSellCanvas.SetActive(false);
-
+        UIController.instance.BlurBg.SetActive(false);
     }
 
     public void SetAllFalse()

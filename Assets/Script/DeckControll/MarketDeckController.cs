@@ -106,8 +106,7 @@ public class MarketDeckController : MonoBehaviourPunCallbacks
         }
         if(usedCards[cardcount -1].increaseIncome == true)
         {
-            photonView.RPC("UpdateDealIncomeInList", RpcTarget.All, PhotonNetwork.LocalPlayer.ActorNumber - 1);
-            photonView.RPC("UpdateLessIncomeCount", RpcTarget.All, GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].lessIncomeCount, PhotonNetwork.LocalPlayer.ActorNumber - 1);
+            photonView.RPC("UpdateDealIncomeInList", RpcTarget.All);
             photonView.RPC("valueUpdate", RpcTarget.All);
             UIController.instance.cancelButton.SetActive(true);
         }
@@ -325,27 +324,27 @@ public class MarketDeckController : MonoBehaviourPunCallbacks
     }
 
     [PunRPC]
-    public void UpdateDealIncomeInList(int x)
+    public void UpdateDealIncomeInList()
     {
-        GameManager.instace.playerList[x].lessIncomeCount = 0;
+
 
         if (MarketDeckController.instance.usedCards[MarketDeckController.instance.cardcount - 1].increaseIncome == true && GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].hasHome32 == true)
         {
             
                 //generate a new list with update info
-                for (int i = 0; i < GameManager.instace.playerList[x].house3s2List.Count; i++)
+                for (int i = 0; i < GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].house3s2List.Count; i++)
                 {
 
                     //skip empty 
-                    if (GameManager.instace.playerList[x].house3s2List.Count == 0)
+                    if (GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].house3s2List.Count == 0)
                     {
                         continue;
                     }
-                    if (GameManager.instace.playerList[x].house3s2List[i].isSelected == false && GameManager.instace.playerList[x].house3s2List[i].CashflowIncome <= 10000)
+                    if (GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].house3s2List[i].isSelected == false && GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].house3s2List[i].CashflowIncome <= 10000)
                     {
-                        GameManager.instace.playerList[x].house3s2List[i].CashflowIncome += MarketDeckController.instance.usedCards[MarketDeckController.instance.cardcount - 1].Cost;
-                    GameManager.instace.playerList[x].income += MarketDeckController.instance.usedCards[MarketDeckController.instance.cardcount - 1].Cost;
-                    GameManager.instace.playerList[x].lessIncomeCount++;
+                        GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].house3s2List[i].CashflowIncome += MarketDeckController.instance.usedCards[MarketDeckController.instance.cardcount - 1].Cost;
+                    GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].income += MarketDeckController.instance.usedCards[MarketDeckController.instance.cardcount - 1].Cost;
+
                     }
 
 
@@ -356,19 +355,19 @@ public class MarketDeckController : MonoBehaviourPunCallbacks
         {
             
                 //generate a new list with update info
-                for (int i = 0; i < GameManager.instace.playerList[x].house2s1List.Count; i++)
+                for (int i = 0; i < GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].house2s1List.Count; i++)
                 {
 
                     //skip empty 
-                    if (GameManager.instace.playerList[x].house2s1List.Count == 0)
+                    if (GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].house2s1List.Count == 0)
                     {
                         continue;
                     }
-                    if (GameManager.instace.playerList[x].house2s1List[i].isSelected == false && GameManager.instace.playerList[x].house2s1List[i].CashflowIncome <= 10000)
+                    if (GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].house2s1List[i].isSelected == false && GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].house2s1List[i].CashflowIncome <= 10000)
                     {
-                        GameManager.instace.playerList[x].house2s1List[i].CashflowIncome += MarketDeckController.instance.usedCards[MarketDeckController.instance.cardcount - 1].Cost;
-                    GameManager.instace.playerList[x].income += MarketDeckController.instance.usedCards[MarketDeckController.instance.cardcount - 1].Cost;
-                    GameManager.instace.playerList[x].lessIncomeCount++;
+                        GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].house2s1List[i].CashflowIncome += MarketDeckController.instance.usedCards[MarketDeckController.instance.cardcount - 1].Cost;
+                    GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].income += MarketDeckController.instance.usedCards[MarketDeckController.instance.cardcount - 1].Cost;
+
                     }
 
 
@@ -379,19 +378,19 @@ public class MarketDeckController : MonoBehaviourPunCallbacks
         {
             
                 //generate a new list with update info
-                for (int i = 0; i < GameManager.instace.playerList[x].CondominiumList.Count; i++)
+                for (int i = 0; i < GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].CondominiumList.Count; i++)
                 {
 
                     //skip empty 
-                    if (GameManager.instace.playerList[x].CondominiumList.Count == 0)
+                    if (GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].CondominiumList.Count == 0)
                     {
                         continue;
                     }
-                    if (GameManager.instace.playerList[x].CondominiumList[i].isSelected == false && GameManager.instace.playerList[x].CondominiumList[i].CashflowIncome <= 10000)
+                    if (GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].CondominiumList[i].isSelected == false && GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].CondominiumList[i].CashflowIncome <= 10000)
                     {
-                        GameManager.instace.playerList[x].CondominiumList[i].CashflowIncome += MarketDeckController.instance.usedCards[MarketDeckController.instance.cardcount - 1].Cost;
-                    GameManager.instace.playerList[x].income += MarketDeckController.instance.usedCards[MarketDeckController.instance.cardcount - 1].Cost;
-                    GameManager.instace.playerList[x].lessIncomeCount++;
+                        GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].CondominiumList[i].CashflowIncome += MarketDeckController.instance.usedCards[MarketDeckController.instance.cardcount - 1].Cost;
+                    GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].income += MarketDeckController.instance.usedCards[MarketDeckController.instance.cardcount - 1].Cost;
+
                     }
 
                 }
@@ -401,19 +400,19 @@ public class MarketDeckController : MonoBehaviourPunCallbacks
         {
             
                 //generate a new list with update info
-                for (int i = 0; i < GameManager.instace.playerList[x].CommercialBuildingList.Count; i++)
+                for (int i = 0; i < GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].CommercialBuildingList.Count; i++)
                 {
 
                     //skip empty 
-                    if (GameManager.instace.playerList[x].CommercialBuildingList.Count == 0)
+                    if (GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].CommercialBuildingList.Count == 0)
                     {
                         continue;
                     }
-                    if (GameManager.instace.playerList[x].CommercialBuildingList[i].isSelected == false && GameManager.instace.playerList[x].CommercialBuildingList[i].CashflowIncome <= 10000)
+                    if (GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].CommercialBuildingList[i].isSelected == false && GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].CommercialBuildingList[i].CashflowIncome <= 10000)
                     {
-                        GameManager.instace.playerList[x].CommercialBuildingList[i].CashflowIncome += MarketDeckController.instance.usedCards[MarketDeckController.instance.cardcount - 1].Cost;
-                    GameManager.instace.playerList[x].income += MarketDeckController.instance.usedCards[MarketDeckController.instance.cardcount - 1].Cost;
-                    GameManager.instace.playerList[x].lessIncomeCount++;
+                        GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].CommercialBuildingList[i].CashflowIncome += MarketDeckController.instance.usedCards[MarketDeckController.instance.cardcount - 1].Cost;
+                    GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].income += MarketDeckController.instance.usedCards[MarketDeckController.instance.cardcount - 1].Cost;
+
                     }
 
                 }
@@ -422,18 +421,18 @@ public class MarketDeckController : MonoBehaviourPunCallbacks
         if (MarketDeckController.instance.usedCards[MarketDeckController.instance.cardcount - 1].increaseIncome == true && GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].hasApartment == true)
         {
             
-                for (int i = 0; i < GameManager.instace.playerList[x].ApartmentList.Count; i++)
+                for (int i = 0; i < GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].ApartmentList.Count; i++)
                 {
                     //skip empty 
-                    if (GameManager.instace.playerList[x].ApartmentList.Count == 0)
+                    if (GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].ApartmentList.Count == 0)
                     {
                         continue;
                     }
-                    if (GameManager.instace.playerList[x].ApartmentList[i].isSelected == false && GameManager.instace.playerList[x].ApartmentList[i].CashflowIncome <= 10000)
+                    if (GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].ApartmentList[i].isSelected == false && GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].ApartmentList[i].CashflowIncome <= 10000)
                     {
-                        GameManager.instace.playerList[x].ApartmentList[i].CashflowIncome += MarketDeckController.instance.usedCards[MarketDeckController.instance.cardcount - 1].Cost;
-                    GameManager.instace.playerList[x].income += MarketDeckController.instance.usedCards[MarketDeckController.instance.cardcount - 1].Cost;
-                    GameManager.instace.playerList[x].lessIncomeCount++;
+                        GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].ApartmentList[i].CashflowIncome += MarketDeckController.instance.usedCards[MarketDeckController.instance.cardcount - 1].Cost;
+                    GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].income += MarketDeckController.instance.usedCards[MarketDeckController.instance.cardcount - 1].Cost;
+
                         
                     }
 

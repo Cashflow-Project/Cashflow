@@ -326,8 +326,8 @@ public class GameManager : MonoBehaviourPunCallbacks
                         {
                             playerList[activePlayer].EnterOuter = true;
                             playerList[activePlayer].hasOutside = true;
-                            GameManager.instace.playerList[GameManager.instace.activePlayer].playerType = GameManager.Entity.PlayerTypes.NO_PLAYER;
-                            GameManager.instace.state = GameManager.States.SWITCH_PLAYER;
+                            //GameManager.instace.playerList[GameManager.instace.activePlayer].playerType = GameManager.Entity.PlayerTypes.NO_PLAYER;
+                            photonView.RPC("UpdateToAllPlayerState", RpcTarget.All, PhotonNetwork.LocalPlayer.ActorNumber - 1);
                             UIController.instance.BlurBg.SetActive(true);
                             UIController.instance.winShow.SetActive(true);
                         }
@@ -461,7 +461,7 @@ public class GameManager : MonoBehaviourPunCallbacks
             //HumanRollDice();
         }
         Debug.Log("Dice Rolled number : " + DiceNumber);
-        UIController.instance.showMessage("Roll Dice Number:" + _diceNumber);
+        //UIController.instance.showMessage("Roll Dice Number:" + _diceNumber);
     }
 
 
@@ -1243,7 +1243,7 @@ public class GameManager : MonoBehaviourPunCallbacks
             activePlayer %= playerList.Count;
         }
         Debug.Log("SetStartingPlayer RPC : " + activePlayer);
-        UIController.instance.showMessage("Player " + activePlayer + " starts first");
+        UIController.instance.showMessage("Player " + playerList[activePlayer].playerName + " starts first");
         TurnUI.text = "Turn player " + playerList[activePlayer].playerName + " Turn'" + playerList[activePlayer].myPlayers[0].turncounts;
         Debug.Log("Turn player " + playerList[activePlayer].playerName + " Turn'" + playerList[activePlayer].myPlayers[0].turncounts);
 
@@ -1321,5 +1321,33 @@ public class GameManager : MonoBehaviourPunCallbacks
     void CheckClick2Dice(bool is2dice)
     {
         GameManager.instace.playerList[GameManager.instace.activePlayer].isClick2Dice = is2dice;
+    }
+
+    private bool IsMyTurn()
+    {
+        // Replace with your logic. This could be checking against a player list, an ID, etc.
+        return GameManager.instace.activePlayer == PhotonNetwork.LocalPlayer.ActorNumber - 1;
+    }
+
+    [PunRPC]
+    void UpdateToAllPlayerState(int x)
+    {
+        GameManager.instace.playerList[x].playerType = GameManager.Entity.PlayerTypes.NO_PLAYER;
+        if (IsMyTurn())
+        {
+            GameManager.instace.state = GameManager.States.SWITCH_PLAYER;
+        }
+        if (PhotonNetwork.IsMasterClient)
+        {
+            // Find the next player to become the Master Client
+            Player[] players = PhotonNetwork.PlayerListOthers;
+            if (players.Length > 0)
+            {
+                // Transfer Master Client role to the next player
+                PhotonNetwork.SetMasterClient(players[0]);
+            }
+        }
+
+
     }
 }

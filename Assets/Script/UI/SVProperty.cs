@@ -48,139 +48,134 @@ public class SVProperty : MonoBehaviourPunCallbacks
 
         if (GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].hasHome32 == true)
         {
-            for (int j = 0; j < GameManager.instace.playerList.Count; j++)
-            {
+
                 //generate a new list with update info
-                for (int i = 0; i < GameManager.instace.playerList[j].house3s2List.Count; i++)
+                for (int i = 0; i < GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].house3s2List.Count; i++)
                 {
 
                     //skip empty 
-                    if (GameManager.instace.playerList[j].house3s2List.Count == 0)
+                    if (GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].house3s2List.Count == 0)
                     {
                         continue;
                     }
-                    if (GameManager.instace.playerList[j].house3s2List[i].isSelected == false)
+                    if (GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].house3s2List[i].isSelected == false)
                     {
                         ItemSVProperty newItem = Instantiate(ItemSVPropertyPrefab);
                         newItem.itemPropertyParent = this;
-                        newItem.SetItemName(GameManager.instace.playerList[j].house3s2List[i].CardName);
-                        newItem.SetCostInItem(GameManager.instace.playerList[j].house3s2List[i].BusinessValue.ToString());
+                        newItem.SetItemName(GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].house3s2List[i].CardName);
+                        newItem.SetCostInItem(GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].house3s2List[i].BusinessValue.ToString());
                         newItem.transform.SetParent(SVPropertyListParent);
-                        ScaleObjectWithScreenSize(newItem.gameObject);
+                        //ScaleObjectWithScreenSize(newItem.gameObject);
                         _SVPropertyItemList.Add(newItem);
 
                     }
                 }
-            }
+            
         }
             if (GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].hasHome21 == true)
             {
-                for (int j = 0; j < GameManager.instace.playerList.Count; j++)
-                {
+
                     //generate a new list with update info
-                    for (int i = 0; i < GameManager.instace.playerList[j].house2s1List.Count; i++)
+                    for (int i = 0; i < GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].house2s1List.Count; i++)
                     {
 
                         //skip empty 
-                        if (GameManager.instace.playerList[j].house2s1List.Count == 0)
+                        if (GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].house2s1List.Count == 0)
                         {
                             continue;
                         }
-                    if (GameManager.instace.playerList[j].house2s1List[i].isSelected == false)
+                    if (GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].house2s1List[i].isSelected == false)
                     {
                         ItemSVProperty newItem = Instantiate(ItemSVPropertyPrefab);
                         newItem.itemPropertyParent = this;
-                        newItem.SetItemName(GameManager.instace.playerList[j].house2s1List[i].CardName);
-                        newItem.SetCostInItem(GameManager.instace.playerList[j].house2s1List[i].BusinessValue.ToString());
+                        newItem.SetItemName(GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].house2s1List[i].CardName);
+                        newItem.SetCostInItem(GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].house2s1List[i].BusinessValue.ToString());
                         newItem.transform.SetParent(SVPropertyListParent);
-                        ScaleObjectWithScreenSize(newItem.gameObject);
+                        //ScaleObjectWithScreenSize(newItem.gameObject);
                         _SVPropertyItemList.Add(newItem);
 
                     }
                     }
-                }
+                
             }
             if (GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].hasCondominium21 == true)
             {
-                for (int j = 0; j < GameManager.instace.playerList.Count; j++)
-                {
+
                     //generate a new list with update info
-                    for (int i = 0; i < GameManager.instace.playerList[j].CondominiumList.Count; i++)
+                    for (int i = 0; i < GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].CondominiumList.Count; i++)
                     {
 
                         //skip empty 
-                        if (GameManager.instace.playerList[j].CondominiumList.Count == 0)
+                        if (GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].CondominiumList.Count == 0)
                         {
                             continue;
                         }
-                    if (GameManager.instace.playerList[j].CondominiumList[i].isSelected == false)
+                    if (GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].CondominiumList[i].isSelected == false)
                     {
                         ItemSVProperty newItem = Instantiate(ItemSVPropertyPrefab);
                         newItem.itemPropertyParent = this;
-                        newItem.SetItemName(GameManager.instace.playerList[j].CondominiumList[i].CardName);
-                        newItem.SetCostInItem(GameManager.instace.playerList[j].CondominiumList[i].BusinessValue.ToString());
+                        newItem.SetItemName(GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].CondominiumList[i].CardName);
+                        newItem.SetCostInItem(GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].CondominiumList[i].BusinessValue.ToString());
                         newItem.transform.SetParent(SVPropertyListParent);
-                        ScaleObjectWithScreenSize(newItem.gameObject);
+                        //ScaleObjectWithScreenSize(newItem.gameObject);
                         _SVPropertyItemList.Add(newItem);
 
                     }
                     }
-                }
+                
             }
             if (GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].hascommercialBuilding == true)
             {
-                for (int j = 0; j < GameManager.instace.playerList.Count; j++)
-                {
+
                     //generate a new list with update info
-                    for (int i = 0; i < GameManager.instace.playerList[j].CommercialBuildingList.Count; i++)
+                    for (int i = 0; i < GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].CommercialBuildingList.Count; i++)
                     {
 
                         //skip empty 
-                        if (GameManager.instace.playerList[j].CommercialBuildingList.Count == 0)
+                        if (GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].CommercialBuildingList.Count == 0)
                         {
                             continue;
                         }
-                    if (GameManager.instace.playerList[j].CommercialBuildingList[i].isSelected == false)
+                    if (GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].CommercialBuildingList[i].isSelected == false)
                     {
                         ItemSVProperty newItem = Instantiate(ItemSVPropertyPrefab);
                         newItem.itemPropertyParent = this;
-                        newItem.SetItemName(GameManager.instace.playerList[j].CommercialBuildingList[i].CardName);
-                        newItem.SetCostInItem(GameManager.instace.playerList[j].CommercialBuildingList[i].BusinessValue.ToString());
+                        newItem.SetItemName(GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].CommercialBuildingList[i].CardName);
+                        newItem.SetCostInItem(GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].CommercialBuildingList[i].BusinessValue.ToString());
                         newItem.transform.SetParent(SVPropertyListParent);
-                        ScaleObjectWithScreenSize(newItem.gameObject);
+                        //ScaleObjectWithScreenSize(newItem.gameObject);
                         _SVPropertyItemList.Add(newItem);
                     }
 
                     }
-                }
+                
             }
             if (GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].hasApartment == true)
             {
-                for (int j = 0; j < GameManager.instace.playerList.Count; j++)
-                {
+
                     //generate a new list with update info
-                    for (int i = 0; i < GameManager.instace.playerList[j].ApartmentList.Count; i++)
+                    for (int i = 0; i < GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].ApartmentList.Count; i++)
                     {
 
                         //skip empty 
-                        if (GameManager.instace.playerList[j].ApartmentList.Count == 0)
+                        if (GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].ApartmentList.Count == 0)
                         {
                             continue;
                         }
-                    if (GameManager.instace.playerList[j].ApartmentList[i].isSelected == false)
+                    if (GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].ApartmentList[i].isSelected == false)
                     {
                         ItemSVProperty newItem = Instantiate(ItemSVPropertyPrefab);
                         newItem.itemPropertyParent = this;
-                        newItem.SetItemName(GameManager.instace.playerList[j].ApartmentList[i].CardName);
-                        newItem.SetCostInItem(GameManager.instace.playerList[j].ApartmentList[i].BusinessValue.ToString());
+                        newItem.SetItemName(GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].ApartmentList[i].CardName);
+                        newItem.SetCostInItem(GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].ApartmentList[i].BusinessValue.ToString());
                         newItem.transform.SetParent(SVPropertyListParent);
-                        ScaleObjectWithScreenSize(newItem.gameObject);
+                        //ScaleObjectWithScreenSize(newItem.gameObject);
                         _SVPropertyItemList.Add(newItem);
 
                     }
                     }
 
-                }
+                
             }
 
         
