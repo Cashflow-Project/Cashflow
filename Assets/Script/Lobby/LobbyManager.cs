@@ -21,6 +21,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     [SerializeField] private TMP_Text status;
     [SerializeField] private Button leaveRoomBtn;
     [SerializeField] private Button startGameBtn;
+    [SerializeField] private Button createGameBtn;
 
     [SerializeField] private TMP_Text _currentLocation;
 
@@ -40,6 +41,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     private void Start()
     {
+        createGameBtn.enabled = false;
         Initialize();
         Connect();
     }
@@ -49,6 +51,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     public override void OnConnectedToMaster()
     {
         status.text = "Connect to master server";
+        createGameBtn.enabled = true;
         Debug.Log("Connect to master server");
         PhotonNetwork.JoinLobby();
     }

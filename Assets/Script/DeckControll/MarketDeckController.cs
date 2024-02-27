@@ -88,7 +88,7 @@ public class MarketDeckController : MonoBehaviourPunCallbacks
         UIController.instance.drawButton.SetActive(false);
         UIController.instance.SellButton.SetActive(false);
         UIController.instance.MarketDrawButton.SetActive(false);
-        UIController.instance.cancelButton.SetActive(false);
+        UIController.instance.cancelButton.SetActive(true);
         photonView.RPC("ShowCardToAllPlayerRPC", RpcTarget.All);
         photonView.RPC("AddToUseCard", RpcTarget.All);
 
@@ -548,6 +548,34 @@ public class MarketDeckController : MonoBehaviourPunCallbacks
         if (usedCards[cardcount - 1].Apartment == true && GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].hasApartment == true)
         {
             UIController.instance.MarketSellButton.SetActive(true);
+        }
+
+        for (int j = 0; j < GameManager.instace.playerList.Count; j++)
+        {
+            if (usedCards[cardcount - 1].GoldCoins == true && GameManager.instace.playerList[j].hasGoldCoins == true)
+            {
+                UIController.instance.cancelButton.SetActive(false);
+            }
+            if (usedCards[cardcount - 1].house3s2 == true && GameManager.instace.playerList[j].hasHome32 == true)
+            {
+                UIController.instance.cancelButton.SetActive(false);
+            }
+            if (usedCards[cardcount - 1].house2s1 == true && GameManager.instace.playerList[j].hasHome21 == true)
+            {
+                UIController.instance.cancelButton.SetActive(false);
+            }
+            if (usedCards[cardcount - 1].Condominium == true && GameManager.instace.playerList[j].hasCondominium21 == true)
+            {
+                UIController.instance.cancelButton.SetActive(false);
+            }
+            if (usedCards[cardcount - 1].CommercialBuilding == true && GameManager.instace.playerList[j].hascommercialBuilding == true)
+            {
+                UIController.instance.cancelButton.SetActive(false);
+            }
+            if (usedCards[cardcount - 1].Apartment == true && GameManager.instace.playerList[j].hasApartment == true)
+            {
+                UIController.instance.cancelButton.SetActive(false);
+            }
         }
     }
 

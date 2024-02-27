@@ -71,7 +71,6 @@ public class UIInvestConfirm : MonoBehaviourPunCallbacks
         UIController.instance.SellButton.SetActive(false);
         UIController.instance.BigPayButton.SetActive(false);
         UIController.instance.payButton.SetActive(false);
-        UIController.instance.cancelButton.SetActive(false);
         UIController.instance.drawButton.SetActive(false);
 
 

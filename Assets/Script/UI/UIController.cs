@@ -48,10 +48,12 @@ public class UIController : MonoBehaviourPunCallbacks
     public GameObject menubar;
     public GameObject outbar;
 
+    public TMP_Text yourColor;
     private void Awake()
     {
         instance = this;
         infoText.text = "";
+
     }
 
     public GameObject payButton;
@@ -74,8 +76,8 @@ public class UIController : MonoBehaviourPunCallbacks
     void Start()
     {
         roomname.text = PhotonNetwork.CurrentRoom.Name;
-            //+"actorNum " + PhotonNetwork.LocalPlayer.ActorNumber.ToString();
-        
+        //+"actorNum " + PhotonNetwork.LocalPlayer.ActorNumber.ToString();
+        yourColor.text = "สีของคุณคือ "+ GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].ColorPlayer.ToString();
 
     }
 
