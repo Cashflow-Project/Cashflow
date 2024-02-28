@@ -78,7 +78,6 @@ public class UIController : MonoBehaviourPunCallbacks
         roomname.text = PhotonNetwork.CurrentRoom.Name;
         //+"actorNum " + PhotonNetwork.LocalPlayer.ActorNumber.ToString();
         yourColor.text = "สีของคุณคือ "+ GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].ColorPlayer.ToString();
-
     }
 
     // Update is called once per frame

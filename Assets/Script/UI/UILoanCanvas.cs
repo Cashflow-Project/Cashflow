@@ -17,10 +17,7 @@ public class UILoanCanvas : MonoBehaviourPunCallbacks
     public Button LoanButton;
     public TMP_InputField LoanInputNum;
     // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+
 
     // Update is called once per frame
     void Update()
@@ -41,14 +38,16 @@ public class UILoanCanvas : MonoBehaviourPunCallbacks
 
     public void OkClick()
     {
+
         GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].money += Int32.Parse(LoanInputNum.text);
         GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].loanBank += Int32.Parse(LoanInputNum.text);
         photonView.RPC("UpdateLoan", RpcTarget.All, GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].money, GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].loanBank, PhotonNetwork.LocalPlayer.ActorNumber - 1);
-        photonView.RPC("UpdateMoneyLoan", RpcTarget.All, PhotonNetwork.LocalPlayer.ActorNumber - 1);
         UIController.instance.LoanCanvas.SetActive(false);
         UIController.instance.BlurBg.SetActive(false);
+        photonView.RPC("UpdateMoney", RpcTarget.All, GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].money, PhotonNetwork.LocalPlayer.ActorNumber - 1);
         photonView.RPC("valueUpdate", RpcTarget.All);
-        
+
+
     }
 
     public void CancelClick()
@@ -58,19 +57,19 @@ public class UILoanCanvas : MonoBehaviourPunCallbacks
     }
 
     [PunRPC]
-    void UpdateMoneyLoan(int x)
+    void UpdateMoney(int money, int x)
     {
-        //GameManager.instace.playerList[x].money = money;
+        GameManager.instace.playerList[x].money = money;
         //note collect
-        GameManager.Note myLoan = new GameManager.Note();
-        myLoan.CardName = "+ " + "Loan";
-        myLoan.price = Int32.Parse(LoanInputNum.text);
-        GameManager.instace.playerList[x].Keep.Add(myLoan);
+        GameManager.Note myNote = new GameManager.Note();
+        myNote.CardName = "+ " + "Loan";
+        myNote.price = Int32.Parse(LoanInputNum.text);
+        GameManager.instace.playerList[x].Keep.Add(myNote);
 
-        GameManager.Note myLoan2 = new GameManager.Note();
-        myLoan2.CardName = "= ";
-        myLoan2.price = GameManager.instace.playerList[x].money;
-        GameManager.instace.playerList[x].Keep.Add(myLoan2);
+        GameManager.Note myNote2 = new GameManager.Note();
+        myNote2.CardName = "= ";
+        myNote2.price = GameManager.instace.playerList[x].money;
+        GameManager.instace.playerList[x].Keep.Add(myNote2);
     }
 
     [PunRPC]

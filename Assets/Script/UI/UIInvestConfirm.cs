@@ -42,8 +42,9 @@ public class UIInvestConfirm : MonoBehaviourPunCallbacks
         if(GameManager.instace.playerList[GameManager.instace.activePlayer].money >= Int32.Parse(sumCalculate.text))
         {
             GameManager.instace.playerList[GameManager.instace.activePlayer].money = GameManager.instace.playerList[GameManager.instace.activePlayer].money - Int32.Parse(sumCalculate.text);
+            photonView.RPC("UpdateInvestMoney", RpcTarget.All, GameManager.instace.playerList[GameManager.instace.activePlayer].money, GameManager.instace.activePlayer);
             photonView.RPC("UpdateKeepForInvest", RpcTarget.All, GameManager.instace.activePlayer,Int32.Parse(inputNum.text));
-            photonView.RPC("UpdateMoney", RpcTarget.All, GameManager.instace.playerList[GameManager.instace.activePlayer].money, GameManager.instace.activePlayer);
+            
             SetAllFalse();
             UIController.instance.BlurBg.SetActive(false);
             //UIController.instance.passButton.SetActive(true);
@@ -76,7 +77,7 @@ public class UIInvestConfirm : MonoBehaviourPunCallbacks
 
     }
     [PunRPC]
-    void UpdateMoney(int money, int x)
+    void UpdateInvestMoney(int money, int x)
     {
         GameManager.instace.playerList[x].money = money;
         UIController.instance.MyMoneyText.text = GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].money.ToString();

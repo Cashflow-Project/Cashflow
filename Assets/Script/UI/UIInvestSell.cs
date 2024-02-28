@@ -75,10 +75,10 @@ public class UIInvestSell : MonoBehaviourPunCallbacks
 
     public void OkSellClick()
     {
-        GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].money = GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].money + Int32.Parse(sumCalculate.text);
-        photonView.RPC("UpdateSellInvestMoney", RpcTarget.All, GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].money, PhotonNetwork.LocalPlayer.ActorNumber - 1, inputNum.text);
+
+        GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].money +=+ Int32.Parse(sumCalculate.text);
         photonView.RPC("UpdateKeepForSellInvest", RpcTarget.All, PhotonNetwork.LocalPlayer.ActorNumber - 1, Int32.Parse(inputNum.text));
-        
+        photonView.RPC("UpdateSellInvestMoney", RpcTarget.All, GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].money, PhotonNetwork.LocalPlayer.ActorNumber - 1,inputNum);
        UIController.instance.investSellCanvas.SetActive(false);
         UIController.instance.BlurBg.SetActive(false);
         UIController.instance.drawButton.SetActive(false);

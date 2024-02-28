@@ -130,6 +130,9 @@ MonoBehaviour:
   - UpdatePayHouseMoney
   - UpdatePayLearnMoney
   - UpdateMoneyLoan
+  - valueNewUpdate
+  - UpdateIncomeMoney
+  - UpdateInvestMoney
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1
