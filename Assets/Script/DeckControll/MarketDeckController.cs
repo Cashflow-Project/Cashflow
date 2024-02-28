@@ -94,7 +94,7 @@ public class MarketDeckController : MonoBehaviourPunCallbacks
 
         
 
-        photonView.RPC("whoCanSell", RpcTarget.All);
+        photonView.RPC("whoCanSellandCancelMarket", RpcTarget.All);
         if (usedCards[cardcount - 1].destroy == true
                 && (GameManager.instace.playerList[GameManager.instace.activePlayer].hasHome32
                 || GameManager.instace.playerList[GameManager.instace.activePlayer].hasHome21
@@ -523,7 +523,7 @@ public class MarketDeckController : MonoBehaviourPunCallbacks
     }
 
     [PunRPC]
-    void whoCanSell()
+    void whoCanSellandCancelMarket()
     {
         if (usedCards[cardcount - 1].GoldCoins == true && GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].hasGoldCoins == true)
         {

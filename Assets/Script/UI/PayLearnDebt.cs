@@ -82,7 +82,7 @@ public class PayLearnDebt : MonoBehaviourPunCallbacks
         GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].getmoney = GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].allRecieve - GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].paid;
     }
     [PunRPC]
-    void UpdateMoney(int money, int x)
+    void UpdatePayLearnMoney(int money, int x)
     {
         GameManager.instace.playerList[x].money = money;
         //note collect

@@ -84,6 +84,10 @@ public class UIController : MonoBehaviourPunCallbacks
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            SceneManager.LoadScene("Lobby");
+        }
         MyMoneyText.text = GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].money.ToString();
         MyIncomeleftText.text = (GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].paid - GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].income).ToString();
     }
@@ -233,31 +237,101 @@ public class UIController : MonoBehaviourPunCallbacks
 
     public void Quit()
     {
-        photonView.RPC("UpdateToAllPlayerState", RpcTarget.All, PhotonNetwork.LocalPlayer.ActorNumber - 1);
-        UIController.instance.BlurBg.SetActive(true);
+        if (PhotonNetwork.IsConnected)
+        {
+            photonView.RPC("UpdateToAllPlayerState", RpcTarget.All, PhotonNetwork.LocalPlayer.ActorNumber - 1, GameManager.Entity.PlayerTypes.NO_PLAYER);
+            Debug.Log(GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].playerType);
+            GameManager.instace.playerInRoom = 0;
+            for (int i = 0; i < GameManager.instace.playerList.Count; i++)
+            {
+                if (GameManager.instace.playerList[i].playerType == GameManager.Entity.PlayerTypes.HUMAN)
+                {
+                    GameManager.instace.playerInRoom++;
+                }
+
+            }
+            Debug.Log($"Player List Size: {GameManager.instace.playerInRoom}");
+            if (GameManager.instace.playerInRoom == 0)
+            {
+                PhotonNetwork.Disconnect();
+                StartCoroutine(WaitAndLoadScene());
+            }
+            else
+            {
+                if (PhotonNetwork.IsMasterClient)
+                {
+                    Debug.Log("In isMasterClient");
+                    Player[] players = PhotonNetwork.PlayerListOthers;
+                    Debug.Log("player[]" + players.Length);
+                    if (players.Length > 0)
+                    {
+                        PhotonNetwork.SetMasterClient(players[0]);
+                    }
+                }
+
+                StartCoroutine(WaitForSwitchTurn());
+            }
+            
+        }
+        //PhotonNetwork.Disconnect();
+        //StartCoroutine(WaitAndLoadScene());
     }
 
+    IEnumerator WaitForSwitchTurn()
+    {
+        Debug.Log($"Player List Size: {GameManager.instace.playerInRoom}");
+        
+        Debug.Log("In WaitForSwitch Turn");
+        while (GameManager.instace.state != GameManager.States.START_TURN)
+        {
+            
+            yield return null;
+            // Wait for the next frame
+        }
+        Debug.Log("Start Disconnected");
+        PhotonNetwork.Disconnect();
+        StartCoroutine(WaitAndLoadScene());
+    }
+    private void HandleLocalPlayerState()
+    {
+        Debug.Log("In HandleLocalPlayerState");
+        //Debug.Log($"Player List Size: {GameManager.instace.playerList.Count}");
+        
+
+    }
+
+    private IEnumerator WaitAndLoadScene()
+    {
+        Debug.Log("Waiting for disconnection to complete...");
+        yield return new WaitForSeconds(5.0f);
+
+        Debug.Log("Loading lobby scene...");
+        SceneManager.LoadScene("Lobby");
+    }
+
+    public override void OnDisconnected(DisconnectCause cause)
+    {
+        Debug.Log($"Disconnected cause: {cause}");
+
+        // Add more debug logs
+        Debug.Log("Before handling local player state");
+
+        // Perform any additional cleanup or handling if needed
+        HandleLocalPlayerState();
+
+        Debug.Log("After handling local player state");
+
+    }
 
     [PunRPC]
-    void UpdateToAllPlayerState(int x)
+    void UpdateToAllPlayerState(int x, GameManager.Entity.PlayerTypes playerTypes)
     {
-        GameManager.instace.playerList[x].playerType = GameManager.Entity.PlayerTypes.NO_PLAYER;
-        if (IsMyTurn())
+        GameManager.instace.playerList[x].playerType = playerTypes;
+        if (GameManager.instace.playerInRoom > 0 && IsMyTurn())
         {
-            GameManager.instace.state = GameManager.States.SWITCH_PLAYER;
+            GameManager.instace.PassTurn();
         }
-        if (PhotonNetwork.IsMasterClient)
-        {
-            // Find the next player to become the Master Client
-            Player[] players = PhotonNetwork.PlayerListOthers;
-            if (players.Length > 0)
-            {
-                // Transfer Master Client role to the next player
-                PhotonNetwork.SetMasterClient(players[0]);
-            }
-        }
-
-
+        Debug.Log(GameManager.instace.state);
     }
 
     private bool IsMyTurn()

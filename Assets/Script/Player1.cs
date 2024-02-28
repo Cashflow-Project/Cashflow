@@ -235,7 +235,7 @@ public class Player1 : MonoBehaviourPunCallbacks
                     GameManager.instace.playerInRoom = 0;
                     for (int i = 0; i < GameManager.instace.playerList.Count; i++)
                     {
-                        if (GameManager.instace.playerList[i].playerType == GameManager.Entity.PlayerTypes.NO_PLAYER)
+                        if (GameManager.instace.playerList[i].playerType == GameManager.Entity.PlayerTypes.HUMAN)
                         {
                             GameManager.instace.playerInRoom++;
                         }

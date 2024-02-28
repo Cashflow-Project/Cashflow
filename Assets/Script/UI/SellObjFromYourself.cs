@@ -72,25 +72,23 @@ public class SellObjFromYourself : MonoBehaviourPunCallbacks
         }
         _investItemList.Clear();
 
-        for (int j = 0; j < GameManager.instace.playerList.Count; j++)
-        {
 
 
                 //skip empty 
-                if (GameManager.instace.playerList[j].ON2UList.Count == 0)
+                if (GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].ON2UList.Count > 0)
                 {
-                    continue;
-                }
-
-                SellItemUI newItem = Instantiate(SellItemUIPrefab);
-                newItem.sellObjFromYourselfParent = this;
-                newItem.SetItemName(GameManager.instace.playerList[j].ON2UList[0].CardName);
-                newItem.SetCountInItem((GameManager.instace.playerList[j].ON2UList[0].countShare).ToString());
-               newItem.transform.SetParent(sellListParent);
-                ScaleObjectWithScreenSize(newItem.gameObject);
-                _investItemList.Add(newItem);
-            
+            SellItemUI newItem = Instantiate(SellItemUIPrefab);
+            newItem.sellObjFromYourselfParent = this;
+            newItem.SetItemName(GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].ON2UList[0].CardName);
+            newItem.SetCountInItem((GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].ON2UList[0].countShare).ToString());
+            newItem.transform.SetParent(sellListParent);
+            ScaleObjectWithScreenSize(newItem.gameObject);
+            _investItemList.Add(newItem);
         }
+
+                
+            
+        
     }
 
     public void UpdateMYT4UItemList()
@@ -101,26 +99,25 @@ public class SellObjFromYourself : MonoBehaviourPunCallbacks
         }
         _investItemList.Clear();
 
-        for (int j = 0; j < GameManager.instace.playerList.Count; j++)
-        {
+
             //generate a new list with update info
 
 
                 //skip empty 
-                if (GameManager.instace.playerList[j].MYT4UList.Count == 0)
+                if (GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].MYT4UList.Count > 0)
                 {
-                    continue;
-                }
-
-                SellItemUI newItem = Instantiate(SellItemUIPrefab);
-                newItem.sellObjFromYourselfParent = this;
-                newItem.SetItemName(GameManager.instace.playerList[j].MYT4UList[0].CardName);
-                newItem.SetCountInItem((GameManager.instace.playerList[j].MYT4UList[0].countShare).ToString());
-                newItem.transform.SetParent(sellListParent);
-                ScaleObjectWithScreenSize(newItem.gameObject);
-                _investItemList.Add(newItem);
-            
+            SellItemUI newItem = Instantiate(SellItemUIPrefab);
+            newItem.sellObjFromYourselfParent = this;
+            newItem.SetItemName(GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].MYT4UList[0].CardName);
+            newItem.SetCountInItem((GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].MYT4UList[0].countShare).ToString());
+            newItem.transform.SetParent(sellListParent);
+            ScaleObjectWithScreenSize(newItem.gameObject);
+            _investItemList.Add(newItem);
         }
+
+                
+            
+        
     }
 
     public void UpdateGRO4USItemList()
@@ -131,26 +128,25 @@ public class SellObjFromYourself : MonoBehaviourPunCallbacks
         }
         _investItemList.Clear();
 
-        for (int j = 0; j < GameManager.instace.playerList.Count; j++)
-        {
+  
             //generate a new list with update info
 
 
                 //skip empty 
-                if (GameManager.instace.playerList[j].GRO4USList.Count == 0)
+                if (GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].GRO4USList.Count > 0)
                 {
-                    continue;
-                }
-
-                SellItemUI newItem = Instantiate(SellItemUIPrefab);
-                newItem.sellObjFromYourselfParent = this;
-                newItem.SetItemName(GameManager.instace.playerList[j].GRO4USList[0].CardName);
-                newItem.SetCountInItem((GameManager.instace.playerList[j].GRO4USList[0].countShare).ToString());
-                newItem.transform.SetParent(sellListParent);
-                ScaleObjectWithScreenSize(newItem.gameObject);
-                _investItemList.Add(newItem);
-            
+            SellItemUI newItem = Instantiate(SellItemUIPrefab);
+            newItem.sellObjFromYourselfParent = this;
+            newItem.SetItemName(GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].GRO4USList[0].CardName);
+            newItem.SetCountInItem((GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].GRO4USList[0].countShare).ToString());
+            newItem.transform.SetParent(sellListParent);
+            ScaleObjectWithScreenSize(newItem.gameObject);
+            _investItemList.Add(newItem);
         }
+
+                
+            
+        
     }
 
     public void UpdateOK4UItemList()
@@ -161,26 +157,25 @@ public class SellObjFromYourself : MonoBehaviourPunCallbacks
         }
         _investItemList.Clear();
 
-        for (int j = 0; j < GameManager.instace.playerList.Count; j++)
-        {
+     
             //generate a new list with update info
 
 
                 //skip empty 
-                if (GameManager.instace.playerList[j].OK4UList.Count == 0)
+                if (GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].OK4UList.Count > 0)
                 {
-                    continue;
-                }
-
-                SellItemUI newItem = Instantiate(SellItemUIPrefab);
-                newItem.sellObjFromYourselfParent = this;
-                newItem.SetItemName(GameManager.instace.playerList[j].OK4UList[0].CardName);
-                newItem.SetCountInItem((GameManager.instace.playerList[j].OK4UList[0].countShare).ToString());
-                newItem.transform.SetParent(sellListParent);
-                ScaleObjectWithScreenSize(newItem.gameObject);
-                _investItemList.Add(newItem);
-            
+            SellItemUI newItem = Instantiate(SellItemUIPrefab);
+            newItem.sellObjFromYourselfParent = this;
+            newItem.SetItemName(GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].OK4UList[0].CardName);
+            newItem.SetCountInItem((GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].OK4UList[0].countShare).ToString());
+            newItem.transform.SetParent(sellListParent);
+            ScaleObjectWithScreenSize(newItem.gameObject);
+            _investItemList.Add(newItem);
         }
+
+                
+            
+        
     }
 
 

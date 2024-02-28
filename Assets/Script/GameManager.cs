@@ -302,7 +302,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     void Start()
     {
-        //PhotonNetwork.ConnectUsingSettings();
+        PhotonNetwork.ConnectUsingSettings();
         playerInRoomChecking();
         RandomFirstPlayer();
         playerJobSetting();

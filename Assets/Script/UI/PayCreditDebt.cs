@@ -47,7 +47,7 @@ public class PayCreditDebt : MonoBehaviourPunCallbacks
             photonView.RPC("UpdatePayCreditDebt", RpcTarget.All, GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].money, GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].creditDebt, GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].creditcardMortgage, PhotonNetwork.LocalPlayer.ActorNumber - 1);
             UIController.instance.PayCreditDebtCanvas.SetActive(false);
             UIController.instance.BlurBg.SetActive(false);
-            photonView.RPC("UpdateMoney", RpcTarget.All, GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].money, PhotonNetwork.LocalPlayer.ActorNumber - 1);
+            photonView.RPC("UpdatePayCreditMoney", RpcTarget.All, GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].money, PhotonNetwork.LocalPlayer.ActorNumber - 1);
             photonView.RPC("valueUpdate", RpcTarget.All);
         }
         else
@@ -82,7 +82,7 @@ public class PayCreditDebt : MonoBehaviourPunCallbacks
         GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].getmoney = GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].allRecieve - GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].paid;
     }
     [PunRPC]
-    void UpdateMoney(int money, int x)
+    void UpdatePayCreditMoney(int money, int x)
     {
         GameManager.instace.playerList[x].money = money;
         //note collect
