@@ -87,9 +87,9 @@ public class UIInvestSell : MonoBehaviourPunCallbacks
                 if (GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].ON2UList[0].countShare == 0)
                 {
                     GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].hasON2U = false;
-                    photonView.RPC("UpdateStillInvest", RpcTarget.All, PhotonNetwork.LocalPlayer.ActorNumber - 1, GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].hasON2U);
+                    photonView.RPC("UpdateStillInvestSell", RpcTarget.Others, PhotonNetwork.LocalPlayer.ActorNumber - 1, GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].hasON2U);
                 }
-                photonView.RPC("UpdateKeepForSellInvestButNoLeft", RpcTarget.All, PhotonNetwork.LocalPlayer.ActorNumber - 1);
+                photonView.RPC("UpdateKeepForSellInvestButNoLeft", RpcTarget.All);
             }
             
         }
@@ -102,9 +102,9 @@ public class UIInvestSell : MonoBehaviourPunCallbacks
                 if (GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].MYT4UList[0].countShare == 0)
                 {
                     GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].hasMYT4U = false;
-                    photonView.RPC("UpdateStillInvest", RpcTarget.All, PhotonNetwork.LocalPlayer.ActorNumber - 1, GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].hasMYT4U);
+                    photonView.RPC("UpdateStillInvestSell", RpcTarget.Others, PhotonNetwork.LocalPlayer.ActorNumber - 1, GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].hasMYT4U);
                 }
-                photonView.RPC("UpdateKeepForSellInvestButNoLeft", RpcTarget.All, PhotonNetwork.LocalPlayer.ActorNumber - 1);
+                photonView.RPC("UpdateKeepForSellInvestButNoLeft", RpcTarget.All);
             }
             
         }
@@ -118,9 +118,9 @@ public class UIInvestSell : MonoBehaviourPunCallbacks
                 if (GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].GRO4USList[0].countShare == 0)
                 {
                     GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].hasGRO4US = false;
-                    photonView.RPC("UpdateStillInvest", RpcTarget.All, PhotonNetwork.LocalPlayer.ActorNumber - 1, GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].hasGRO4US);
+                    photonView.RPC("UpdateStillInvestSell", RpcTarget.Others, PhotonNetwork.LocalPlayer.ActorNumber - 1, GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].hasGRO4US);
                 }
-                photonView.RPC("UpdateKeepForSellInvestButNoLeft", RpcTarget.All, PhotonNetwork.LocalPlayer.ActorNumber - 1);
+                photonView.RPC("UpdateKeepForSellInvestButNoLeft", RpcTarget.All);
             }
             
         }
@@ -134,9 +134,9 @@ public class UIInvestSell : MonoBehaviourPunCallbacks
                 if (GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].OK4UList[0].countShare == 0)
                 {
                     GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].hasOK4U = false;
-                    photonView.RPC("UpdateStillInvest", RpcTarget.All, PhotonNetwork.LocalPlayer.ActorNumber - 1, GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].hasOK4U);
+                    photonView.RPC("UpdateStillInvestSell", RpcTarget.Others, PhotonNetwork.LocalPlayer.ActorNumber - 1, GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].hasOK4U);
                 }
-                photonView.RPC("UpdateKeepForSellInvestButNoLeft", RpcTarget.All, PhotonNetwork.LocalPlayer.ActorNumber - 1);
+                photonView.RPC("UpdateKeepForSellInvestButNoLeft", RpcTarget.All);
             }
             
         }
@@ -256,7 +256,7 @@ public class UIInvestSell : MonoBehaviourPunCallbacks
 
 
     [PunRPC]
-    void UpdateStillInvest(int x,bool stillHave)
+    void UpdateStillInvestSell(int x,bool stillHave)
     {
 
         if (SmallDealDeckController.instance.usedCards[SmallDealDeckController.instance.cardcount - 1].ON2U == true)
@@ -374,23 +374,25 @@ public class UIInvestSell : MonoBehaviourPunCallbacks
 
 
     [PunRPC]
-    void UpdateKeepForSellInvestButNoLeft(int x)
+    void UpdateKeepForSellInvestButNoLeft()
     {
-
+        //UIController.instance.infoText.text = "in UpdateKeepForSellInvestButNoLeft";
         if (SmallDealDeckController.instance.usedCards[SmallDealDeckController.instance.cardcount - 1].ON2U == true)
         {
-            if (GameManager.instace.playerList[x].hasON2U == false)
+            if (GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].hasON2U == false)
             {
-                GameManager.instace.playerList[x].ON2UList.RemoveAt(0);
+                //UILeftController.instance.ON2Ucount.text = "0";
+                GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].ON2UList.RemoveAt(0);
             }
 
         }
         if (SmallDealDeckController.instance.usedCards[SmallDealDeckController.instance.cardcount - 1].MYT4U == true)
         {
 
-            if (GameManager.instace.playerList[x].hasMYT4U == false)
+            if (GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].hasMYT4U == false)
             {
-                GameManager.instace.playerList[x].MYT4UList.RemoveAt(0);
+                //UILeftController.instance.MYT4Ucount.text = "0";
+                GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].MYT4UList.RemoveAt(0);
 
             } 
             
@@ -398,10 +400,12 @@ public class UIInvestSell : MonoBehaviourPunCallbacks
         }
         if (SmallDealDeckController.instance.usedCards[SmallDealDeckController.instance.cardcount - 1].GRO4US == true)
         {
-
-            if (GameManager.instace.playerList[x].hasGRO4US == false)
+            //UIController.instance.infoText.text = "in UpdateKeepForSellInvestButNoLeft in card";
+            if (GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].hasGRO4US == false)
             {
-                GameManager.instace.playerList[x].GRO4USList.RemoveAt(0);
+                //UIController.instance.infoText.text = "in UpdateKeepForSellInvestButNoLeft remove";
+                //UILeftController.instance.GRO4UScount.text = "0";
+                GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].GRO4USList.RemoveAt(0);
 
             }
 
@@ -410,9 +414,10 @@ public class UIInvestSell : MonoBehaviourPunCallbacks
         if (SmallDealDeckController.instance.usedCards[SmallDealDeckController.instance.cardcount - 1].OK4U == true)
         {
 
-                if (GameManager.instace.playerList[x].hasOK4U == false)
+                if (GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].hasOK4U == false)
                 {
-                    GameManager.instace.playerList[x].OK4UList.RemoveAt(0);
+                //UILeftController.instance.OK4Ucount.text = "0";
+                GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].OK4UList.RemoveAt(0);
 
                 }
 

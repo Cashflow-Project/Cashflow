@@ -248,20 +248,43 @@ public class UILeftController : MonoBehaviourPunCallbacks
             ON2Ucount.text = GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].ON2UList[0].countShare.ToString();
             ON2U.text = GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].ON2UList[0].pricePerShare.ToString();
         }
+        else
+        {
+            ON2Ucount.text = "0";
+            ON2U.text = "0";
+        }
+
         if (GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].GRO4USList.Count > 0)
         {
             GRO4UScount.text = GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].GRO4USList[0].countShare.ToString();
             GRO4US.text = GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].GRO4USList[0].pricePerShare.ToString();
         }
+        else
+        {
+            GRO4UScount.text = "0";
+            GRO4US.text = "0";
+        }
+
         if (GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].OK4UList.Count > 0)
         {
             OK4Ucount.text = GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].OK4UList[0].countShare.ToString();
             OK4U.text = GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].OK4UList[0].pricePerShare.ToString();
         }
+        else
+        {
+            OK4Ucount.text = "0";
+            OK4U.text = "0";
+        }
+
         if (GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].MYT4UList.Count > 0)
         {
             MYT4Ucount.text = GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].MYT4UList[0].countShare.ToString();
             MYT4U.text = GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].MYT4UList[0].pricePerShare.ToString();
+        }
+        else
+        {
+            MYT4Ucount.text = "0";
+            MYT4U.text = "0";
         }
 }
 
