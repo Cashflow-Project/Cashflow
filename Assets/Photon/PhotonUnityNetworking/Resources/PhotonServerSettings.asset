@@ -34,11 +34,6 @@ MonoBehaviour:
   RunInBackground: 1
   StartInOfflineMode: 0
   RpcList:
-  - ClickRpc
-  - DestroyRpc
-  - DestroySpaceship
-  - Fire
-  - RespawnSpaceship
   - SetStartingPlayer
   - SetFirstPlayer
   - nextPlayerRPC
@@ -122,6 +117,25 @@ MonoBehaviour:
   - whoCanCancel
   - UpdateKeepForSellInvest
   - UpdateSellInvestMoney
+  - ClickRpc
+  - DestroyRpc
+  - DestroySpaceship
+  - Fire
+  - RespawnSpaceship
+  - UpdateGRO4USItemList
+  - UpdateMYT4UItemList
+  - UpdateOK4UItemList
+  - UpdateON2UItemList
+  - UpdateStillInvest
+  - UpdateKeepForBuyInvest
+  - UpdateKeepForBuyInvestButNo
+  - UpdateKeepForSellInvestButNoLeft
+  - UpdateSellInvest
+  - valueNewUpdate
+  - UpdateMoneySell
+  - UpdateMoneyBuyInvest
+  - UpdateMoneyLoan
+  - UpdateMoneyPass
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

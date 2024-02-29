@@ -97,12 +97,9 @@ public class UILeftController : MonoBehaviourPunCallbacks
 
     public void OperPage1()
     {
-        if (GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].isOpenPage1 == false)
-        {
-            SetPage1Value();
-            GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].isOpenPage1 = true;
 
-        }
+        SetPage1Value();
+
         page1.enabled = true;
         page2.enabled = false;
         set1.SetActive(false);
@@ -111,7 +108,7 @@ public class UILeftController : MonoBehaviourPunCallbacks
 
     public void OperPage2()
     {
-        //SetPage2Value();
+        SetPage2Value();
         page1.enabled = false;
         page2.enabled = true;
         set1.SetActive(false);
@@ -120,7 +117,7 @@ public class UILeftController : MonoBehaviourPunCallbacks
 
     public void closePage1()
     {
-        //SetPage1Value();
+        SetPage1Value();
         SetPage2Value();
         if (page1.enabled == false && page2.enabled == true)
         {
@@ -139,7 +136,7 @@ public class UILeftController : MonoBehaviourPunCallbacks
 
     public void closePage2()
     {
-        //SetPage1Value();
+        SetPage1Value();
         SetPage2Value();
         if (page1.enabled == false && page2.enabled == true)
         {
@@ -164,9 +161,9 @@ public class UILeftController : MonoBehaviourPunCallbacks
 
     public void SetPage1Value()
     {
-        firstmoneyP2.text = GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].firstMoney.ToString();
-        leftmoneyP2.text = (GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].getmoney).ToString();
-        allMoneyP2.text = (GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].firstMoney + GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].getmoney).ToString();
+        firstmoneyP2.text = GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].SaveFirstMoney.ToString();
+        leftmoneyP2.text = (GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].SaveGetMoney).ToString();
+        allMoneyP2.text = (GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].SaveAllMoney).ToString();
     }
     public void SetPage2Value()
     {

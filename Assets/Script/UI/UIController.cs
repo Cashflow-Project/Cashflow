@@ -30,6 +30,8 @@ public class UIController : MonoBehaviourPunCallbacks
     public GameObject SellListCanvas;
     public GameObject SellListFromMarketCanvas;
     public Text infoText;
+    public TMP_Text colorTurnText;
+    public TMP_Text TurnText;
     public TMP_Text MyMoneyText;
     public TMP_Text MyIncomeleftText;
     public Image cardShow;

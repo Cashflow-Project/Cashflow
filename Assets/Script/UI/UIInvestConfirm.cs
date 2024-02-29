@@ -42,8 +42,88 @@ public class UIInvestConfirm : MonoBehaviourPunCallbacks
         if(GameManager.instace.playerList[GameManager.instace.activePlayer].money >= Int32.Parse(sumCalculate.text))
         {
             GameManager.instace.playerList[GameManager.instace.activePlayer].money = GameManager.instace.playerList[GameManager.instace.activePlayer].money - Int32.Parse(sumCalculate.text);
-            photonView.RPC("UpdateKeepForInvest", RpcTarget.All);
-            photonView.RPC("UpdateMoney", RpcTarget.All, GameManager.instace.playerList[GameManager.instace.activePlayer].money, GameManager.instace.activePlayer);
+            int x = PhotonNetwork.LocalPlayer.ActorNumber - 1;
+            if (SmallDealDeckController.instance.usedCards[SmallDealDeckController.instance.cardcount - 1].ON2U == true)
+            {
+                if(GameManager.instace.playerList[x].hasON2U == true)
+                {
+                    GameManager.instace.playerList[x].ON2UList[0].countShare += Int32.Parse(inputNum.text);
+                    GameManager.instace.playerList[GameManager.instace.activePlayer].ON2UList[0].pricePerShare = ((Int32.Parse(inputNum.text) * SmallDealDeckController.instance.usedCards[SmallDealDeckController.instance.cardcount - 1].value)
+                    + (GameManager.instace.playerList[GameManager.instace.activePlayer].ON2UList[0].countShare * GameManager.instace.playerList[GameManager.instace.activePlayer].ON2UList[0].pricePerShare))
+                    / (Int32.Parse(inputNum.text) + GameManager.instace.playerList[GameManager.instace.activePlayer].ON2UList[0].countShare);
+                    photonView.RPC("UpdateKeepForBuyInvest", RpcTarget.All, x, GameManager.instace.playerList[x].ON2UList[0].countShare, GameManager.instace.playerList[x].ON2UList[0].pricePerShare);
+                }
+                else
+                {
+                    photonView.RPC("UpdateKeepForBuyInvestButNo", RpcTarget.All, x);
+                }
+
+                GameManager.instace.playerList[x].hasON2U = true;
+                photonView.RPC("UpdateStillInvest", RpcTarget.All, x, GameManager.instace.playerList[x].hasON2U);
+                
+
+            }
+
+            if (SmallDealDeckController.instance.usedCards[SmallDealDeckController.instance.cardcount - 1].MYT4U == true)
+            {
+                if(GameManager.instace.playerList[x].hasMYT4U == true)
+                {
+                    GameManager.instace.playerList[x].MYT4UList[0].countShare += Int32.Parse(inputNum.text);
+                    GameManager.instace.playerList[GameManager.instace.activePlayer].MYT4UList[0].pricePerShare = ((Int32.Parse(inputNum.text) * SmallDealDeckController.instance.usedCards[SmallDealDeckController.instance.cardcount - 1].value)
+                    + (GameManager.instace.playerList[GameManager.instace.activePlayer].MYT4UList[0].countShare * GameManager.instace.playerList[GameManager.instace.activePlayer].MYT4UList[0].pricePerShare))
+                    / (Int32.Parse(inputNum.text) + GameManager.instace.playerList[GameManager.instace.activePlayer].MYT4UList[0].countShare);
+                    photonView.RPC("UpdateKeepForBuyInvest", RpcTarget.All, x, GameManager.instace.playerList[x].MYT4UList[0].countShare, GameManager.instace.playerList[x].MYT4UList[0].pricePerShare);
+                }
+                else
+                {
+                    photonView.RPC("UpdateKeepForBuyInvestButNo", RpcTarget.All, x);
+                }
+                GameManager.instace.playerList[x].hasMYT4U = true;
+                photonView.RPC("UpdateStillInvest", RpcTarget.All, x, GameManager.instace.playerList[x].hasMYT4U);
+                
+
+            }
+            if (SmallDealDeckController.instance.usedCards[SmallDealDeckController.instance.cardcount - 1].GRO4US == true)
+            {
+                if(GameManager.instace.playerList[x].hasGRO4US == true)
+                {
+                    GameManager.instace.playerList[x].GRO4USList[0].countShare += Int32.Parse(inputNum.text);
+                    GameManager.instace.playerList[GameManager.instace.activePlayer].GRO4USList[0].pricePerShare = ((Int32.Parse(inputNum.text) * SmallDealDeckController.instance.usedCards[SmallDealDeckController.instance.cardcount - 1].value)
+                    + (GameManager.instace.playerList[GameManager.instace.activePlayer].GRO4USList[0].countShare * GameManager.instace.playerList[GameManager.instace.activePlayer].GRO4USList[0].pricePerShare))
+                    / (Int32.Parse(inputNum.text) + GameManager.instace.playerList[GameManager.instace.activePlayer].GRO4USList[0].countShare);
+                    photonView.RPC("UpdateKeepForBuyInvest", RpcTarget.All, x, GameManager.instace.playerList[x].GRO4USList[0].countShare, GameManager.instace.playerList[x].GRO4USList[0].pricePerShare);
+                }
+                else
+                {
+                    photonView.RPC("UpdateKeepForBuyInvestButNo", RpcTarget.All, x);
+                }
+                GameManager.instace.playerList[x].hasGRO4US = true;
+                photonView.RPC("UpdateStillInvest", RpcTarget.All, x, GameManager.instace.playerList[x].hasGRO4US);
+                
+
+            }
+            if (SmallDealDeckController.instance.usedCards[SmallDealDeckController.instance.cardcount - 1].OK4U == true)
+            {
+               if( GameManager.instace.playerList[x].hasOK4U == true)
+               {
+                    GameManager.instace.playerList[x].OK4UList[0].countShare += Int32.Parse(inputNum.text);
+                    GameManager.instace.playerList[GameManager.instace.activePlayer].OK4UList[0].pricePerShare = ((Int32.Parse(inputNum.text) * SmallDealDeckController.instance.usedCards[SmallDealDeckController.instance.cardcount - 1].value)
+                    + (GameManager.instace.playerList[GameManager.instace.activePlayer].OK4UList[0].countShare * GameManager.instace.playerList[GameManager.instace.activePlayer].OK4UList[0].pricePerShare))
+                    / (Int32.Parse(inputNum.text) + GameManager.instace.playerList[GameManager.instace.activePlayer].OK4UList[0].countShare);
+                    photonView.RPC("UpdateKeepForBuyInvest", RpcTarget.All, x, GameManager.instace.playerList[x].OK4UList[0].countShare, GameManager.instace.playerList[x].OK4UList[0].pricePerShare);
+                }
+                else
+                {
+                    photonView.RPC("UpdateKeepForBuyInvestButNo", RpcTarget.All, x);
+                }
+
+                GameManager.instace.playerList[x].hasOK4U = true;
+                photonView.RPC("UpdateStillInvest", RpcTarget.All, x, GameManager.instace.playerList[x].hasOK4U);
+                
+
+            }
+
+            photonView.RPC("UpdateMoneyBuyInvest", RpcTarget.All, GameManager.instace.playerList[GameManager.instace.activePlayer].money, GameManager.instace.activePlayer);
             SetAllFalse();
             UIController.instance.BlurBg.SetActive(false);
             //UIController.instance.passButton.SetActive(true);
@@ -76,7 +156,7 @@ public class UIInvestConfirm : MonoBehaviourPunCallbacks
 
     }
     [PunRPC]
-    void UpdateMoney(int money, int x)
+    void UpdateMoneyBuyInvest(int money, int x)
     {
         GameManager.instace.playerList[x].money = money;
         UIController.instance.MyMoneyText.text = GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].money.ToString();
@@ -93,7 +173,94 @@ public class UIInvestConfirm : MonoBehaviourPunCallbacks
     }
 
     [PunRPC]
-    void UpdateKeepForInvest()
+    void UpdateStillInvest(int x, bool stillHave)
+    {
+
+        if (SmallDealDeckController.instance.usedCards[SmallDealDeckController.instance.cardcount - 1].ON2U == true)
+        {
+            GameManager.instace.playerList[x].hasON2U = stillHave;
+        }
+        else if (SmallDealDeckController.instance.usedCards[SmallDealDeckController.instance.cardcount - 1].MYT4U == true)
+        {
+            GameManager.instace.playerList[x].hasMYT4U = stillHave;
+        }
+        else if (SmallDealDeckController.instance.usedCards[SmallDealDeckController.instance.cardcount - 1].GRO4US == true)
+        {
+            GameManager.instace.playerList[x].hasGRO4US = stillHave;
+        }
+        else if (SmallDealDeckController.instance.usedCards[SmallDealDeckController.instance.cardcount - 1].OK4U == true)
+        {
+            GameManager.instace.playerList[x].hasOK4U = stillHave;
+        }
+        else
+        {
+            // Handle the case where none of the asset types match
+            Debug.LogError("Unexpected asset type for UpdateStillInvest RPC.");
+        }
+
+
+    }
+
+
+    [PunRPC]
+    void UpdateKeepForBuyInvestButNo(int x)
+    {
+        if (SmallDealDeckController.instance.usedCards[SmallDealDeckController.instance.cardcount - 1].ON2U == true)
+        {
+             if (GameManager.instace.playerList[x].hasON2U == false)
+            {
+                GameManager.ON2UKeep myON2U = new GameManager.ON2UKeep();
+                myON2U.CardName = SmallDealDeckController.instance.usedCards[SmallDealDeckController.instance.cardcount - 1].cardName;
+                myON2U.countShare = Int32.Parse(inputNum.text);
+                myON2U.pricePerShare = SmallDealDeckController.instance.usedCards[SmallDealDeckController.instance.cardcount - 1].value;
+                GameManager.instace.playerList[x].ON2UList.Add(myON2U);
+                
+            }
+        }
+        if (SmallDealDeckController.instance.usedCards[SmallDealDeckController.instance.cardcount - 1].MYT4U == true)
+        {
+
+            if (GameManager.instace.playerList[x].hasMYT4U == false)
+            {
+                GameManager.MYT4UKeep myMYT4U = new GameManager.MYT4UKeep();
+                myMYT4U.CardName = SmallDealDeckController.instance.usedCards[SmallDealDeckController.instance.cardcount - 1].cardName;
+                myMYT4U.countShare = Int32.Parse(inputNum.text);
+                myMYT4U.pricePerShare = SmallDealDeckController.instance.usedCards[SmallDealDeckController.instance.cardcount - 1].value;
+                GameManager.instace.playerList[x].MYT4UList.Add(myMYT4U);
+
+            }
+        }
+        if (SmallDealDeckController.instance.usedCards[SmallDealDeckController.instance.cardcount - 1].GRO4US == true)
+        {
+
+            if (GameManager.instace.playerList[x].hasGRO4US == false)
+            {
+                GameManager.GRO4USKeep myGRO4US = new GameManager.GRO4USKeep();
+                myGRO4US.CardName = SmallDealDeckController.instance.usedCards[SmallDealDeckController.instance.cardcount - 1].cardName;
+                myGRO4US.countShare = Int32.Parse(inputNum.text);
+                myGRO4US.pricePerShare = SmallDealDeckController.instance.usedCards[SmallDealDeckController.instance.cardcount - 1].value;
+                GameManager.instace.playerList[x].GRO4USList.Add(myGRO4US);
+
+            }
+
+        }
+        if (SmallDealDeckController.instance.usedCards[SmallDealDeckController.instance.cardcount - 1].OK4U == true)
+        {
+            if (GameManager.instace.playerList[x].hasOK4U == false)
+            {
+                GameManager.OK4UKeep myOK4U = new GameManager.OK4UKeep();
+                myOK4U.CardName = SmallDealDeckController.instance.usedCards[SmallDealDeckController.instance.cardcount - 1].cardName;
+                myOK4U.countShare = Int32.Parse(inputNum.text);
+                myOK4U.pricePerShare = SmallDealDeckController.instance.usedCards[SmallDealDeckController.instance.cardcount - 1].value;
+                GameManager.instace.playerList[x].OK4UList.Add(myOK4U);
+
+            }
+
+        
+    }
+}
+    [PunRPC]
+    void UpdateKeepForBuyInvest(int x,int countShare,int pricePerShare)
     {
         
         if (SmallDealDeckController.instance.usedCards[SmallDealDeckController.instance.cardcount - 1].ON2U == true)
@@ -101,61 +268,35 @@ public class UIInvestConfirm : MonoBehaviourPunCallbacks
            
             if (GameManager.instace.playerList[GameManager.instace.activePlayer].hasON2U == true)
             {
-                GameManager.instace.playerList[GameManager.instace.activePlayer].ON2UList[0].pricePerShare = ((Int32.Parse(inputNum.text) * SmallDealDeckController.instance.usedCards[SmallDealDeckController.instance.cardcount - 1].value)
-                    + (GameManager.instace.playerList[GameManager.instace.activePlayer].ON2UList[0].countShare * GameManager.instace.playerList[GameManager.instace.activePlayer].ON2UList[0].pricePerShare))
-                    / (Int32.Parse(inputNum.text) + GameManager.instace.playerList[GameManager.instace.activePlayer].ON2UList[0].countShare);
-                GameManager.instace.playerList[GameManager.instace.activePlayer].ON2UList[0].countShare += Int32.Parse(inputNum.text);
                 
+                GameManager.instace.playerList[GameManager.instace.activePlayer].ON2UList[0].countShare = countShare;
+                GameManager.instace.playerList[GameManager.instace.activePlayer].ON2UList[0].pricePerShare = pricePerShare;
+
+
             }
-            else
-            {
-                GameManager.ON2UKeep myON2U = new GameManager.ON2UKeep();
-                myON2U.CardName = SmallDealDeckController.instance.usedCards[SmallDealDeckController.instance.cardcount - 1].cardName;
-                myON2U.countShare = Int32.Parse(inputNum.text);
-                myON2U.pricePerShare = SmallDealDeckController.instance.usedCards[SmallDealDeckController.instance.cardcount - 1].value;
-                GameManager.instace.playerList[GameManager.instace.activePlayer].ON2UList.Add(myON2U);
-                GameManager.instace.playerList[GameManager.instace.activePlayer].hasON2U = true;
-            }
+
         }
         if (SmallDealDeckController.instance.usedCards[SmallDealDeckController.instance.cardcount - 1].MYT4U == true)
         {
 
             if (GameManager.instace.playerList[GameManager.instace.activePlayer].hasMYT4U == true)
             {
-                GameManager.instace.playerList[GameManager.instace.activePlayer].MYT4UList[0].pricePerShare = ((Int32.Parse(inputNum.text) * SmallDealDeckController.instance.usedCards[SmallDealDeckController.instance.cardcount - 1].value)
-                    + (GameManager.instace.playerList[GameManager.instace.activePlayer].MYT4UList[0].countShare * GameManager.instace.playerList[GameManager.instace.activePlayer].MYT4UList[0].pricePerShare))
-                    / (Int32.Parse(inputNum.text) + GameManager.instace.playerList[GameManager.instace.activePlayer].MYT4UList[0].countShare);
-                GameManager.instace.playerList[GameManager.instace.activePlayer].MYT4UList[0].countShare += Int32.Parse(inputNum.text);
+                
+                GameManager.instace.playerList[GameManager.instace.activePlayer].MYT4UList[0].countShare = countShare;
+                GameManager.instace.playerList[GameManager.instace.activePlayer].MYT4UList[0].pricePerShare = pricePerShare;
             }
-            else
-            {
-                GameManager.MYT4UKeep myMYT4U = new GameManager.MYT4UKeep();
-                myMYT4U.CardName = SmallDealDeckController.instance.usedCards[SmallDealDeckController.instance.cardcount - 1].cardName;
-                myMYT4U.countShare = Int32.Parse(inputNum.text);
-                myMYT4U.pricePerShare = SmallDealDeckController.instance.usedCards[SmallDealDeckController.instance.cardcount - 1].value;
-                GameManager.instace.playerList[GameManager.instace.activePlayer].MYT4UList.Add(myMYT4U);
-                GameManager.instace.playerList[GameManager.instace.activePlayer].hasMYT4U = true;
-            }
+
         }
         if (SmallDealDeckController.instance.usedCards[SmallDealDeckController.instance.cardcount - 1].GRO4US == true)
         {
 
             if (GameManager.instace.playerList[GameManager.instace.activePlayer].hasGRO4US == true)
             {
-                GameManager.instace.playerList[GameManager.instace.activePlayer].GRO4USList[0].pricePerShare = ((Int32.Parse(inputNum.text) * SmallDealDeckController.instance.usedCards[SmallDealDeckController.instance.cardcount - 1].value)
-                    + (GameManager.instace.playerList[GameManager.instace.activePlayer].GRO4USList[0].countShare * GameManager.instace.playerList[GameManager.instace.activePlayer].GRO4USList[0].pricePerShare))
-                    / (Int32.Parse(inputNum.text) + GameManager.instace.playerList[GameManager.instace.activePlayer].GRO4USList[0].countShare);
-                GameManager.instace.playerList[GameManager.instace.activePlayer].GRO4USList[0].countShare += Int32.Parse(inputNum.text);
+                
+                GameManager.instace.playerList[GameManager.instace.activePlayer].GRO4USList[0].countShare = countShare;
+                GameManager.instace.playerList[GameManager.instace.activePlayer].GRO4USList[0].pricePerShare = pricePerShare;
             }
-            else
-            {
-                GameManager.GRO4USKeep myGRO4US = new GameManager.GRO4USKeep();
-                myGRO4US.CardName = SmallDealDeckController.instance.usedCards[SmallDealDeckController.instance.cardcount - 1].cardName;
-                myGRO4US.countShare = Int32.Parse(inputNum.text);
-                myGRO4US.pricePerShare = SmallDealDeckController.instance.usedCards[SmallDealDeckController.instance.cardcount - 1].value;
-                GameManager.instace.playerList[GameManager.instace.activePlayer].GRO4USList.Add(myGRO4US);
-                GameManager.instace.playerList[GameManager.instace.activePlayer].hasGRO4US = true;
-            }
+
                 
         }
         if (SmallDealDeckController.instance.usedCards[SmallDealDeckController.instance.cardcount - 1].OK4U == true)
@@ -163,19 +304,9 @@ public class UIInvestConfirm : MonoBehaviourPunCallbacks
 
             if (GameManager.instace.playerList[GameManager.instace.activePlayer].hasOK4U == true)
             {
-                GameManager.instace.playerList[GameManager.instace.activePlayer].OK4UList[0].pricePerShare = ((Int32.Parse(inputNum.text) * SmallDealDeckController.instance.usedCards[SmallDealDeckController.instance.cardcount - 1].value)
-                    + (GameManager.instace.playerList[GameManager.instace.activePlayer].OK4UList[0].countShare * GameManager.instace.playerList[GameManager.instace.activePlayer].OK4UList[0].pricePerShare))
-                    / (Int32.Parse(inputNum.text) + GameManager.instace.playerList[GameManager.instace.activePlayer].OK4UList[0].countShare);
-                GameManager.instace.playerList[GameManager.instace.activePlayer].OK4UList[0].countShare += Int32.Parse(inputNum.text);
-            }
-            else
-            {
-                GameManager.OK4UKeep myOK4U = new GameManager.OK4UKeep();
-                myOK4U.CardName = SmallDealDeckController.instance.usedCards[SmallDealDeckController.instance.cardcount - 1].cardName;
-                myOK4U.countShare = Int32.Parse(inputNum.text);
-                myOK4U.pricePerShare = SmallDealDeckController.instance.usedCards[SmallDealDeckController.instance.cardcount - 1].value;
-                GameManager.instace.playerList[GameManager.instace.activePlayer].OK4UList.Add(myOK4U);
-                GameManager.instace.playerList[GameManager.instace.activePlayer].hasOK4U = true;
+                
+                GameManager.instace.playerList[GameManager.instace.activePlayer].OK4UList[0].countShare = countShare;
+                GameManager.instace.playerList[GameManager.instace.activePlayer].OK4UList[0].pricePerShare = pricePerShare;
             }
             
         }

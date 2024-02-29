@@ -173,7 +173,9 @@ public class GameManager : MonoBehaviourPunCallbacks
 
         public Jobs playerJob;
         public Color ColorPlayer;
-
+        public int SaveFirstMoney;
+        public int SaveGetMoney;
+        public int SaveAllMoney;
         //��Ѿ���Թ
         public int money;
         public int firstMoney;
@@ -275,7 +277,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     public GameObject diceButton;
     public GameObject DoublediceButton;
-    public Text TurnUI;
+
     [HideInInspector] public int rolledhumanDice;
 
     public GameObject player1;
@@ -779,6 +781,9 @@ public class GameManager : MonoBehaviourPunCallbacks
             GameManager.instace.playerList[i].getmoney = GameManager.instace.playerList[i].allRecieve - GameManager.instace.playerList[i].paid;
 
             GameManager.instace.playerList[i].hasJobCount = 0;
+            GameManager.instace.playerList[i].SaveFirstMoney = GameManager.instace.playerList[i].firstMoney;
+            GameManager.instace.playerList[i].SaveGetMoney = GameManager.instace.playerList[i].getmoney;
+            GameManager.instace.playerList[i].SaveAllMoney = GameManager.instace.playerList[i].SaveFirstMoney + GameManager.instace.playerList[i].SaveGetMoney;
 
             GameManager.instace.playerList[i].hasChild = false;
             GameManager.instace.playerList[i].hasDonate = false;
@@ -818,6 +823,9 @@ public class GameManager : MonoBehaviourPunCallbacks
             GameManager.instace.playerList[i].getmoney = GameManager.instace.playerList[i].allRecieve - GameManager.instace.playerList[i].paid;
 
             GameManager.instace.playerList[i].hasJobCount = 0;
+            GameManager.instace.playerList[i].SaveFirstMoney = GameManager.instace.playerList[i].firstMoney;
+            GameManager.instace.playerList[i].SaveGetMoney = GameManager.instace.playerList[i].getmoney;
+            GameManager.instace.playerList[i].SaveAllMoney = GameManager.instace.playerList[i].SaveFirstMoney + GameManager.instace.playerList[i].SaveGetMoney;
             GameManager.instace.playerList[i].hasChild = false;
             GameManager.instace.playerList[i].hasDonate = false;
             GameManager.instace.playerList[i].hasOutside = false;
@@ -855,6 +863,9 @@ public class GameManager : MonoBehaviourPunCallbacks
             GameManager.instace.playerList[i].getmoney = GameManager.instace.playerList[i].allRecieve - GameManager.instace.playerList[i].paid;
 
             GameManager.instace.playerList[i].hasJobCount = 0;
+            GameManager.instace.playerList[i].SaveFirstMoney = GameManager.instace.playerList[i].firstMoney;
+            GameManager.instace.playerList[i].SaveGetMoney = GameManager.instace.playerList[i].getmoney;
+            GameManager.instace.playerList[i].SaveAllMoney = GameManager.instace.playerList[i].SaveFirstMoney + GameManager.instace.playerList[i].SaveGetMoney;
             GameManager.instace.playerList[i].hasChild = false;
             GameManager.instace.playerList[i].hasDonate = false;
             GameManager.instace.playerList[i].hasOutside = false;
@@ -891,6 +902,9 @@ public class GameManager : MonoBehaviourPunCallbacks
             GameManager.instace.playerList[i].getmoney = GameManager.instace.playerList[i].allRecieve - GameManager.instace.playerList[i].paid;
 
             GameManager.instace.playerList[i].hasJobCount = 0;
+            GameManager.instace.playerList[i].SaveFirstMoney = GameManager.instace.playerList[i].firstMoney;
+            GameManager.instace.playerList[i].SaveGetMoney = GameManager.instace.playerList[i].getmoney;
+            GameManager.instace.playerList[i].SaveAllMoney = GameManager.instace.playerList[i].SaveFirstMoney + GameManager.instace.playerList[i].SaveGetMoney;
             GameManager.instace.playerList[i].hasChild = false;
             GameManager.instace.playerList[i].hasDonate = false;
             GameManager.instace.playerList[i].hasOutside = false;
@@ -927,6 +941,9 @@ public class GameManager : MonoBehaviourPunCallbacks
             GameManager.instace.playerList[i].getmoney = GameManager.instace.playerList[i].allRecieve - GameManager.instace.playerList[i].paid;
 
             GameManager.instace.playerList[i].hasJobCount = 0;
+            GameManager.instace.playerList[i].SaveFirstMoney = GameManager.instace.playerList[i].firstMoney;
+            GameManager.instace.playerList[i].SaveGetMoney = GameManager.instace.playerList[i].getmoney;
+            GameManager.instace.playerList[i].SaveAllMoney = GameManager.instace.playerList[i].SaveFirstMoney + GameManager.instace.playerList[i].SaveGetMoney;
             GameManager.instace.playerList[i].hasChild = false;
             GameManager.instace.playerList[i].hasDonate = false;
             GameManager.instace.playerList[i].hasOutside = false;
@@ -963,6 +980,9 @@ public class GameManager : MonoBehaviourPunCallbacks
             GameManager.instace.playerList[i].getmoney = GameManager.instace.playerList[i].allRecieve - GameManager.instace.playerList[i].paid;
 
             GameManager.instace.playerList[i].hasJobCount = 0;
+            GameManager.instace.playerList[i].SaveFirstMoney = GameManager.instace.playerList[i].firstMoney;
+            GameManager.instace.playerList[i].SaveGetMoney = GameManager.instace.playerList[i].getmoney;
+            GameManager.instace.playerList[i].SaveAllMoney = GameManager.instace.playerList[i].SaveFirstMoney + GameManager.instace.playerList[i].SaveGetMoney;
             GameManager.instace.playerList[i].hasChild = false;
             GameManager.instace.playerList[i].hasDonate = false;
             GameManager.instace.playerList[i].hasOutside = false;
@@ -999,6 +1019,9 @@ public class GameManager : MonoBehaviourPunCallbacks
             GameManager.instace.playerList[i].getmoney = GameManager.instace.playerList[i].allRecieve - GameManager.instace.playerList[i].paid;
 
             GameManager.instace.playerList[i].hasJobCount = 0;
+            GameManager.instace.playerList[i].SaveFirstMoney = GameManager.instace.playerList[i].firstMoney;
+            GameManager.instace.playerList[i].SaveGetMoney = GameManager.instace.playerList[i].getmoney;
+            GameManager.instace.playerList[i].SaveAllMoney = GameManager.instace.playerList[i].SaveFirstMoney + GameManager.instace.playerList[i].SaveGetMoney;
             GameManager.instace.playerList[i].hasChild = false;
             GameManager.instace.playerList[i].hasDonate = false;
             GameManager.instace.playerList[i].hasOutside = false;
@@ -1035,6 +1058,9 @@ public class GameManager : MonoBehaviourPunCallbacks
             GameManager.instace.playerList[i].getmoney = GameManager.instace.playerList[i].allRecieve - GameManager.instace.playerList[i].paid;
 
             GameManager.instace.playerList[i].hasJobCount = 0;
+            GameManager.instace.playerList[i].SaveFirstMoney = GameManager.instace.playerList[i].firstMoney;
+            GameManager.instace.playerList[i].SaveGetMoney = GameManager.instace.playerList[i].getmoney;
+            GameManager.instace.playerList[i].SaveAllMoney = GameManager.instace.playerList[i].SaveFirstMoney + GameManager.instace.playerList[i].SaveGetMoney;
             GameManager.instace.playerList[i].hasChild = false;
             GameManager.instace.playerList[i].hasDonate = false;
             GameManager.instace.playerList[i].hasOutside = false;
@@ -1071,6 +1097,9 @@ public class GameManager : MonoBehaviourPunCallbacks
             GameManager.instace.playerList[i].getmoney = GameManager.instace.playerList[i].allRecieve - GameManager.instace.playerList[i].paid;
 
             GameManager.instace.playerList[i].hasJobCount = 0;
+            GameManager.instace.playerList[i].SaveFirstMoney = GameManager.instace.playerList[i].firstMoney;
+            GameManager.instace.playerList[i].SaveGetMoney = GameManager.instace.playerList[i].getmoney;
+            GameManager.instace.playerList[i].SaveAllMoney = GameManager.instace.playerList[i].SaveFirstMoney + GameManager.instace.playerList[i].SaveGetMoney;
             GameManager.instace.playerList[i].hasChild = false;
             GameManager.instace.playerList[i].hasDonate = false;
             GameManager.instace.playerList[i].hasOutside = false;
@@ -1107,6 +1136,9 @@ public class GameManager : MonoBehaviourPunCallbacks
             GameManager.instace.playerList[i].getmoney = GameManager.instace.playerList[i].allRecieve - GameManager.instace.playerList[i].paid;
 
             GameManager.instace.playerList[i].hasJobCount = 0;
+            GameManager.instace.playerList[i].SaveFirstMoney = GameManager.instace.playerList[i].firstMoney;
+            GameManager.instace.playerList[i].SaveGetMoney = GameManager.instace.playerList[i].getmoney;
+            GameManager.instace.playerList[i].SaveAllMoney = GameManager.instace.playerList[i].SaveFirstMoney + GameManager.instace.playerList[i].SaveGetMoney;
             GameManager.instace.playerList[i].hasChild = false;
             GameManager.instace.playerList[i].hasDonate = false;
             GameManager.instace.playerList[i].hasOutside = false;
@@ -1143,6 +1175,9 @@ public class GameManager : MonoBehaviourPunCallbacks
             GameManager.instace.playerList[i].getmoney = GameManager.instace.playerList[i].allRecieve - GameManager.instace.playerList[i].paid;
 
             GameManager.instace.playerList[i].hasJobCount = 0;
+            GameManager.instace.playerList[i].SaveFirstMoney = GameManager.instace.playerList[i].firstMoney;
+            GameManager.instace.playerList[i].SaveGetMoney = GameManager.instace.playerList[i].getmoney;
+            GameManager.instace.playerList[i].SaveAllMoney = GameManager.instace.playerList[i].SaveFirstMoney + GameManager.instace.playerList[i].SaveGetMoney;
             GameManager.instace.playerList[i].hasChild = false;
             GameManager.instace.playerList[i].hasDonate = false;
             GameManager.instace.playerList[i].hasOutside = false;
@@ -1179,6 +1214,9 @@ public class GameManager : MonoBehaviourPunCallbacks
             GameManager.instace.playerList[i].getmoney = GameManager.instace.playerList[i].allRecieve - GameManager.instace.playerList[i].paid;
 
             GameManager.instace.playerList[i].hasJobCount = 0;
+            GameManager.instace.playerList[i].SaveFirstMoney = GameManager.instace.playerList[i].firstMoney;
+            GameManager.instace.playerList[i].SaveGetMoney = GameManager.instace.playerList[i].getmoney;
+            GameManager.instace.playerList[i].SaveAllMoney = GameManager.instace.playerList[i].SaveFirstMoney + GameManager.instace.playerList[i].SaveGetMoney;
             GameManager.instace.playerList[i].hasChild = false;
             GameManager.instace.playerList[i].hasDonate = false;
             GameManager.instace.playerList[i].hasOutside = false;
@@ -1201,7 +1239,8 @@ public class GameManager : MonoBehaviourPunCallbacks
     void turnCountRPC(int turncount)
     {
         playerList[activePlayer].myPlayers[0].turncounts = turncount;
-        TurnUI.text = "Turn player " + playerList[activePlayer].playerName + " Turn'" + playerList[activePlayer].myPlayers[0].turncounts;
+        UIController.instance.colorTurnText.text = playerList[activePlayer].playerName.ToString();
+        UIController.instance.TurnText.text = playerList[activePlayer].myPlayers[0].turncounts.ToString();
         Debug.Log("Turn player " + playerList[activePlayer].playerName + " Turn'" + playerList[activePlayer].myPlayers[0].turncounts);
     }
     [PunRPC]
@@ -1244,7 +1283,8 @@ public class GameManager : MonoBehaviourPunCallbacks
         }
         Debug.Log("SetStartingPlayer RPC : " + activePlayer);
         UIController.instance.showMessage("Player " + playerList[activePlayer].playerName + " starts first");
-        TurnUI.text = "Turn player " + playerList[activePlayer].playerName + " Turn'" + playerList[activePlayer].myPlayers[0].turncounts;
+        UIController.instance.colorTurnText.text = playerList[activePlayer].playerName.ToString();
+        UIController.instance.TurnText.text = playerList[activePlayer].myPlayers[0].turncounts.ToString();
         Debug.Log("Turn player " + playerList[activePlayer].playerName + " Turn'" + playerList[activePlayer].myPlayers[0].turncounts);
 
     }

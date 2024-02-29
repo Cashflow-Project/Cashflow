@@ -123,8 +123,9 @@ public class Player1 : MonoBehaviourPunCallbacks
             {
                 Debug.Log("pass orange route");
                 photonView.RPC("valueUpdate", RpcTarget.All);
-                GameManager.instace.playerList[GameManager.instace.activePlayer].money = GameManager.instace.playerList[GameManager.instace.activePlayer].money + GameManager.instace.playerList[GameManager.instace.activePlayer].getmoney;
-                photonView.RPC("UpdateMoney", RpcTarget.All, GameManager.instace.playerList[GameManager.instace.activePlayer].money, GameManager.instace.activePlayer);
+                GameManager.instace.playerList[GameManager.instace.activePlayer].money += GameManager.instace.playerList[GameManager.instace.activePlayer].getmoney;
+                photonView.RPC("UpdateMoneyPass", RpcTarget.All, GameManager.instace.playerList[GameManager.instace.activePlayer].money);
+                photonView.RPC("valueUpdate", RpcTarget.All);
                 if (GameManager.instace.playerList[GameManager.instace.activePlayer].getmoney <= 0 && GameManager.instace.playerList[GameManager.instace.activePlayer].money < Math.Abs(GameManager.instace.playerList[GameManager.instace.activePlayer].getmoney))
                 {
                     //lose
@@ -145,6 +146,7 @@ public class Player1 : MonoBehaviourPunCallbacks
                     UIController.instance.BlurBg.SetActive(true);
                     UIController.instance.lostShow.SetActive(true);
                 }
+
             }
 
 
@@ -475,9 +477,9 @@ public class Player1 : MonoBehaviourPunCallbacks
     }
 
     [PunRPC]
-    void UpdateMoney(int money, int x)
+    void UpdateMoneyPass(int money)
     {
-        GameManager.instace.playerList[x].money = money;
+        GameManager.instace.playerList[GameManager.instace.activePlayer].money = money;
         UIController.instance.MyMoneyText.text = GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].money.ToString();
         //note collect
         GameManager.Note myNote = new GameManager.Note();
@@ -487,8 +489,8 @@ public class Player1 : MonoBehaviourPunCallbacks
 
         GameManager.Note myNote2 = new GameManager.Note();
         myNote2.CardName = "= ";
-        myNote2.price = GameManager.instace.playerList[x].money;
-        GameManager.instace.playerList[x].Keep.Add(myNote2);
+        myNote2.price = GameManager.instace.playerList[GameManager.instace.activePlayer].money;
+        GameManager.instace.playerList[GameManager.instace.activePlayer].Keep.Add(myNote2);
     }
 
     [PunRPC]
