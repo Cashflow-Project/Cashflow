@@ -104,7 +104,8 @@ public class SmallDealDeckController : MonoBehaviourPunCallbacks
         if (SmallDealDeckController.instance.usedCards[SmallDealDeckController.instance.cardcount - 1].ON2U == true || SmallDealDeckController.instance.usedCards[SmallDealDeckController.instance.cardcount - 1].MYT4U == true || SmallDealDeckController.instance.usedCards[SmallDealDeckController.instance.cardcount - 1].GRO4US == true || SmallDealDeckController.instance.usedCards[SmallDealDeckController.instance.cardcount - 1].OK4U == true)
         {
             photonView.RPC("UpdateEachKeepForInvest", RpcTarget.All);
-            photonView.RPC("whoCanCancel", RpcTarget.All); 
+            UIController.instance.cancelButton.SetActive(false);
+            //photonView.RPC("whoCanCancel", RpcTarget.All); 
         }
         photonView.RPC("whoCanSell", RpcTarget.All);
         Destroy(newCard.gameObject, 1);
@@ -154,13 +155,13 @@ public class SmallDealDeckController : MonoBehaviourPunCallbacks
             UIController.instance.LoanCanvas.SetActive(true);
             UIController.instance.BlurBg.SetActive(true);
         }
-            
-            
-        
-        
-        
 
-        photonView.RPC("valueUpdate", RpcTarget.All);
+
+
+
+
+
+        photonView.RPC("valueNewUpdate", RpcTarget.All, PhotonNetwork.LocalPlayer.ActorNumber - 1);
 
 
     }
@@ -320,14 +321,13 @@ public class SmallDealDeckController : MonoBehaviourPunCallbacks
         }
     }
     [PunRPC]
-    void valueUpdate()
+    void valueNewUpdate(int x)
     {
-        UIController.instance.MyMoneyText.text = GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].money.ToString();
-        GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].allRecieve = GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].salary + GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].income;
-        GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].InstallmentsBank = GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].loanBank / 10;
-        GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].sumChild = GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].child * GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].perChild;
-        GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].paid = GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].tax + GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].homeMortgage + GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].learnMortgage + GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].carMortgage + GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].creditcardMortgage + GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].extraPay + GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].InstallmentsBank + GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].sumChild;
-        GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].getmoney = GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].allRecieve - GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].paid;
+        GameManager.instace.playerList[x].allRecieve = GameManager.instace.playerList[x].salary + GameManager.instace.playerList[x].income;
+        GameManager.instace.playerList[x].InstallmentsBank = GameManager.instace.playerList[x].loanBank / 10;
+        GameManager.instace.playerList[x].sumChild = GameManager.instace.playerList[x].child * GameManager.instace.playerList[x].perChild;
+        GameManager.instace.playerList[x].paid = GameManager.instace.playerList[x].tax + GameManager.instace.playerList[x].homeMortgage + GameManager.instace.playerList[x].learnMortgage + GameManager.instace.playerList[x].carMortgage + GameManager.instace.playerList[x].creditcardMortgage + GameManager.instace.playerList[x].extraPay + GameManager.instace.playerList[x].InstallmentsBank + GameManager.instace.playerList[x].sumChild;
+        GameManager.instace.playerList[x].getmoney = GameManager.instace.playerList[x].allRecieve - GameManager.instace.playerList[x].paid;
     }
 
     [PunRPC]

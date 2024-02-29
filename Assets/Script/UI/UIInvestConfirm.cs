@@ -169,16 +169,32 @@ public class UIInvestConfirm : MonoBehaviourPunCallbacks
         myNote2.CardName = "= ";
         myNote2.price = GameManager.instace.playerList[GameManager.instace.activePlayer].money;
         GameManager.instace.playerList[GameManager.instace.activePlayer].Keep.Add(myNote2);
-    }
-    public void StillInvestUpdate(bool isStill)
-    {
-        
+
+        if (SmallDealDeckController.instance.usedCards[SmallDealDeckController.instance.cardcount - 1].ON2U == true)
+        {
+            GameManager.instace.playerList[GameManager.instace.activePlayer].hasON2U = true;
+        }
+        else if (SmallDealDeckController.instance.usedCards[SmallDealDeckController.instance.cardcount - 1].MYT4U == true)
+        {
+            GameManager.instace.playerList[GameManager.instace.activePlayer].hasMYT4U = true;
+        }
+        else if (SmallDealDeckController.instance.usedCards[SmallDealDeckController.instance.cardcount - 1].GRO4US == true)
+        {
+            //UIController.instance.infoText.text = "in UpdateStillGRO4US";
+            GameManager.instace.playerList[GameManager.instace.activePlayer].hasGRO4US = true;
+        }
+        else if (SmallDealDeckController.instance.usedCards[SmallDealDeckController.instance.cardcount - 1].OK4U == true)
+        {
+            GameManager.instace.playerList[GameManager.instace.activePlayer].hasOK4U = true;
+        }
+
+
     }
 
     [PunRPC]
     void UpdateStillInvest(bool stillHave)
     {
-        UIController.instance.infoText.text = "in UpdateStillInvest";
+        //UIController.instance.infoText.text = "in UpdateStillInvest";
         if (SmallDealDeckController.instance.usedCards[SmallDealDeckController.instance.cardcount - 1].ON2U == true)
         {
             GameManager.instace.playerList[GameManager.instace.activePlayer].hasON2U = stillHave;
@@ -189,7 +205,7 @@ public class UIInvestConfirm : MonoBehaviourPunCallbacks
         }
         else if (SmallDealDeckController.instance.usedCards[SmallDealDeckController.instance.cardcount - 1].GRO4US == true)
         {
-            UIController.instance.infoText.text = "in UpdateStillGRO4US";
+            //UIController.instance.infoText.text = "in UpdateStillGRO4US";
             GameManager.instace.playerList[GameManager.instace.activePlayer].hasGRO4US = stillHave;
         }
         else if (SmallDealDeckController.instance.usedCards[SmallDealDeckController.instance.cardcount - 1].OK4U == true)
