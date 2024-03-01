@@ -108,8 +108,9 @@ public class BigDealDeckController : MonoBehaviourPunCallbacks
 
         if(GameManager.instace.playerList[GameManager.instace.activePlayer].money >= usedCards[cardcount - 1].DownPayment)
         {
-            GameManager.instace.playerList[GameManager.instace.activePlayer].money = GameManager.instace.playerList[GameManager.instace.activePlayer].money - GameManager.instace.playerList[GameManager.instace.activePlayer].money - usedCards[cardcount - 1].DownPayment;
-            photonView.RPC("UpdateMoney", RpcTarget.All, GameManager.instace.playerList[GameManager.instace.activePlayer].money, GameManager.instace.activePlayer);
+            GameManager.instace.playerList[GameManager.instace.activePlayer].money = GameManager.instace.playerList[GameManager.instace.activePlayer].money - usedCards[cardcount - 1].DownPayment;
+            GameManager.instace.playerList[GameManager.instace.activePlayer].income = GameManager.instace.playerList[GameManager.instace.activePlayer].income + usedCards[cardcount - 1].CashflowIncome;
+            photonView.RPC("UpdateBigMoney", RpcTarget.All, GameManager.instace.playerList[GameManager.instace.activePlayer].money, GameManager.instace.activePlayer, GameManager.instace.playerList[GameManager.instace.activePlayer].income);
             photonView.RPC("UpdateKeepForDeal", RpcTarget.All);
 
             UIController.instance.drawButton.SetActive(false);
@@ -159,9 +160,10 @@ public class BigDealDeckController : MonoBehaviourPunCallbacks
     }
 
     [PunRPC]
-    void UpdateMoney(int money,int x)
+    void UpdateBigMoney(int money,int x,int income)
     {
         GameManager.instace.playerList[x].money = money;
+        GameManager.instace.playerList[x].income = income;
         UIController.instance.MyMoneyText.text = GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].money.ToString();
         //note collect
         GameManager.Note myNote = new GameManager.Note();
@@ -203,7 +205,7 @@ public class BigDealDeckController : MonoBehaviourPunCallbacks
             GameManager.instace.playerList[GameManager.instace.activePlayer].hasBusiness = true;
         }
         GameManager.instace.playerList[GameManager.instace.activePlayer].DealList.Add(myDeal);
-        GameManager.instace.playerList[GameManager.instace.activePlayer].income = GameManager.instace.playerList[GameManager.instace.activePlayer].income + usedCards[cardcount - 1].CashflowIncome;
+        
     }
 
     [PunRPC]
