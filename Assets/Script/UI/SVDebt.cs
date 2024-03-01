@@ -177,6 +177,31 @@ public class SVDebt : MonoBehaviourPunCallbacks
                 
             }
 
-        
+        if (GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].hasBusiness == true)
+        {
+
+            //generate a new list with update info
+            for (int i = 0; i < GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].BusinessList.Count; i++)
+            {
+
+                //skip empty 
+                if (GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].BusinessList.Count == 0)
+                {
+                    continue;
+                }
+                if (GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].BusinessList[i].isSelected == false)
+                {
+                    ItemSVDebt newItem = Instantiate(ItemSVDebtPrefab);
+                    newItem.itemDebtParent = this;
+                    newItem.SetItemName(GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].BusinessList[i].CardName);
+                    newItem.SetDebtInItem(GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].BusinessList[i].BankLoan.ToString());
+                    newItem.transform.SetParent(SVDebtListParent);
+                    //ScaleObjectWithScreenSize(newItem.gameObject);
+                    _SVDebtItemList.Add(newItem);
+                }
+
+            }
+
+        }
     }
 }

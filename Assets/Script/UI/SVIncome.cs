@@ -177,7 +177,32 @@ public class SVIncome : MonoBehaviourPunCallbacks
 
                 
             }
+        if (GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].hasBusiness == true)
+        {
 
-        
+            //generate a new list with update info
+            for (int i = 0; i < GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].BusinessList.Count; i++)
+            {
+
+                //skip empty 
+                if (GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].BusinessList.Count == 0)
+                {
+                    continue;
+                }
+                if (GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].BusinessList[i].isSelected == false)
+                {
+                    ItemSVIncome newItem = Instantiate(ItemSVIncomePrefab);
+                    newItem.itemIncomeParent = this;
+                    newItem.SetItemName(GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].BusinessList[i].CardName);
+                    newItem.SetIncomeInItem(GameManager.instace.playerList[PhotonNetwork.LocalPlayer.ActorNumber - 1].BusinessList[i].CashflowIncome.ToString());
+                    newItem.transform.SetParent(SVIncomeListParent);
+                    //ScaleObjectWithScreenSize(newItem.gameObject);
+                    _SVIncomeItemList.Add(newItem);
+                }
+
+            }
+
+        }
+
     }
 }
