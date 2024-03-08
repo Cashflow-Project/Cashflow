@@ -201,4 +201,9 @@ public class Login : MonoBehaviour
 
         yield return null;
     }
+
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
 }

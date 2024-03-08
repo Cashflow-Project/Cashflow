@@ -9,7 +9,7 @@ public class PlayerItemUI : MonoBehaviour
 {
     public LobbyManager PlayerParent;
     public TMP_Text _playerName;
-    public TMP_Text statusPlayer;
+
 
    
     public void SetName(string playerName)
@@ -17,10 +17,6 @@ public class PlayerItemUI : MonoBehaviour
         _playerName.text = playerName;
     }
 
-    public void SetStatusPlayer(string playerStatus)
-    {
-        statusPlayer.text = playerStatus;
-    }
 
     
 }
