@@ -47,12 +47,6 @@ public class MarketDeckController : MonoBehaviourPunCallbacks
         UIController.instance.MarketDrawButton.SetActive(false);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     public void SetUpDeck()
     {
 

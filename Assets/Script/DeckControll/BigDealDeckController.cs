@@ -46,12 +46,6 @@ public class BigDealDeckController : MonoBehaviourPunCallbacks
         UIController.instance.SellButton.SetActive(false);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void SetUpDeck()
     {
 
